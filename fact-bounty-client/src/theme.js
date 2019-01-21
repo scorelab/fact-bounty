@@ -1,7 +1,7 @@
 import {createMuiTheme} from '@material-ui/core/styles'
 import lightBlue        from '@material-ui/core/es/colors/lightBlue'
 
-export const theme = createMuiTheme({
+const theme = createMuiTheme({
 	palette: {
 		primary: lightBlue,
 	},
@@ -21,3 +21,5 @@ export const theme = createMuiTheme({
 		useNextVariants: true,
 	},
 })
+
+export default theme
