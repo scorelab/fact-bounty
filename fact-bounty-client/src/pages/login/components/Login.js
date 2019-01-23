@@ -1,10 +1,10 @@
-import React, {Component} from 'react'
-import {Link}             from 'react-router-dom'
-import PropTypes          from 'prop-types'
-import {connect}          from 'react-redux'
-import classnames         from 'classnames'
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import classnames from 'classnames'
 
-import {loginUser} from '../../actions/authActions'
+import { loginUser } from '../actions/authActions'
 
 class Login extends Component {
 	constructor() {
@@ -35,7 +35,7 @@ class Login extends Component {
 	}
 
 	onChange = e => {
-		this.setState({[e.target.id]: e.target.value})
+		this.setState({ [e.target.id]: e.target.value })
 	}
 	onSubmit = e => {
 		e.preventDefault()
@@ -47,10 +47,10 @@ class Login extends Component {
 	}
 
 	render() {
-		const {errors} = this.state
+		const { errors } = this.state
 		return (
 			<div className="container">
-				<div style={{marginTop: '4rem'}} className="row">
+				<div style={{ marginTop: '4rem' }} className="row">
 					<div className="col s8 offset-s2">
 						<Link to="/" className="btn-flat waves-effect">
 							<i className="material-icons left">keyboard_backspace</i> Back to
@@ -70,9 +70,9 @@ class Login extends Component {
 								/>
 								<label htmlFor="email">Email</label>
 								<span className="red-text">
-                  {errors.email}
+									{errors.email}
 									{errors.emailnotfound}
-                </span>
+								</span>
 							</div>
 							<div className="input-field col s12">
 								<input
@@ -87,11 +87,11 @@ class Login extends Component {
 								/>
 								<label htmlFor="password">Password</label>
 								<span className="red-text">
-                  {errors.password}
+									{errors.password}
 									{errors.passwordincorrect}
-                </span>
+								</span>
 							</div>
-							<div className="col s12" style={{paddingLeft: '11.250px'}}>
+							<div className="col s12" style={{ paddingLeft: '11.250px' }}>
 								<button
 									style={{
 										width: '150px',
@@ -126,5 +126,5 @@ const mapStateToProps = state => ({
 
 export default connect(
 	mapStateToProps,
-	{loginUser}
+	{ loginUser }
 )(Login)

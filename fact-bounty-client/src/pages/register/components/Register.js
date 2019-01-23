@@ -1,10 +1,10 @@
-import React, {Component} from 'react'
-import {Link, withRouter} from 'react-router-dom'
-import PropTypes          from 'prop-types'
-import {connect}          from 'react-redux'
-import classnames         from 'classnames'
+import React, { Component } from 'react'
+import { Link, withRouter } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import classnames from 'classnames'
 
-import {registerUser} from '../../actions/authActions'
+import { registerUser } from '../actions/newUserActions';
 
 class Register extends Component {
 	constructor() {
@@ -34,7 +34,7 @@ class Register extends Component {
 	}
 
 	onChange = e => {
-		this.setState({[e.target.id]: e.target.value})
+		this.setState({ [e.target.id]: e.target.value })
 	}
 	onSubmit = e => {
 		e.preventDefault()
@@ -48,7 +48,7 @@ class Register extends Component {
 	}
 
 	render() {
-		const {errors} = this.state
+		const { errors } = this.state
 		return (
 			<div className="container">
 				<div className="row">
@@ -114,7 +114,7 @@ class Register extends Component {
 								<label htmlFor="password2">Confirm Password</label>
 								<span className="red-text">{errors.password2}</span>
 							</div>
-							<div className="col s12" style={{paddingLeft: '11.250px'}}>
+							<div className="col s12" style={{ paddingLeft: '11.250px' }}>
 								<button
 									style={{
 										width: '150px',
@@ -149,5 +149,5 @@ const mapStateToProps = state => ({
 
 export default connect(
 	mapStateToProps,
-	{registerUser}
+	{ registerUser }
 )(withRouter(Register))
