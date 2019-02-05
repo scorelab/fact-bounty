@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const passport   = require('passport')
 
 const users = require('./routes/api/user')
+const stories = require('./routes/api/story')
 
 const app = express()
 
@@ -31,6 +32,7 @@ require('./config/passport')(passport)
 
 // Routes
 app.use('/api/users', users)
+app.use('/api/stories', stories)
 
 const port = process.env.PORT || 7000
 app.listen(port, () => console.log(`Server up and running on port ${port} !`))
