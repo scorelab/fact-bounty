@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 import scrapy
-from scrapy.spider import Spider
+from scrapy.spiders import Spider
 from news_sites.items import GeneralItem
 from urllib.parse import urljoin
 import datetime

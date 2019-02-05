@@ -1,6 +1,6 @@
 from urllib.parse import urljoin
 import scrapy
-from scrapy.spider import Spider
+from scrapy.spiders import Spider
 from news_sites.items import NationlkItem
 import datetime
 from scrapy.http import Request
