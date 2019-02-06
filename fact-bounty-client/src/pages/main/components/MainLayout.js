@@ -9,7 +9,6 @@ class MainLayout extends Component {
 
     render() {
         const { match } = this.props;
-        console.log(`${match.url}/post`);
         return (
             <div className="mainLayout">
                 <TopNavBar />
