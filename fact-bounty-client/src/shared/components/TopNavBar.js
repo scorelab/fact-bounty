@@ -14,7 +14,8 @@ class TopNavBar extends Component {
             flexGrow: 1,
             textAlign: 'center',
             fontVariant: 'small-caps',
-            letterSpacing: '1px'
+            letterSpacing: '1px',
+            fontFamily: 'Aladin'
         },
         navbarLinks: {
             letterSpacing: '1px',
@@ -27,7 +28,7 @@ class TopNavBar extends Component {
         return (
             <AppBar position="static" color="default" style={this.styles.navbar}>
                 <Toolbar>
-                    <Typography variant="h4" color="primary" style={this.styles.navbarTitle}>Fact Bounty</Typography>
+                    <Typography variant="h3" color="primary" style={this.styles.navbarTitle}>Fact Bounty</Typography>
                     <Button color="primary" style={this.styles.navbarLinks}>HOME</Button>
                     <Button color="primary" style={this.styles.navbarLinks}>ABOUT</Button>
                 </Toolbar>
