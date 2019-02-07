@@ -9,7 +9,49 @@
 .vote-status
     height: 5px
     background-color: #009688
+    transition: 0.2s ease
+
+.hover-container
+    padding: 0 45px
+    transition: 0.2s ease
+
+.hover-container:hover
+    .vote-status
+        height: 25px
 
 .container
-    height: 150px
+    // height: 150px
     overflow: hidden
+    display: flex
+
+    .image
+        background-color: #e0e0e0
+        .post-img
+            height: 150px
+            max-width: 200px
+
+    .details
+        padding: 12px 22px 2px 22px
+        position: relative
+        .title
+            font-size: 1.2rem
+            font-weight: 700
+            width: 35vw
+        .date
+            font-size: 0.8rem
+            opacity: 0.7
+            margin-bottom: 7px
+        .content
+            text-align: justify
+        a
+            text-decoration: none
+            color: #424242
+        .read-more
+            text-decoration: none
+            opacity: 0.7
+            font-size: 0.8rem
+            text-align: right
+            position: absolute
+            bottom: 0
+            right: 10px
+            
