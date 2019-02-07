@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Card, CardContent } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import postImg1 from '../president.jpg';
+import postImg1 from '../flag1.jpg';
+import postImg2 from '../flag2.jpg';
+import postImg3 from '../president.jpg';
 import LinesEllipsis from 'react-lines-ellipsis';
 import '../Posts.sass';
 
@@ -40,6 +42,7 @@ class Post extends Component {
 
     render() {
         const { post } = this.props;
+        const content = post.content.slice(0, 320);
         return (
             <div className="hover-container">
                 <Card style={styles.card}>
@@ -53,12 +56,14 @@ class Post extends Component {
                                 <div className="title">{post.title}</div>
                                 <div className="date">{post.date}</div>
                                 <div className="content">
-                                    <LinesEllipsis
+                                    {/* <LinesEllipsis
                                         text={this.state.postContent}
                                         maxLine='3'
                                         ellipsis='...'
                                         onReflow={this.handleReflow}
-                                    />
+                                    /> */}
+                                    {content}
+                                    {(post.content.length > 320) ? '...' : ''}
                                 </div>
                                 <div className="read-more"><Link to="/post">Read more</Link></div>
                             </div>
