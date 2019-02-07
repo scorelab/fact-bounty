@@ -7,28 +7,32 @@ import { Person, ExpandMore } from '@material-ui/icons';
 import { Menu, MenuItem } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
+const styles = {
+    navbar: {
+        backgroundColor: '#fafafa',
+        zIndex: '15'
+    },
+    navbarTitle: {
+        flexGrow: 2,
+        textAlign: 'center',
+        fontVariant: 'small-caps',
+        letterSpacing: '1px',
+        fontFamily: 'Aladin'
+    },
+    navbarLinks: {
+        letterSpacing: '1px',
+        fontWeight: '500',
+        marginLeft: '24px'
+    },
+    link: {
+        textDecoration: 'none'
+    }
+};
+
 class TopNavBar extends Component {
 
     state = {
         anchorEl: null
-    };
-
-    styles = {
-        navbar: {
-            backgroundColor: '#fafafa'
-        },
-        navbarTitle: {
-            flexGrow: 2,
-            textAlign: 'center',
-            fontVariant: 'small-caps',
-            letterSpacing: '1px',
-            fontFamily: 'Aladin'
-        },
-        navbarLinks: {
-            letterSpacing: '1px',
-            fontWeight: '500',
-            marginLeft: '24px'
-        }
     };
 
     handleToggle = event => {
@@ -44,17 +48,17 @@ class TopNavBar extends Component {
     render() {
         const { anchorEl } = this.state;
         return (
-            <AppBar position="static" color="default" style={this.styles.navbar}>
+            <AppBar position="static" color="default" style={styles.navbar}>
                 <Toolbar>
                     <div style={{ height: '10px', width: '14%' }}></div>
-                    <Typography variant="h3" color="primary" style={this.styles.navbarTitle}>Fact Bounty</Typography>
-                    <Link to="/" style={{ textDecoration: 'none' }}>
-                        <Button color="primary" style={this.styles.navbarLinks}>HOME</Button>
+                    <Typography variant="h3" color="primary" style={styles.navbarTitle}>Fact Bounty</Typography>
+                    <Link to="/" style={styles.link}>
+                        <Button color="primary" style={styles.navbarLinks}>HOME</Button>
                     </Link>
-                    <Link to="/about" style={{ textDecoration: 'none' }}>
-                        <Button color="primary" style={this.styles.navbarLinks} >ABOUT</Button>
+                    <Link to="/about" style={styles.link}>
+                        <Button color="primary" style={styles.navbarLinks} >ABOUT</Button>
                     </Link>
-                    <Button color="primary" style={this.styles.navbarLinks}
+                    <Button color="primary" style={styles.navbarLinks}
                         onClick={this.handleToggle} aria-haspopup="true"
                         aria-owns={anchorEl ? 'simple-menu' : undefined}>
                         <Person /> <ExpandMore />
