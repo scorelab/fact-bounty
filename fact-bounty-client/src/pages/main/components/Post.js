@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import postImg1 from '../flag1.jpg';
 import postImg2 from '../flag2.jpg';
 import postImg3 from '../president.jpg';
-import LinesEllipsis from 'react-lines-ellipsis';
 import { withStyles } from '@material-ui/core/styles';
 import '../Posts.sass';
 import ReportProblem from '@material-ui/icons/ReportProblemOutlined';
@@ -16,7 +15,6 @@ const styles = {
     },
     card: {
         marginBottom: '7px',
-        // boxShadow: '0 0 0 0',
         backgroundColor: '#fafafa',
         color: '#424242',
         transition: '0.1s ease',
@@ -61,9 +59,40 @@ class Post extends Component {
         })
     }
 
+    findHighestVotesColor(post) {
+        let value;
+        if (post.true >= post.fake) {
+            if (post.true >= post.mixture) {
+                value = '#009688';
+            } else {
+                value = '#0288d1';
+            }
+        } else {
+            if (post.fake >= post.mixture) {
+                value = '#f4511e';
+            } else {
+                value = '#0288d1';
+            }
+        }
+        return value;
+    }
+
+    displayVote(value, totalVotes) {
+        return (value / totalVotes * 100) > 3 ? Math.round(value / totalVotes * 100) + "%" : '';
+    }
+
     render() {
         const { post, classes } = this.props;
         const content = post.content.slice(0, 320);
+        const totalVotes = post.true + post.fake + post.mixture;
+        const highestVotes = this.findHighestVotesColor(post);
+        const votes = (
+            <div className="vote-status" style={{ backgroundColor: highestVotes }}>
+                <div className="votes true-votes" style={{ width: (post.true / totalVotes * 100) + '%' }}><span className="vote-value">{this.displayVote(post.true, totalVotes)}</span></div>
+                <div className="votes fake-votes" style={{ width: (post.fake / totalVotes * 100) + '%' }}><span className="vote-value">{this.displayVote(post.fake, totalVotes)}</span></div>
+                <div className="votes mix-votes" style={{ width: (post.mixture / totalVotes * 100) + '%' }}><span className="vote-value">{this.displayVote(post.mixture, totalVotes)}</span></div>
+            </div>
+        );
         return (
             <div className="hover-container">
                 <Card className={classes.card}>
@@ -82,7 +111,7 @@ class Post extends Component {
                                 <div className="read-more"><Link to="/post">Read more</Link></div>
                             </div>
                         </div>
-                        <div className="vote-status"></div>
+                        {votes}
                     </CardContent>
                 </Card>
                 <div className="btn-column">
@@ -108,10 +137,7 @@ class Post extends Component {
                         </div>
                     </div>
                 </div>
-                {/* <div className="btn-column-hover">
-                    <div className="fake-btn"><Cancel className={classes.icon} /></div>
-                    <div className="mix-btn"><ReportProblem className={classes.icon} /></div>
-                </div> */}
+                <div className="total-vote-count">{totalVotes} votes</div>
             </div>
         )
     }

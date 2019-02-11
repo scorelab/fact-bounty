@@ -6,7 +6,7 @@ export const postsList = [
         img: '',
         true: 56,
         fake: 98,
-        mixture: 12,
+        mixture: 0,
         date: 'Jan 21st'
     },
     {
@@ -26,7 +26,7 @@ export const postsList = [
         img: '',
         true: 12,
         fake: 33,
-        mixture: 2,
+        mixture: 54,
         date: 'Jan 21st'
     },
     {
