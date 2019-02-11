@@ -23,7 +23,7 @@
 """
 
 import scrapy
-from scrapy.spider import Spider
+from scrapy.spiders import Spider
 from urllib.parse import urljoin
 from scrapy.http import Request
 

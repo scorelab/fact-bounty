@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from scrapy.spider import Spider
+from scrapy.spiders import Spider
 from news_sites.items import adaDeraneItem
 from urllib.parse import urljoin
 from scrapy.http import Request
