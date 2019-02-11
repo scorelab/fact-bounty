@@ -78,7 +78,11 @@ class Post extends Component {
     }
 
     displayVote(value, totalVotes) {
-        return (value / totalVotes * 100) > 3 ? Math.round(value / totalVotes * 100) + "%" : '';
+        return (value / totalVotes * 100) > 3 ? Math.round(value / totalVotes * 1000) / 10 + "%" : '';
+    }
+
+    handleClick = (event) => {
+        //handle user vote click
     }
 
     render() {
