@@ -11,8 +11,28 @@ $fake-color: #f4511e
 
 .vote-status
     height: 4px
-    background-color: #009688
     transition: 0.2s ease
+    display: flex
+    position: relative
+
+    .votes
+        display: flex
+        justify-content: center
+        align-items: center
+        transition: 0.2s ease
+        opacity: 0
+    .true-votes
+        background-color: $true-color
+    .fake-votes
+        background-color: $fake-color
+    .mix-votes
+        background-color: $mix-color
+    .vote-value
+        font-size: 0.8rem
+        font-weight: 600
+        color: #fafafa
+        opacity: 0
+        transition: 0.2s ease
 
 .hover-container
     padding: 0 45px
@@ -22,6 +42,14 @@ $fake-color: #f4511e
 .hover-container:hover
     .vote-status
         height: 18px
+    .btn-column
+        opacity: 1
+    .votes
+        opacity: 1
+    .vote-value
+        opacity: 1
+    .total-vote-count
+        opacity: 0.6
 
 .container
     overflow: hidden
@@ -63,6 +91,7 @@ $fake-color: #f4511e
     top: 0
     right: 10px
     transition: 0.2s ease
+    opacity: 0
 
 .true-transition
     margin-bottom: 5px
@@ -132,3 +161,12 @@ $fake-color: #f4511e
     top: 6px
     left: 40px
     font-weight: 600
+
+.total-vote-count
+        position: absolute
+        right: -22px
+        bottom: 2px
+        opacity: 0
+        font-size: 0.8rem
+        text-align: left
+        width: 60px
