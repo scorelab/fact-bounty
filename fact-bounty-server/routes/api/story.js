@@ -53,4 +53,17 @@ router.post('/change-downvote-count', (req, res) => {
 	})
 })
 
+// @route POST api/stories/change-mixedvotes
+// @desc Change mixedvote count of a story
+// @access Public
+router.post('/change-mixedvote-count', (req, res) => {
+	Story.updateOne({_id: req.body.story_id}, {
+		$inc: {
+			mixedvote_count: req.body.change_val
+		}
+	}, function (mon_err, affected, mon_res) {
+		return mon_err ? res.status(200).json(mon_err) : res.status(200).send()
+	})
+})
+
 module.exports = router
