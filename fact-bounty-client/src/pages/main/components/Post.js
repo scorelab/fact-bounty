@@ -14,16 +14,14 @@ const styles = {
         padding: 0
     },
     card: {
-        marginBottom: '7px',
+        marginBottom: '12px',
         backgroundColor: '#fafafa',
         color: '#424242',
         transition: '0.1s ease',
         '&:hover': {
             boxShadow: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)',
-            '&:cardContent': {
-                padding: '20px'
-            }
-        }
+        },
+        // boxShadow: '0 0 0 0',
     },
     icon: {
         fontSize: '30px'
@@ -112,7 +110,7 @@ class Post extends Component {
                                     {content}
                                     {(post.content.length > 320) ? '...' : ''}
                                 </div>
-                                <div className="read-more"><Link to="/post">Read more</Link></div>
+                                <div className="read-more">Read more</div>
                             </div>
                         </div>
                         {votes}
