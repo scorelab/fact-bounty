@@ -14,7 +14,6 @@ const styles = {
     },
     navbarTitle: {
         flexGrow: 2,
-        textAlign: 'center',
         fontVariant: 'small-caps',
         letterSpacing: '1px',
         fontFamily: 'Aladin',
@@ -53,8 +52,7 @@ class TopNavBar extends Component {
         return (
             <AppBar position="fixed" color="default" style={styles.navbar}>
                 <Toolbar>
-                    <div style={{ height: '10px', width: '14%' }}></div>
-                    <Typography variant="h3" color="primary" style={styles.navbarTitle}>Fact Bounty</Typography>
+                    <Typography variant="h4" color="primary" style={styles.navbarTitle}>Fact Bounty</Typography>
                     <Link to="/" style={styles.link}>
                         <Button color="primary" style={styles.navbarLinks}>HOME</Button>
                     </Link>
