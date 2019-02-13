@@ -9,7 +9,6 @@ import About from '../../about/About';
 class MainLayout extends Component {
 
     render() {
-        const { match } = this.props;
         return (
             <div className="mainLayout">
                 <TopNavBar />

@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
-import { postsList } from '../dummy.data';
 import '../Posts.sass';
 import Post from './Post';
+import { connect } from 'react-redux';
+import { fetchPosts } from '../actions/postActions';
 
 class Posts extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            posts: postsList
-        }
+    // constructor(props) {
+    //     super(props);
+    //     this.state = {
+    //         posts: postsList
+    //     }
+    // }
+
+    componentDidMount() {
+        this.props.fetchPosts();
     }
 
     render() {
@@ -17,9 +22,9 @@ class Posts extends Component {
             <div className="postLayout">
                 <div></div>
                 <div className="postColumn">
-                    {this.state.posts.map((post) => {
+                    {this.props.posts.map((post) => {
                         return (
-                            <Post key={post.id} post={post} />
+                            <Post key={post._id} post={post} />
                         )
                     })}
                 </div>
@@ -29,4 +34,8 @@ class Posts extends Component {
     }
 }
 
-export default Posts;
+const mapStatetoProps = state => ({
+    posts: state.posts.items
+})
+
+export default connect(mapStatetoProps, { fetchPosts })(Posts);
