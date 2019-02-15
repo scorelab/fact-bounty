@@ -27,36 +27,36 @@ router.get('/get-range/:page', (req, res) => {
 	})
 })
 
-// @route POST api/stories/change-upvotes
-// @desc Change upvote count of a story
+// @route POST api/stories/change-approved-count
+// @desc Change approved count of a story
 // @access Public
-router.post('/change-upvote-count', (req, res) => {
+router.post('/change-approved-count', (req, res) => {
 	Story.updateOne({_id: req.body.story_id}, {
 		$inc: {
-			upvote_count: req.body.change_val
+			approved_count: req.body.change_val
 		}
 	}, function (mon_err, affected, mon_res) {
 		return mon_err ? res.status(200).json(mon_err) : res.status(200).send()
 	})
 })
 
-// @route POST api/stories/change-downvotes
-// @desc Change downvote count of a story
+// @route POST api/stories/change-fake-count
+// @desc Change fake count of a story
 // @access Public
-router.post('/change-downvote-count', (req, res) => {
+router.post('/change-fake-count', (req, res) => {
 	Story.updateOne({_id: req.body.story_id}, {
 		$inc: {
-			downvote_count: req.body.change_val
+			fake_count: req.body.change_val
 		}
 	}, function (mon_err, affected, mon_res) {
 		return mon_err ? res.status(200).json(mon_err) : res.status(200).send()
 	})
 })
 
-// @route POST api/stories/change-mixedvotes
-// @desc Change mixedvote count of a story
+// @route POST api/stories/change-mixed-count
+// @desc Change mixed count of a story
 // @access Public
-router.post('/change-mixedvote-count', (req, res) => {
+router.post('/change-mixed-count', (req, res) => {
 	Story.updateOne({_id: req.body.story_id}, {
 		$inc: {
 			mixedvote_count: req.body.change_val
