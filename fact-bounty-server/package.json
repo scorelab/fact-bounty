@@ -2,27 +2,34 @@
   "name": "fact-bounty-server",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "app.js",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "dev": "nodemon server.js"
+    "start": "node ./bin/www",
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
-    "express": "^4.16.4",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "dotenv": "^6.2.0",
+    "express": "~4.16.0",
+    "http-errors": "~1.6.2",
     "is-empty": "^1.2.0",
     "jsonwebtoken": "^8.4.0",
     "mongoose": "^5.4.5",
     "mongoose-paginate-v2": "^1.0.20",
+    "morgan": "~1.9.0",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "validator": "^10.11.0"
   },
   "devDependencies": {
-    "nodemon": "^1.18.9"
+    "eslint": "^5.13.0",
+    "nodemon": "^1.18.10"
   }
 }
