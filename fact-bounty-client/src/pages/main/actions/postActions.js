@@ -6,5 +6,8 @@ export const fetchPosts = () => dispatch => {
         .then(posts => dispatch({
             type: FETCH_POSTS,
             payload: posts
-        }));
+        }))
+        .catch(err => {
+            console.error('Server response invalid', err);
+        })
 }
