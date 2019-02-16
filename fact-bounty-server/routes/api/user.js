@@ -1,30 +1,27 @@
-const express = require('express')
-const router  = express.Router()
-const bcrypt  = require('bcryptjs')
-const jwt     = require('jsonwebtoken')
-const keys    = require('../../config/keys')
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const keys = require('../../config/keys')
 
 // Load input validation
 const validateRegisterInput = require('../../validation/register')
-const validateLoginInput    = require('../../validation/login')
+const validateLoginInput = require('../../validation/login')
 
 // Load User model
-const User = require('../../models/User')
+const User = require('../../models/user')
 
-// @route POST api/users/register
 // @desc Register user
 // @access Public
-router.post('/register', (req, res) => {
+exports.userRegister = function (res, req) {
 	// Form validation
-	const {errors, isValid} = validateRegisterInput(req.body)
+	const { errors, isValid } = validateRegisterInput(req.body)
 
 	// Check validation
 	if (!isValid) {
 		return res.status(400).json(errors)
 	}
-	User.findOne({email: req.body.email}).then(user => {
+	User.findOne({ email: req.body.email }).then(user => {
 		if (user) {
-			return res.status(400).json({email: 'Email already exists'})
+			return res.status(400).json({ email: 'Email already exists' })
 		}
 		const newUser = new User({
 			name: req.body.name,
@@ -44,27 +41,28 @@ router.post('/register', (req, res) => {
 			})
 		})
 	})
-})
+}
 
-// @route POST api/users/login
+
+
 // @desc Login user and return JWT token
 // @access Public
-router.post('/login', (req, res) => {
+exports.userLogin = function (res, req) {
 	// Form validation
-	const {errors, isValid} = validateLoginInput(req.body)
+	const { errors, isValid } = validateLoginInput(req.body)
 
 	// Check validation
 	if (!isValid) {
 		return res.status(400).json(errors)
 	}
-	const email    = req.body.email
+	const email = req.body.email
 	const password = req.body.password
 
 	// Find user by email
-	User.findOne({email}).then(user => {
+	User.findOne({ email }).then(user => {
 		// Check if user exists
 		if (!user) {
-			return res.status(404).json({emailnotfound: 'Email not found'})
+			return res.status(404).json({ emailnotfound: 'Email not found' })
 		}
 
 		// Check password
@@ -94,10 +92,9 @@ router.post('/login', (req, res) => {
 			} else {
 				return res
 					.status(400)
-					.json({passwordincorrect: 'Password incorrect'})
+					.json({ passwordincorrect: 'Password incorrect' })
 			}
 		})
 	})
-})
+}
 
-module.exports = router

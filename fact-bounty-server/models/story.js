@@ -1,6 +1,6 @@
-const mongoose       = require('mongoose')
+const mongoose = require('mongoose')
 const mongoosePaginate = require('mongoose-paginate-v2')
-const Schema         = mongoose.Schema
+const Schema = mongoose.Schema
 
 // Create Schema
 const StorySchema = new Schema({
@@ -32,4 +32,4 @@ const StorySchema = new Schema({
 
 StorySchema.plugin(mongoosePaginate)
 
-module.exports = Story = mongoose.model('stories', StorySchema)
+module.exports = mongoose.model('stories', StorySchema)
