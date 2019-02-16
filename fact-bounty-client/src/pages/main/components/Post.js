@@ -59,14 +59,14 @@ class Post extends Component {
 
     findHighestVotesColor(post) {
         let value;
-        if (post.true >= post.fake) {
-            if (post.true >= post.mixture) {
+        if (post.approved_count >= post.fake_count) {
+            if (post.approved_count >= post.mixedvote_count) {
                 value = '#009688';
             } else {
                 value = '#0288d1';
             }
         } else {
-            if (post.fake >= post.mixture) {
+            if (post.fake_count >= post.mixedvote_count) {
                 value = '#f4511e';
             } else {
                 value = '#0288d1';
@@ -86,13 +86,13 @@ class Post extends Component {
     render() {
         const { post, classes } = this.props;
         const content = post.content.slice(0, 320);
-        const totalVotes = post.true + post.fake + post.mixture;
+        const totalVotes = post.approved_count + post.fake_count + post.mixedvote_count;
         const highestVotes = this.findHighestVotesColor(post);
         const votes = (
             <div className="vote-status" style={{ backgroundColor: highestVotes }}>
-                <div className="votes true-votes" style={{ width: (post.true / totalVotes * 100) + '%' }}><span className="vote-value">{this.displayVote(post.true, totalVotes)}</span></div>
-                <div className="votes fake-votes" style={{ width: (post.fake / totalVotes * 100) + '%' }}><span className="vote-value">{this.displayVote(post.fake, totalVotes)}</span></div>
-                <div className="votes mix-votes" style={{ width: (post.mixture / totalVotes * 100) + '%' }}><span className="vote-value">{this.displayVote(post.mixture, totalVotes)}</span></div>
+                <div className="votes true-votes" style={{ width: (post.approved_count / totalVotes * 100) + '%' }}><span className="vote-value">{this.displayVote(post.approved_count, totalVotes)}</span></div>
+                <div className="votes fake-votes" style={{ width: (post.fake_count / totalVotes * 100) + '%' }}><span className="vote-value">{this.displayVote(post.fake_count, totalVotes)}</span></div>
+                <div className="votes mix-votes" style={{ width: (post.mixedvote_count / totalVotes * 100) + '%' }}><span className="vote-value">{this.displayVote(post.mixedvote_count, totalVotes)}</span></div>
             </div>
         );
         return (
