@@ -11,7 +11,7 @@ const User = require('../../models/user')
 
 // @desc Register user
 // @access Public
-exports.userRegister = function (res, req) {
+exports.userRegister = function (req, res, next) {
 	// Form validation
 	const { errors, isValid } = validateRegisterInput(req.body)
 
@@ -47,7 +47,7 @@ exports.userRegister = function (res, req) {
 
 // @desc Login user and return JWT token
 // @access Public
-exports.userLogin = function (res, req) {
+exports.userLogin = function (req, res, next) {
 	// Form validation
 	const { errors, isValid } = validateLoginInput(req.body)
 
