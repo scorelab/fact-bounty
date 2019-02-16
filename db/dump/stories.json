@@ -1,7 +1,93 @@
-{"_id":{"$oid":"5c591db23cfc782afd0a23f4"},"title":"A","content":"A content","featured_image_url":"A url","upvote_count":1,"downvote_count":1,"date_added":{"$date":"2019-01-01T00:00:00.000Z"}}
-{"_id":{"$oid":"5c591e38a745c02afdeb840b"},"title":"B","content":"B content","featured_image_url":"B url","upvote_count":2,"downvote_count":2,"date_added":{"$date":"2019-01-02T00:00:00.000Z"}}
-{"_id":{"$oid":"5c591e4aa745c02afdeb840c"},"title":"C","content":"C content","featured_image_url":"C url","upvote_count":3,"downvote_count":3,"date_added":{"$date":"2019-01-03T00:00:00.000Z"}}
-{"_id":{"$oid":"5c591e71a745c02afdeb840d"},"title":"D","content":"D content","featured_image_url":"D url","upvote_count":4,"downvote_count":4,"date_added":{"$date":"2019-01-04T00:00:00.000Z"}}
-{"_id":{"$oid":"5c591ed4a745c02afdeb840e"},"title":"E","content":"E content","featured_image_url":"E url","upvote_count":5,"downvote_count":5,"date_added":{"$date":"2019-01-05T00:00:00.000Z"}}
-{"_id":{"$oid":"5c591ee5a745c02afdeb840f"},"title":"F","content":"F content","featured_image_url":"F url","upvote_count":6,"downvote_count":6,"date_added":{"$date":"2019-01-06T00:00:00.000Z"}}
-{"_id":{"$oid":"5c591ef5a745c02afdeb8410"},"title":"G","content":"G content","featured_image_url":"G url","upvote_count":7,"downvote_count":7,"date_added":{"$date":"2019-01-07T00:00:00.000Z"}}
+[
+  {
+    "_id": {
+      "$oid": "5c591db23cfc782afd0a23f4"
+    },
+    "title": "A",
+    "content": "A content",
+    "featured_image_url": "A url",
+    "upvote_count": 1,
+    "downvote_count": 1,
+    "date_added": {
+      "$date": "2019-01-01T00:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5c591e38a745c02afdeb840b"
+    },
+    "title": "B",
+    "content": "B content",
+    "featured_image_url": "B url",
+    "upvote_count": 2,
+    "downvote_count": 2,
+    "date_added": {
+      "$date": "2019-01-02T00:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5c591e4aa745c02afdeb840c"
+    },
+    "title": "C",
+    "content": "C content",
+    "featured_image_url": "C url",
+    "upvote_count": 3,
+    "downvote_count": 3,
+    "date_added": {
+      "$date": "2019-01-03T00:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5c591e71a745c02afdeb840d"
+    },
+    "title": "D",
+    "content": "D content",
+    "featured_image_url": "D url",
+    "upvote_count": 4,
+    "downvote_count": 4,
+    "date_added": {
+      "$date": "2019-01-04T00:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5c591ed4a745c02afdeb840e"
+    },
+    "title": "E",
+    "content": "E content",
+    "featured_image_url": "E url",
+    "upvote_count": 5,
+    "downvote_count": 5,
+    "date_added": {
+      "$date": "2019-01-05T00:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5c591ee5a745c02afdeb840f"
+    },
+    "title": "F",
+    "content": "F content",
+    "featured_image_url": "F url",
+    "upvote_count": 6,
+    "downvote_count": 6,
+    "date_added": {
+      "$date": "2019-01-06T00:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5c591ef5a745c02afdeb8410"
+    },
+    "title": "G",
+    "content": "G content",
+    "featured_image_url": "G url",
+    "upvote_count": 7,
+    "downvote_count": 7,
+    "date_added": {
+      "$date": "2019-01-07T00:00:00.000Z"
+    }
+  }
+]
