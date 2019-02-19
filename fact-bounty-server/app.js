@@ -23,7 +23,7 @@ app.use(passport.initialize())
 require('./config/passport')(passport)
 
 // DB Config
-const db = require('./config/keys.example').mongoURI
+const db = require('./config/keys').mongoURI
 
 // Connect to MongoDB
 mongoose.connect(db, { useNewUrlParser: true })
@@ -34,8 +34,12 @@ mongoose.connect(db, { useNewUrlParser: true })
 app.use('/', indexRouter)
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
-	next(createError(404))
+// app.use(function (req, res, next) {
+// 	next(createError(404))
+// })
+
+app.get('/', function (req, res) {
+	res.send("Welcome to fact-bounty!")
 })
 
 // error handler
