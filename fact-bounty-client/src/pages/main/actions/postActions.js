@@ -2,6 +2,8 @@ import axios from 'axios';
 export const FETCH_POSTS = 'FETCH_POSTS';
 export const LOADING = 'LOADING';
 export const APPROVE_VOTE_COMPLETE = 'VOTE_COMPLETE';
+export const FAKE_VOTE_COMPLETE = 'FAKE_VOTE_COMPLETE';
+export const MIX_VOTE_COMPLETE = 'MIX_VOTE_COMPLETE';
 export const VOTE_ERROR = 'VOTE_ERROR';
 
 export const fetchPosts = () => dispatch => {
@@ -31,6 +33,58 @@ export const approveVote = (voteId) => dispatch => {
         .then(res => {
             dispatch({
                 type: APPROVE_VOTE_COMPLETE,
+                id: voteId
+            })
+        })
+        .catch(res => {
+            dispatch({
+                type: VOTE_ERROR,
+                error: res
+            })
+        })
+}
+
+export const fakeVote = (voteId) => dispatch => {
+    dispatch({ type: LOADING })
+    axios({
+        baseURL: 'http://localhost:7000',
+        url: '/api/stories/change-downvote-count',
+        method: 'post',
+        data: {
+            story_id: voteId,
+            change_val: 1
+        },
+        headers: { "Access-Control-Allow-Origin": "*" }
+    })
+        .then(res => {
+            dispatch({
+                type: FAKE_VOTE_COMPLETE,
+                id: voteId
+            })
+        })
+        .catch(res => {
+            dispatch({
+                type: VOTE_ERROR,
+                error: res
+            })
+        })
+}
+
+export const mixVote = (voteId) => dispatch => {
+    dispatch({ type: LOADING })
+    axios({
+        baseURL: 'http://localhost:7000',
+        url: '/api/stories/change-mixedvote-count',
+        method: 'post',
+        data: {
+            story_id: voteId,
+            change_val: 1
+        },
+        headers: { "Access-Control-Allow-Origin": "*" }
+    })
+        .then(res => {
+            dispatch({
+                type: MIX_VOTE_COMPLETE,
                 id: voteId
             })
         })

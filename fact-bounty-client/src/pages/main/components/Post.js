@@ -8,7 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 import '../Posts.sass';
 import ReportProblem from '@material-ui/icons/ReportProblemOutlined';
 import Cancel from '@material-ui/icons/CancelOutlined';
-import { approveVote } from '../actions/postActions';
+import { approveVote, fakeVote, mixVote } from '../actions/postActions';
 import { connect } from 'react-redux';
 import compose from 'recompose/compose';
 
@@ -84,6 +84,12 @@ class Post extends Component {
     handleClick = (value) => {
         if (value === 'approve') {
             this.props.approveVote(this.props.post._id);
+        } else if (value == 'fake') {
+            this.props.fakeVote(this.props.post._id);
+        } else if (value == 'mix') {
+            this.props.mixVote(this.props.post._id);
+        } else {
+            console.error('Wrong vote type received ', value);
         }
     }
 
@@ -128,22 +134,20 @@ class Post extends Component {
                             <div className="true-label">True</div>
                         </div>
                     </div>
-                    <div className="fake-transition">
+                    <div className="fake-transition" onClick={() => this.handleClick('fake')}>
                         <div className="fake-btn"><Cancel className={classes.icon} /></div>
                         <div className="fake-btn-hover">
                             <Icon className={classes.fakeBtnHover}>cancel</Icon>
                             <div className="fake-label">Fake</div>
                         </div>
                     </div>
-                    <div className="mix-transition">
+                    <div className="mix-transition" onClick={() => this.handleClick('mix')}>
                         <div className="mix-btn"><ReportProblem className={classes.icon} /></div>
                         <div className="mix-btn-hover">
                             <Icon className={classes.mixBtnHover}>report_problem</Icon>
                             <div className="mix-label">Mixture</div>
                         </div>
                     </div>
-                    {(this.props.loading) ? <h4>Loading</h4> : ''}
-                    {(this.props.error === undefined) ? <h4>{this.props.error}</h4> : ''}
                 </div>
                 <div className="total-vote-count">{totalVotes} votes</div>
             </div>
@@ -157,8 +161,7 @@ const mapStateToProps = state => ({
     error: state.posts.error
 })
 
-// export default connect(mapStateToProps, { approveVote })(withStyles(styles)(Post));
 export default compose(
     withStyles(styles),
-    connect(mapStateToProps, { approveVote })
+    connect(mapStateToProps, { approveVote, fakeVote, mixVote })
 )(Post);
