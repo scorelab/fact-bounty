@@ -9,7 +9,7 @@ var users = require('./api/user')
 // -> /api/stories/
 router.get('/api/stories/all', stories.storyAll)
 router.get('/api/stories/get-range/:page', stories.storyRange)
-router.get('/api/stories/change-upvote-count', stories.storyChangeUpvoteCount)
+router.post('/api/stories/change-upvote-count', stories.storyChangeUpvoteCount)
 router.get('/api/stories/change-downvote-count', stories.storyChangeDownvoteCount)
 router.get('/api/stories/change-mixedvote-count', stories.storyChangeDownvoteCount)
 
