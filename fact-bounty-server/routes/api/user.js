@@ -1,6 +1,5 @@
-const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const keys = require('../../config/keys.example')
+const keys = require('../../config/keys')
 
 // Load input validation
 const validateRegisterInput = require('../../validation/register')
@@ -11,7 +10,7 @@ const User = require('../../models/user')
 
 // @desc Register user
 // @access Public
-exports.userRegister = function (res, req) {
+exports.userRegister = function (req, res) {
 	// Form validation
 	const { errors, isValid } = validateRegisterInput(req.body)
 
@@ -28,18 +27,7 @@ exports.userRegister = function (res, req) {
 			email: req.body.email,
 			password: req.body.password
 		})
-
-		// Hash password before saving in database
-		bcrypt.genSalt(10, (err, salt) => {
-			bcrypt.hash(newUser.password, salt, (err, hash) => {
-				if (err) throw err
-				newUser.password = hash
-				newUser
-					.save()
-					.then(user => res.json(user))
-					.catch(err => console.log(err))
-			})
-		})
+		newUser.save().then(user => res.json(user)).catch(err => console.log(err));
 	})
 }
 
@@ -47,7 +35,7 @@ exports.userRegister = function (res, req) {
 
 // @desc Login user and return JWT token
 // @access Public
-exports.userLogin = function (res, req) {
+exports.userLogin = function (req, res) {
 	// Form validation
 	const { errors, isValid } = validateLoginInput(req.body)
 
@@ -58,6 +46,7 @@ exports.userLogin = function (res, req) {
 	const email = req.body.email
 	const password = req.body.password
 
+
 	// Find user by email
 	User.findOne({ email }).then(user => {
 		// Check if user exists
@@ -65,17 +54,12 @@ exports.userLogin = function (res, req) {
 			return res.status(404).json({ emailnotfound: 'Email not found' })
 		}
 
-		// Check password
-		bcrypt.compare(password, user.password).then(isMatch => {
-			if (isMatch) {
-				// User matched
-				// Create JWT Payload
+		user.comparePassword(password, function (err, isMatch) {
+			if (isMatch && !err) {
 				const payload = {
 					id: user.id,
 					name: user.name
-				}
-
-				// Sign token
+				};
 				jwt.sign(
 					payload,
 					keys.secretOrKey,
@@ -91,10 +75,11 @@ exports.userLogin = function (res, req) {
 				)
 			} else {
 				return res
-					.status(400)
+					.status(401)
 					.json({ passwordincorrect: 'Password incorrect' })
 			}
-		})
+		});
+
 	})
 }
 
