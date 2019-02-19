@@ -27,7 +27,6 @@ exports.userRegister = function (req, res, next) {
 			email: req.body.email,
 			password: req.body.password
 		})
-		console.log("user added with new logic");
 		newUser.save().then(user => res.json(user)).catch(err => console.log(err));
 	})
 }
@@ -58,7 +57,6 @@ exports.userLogin = function (req, res, next) {
 			if (isMatch && !err) {
 				// User matched
 				// Create JWT Payload
-				console.log("user logged in with new logic");
 				const payload = {
 					id: user.id,
 					name: user.name
