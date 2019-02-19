@@ -8,6 +8,9 @@ import { withStyles } from '@material-ui/core/styles';
 import '../Posts.sass';
 import ReportProblem from '@material-ui/icons/ReportProblemOutlined';
 import Cancel from '@material-ui/icons/CancelOutlined';
+import { approveVote } from '../actions/postActions';
+import { connect } from 'react-redux';
+import compose from 'recompose/compose';
 
 const styles = {
     cardContent: {
@@ -21,7 +24,6 @@ const styles = {
         '&:hover': {
             boxShadow: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)',
         },
-        // boxShadow: '0 0 0 0',
     },
     icon: {
         fontSize: '30px'
@@ -44,11 +46,11 @@ class Post extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            postStatus: 'true',
-            userInput: null,
-            postContent: ""
-        }
+        // this.state = {
+        //     postStatus: 'true',
+        //     userInput: null,
+        //     postContent: ""
+        // }
     }
 
     componentDidMount() {
@@ -79,8 +81,10 @@ class Post extends Component {
         return (value / totalVotes * 100) > 3 ? Math.round(value / totalVotes * 1000) / 10 + "%" : '';
     }
 
-    handleClick = (event) => {
-        //handle user vote click
+    handleClick = (value) => {
+        if (value === 'approve') {
+            this.props.approveVote(this.props.post._id);
+        }
     }
 
     render() {
@@ -110,14 +114,14 @@ class Post extends Component {
                                     {content}
                                     {(post.content.length > 320) ? '...' : ''}
                                 </div>
-                                <div className="read-more">Read more</div>
+                                {(post.content.length > 320) ? <div className="read-more">Read more</div> : ''}
                             </div>
                         </div>
                         {votes}
                     </CardContent>
                 </Card>
                 <div className="btn-column">
-                    <div className="true-transition">
+                    <div className="true-transition" onClick={() => this.handleClick('approve')}>
                         <div className="true-btn"><Icon className={classes.icon}>check_circle_outline</Icon></div>
                         <div className="true-btn-hover">
                             <Icon className={classes.trueBtnHover}>check_circle</Icon>
@@ -138,6 +142,8 @@ class Post extends Component {
                             <div className="mix-label">Mixture</div>
                         </div>
                     </div>
+                    {(this.props.loading) ? <h4>Loading</h4> : ''}
+                    {(this.props.error === undefined) ? <h4>{this.props.error}</h4> : ''}
                 </div>
                 <div className="total-vote-count">{totalVotes} votes</div>
             </div>
@@ -146,4 +152,13 @@ class Post extends Component {
 
 }
 
-export default withStyles(styles)(Post);
+const mapStateToProps = state => ({
+    loading: state.posts.loading,
+    error: state.posts.error
+})
+
+// export default connect(mapStateToProps, { approveVote })(withStyles(styles)(Post));
+export default compose(
+    withStyles(styles),
+    connect(mapStateToProps, { approveVote })
+)(Post);
