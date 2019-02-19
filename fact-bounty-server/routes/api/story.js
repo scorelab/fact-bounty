@@ -2,7 +2,8 @@ const Story = require('../../models/story')
 
 // @desc Get all stories
 // @access Public
-exports.storyAll = function (req, res) {
+
+exports.storyAll = function (req, res, next) {
 	Story.find({}).then(posts => {
 		return res.status(200).json(posts)
 	})
@@ -10,7 +11,8 @@ exports.storyAll = function (req, res) {
 
 // @desc Get stories in a range
 // @access Public
-exports.storyRange = function (req, res) {
+
+exports.storyRange = function (req, res, next) {
 	const options = {
 		page: req.params.page,
 		limit: 3
@@ -23,7 +25,8 @@ exports.storyRange = function (req, res) {
 
 // @desc Change upvote count of a story
 // @access Public
-exports.storyChangeUpvoteCount = function (req, res) {
+
+exports.storyChangeUpvoteCount = function (req, res, next) {
 	Story.updateOne({ _id: req.body.story_id }, {
 		$inc: {
 			approved_count: req.body.change_val
@@ -35,7 +38,8 @@ exports.storyChangeUpvoteCount = function (req, res) {
 
 // @desc Change downvote count of a story
 // @access Public
-exports.storyChangeDownvoteCount = function (req, res) {
+
+exports.storyChangeDownvoteCount = function (req, res, next) {
 	Story.updateOne({ _id: req.body.story_id }, {
 		$inc: {
 			fake_count: req.body.change_val
@@ -47,7 +51,8 @@ exports.storyChangeDownvoteCount = function (req, res) {
 
 // @desc Change mixedvote count of a story
 // @access Public
-exports.storyChangeMixedvoteCount = function (req, res) {
+
+exports.storyChangeMixedvoteCount = function (req, res, next) {
 	Story.updateOne({ _id: req.body.story_id }, {
 		$inc: {
 			mixedvote_count: req.body.change_val

@@ -17,7 +17,10 @@ const styles = {
         textAlign: 'center',
         fontVariant: 'small-caps',
         letterSpacing: '1px',
-        fontFamily: 'Aladin'
+        fontFamily: 'Aladin',
+        MozUserSelect: 'none',
+        WebkitUserSelect: 'none',
+        msUserSelect: 'none'
     },
     navbarLinks: {
         letterSpacing: '1px',
