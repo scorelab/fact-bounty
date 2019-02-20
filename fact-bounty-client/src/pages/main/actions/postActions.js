@@ -5,14 +5,20 @@ export const APPROVE_VOTE_COMPLETE = 'VOTE_COMPLETE';
 export const FAKE_VOTE_COMPLETE = 'FAKE_VOTE_COMPLETE';
 export const MIX_VOTE_COMPLETE = 'MIX_VOTE_COMPLETE';
 export const VOTE_ERROR = 'VOTE_ERROR';
+export const INCREMENT_PAGE = 'INCREMENT_PAGE';
+export const NO_MORE = 'NO_MORE';
 
-export const fetchPosts = () => dispatch => {
-    fetch('/api/stories/all')
+export const fetchPosts = (page) => dispatch => {
+    dispatch({ type: LOADING })
+    fetch('/api/stories/get-range/' + page)
         .then(res => res.json())
-        .then(posts => dispatch({
-            type: FETCH_POSTS,
-            payload: posts
-        }))
+        .then(posts => {
+            dispatch({
+                type: FETCH_POSTS,
+                payload: posts.docs
+            })
+            dispatch({ type: INCREMENT_PAGE })
+        })
         .catch(err => {
             console.error('Server response invalid', err);
         })

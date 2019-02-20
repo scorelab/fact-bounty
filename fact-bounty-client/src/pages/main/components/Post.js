@@ -46,11 +46,6 @@ class Post extends Component {
 
     constructor(props) {
         super(props);
-        // this.state = {
-        //     postStatus: 'true',
-        //     userInput: null,
-        //     postContent: ""
-        // }
     }
 
     componentDidMount() {
