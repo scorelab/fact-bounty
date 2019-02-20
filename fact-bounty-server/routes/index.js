@@ -2,19 +2,14 @@ var express = require('express')
 var router = express.Router()
 
 // API's path
-var stories = require('./api/story')
-var users = require('./api/user')
+var storyRoute = require('./api/story')
+var usersRoute = require('./api/user')
 
 // Routes
 // -> /api/stories/
-router.get('/api/stories/all', stories.storyAll)
-router.get('/api/stories/get-range/:page', stories.storyRange)
-router.get('/api/stories/change-upvote-count', stories.storyChangeUpvoteCount)
-router.get('/api/stories/change-downvote-count', stories.storyChangeDownvoteCount)
-router.get('/api/stories/change-mixedvote-count', stories.storyChangeDownvoteCount)
+router.use('/api/stories', storyRoute)
 
 // -> /api/users/
-router.post('/api/users/register', users.userRegister)
-router.post('/api/users/login', users.userLogin)
+router.use('/api/users', usersRoute)
 
 module.exports = router
