@@ -4,7 +4,16 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import classnames from 'classnames'
 
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import FormControl from '@material-ui/core/FormControl';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+
 import { loginUser } from '../actions/authActions'
+import '../styles/login.sass';
 
 class Login extends Component {
 	constructor() {
@@ -49,66 +58,52 @@ class Login extends Component {
 	render() {
 		const { errors } = this.state
 		return (
-			<div className="container">
-				<div style={{ marginTop: '4rem' }} className="row">
-					<div className="col s8 offset-s2">
-						<Link to="/" className="btn-flat waves-effect">
-							<i className="material-icons left">keyboard_backspace</i> Back to
-							home
-						</Link>
-						<form noValidate onSubmit={this.onSubmit}>
-							<div className="input-field col s12">
-								<input
-									onChange={this.onChange}
+			<main>
+			<CssBaseline />
+			<Paper>
+			  <Typography component="h1" variant="h5">
+				Login
+			  </Typography>
+			  <form noValidate onSubmit={this.onSubmit}>
+				<FormControl margin="normal" required fullWidth>
+				  <InputLabel htmlFor="email">Email Address</InputLabel>
+				  <Input onChange={this.onChange}
 									value={this.state.email}
 									error={errors.email}
 									id="email"
 									type="email"
 									className={classnames('', {
 										invalid: errors.email || errors.emailnotfound
-									})}
-								/>
-								<label htmlFor="email">Email</label>
-								<span className="red-text">
+									})}/>
+					<span className="red-text">
 									{errors.email}
 									{errors.emailnotfound}
 								</span>
-							</div>
-							<div className="input-field col s12">
-								<input
-									onChange={this.onChange}
+				</FormControl>
+				
+				<FormControl margin="normal" required fullWidth>
+				  <InputLabel htmlFor="password">Password</InputLabel>
+				  <Input onChange={this.onChange}
 									value={this.state.password}
 									error={errors.password}
 									id="password"
 									type="password"
 									className={classnames('', {
 										invalid: errors.password || errors.passwordincorrect
-									})}
-								/>
-								<label htmlFor="password">Password</label>
-								<span className="red-text">
+									})} />
+					<span className="red-text">
 									{errors.password}
 									{errors.passwordincorrect}
 								</span>
-							</div>
-							<div className="col s12" style={{ paddingLeft: '11.250px' }}>
-								<button
-									style={{
-										width: '150px',
-										borderRadius: '3px',
-										letterSpacing: '1.5px',
-										marginTop: '1rem'
-									}}
-									type="submit"
-									className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-								>
-									Login
-								</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
+				</FormControl>
+				
+				<Button type="submit" fullWidth variant="contained" color="primary">
+				  Login
+				</Button>
+			  </form>
+			</Paper>
+		  </main>
+			
 		)
 	}
 }

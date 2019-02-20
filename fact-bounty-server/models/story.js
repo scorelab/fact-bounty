@@ -16,11 +16,15 @@ const StorySchema = new Schema({
 		type: String,
 		required: true
 	},
-	upvote_count: {
+	approved_count: {
 		type: Number,
 		required: true
 	},
-	downvote_count: {
+	fake_count: {
+		type: Number,
+		required: true
+	},
+	mixedvote_count: {
 		type: Number,
 		required: true
 	},

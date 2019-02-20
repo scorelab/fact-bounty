@@ -4,7 +4,16 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import classnames from 'classnames'
 
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import FormControl from '@material-ui/core/FormControl';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+
 import { registerUser } from '../actions/newUserActions';
+import "../styles/register.sass"
 
 class Register extends Component {
 	constructor() {
@@ -50,88 +59,71 @@ class Register extends Component {
 	render() {
 		const { errors } = this.state
 		return (
-			<div className="container">
-				<div className="row">
-					<div className="col s8 offset-s2">
-						<Link to="/" className="btn-flat waves-effect">
-							<i className="material-icons left">keyboard_backspace</i> Back to
-							home
-						</Link>
-						<form noValidate onSubmit={this.onSubmit}>
-							<div className="input-field col s12">
-								<input
-									onChange={this.onChange}
+			<main>
+			<CssBaseline />
+			<Paper>
+			  <Typography component="h1" variant="h5">
+				Sign Up
+			  </Typography>
+			  <form noValidate onSubmit={this.onSubmit}>
+			  <FormControl margin="normal" required fullWidth>
+				  <InputLabel htmlFor="email">Name</InputLabel>
+				  <Input onChange={this.onChange}
 									value={this.state.name}
 									error={errors.name}
 									id="name"
 									type="text"
 									className={classnames('', {
 										invalid: errors.name
-									})}
-								/>
-								<label htmlFor="name">Name</label>
-								<span className="red-text">{errors.name}</span>
-							</div>
-							<div className="input-field col s12">
-								<input
-									onChange={this.onChange}
+									})}/>
+					<span className="red-text">{errors.name}</span>
+				</FormControl>
+
+				<FormControl margin="normal" required fullWidth>
+				  <InputLabel htmlFor="email">Email Address</InputLabel>
+				  <Input onChange={this.onChange}
 									value={this.state.email}
 									error={errors.email}
 									id="email"
 									type="email"
 									className={classnames('', {
 										invalid: errors.email
-									})}
-								/>
-								<label htmlFor="email">Email</label>
-								<span className="red-text">{errors.email}</span>
-							</div>
-							<div className="input-field col s12">
-								<input
-									onChange={this.onChange}
+									})}/>
+					<span className="red-text">{errors.name}</span>
+				</FormControl>
+				
+				<FormControl margin="normal" required fullWidth>
+				  <InputLabel htmlFor="password">Password</InputLabel>
+				  <Input onChange={this.onChange}
 									value={this.state.password}
 									error={errors.password}
 									id="password"
 									type="password"
 									className={classnames('', {
 										invalid: errors.password
-									})}
-								/>
-								<label htmlFor="password">Password</label>
-								<span className="red-text">{errors.password}</span>
-							</div>
-							<div className="input-field col s12">
-								<input
-									onChange={this.onChange}
+									})} />
+					<span className="red-text">{errors.password}</span>
+				</FormControl>
+
+				<FormControl margin="normal" required fullWidth>
+				  <InputLabel htmlFor="password2">Confirm Password</InputLabel>
+				  <Input onChange={this.onChange}
 									value={this.state.password2}
 									error={errors.password2}
 									id="password2"
 									type="password"
 									className={classnames('', {
 										invalid: errors.password2
-									})}
-								/>
-								<label htmlFor="password2">Confirm Password</label>
-								<span className="red-text">{errors.password2}</span>
-							</div>
-							<div className="col s12" style={{ paddingLeft: '11.250px' }}>
-								<button
-									style={{
-										width: '150px',
-										borderRadius: '3px',
-										letterSpacing: '1.5px',
-										marginTop: '1rem'
-									}}
-									type="submit"
-									className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-								>
-									Sign up
-								</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
+									})}/>
+					<span className="red-text">{errors.password2}</span>
+				</FormControl>
+				
+				<Button type="submit" fullWidth variant="contained" color="primary">
+				  Sign Up
+				</Button>
+			  </form>
+			</Paper>
+		  </main>
 		)
 	}
 }
