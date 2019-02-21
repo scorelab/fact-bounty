@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import classnames from 'classnames'
 
 import { loginUser } from '../actions/authActions'
+import '../styles/login.sass';
 
 class Login extends Component {
 	constructor() {
@@ -48,6 +49,7 @@ class Login extends Component {
 
 	render() {
 		const { errors } = this.state
+		console.log(errors)
 		return (
 			<div className="container">
 				<div style={{ marginTop: '4rem' }} className="row">
