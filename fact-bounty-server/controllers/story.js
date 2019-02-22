@@ -24,35 +24,41 @@ exports.storyRange = function (req, res, next) {
 // @desc Change upvote count of a story
 // @access Public
 exports.storyChangeUpvoteCount = function (req, res, next) {
-	Story.updateOne({ _id: req.body.story_id }, {
+	Story.findOneAndUpdate({ _id: req.body.story_id }, {
 		$inc: {
 			approved_count: req.body.change_val
 		}
-	}, function (mon_err, affected, mon_res) {
-		return mon_err ? res.status(200).json(mon_err) : res.status(200).send()
+	}, {
+		new : true,
+	}, function (mon_err, new_doc) {
+		return mon_err ? res.status(200).json(mon_err) : res.status(200).json(new_doc)
 	})
 }
 
 // @desc Change downvote count of a story
 // @access Public
 exports.storyChangeDownvoteCount = function (req, res, next) {
-	Story.updateOne({ _id: req.body.story_id }, {
+	Story.findOneAndUpdate({ _id: req.body.story_id }, {
 		$inc: {
 			fake_count: req.body.change_val
 		}
-	}, function (mon_err, affected, mon_res) {
-		return mon_err ? res.status(200).json(mon_err) : res.status(200).send()
+	}, {
+		new : true
+	}, function (mon_err, new_doc) {
+		return mon_err ? res.status(200).json(mon_err) : res.status(200).json(new_doc)
 	})
 }
 
 // @desc Change mixedvote count of a story
 // @access Public
 exports.storyChangeMixedvoteCount = function (req, res, next) {
-	Story.updateOne({ _id: req.body.story_id }, {
+	Story.findOneAndUpdate({ _id: req.body.story_id }, {
 		$inc: {
 			mixedvote_count: req.body.change_val
 		}
-	}, function (mon_err, affected, mon_res) {
-		return mon_err ? res.status(200).json(mon_err) : res.status(200).send()
+	}, {
+		new : true
+	}, function (mon_err, new_doc) {
+		return mon_err ? res.status(200).json(mon_err) : res.status(200).json(new_doc)
 	})
 }

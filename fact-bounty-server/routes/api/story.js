@@ -22,6 +22,6 @@ router.post(
 
 router.post(
   '/change-mixedvote-count', 
-  storyController.storyChangeDownvoteCount)
+  storyController.storyChangeMixedvoteCount)
 
 module.exports = router

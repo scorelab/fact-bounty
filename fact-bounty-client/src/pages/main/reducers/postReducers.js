@@ -28,8 +28,10 @@ export default function (state = initialState, action) {
                 ...state,
                 loading: false,
                 items: state.items.map((post) => {
-                    if (post._id === action.id) {
-                        post.approved_count += 1;
+                    if (post._id === action.post._id) {
+                        post.approved_count = action.post.approved_count;
+                        post.fake_count = action.post.fake_count;
+                        post.mixedvote_count = action.post.mixedvote_count;
                     }
                     return post
                 })
@@ -39,8 +41,10 @@ export default function (state = initialState, action) {
                 ...state,
                 loading: false,
                 items: state.items.map((post) => {
-                    if (post._id === action.id) {
-                        post.fake_count += 1;
+                    if (post._id === action.post._id) {
+                        post.approved_count = action.post.approved_count;
+                        post.fake_count = action.post.fake_count;
+                        post.mixedvote_count = action.post.mixedvote_count;
                     }
                     return post
                 })
@@ -50,8 +54,10 @@ export default function (state = initialState, action) {
                 ...state,
                 loading: false,
                 items: state.items.map((post) => {
-                    if (post._id === action.id) {
-                        post.mixedvote_count += 1;
+                    if (post._id === action.post._id) {
+                        post.approved_count = action.post.approved_count;
+                        post.fake_count = action.post.fake_count;
+                        post.mixedvote_count = action.post.mixedvote_count;
                     }
                     return post
                 })
