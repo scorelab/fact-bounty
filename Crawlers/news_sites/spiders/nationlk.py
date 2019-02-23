@@ -5,21 +5,27 @@ from news_sites.items import NationlkItem
 import datetime
 from scrapy.http import Request
 
+
 class NationLKSpider(scrapy.Spider):
     name = "nationlk"
     allowed_url = ["nation.lk"]
-    start_urls = ['http://nation.lk/online/pages/news/page/1']  # home contains all goods
-    today = datetime.datetime.now().strftime("%Y-%m-%d") # get current date
+    # home contains all goods
+    start_urls = ['http://nation.lk/online/pages/news/page/1']
+    today = datetime.datetime.now().strftime("%Y-%m-%d")  # get current date
 
     def parse(self, response):
         items = []
         for itemNames in response.css('div.td_module_10.td_module_wrap.td-animation-stack.td_module_no_thumb'):
             item = NationlkItem()
 
-            title = itemNames.css('h3.entry-title.td-module-title ::text').extract_first()
-            link = itemNames.css('h3.entry-title.td-module-title ::attr(href)').extract_first()
-            date = itemNames.css('div.td-post-date ::attr(datetime)').extract_first()
-            writer = itemNames.css('div.td-post-author-name a ::text').extract_first()
+            title = itemNames.css(
+                'h3.entry-title.td-module-title ::text').extract_first()
+            link = itemNames.css(
+                'h3.entry-title.td-module-title ::attr(href)').extract_first()
+            date = itemNames.css(
+                'div.td-post-date ::attr(datetime)').extract_first()
+            writer = itemNames.css(
+                'div.td-post-author-name a ::text').extract_first()
 
             item['news_headline'] = title
             item['news_link'] = link
@@ -29,7 +35,7 @@ class NationLKSpider(scrapy.Spider):
             r.meta['item'] = item
             yield r
             items.append(item)
-        yield {"data" : items}
+        yield {"data": items}
 
         '''
         last = response.css('div.page-nav.td-pb-padding-side a.last ::text').extract_first()
@@ -50,9 +56,9 @@ class NationLKSpider(scrapy.Spider):
             yield scrapy.Request(next_url, callback=self.parse)
 
     def parse_1(self, response):
-        data = response.css('div.td-post-content.td-pb-padding-side p ::text').extract()
+        data = response.css(
+            'div.td-post-content.td-pb-padding-side p ::text').extract()
         data = ' '.join(data)
         item = response.meta['item']
         item['newsInDetails'] = data
         yield item
-
