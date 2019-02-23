@@ -10,6 +10,7 @@ from scrapy.exceptions import DropItem
 from scrapy import log
 import hashlib
 
+
 class NewsSitesPipeline(object):
     def process_item(self, item, spider):
         return item
