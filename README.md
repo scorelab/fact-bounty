@@ -2,14 +2,7 @@
 
 The recent decade has witnessed the birth of social media ecosystems that brings social organizations, media content and various stakeholders together, and now it appears significant advantages of comprehensiveness, diversity and wisdom that provide users with higher quality of experiences. Meanwhile, social media ecosystems suffer from security, privacy and trustworthiness threats. How to leverage the power of intelligent crowds to improve the ecosystem’s efficacy and efficiency, as well as ensure its security and privacy become burning and challenging issues.
 
-### Expected Result
-This project aims to implement the back-end of the Fact-checking platform mentioned in Project 1. This will be a NodeJS API that will serve for the requests of the React frontend. The scope of the project also includes, writing unit tests for the endpoints and making a documentation. 
-
-### Used Technologies
-
-- React JS
-- Mongo DB
-- Node JS
+#### Fact Bounty is a crowd sourced fact checking platform.
 
 # User Guide
 
