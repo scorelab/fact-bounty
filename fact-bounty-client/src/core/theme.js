@@ -2,7 +2,7 @@ import {
 	createMuiTheme
 } from '@material-ui/core/styles'
 // import lightBlue        from '@material-ui/core/es/colors/lightBlue'
-import brown from '@material-ui/core/colors/brown';
+import brown from '@material-ui/core/colors/brown'
 
 const theme = createMuiTheme({
 	palette: {
