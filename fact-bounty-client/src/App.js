@@ -15,11 +15,11 @@ import './App.sass'
 // import Login        from './components/login/Login'
 import PrivateRoute from './core/PrivateRoute'
 // import Dashboard    from './components/dashboard/Dashboard'
-import Landing from './pages/landing/components/Landing';
-import Register from './pages/register/components/Register';
-import Login from './pages/login/components/Login';
-import Dashboard from './pages/dashboard/components/Dashboard';
-import MainLayout from './pages/main/components/MainLayout';
+import Landing from './pages/landing/components/Landing'
+import Register from './pages/register/components/Register'
+import Login from './pages/login/components/Login'
+import Dashboard from './pages/dashboard/components/Dashboard'
+import MainLayout from './pages/main/components/MainLayout'
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
