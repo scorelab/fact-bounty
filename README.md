@@ -45,7 +45,7 @@ Start the mongodb server in your local machine
 
 `sudo service mongod start`
 
-Use two terminals, one for fact-bounty-server and the other fot fact-bounty-client.
+Use two terminals, one for fact-bounty-server and the other for fact-bounty-client.
 
 start the npm server in both directories. use,
 
@@ -53,7 +53,7 @@ start the npm server in both directories. use,
 
 And use [localhost:3000](https://) to browse.
 
-> **NOTE**: This version is only supporting for Chrome browser. And make sure to instal the extension -> Redux Dev Tools in chrome extension library.
+> **NOTE**: This version only works for Chrome browser for now. And make sure to install the extension -> Redux Dev Tools in chrome extension library.
 >
 
 # How to Contribute
