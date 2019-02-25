@@ -58,6 +58,6 @@ And use [localhost:3000](https://) to browse.
 
 # How to Contribute
 
-- Frist Forke the repository and clone it.
-- You can open issue regarding any prolem according to the given issue template
+- First Fork the repository and clone it.
+- You can open issue regarding any problem according to the given issue template
 - Make changes and do the PR according to the given template.
