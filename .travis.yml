@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - "stable"
+
+services:
+  - "docker"
+
+script:
+  - cd fact-bounty-server/
+  - npm install && npm test 

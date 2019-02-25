@@ -1,32 +1,50 @@
-import React, { Component } from 'react';
-import { postsList } from '../dummy.data';
-import '../Posts.sass';
-import Post from './Post';
+import React, { Component } from 'react'
+import '../Posts.sass'
+import Post from './Post'
+import { connect } from 'react-redux'
+import { fetchPosts } from '../actions/postActions'
+import InfiniteScroll from 'react-infinite-scroller'
 
 class Posts extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            posts: postsList
-        }
-    }
+	loadItems() {
+		if (!this.props.loading) {
+			this.props.fetchPosts(this.props.nextPage)
+		}
+	}
 
-    render() {
-        return (
-            <div className="postLayout">
-                <div></div>
-                <div className="postColumn">
-                    {this.state.posts.map((post) => {
-                        return (
-                            <Post key={post.id} post={post} />
-                        )
-                    })}
-                </div>
-                <div></div>
-            </div>
-        )
-    }
+	render() {
+		const loader = <div className="loader" key={0}>Loading ...</div>
+		var items = []
+		this.props.posts.map(post => {
+			items.push(
+				<Post key={post._id} post={post} />
+			)
+		})
+		return (
+			<InfiniteScroll
+				pageStart={0}
+				loadMore={this.loadItems.bind(this)}
+				hasMore={this.props.hasMore}
+				loader={loader}>
+				<div className="postLayout">
+					<div></div>
+					<div className="postColumn">
+						{items}
+					</div>
+					<div></div>
+				</div>
+			</InfiniteScroll>
+		)
+
+	}
 }
 
-export default Posts;
+const mapStatetoProps = state => ({
+	posts: state.posts.items,
+	nextPage: state.posts.nextPage,
+	hasMore: state.posts.hasMore,
+	loading: state.posts.loading
+})
+
+export default connect(mapStatetoProps, { fetchPosts })(Posts)

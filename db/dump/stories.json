@@ -1,13 +1,13 @@
-[
-  {
+[{
     "_id": {
       "$oid": "5c591db23cfc782afd0a23f4"
     },
     "title": "A",
     "content": "A content",
     "featured_img_url": "A url",
-    "upvote_count": 1,
-    "downvote_count": 1,
+    "approved_count": 1,
+    "fake_count": 1,
+    "mixedvote_count": 0,
     "date_added": {
       "$date": "2019-01-01T00:00:00.000Z"
     }
@@ -19,8 +19,9 @@
     "title": "B",
     "content": "B content",
     "featured_img_url": "B url",
-    "upvote_count": 2,
-    "downvote_count": 2,
+    "approved_count": 2,
+    "fake_count": 8,
+    "mixedvote_count": 1,
     "date_added": {
       "$date": "2019-01-02T00:00:00.000Z"
     }
@@ -32,8 +33,9 @@
     "title": "C",
     "content": "C content",
     "featured_img_url": "C url",
-    "upvote_count": 3,
-    "downvote_count": 3,
+    "approved_count": 3,
+    "fake_count": 2,
+    "mixedvote_count": 0,
     "date_added": {
       "$date": "2019-01-03T00:00:00.000Z"
     }
@@ -45,8 +47,9 @@
     "title": "D",
     "content": "D content",
     "featured_img_url": "D url",
-    "upvote_count": 4,
-    "downvote_count": 4,
+    "approved_count": 4,
+    "fake_count": 4,
+    "mixedvote_count": 0,
     "date_added": {
       "$date": "2019-01-04T00:00:00.000Z"
     }
@@ -58,8 +61,9 @@
     "title": "E",
     "content": "E content",
     "featured_img_url": "E url",
-    "upvote_count": 5,
-    "downvote_count": 5,
+    "approved_count": 5,
+    "fake_count": 5,
+    "mixedvote_count": 6,
     "date_added": {
       "$date": "2019-01-05T00:00:00.000Z"
     }
@@ -71,8 +75,9 @@
     "title": "F",
     "content": "F content",
     "featured_img_url": "F url",
-    "upvote_count": 6,
-    "downvote_count": 6,
+    "approved_count": 6,
+    "fake_count": 6,
+    "mixedvote_count": 2,
     "date_added": {
       "$date": "2019-01-06T00:00:00.000Z"
     }
@@ -84,8 +89,9 @@
     "title": "G",
     "content": "G content",
     "featured_img_url": "G url",
-    "upvote_count": 7,
-    "downvote_count": 7,
+    "approved_count": 7,
+    "fake_count": 7,
+    "mixedvote_count": 0,
     "date_added": {
       "$date": "2019-01-07T00:00:00.000Z"
     }

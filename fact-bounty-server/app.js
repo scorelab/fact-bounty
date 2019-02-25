@@ -5,6 +5,9 @@ const logger = require('morgan')
 const app = express()
 const mongoose = require('mongoose')
 const passport = require('passport')
+const cors = require('cors')
+
+app.use(cors())
 
 // Routes
 const indexRouter = require('./routes/index')
@@ -18,6 +21,7 @@ app.use(cookieParser())
 
 // Passport middleware
 app.use(passport.initialize())
+
 
 // Passport config
 require('./config/passport')(passport)
