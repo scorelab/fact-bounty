@@ -21,7 +21,10 @@ import Login from './pages/login/components/Login'
 import Dashboard from './pages/dashboard/components/Dashboard'
 import MainLayout from './pages/main/components/MainLayout'
 
-// Check for token to keep user logged in
+
+class App extends Component {
+	componentDidMount(){
+		// Check for token to keep user logged in
 if (localStorage.jwtToken) {
 	// Set auth token header auth
 	const token = localStorage.jwtToken
@@ -39,11 +42,11 @@ if (localStorage.jwtToken) {
 		// Logout user
 		store.dispatch(logoutUser())
 		// Redirect to login
-		window.location.href = './login'
+		window.location.href = '/login'
 	}
 }
 
-class App extends Component {
+	}
 	render() {
 		return (
 			<Provider store={store}>
