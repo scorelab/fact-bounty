@@ -39,7 +39,7 @@ export const approveVote = (voteId) => dispatch => {
 		.then(res => {
 			dispatch({
 				type: APPROVE_VOTE_COMPLETE,
-				id: voteId
+				post: res.data
 			})
 		})
 		.catch(res => {
@@ -65,7 +65,7 @@ export const fakeVote = (voteId) => dispatch => {
 		.then(res => {
 			dispatch({
 				type: FAKE_VOTE_COMPLETE,
-				id: voteId
+				post: res.data
 			})
 		})
 		.catch(res => {
@@ -91,7 +91,7 @@ export const mixVote = (voteId) => dispatch => {
 		.then(res => {
 			dispatch({
 				type: MIX_VOTE_COMPLETE,
-				id: voteId
+				post: res.data
 			})
 		})
 		.catch(res => {
