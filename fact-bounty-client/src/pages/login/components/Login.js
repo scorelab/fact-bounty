@@ -104,6 +104,9 @@ class Login extends Component {
 								>
 									Login
 								</button>
+								<Link to="/" className="btn-flat waves-effect">
+									Not registered? Register here.
+								</Link>
 							</div>
 						</form>
 					</div>
