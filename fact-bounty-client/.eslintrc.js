@@ -4,7 +4,7 @@ module.exports = {
     commonjs: true,
     es6: true
   },
-  extends: ["react-app", "eslint:recommended", "plugin:react/recommended"],
+  extends: ["react-app", "eslint:recommended", "plugin:react/recommended", "plugin:prettier/recommended"],
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: "module"
