@@ -1,0 +1,17 @@
+[ignore]
+.*/node_modules/.*
+[include]
+
+[libs]
+
+[lints]
+
+[options]
+module.file_ext=.js
+module.file_ext=.json
+module.file_ext=.jsx
+module.file_ext=.css
+module.file_ext=.sass
+module.name_mapper.extension='sass' -> 'empty/object'
+
+[strict]
