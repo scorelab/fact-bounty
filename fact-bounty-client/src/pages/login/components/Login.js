@@ -142,6 +142,9 @@ class Login extends Component {
 					color="primary" className = {this.props.classes.submit}>
 				  Login
 				</Button>
+				<Link to="/" className="btn-flat waves-effect">
+									Not registered? Register here.
+								</Link>
 			  </form>
 			</Paper>
 		  </main>
