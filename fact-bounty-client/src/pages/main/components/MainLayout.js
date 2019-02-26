@@ -5,6 +5,7 @@ import { Route } from 'react-router-dom'
 import Posts from './Posts'
 import TopNavBar from '../../../shared/components/TopNavBar'
 import About from '../../about/About'
+import '../styles/Mainlayout.sass'
 
 class MainLayout extends Component {
 
