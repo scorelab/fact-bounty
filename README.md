@@ -28,7 +28,7 @@ And run npm install in both fact-bounty-client and fact-bounty-server folders.
  npm install
 ```
 
-Change the MongoDB url to user local mongodb database url in *fact-Bounty/fact-bounty-server/config/keys-example.js*.
+Change the MongoDB url to user local mongodb database url in *fact-Bounty/fact-bounty-server/config/keys.js*.
 
 ex:
 ```
@@ -37,7 +37,7 @@ module.exports = {
         secretOrKey: "secret"
 }
 ```
-And rename the **keys-example.js** file to **keys.js**
+And add your **jwt** secret in secretOrKey
 
 #### How to Use
 

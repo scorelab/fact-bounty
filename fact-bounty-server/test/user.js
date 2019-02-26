@@ -17,7 +17,7 @@ chai.use(chaiHttp)
 
 describe('Authentication tests', async () => {
 	before(function (done) {
-		const db_uri = require('../config/keys').mongoURI
+		const db_uri = require('../config/travis').mongoURI
 		mongoose.connect(db_uri, { useNewUrlParser: true })
 			.then(() => console.log('MongoDB successfully connected'))
 			.catch(err => console.log(err))
