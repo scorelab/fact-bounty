@@ -1,23 +1,22 @@
-import React, {
-	Component
-} from 'react'
-import { Route } from 'react-router-dom'
-import Posts from './Posts'
-import TopNavBar from '../../../shared/components/TopNavBar'
-import About from '../../about/About'
+//@flow
 
-class MainLayout extends Component {
+import React, { Component } from "react";
+import { Route } from "react-router-dom";
+import Posts from "./Posts";
+import TopNavBar from "../../../shared/components/TopNavBar";
+import About from "../../about/About";
+type Props = {};
 
-	render() {
-		return (
-			<div className="mainLayout">
-				<TopNavBar />
-				<Route exact path={'/'} component={Posts} />
-				<Route path="/about" component={About} />
-			</div>
-		)
-	}
-
+class MainLayout extends Component<Props> {
+  render() {
+    return (
+      <div className="mainLayout">
+        <TopNavBar />
+        <Route exact path={"/"} component={Posts} />
+        <Route path="/about" component={About} />
+      </div>
+    );
+  }
 }
 
-export default MainLayout
+export default MainLayout;

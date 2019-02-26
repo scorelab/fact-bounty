@@ -12,7 +12,7 @@ type Props = {
   loading: boolean,
   hasMore: boolean,
   fetchPosts: (nextPage: number) => {},
-  posts: Array<{}>
+  posts: Array<{ _id: number }>
 };
 
 class Posts extends Component<Props> {
