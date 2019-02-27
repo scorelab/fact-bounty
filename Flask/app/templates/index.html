@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+        <style>
+        img {
+                display:block;
+                margin-left:auto;
+                margin-right:auto;
+            }
+        </style>
+        <body style="background-color:white;">
+        <h1 style="color:blue;font-family:verdana;font-size:300%;text-align:center;">Hello, Welcome to Fact-Bounty!!!</h1>
+	<img src=" {{url_for('static', filename="score.jpg")}} "  height="600px" width="600px" ALIGN="center" style="width:40%;"></img>
+
+        </body>
+
+
+{% endblock %}

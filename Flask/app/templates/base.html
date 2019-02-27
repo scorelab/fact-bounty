@@ -1,0 +1,44 @@
+<html>
+	<head>
+		{% if title %}
+		<title>{{title}} - Home</title>
+		{% else %}
+		<title></title>
+		{% endif %}
+	</head>
+	<center><body>
+		<div>
+		</div>
+
+		<div>	<a href="{{ url_for('index') }}" style="font-size:200%;color:black;"> Home </a>
+		</div>
+
+		<div> 
+		</div>
+
+		<div>	{% if current_user.is_anonymous %}
+			<a href="{{ url_for('login') }}" style="font-size:200%;color:black;"> Login </a>
+			{% else %}
+			<a href="{{url_for('logout') }} "style="font-size:200%;color:black;"> Logout </a>
+			{% endif %}
+		</div>
+		<hr>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		{% with messages=get_flashed_messages() %}
+		{% if messages %}
+		<ul>
+			{% for message in messages %}
+			<li>{{message}}</li>
+			{% endfor %}
+		</ul>
+		{% endif %}
+		{% endwith %}
+		{% block content %}{% endblock %}
+	</body>
+    </center>
+</html>
