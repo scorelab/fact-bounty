@@ -13,7 +13,7 @@ exports.storyAll = function (req, res, next) {
 exports.storyRange = function (req, res, next) {
 	const options = {
 		page: req.params.page,
-		limit: 3
+		limit: 7
 	}
 	Story.paginate({}, options, function (err, result) {
 		return res.status(200).json(result)
