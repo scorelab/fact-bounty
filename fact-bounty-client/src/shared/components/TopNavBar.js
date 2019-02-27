@@ -16,7 +16,8 @@ const styles = {
 		flexGrow: 2,
 		MozUserSelect: 'none',
 		WebkitUserSelect: 'none',
-		msUserSelect: 'none'
+		msUserSelect: 'none',
+		textDecoration: 'none'
 	},
 	navbarLinks: {
 		letterSpacing: '1px',
@@ -49,7 +50,9 @@ class TopNavBar extends Component {
 		return (
 			<AppBar position="fixed" color="default" style={styles.navbar}>
 				<Toolbar>
-					<Typography variant="h4" color="primary" style={styles.navbarTitle}>Fact Bounty</Typography>
+					<Link to="/" style={styles.navbarTitle}>
+						<Typography variant="h4" color="primary">Fact Bounty</Typography>
+					</Link>
 					<Link to="/" style={styles.link}>
 						<Button color="primary" style={styles.navbarLinks}>HOME</Button>
 					</Link>
