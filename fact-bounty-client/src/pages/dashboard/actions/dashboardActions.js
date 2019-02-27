@@ -1,5 +1,6 @@
 import setAuthToken from '../../../utils/setAuthToken'
-import { USER_LOADING } from '../../../core/types'
+import { USER_LOADING, SET_CURRENT_USER } from '../../../core/types'
+import { setCurrentUser } from '../../../actions/authActions'
 
 // Log user out
 export const logoutUser = () => dispatch => {
@@ -10,7 +11,5 @@ export const logoutUser = () => dispatch => {
 	setAuthToken(false)
 
 	// Set current user to empty object {} which will set isAuthenticated to false
-	dispatch({
-		type: USER_LOADING
-	})
+	dispatch(setCurrentUser({}))
 }

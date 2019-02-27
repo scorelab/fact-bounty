@@ -56,8 +56,19 @@ And use [localhost:3000](https://) to browse.
 > **NOTE**: This version is only supporting for Chrome browser. And make sure to instal the extension -> Redux Dev Tools in chrome extension library.
 >
 
+### Running with Docker
+
+1. Change the MongoDB url to user local mongodb database url in *fact-Bounty/fact-bounty-server/config/keys-example.js*.
+2. In the root of the project directory, run `docker-compose build`
+   - If you are on Linux machine, execute the following steps to install compose. 
+     ```
+     sudo curl -L https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+     sudo chmod +x /usr/local/bin/docker-compose
+     ```
+3. Once build completes, run `docker-compose up`
+
 # How to Contribute
 
-- Frist Forke the repository and clone it.
-- You can open issue regarding any prolem according to the given issue template
+- First fork the repository and clone it.
+- You can open issue regarding any problem according to the given issue template.
 - Make changes and do the PR according to the given template.

@@ -5,6 +5,7 @@ from news_sites.items import ReadMeItem
 from urllib.parse import urljoin
 from scrapy.http import Request
 
+
 class DailymirrorlkSpider(scrapy.Spider):
     name = "readmelk"
     allowed_domains = ["readme.lk"]
@@ -13,14 +14,14 @@ class DailymirrorlkSpider(scrapy.Spider):
     def parse(self, response):
         items = []
         # panel panel-default panel-latestst
-        i=0
+        i = 0
         for news in response.css('div.article-panel.add-active.clearfix.category-231.col-md-3.grid-4'):
             latest_news = news.css('::text').extract()
             news_url = news.css('a.layer-link ::attr(href)').extract_first()
             newss = latest_news
             newss = [i.strip() for i in newss]
             obj = list(filter(None, newss))
-            #print(news_urls)
+            # print(news_urls)
             item = ReadMeItem()
             item['sub_category'] = obj[0]
             item['news_headline'] = obj[1]
@@ -28,8 +29,8 @@ class DailymirrorlkSpider(scrapy.Spider):
             item['writer'] = obj[4]
             #item['moreDetails'] = obj[4]
             item['news_link'] = news_url
-            r=Request(url=news_url, callback=self.parse_1)
-            r.meta['item']=item
+            r = Request(url=news_url, callback=self.parse_1)
+            r.meta['item'] = item
             yield r
             items.append(item)
         yield {"data": items}
@@ -56,7 +57,7 @@ class DailymirrorlkSpider(scrapy.Spider):
                 break
             else:
                 tmp.append(s)
-        s=' '.join(tmp)
+        s = ' '.join(tmp)
         item = response.meta['item']
         item['newsInDetails'] = s
         yield item

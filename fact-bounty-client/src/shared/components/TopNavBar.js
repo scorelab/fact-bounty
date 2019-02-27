@@ -14,12 +14,10 @@ const styles = {
 	},
 	navbarTitle: {
 		flexGrow: 2,
-		fontVariant: 'small-caps',
-		letterSpacing: '1px',
-		fontFamily: 'Aladin',
 		MozUserSelect: 'none',
 		WebkitUserSelect: 'none',
-		msUserSelect: 'none'
+		msUserSelect: 'none',
+		textDecoration: 'none'
 	},
 	navbarLinks: {
 		letterSpacing: '1px',
@@ -33,45 +31,47 @@ const styles = {
 
 class TopNavBar extends Component {
 
-  state = {
-  	anchorEl: null
-  };
+	state = {
+		anchorEl: null
+	};
 
-  handleToggle = event => {
-  	this.setState({ anchorEl: event.currentTarget })
-  }
+	handleToggle = event => {
+		this.setState({ anchorEl: event.currentTarget })
+	}
 
-  handleClose = () => {
-  	this.setState(state => ({
-    	anchorEl: null
-  	}))
-  }
+	handleClose = () => {
+		this.setState(state => ({
+			anchorEl: null
+		}))
+	}
 
-  render() {
-  	const { anchorEl } = this.state
-    	return (
-    		<AppBar position="fixed" color="default" style={styles.navbar}>
-    			<Toolbar>
-    				<Typography variant="h4" color="primary" style={styles.navbarTitle}>Fact Bounty</Typography>
-    				<Link to="/" style={styles.link}>
-    					<Button color="primary" style={styles.navbarLinks}>HOME</Button>
-    				</Link>
-    				<Link to="/about" style={styles.link}>
-    					<Button color="primary" style={styles.navbarLinks} >ABOUT</Button>
-    				</Link>
-    				<Button color="primary" style={styles.navbarLinks}
-    					onClick={this.handleToggle} aria-haspopup="true"
-    					aria-owns={anchorEl ? 'simple-menu' : undefined}>
-    					<Person /> <ExpandMore />
-    				</Button>
-    				<Menu id="simple-menu" anchorEl={anchorEl}
-    					open={Boolean(anchorEl)} onClose={this.handleClose}>
-    					<MenuItem onClick={this.handleClose}>Login</MenuItem>
-    				</Menu>
-    			</Toolbar>
-    		</AppBar>
-    	)
-  }
+	render() {
+		const { anchorEl } = this.state
+		return (
+			<AppBar position="fixed" color="default" style={styles.navbar}>
+				<Toolbar>
+					<Link to="/" style={styles.navbarTitle}>
+						<Typography variant="h4" color="primary">Fact Bounty</Typography>
+					</Link>
+					<Link to="/" style={styles.link}>
+						<Button color="primary" style={styles.navbarLinks}>HOME</Button>
+					</Link>
+					<Link to="/about" style={styles.link}>
+						<Button color="primary" style={styles.navbarLinks} >ABOUT</Button>
+					</Link>
+					<Button color="primary" style={styles.navbarLinks}
+						onClick={this.handleToggle} aria-haspopup="true"
+						aria-owns={anchorEl ? 'simple-menu' : undefined}>
+						<Person /> <ExpandMore />
+					</Button>
+					<Menu id="simple-menu" anchorEl={anchorEl}
+						open={Boolean(anchorEl)} onClose={this.handleClose}>
+						<MenuItem onClick={this.handleClose}>Login</MenuItem>
+					</Menu>
+				</Toolbar>
+			</AppBar>
+		)
+	}
 
 }
 
