@@ -1,5 +1,4 @@
 import setAuthToken from '../../../utils/setAuthToken'
-import { USER_LOADING, SET_CURRENT_USER } from '../../../core/types'
 import { setCurrentUser } from '../../../actions/authActions'
 
 // Log user out

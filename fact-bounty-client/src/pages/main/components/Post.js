@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import { Card, CardContent, Icon } from '@material-ui/core'
-import { Link } from 'react-router-dom'
 import postImg1 from '../flag1.jpg'
-import postImg2 from '../flag2.jpg'
-import postImg3 from '../president.jpg'
 import { withStyles } from '@material-ui/core/styles'
 import '../Posts.sass'
 import ReportProblem from '@material-ui/icons/ReportProblemOutlined'
@@ -43,11 +40,6 @@ const styles = {
 }
 
 class Post extends Component {
-
-	constructor(props) {
-		super(props)
-	}
-
 	componentDidMount() {
 		this.setState({
 			postContent: this.props.post.content
@@ -79,9 +71,9 @@ class Post extends Component {
     handleClick = (value) => {
     	if (value === 'approve') {
     		this.props.approveVote(this.props.post._id)
-    	} else if (value == 'fake') {
+    	} else if (value === 'fake') {
     		this.props.fakeVote(this.props.post._id)
-    	} else if (value == 'mix') {
+    	} else if (value === 'mix') {
     		this.props.mixVote(this.props.post._id)
     	} else {
     		console.error('Wrong vote type received ', value)
