@@ -5,6 +5,7 @@ from news_sites.items import DailyMirrorSportsItem
 from urllib.parse import urljoin
 from scrapy.http import Request
 
+
 class DM_medicine(scrapy.Spider):
     name = "dm-medicine"
     allowed_domains = ["dailymirror.lk"]
@@ -13,17 +14,19 @@ class DM_medicine(scrapy.Spider):
     def parse(self, response):
         items = []
         for news in response.css('div.media'):
-            headline = news.css('h2.media-heading.cat-header a ::text').extract_first()
-            news_url = news.css('h2.media-heading.cat-header a ::attr(href)').extract_first()
+            headline = news.css(
+                'h2.media-heading.cat-header a ::text').extract_first()
+            news_url = news.css(
+                'h2.media-heading.cat-header a ::attr(href)').extract_first()
             item = DailyMirrorSportsItem()
             item['news_headline'] = headline
             item['link'] = news_url
-            r=Request(url=news_url, callback=self.parse_1)
-            r.meta['item']=item
+            r = Request(url=news_url, callback=self.parse_1)
+            r.meta['item'] = item
             yield r
             items.append(item)
-            
-        yield {'newsInDetails':items}
+
+        yield {'newsInDetails': items}
 
         # next_link = response.css('a.nextpostslink ::attr(href)').extract_first()
         # if next_link is not None:
@@ -39,7 +42,7 @@ class DM_medicine(scrapy.Spider):
         path = response.css('div.row.inner-text p ::text').extract()
         path = [i.strip() for i in path]
         path = list(filter(None, path))
-        s=' '.join(path)
+        s = ' '.join(path)
         item = response.meta['item']
-        item['newsInDetails']=s
+        item['newsInDetails'] = s
         yield item

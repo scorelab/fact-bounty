@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  server:
+    build: ./fact-bounty-server
+    ports:
+      - 7000:7000
+    links:
+      - mongo
+  
+  mongo:
+    image: mongo
+  
+  client:
+    build: ./fact-bounty-client
+    ports:
+      - 3000:3000
+    environment:
+      - NODE_ENV=development

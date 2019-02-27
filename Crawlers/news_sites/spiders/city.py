@@ -27,6 +27,7 @@ from scrapy.spiders import Spider
 from urllib.parse import urljoin
 from scrapy.http import Request
 
+
 class CitySpider(scrapy.Spider):
     name = "city"
     allowed_domains = ["fallingrain.com"]
@@ -35,11 +36,11 @@ class CitySpider(scrapy.Spider):
     def parse(self, response):
         items = []
         # panel panel-default panel-latestst
-        i=0
+        i = 0
         prefix = "http://www.fallingrain.com"
         arr = []
         for news in response.css('ul ::attr(href)').extract():
-            if( news != '/world/CE/00/'):
+            if(news != '/world/CE/00/'):
                 arr.append(prefix+news)
             else:
                 print("pass none")
@@ -50,7 +51,7 @@ class CitySpider(scrapy.Spider):
     def parse_1(self, response):
         prefix = "http://www.fallingrain.com"
         path = response.css('a ::attr(href)').extract()
-        yield {"data" : path}
+        yield {"data": path}
         '''        
         urls = []
         for i in path:
