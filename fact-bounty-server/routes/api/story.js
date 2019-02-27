@@ -1,27 +1,27 @@
-var express =  require('express')
+var express = require('express')
 
 const router = express.Router()
 
-const storyController = require('../../controllers/story') 
+const storyController = require('../../controllers/story')
 
 router.get(
-  '/all', 
+  '/all',
   storyController.storyAll)
 
 router.get(
-  '/get-range/:page', 
+  '/get-range/:page',
   storyController.storyRange)
 
 router.post(
-  '/change-upvote-count', 
+  '/change-upvote-count',
   storyController.storyChangeUpvoteCount)
 
 router.post(
-  '/change-downvote-count', 
+  '/change-downvote-count',
   storyController.storyChangeDownvoteCount)
 
 router.post(
-  '/change-mixedvote-count', 
-  storyController.storyChangeDownvoteCount)
+  '/change-mixedvote-count',
+  storyController.storyChangeMixedvoteCount)
 
 module.exports = router
