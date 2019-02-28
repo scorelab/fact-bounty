@@ -1,4 +1,5 @@
 class Story(db.Model):
+  """ This model holds information about Story """
 	title = db.Column(db.Text, required=True)
 	content = db.Column(db.Text, required=True)
 	featured_img_url = db.Column(db.Text, required=True)
@@ -8,6 +9,9 @@ class Story(db.Model):
 	date_added = db.Column(db.DateTime, default=datetime.datetime.now())
 
   def __init__(self, title, content, featured_img_url, fake_count, mixedvote_count):
+    """
+    Initialize the instance
+    """
     self.title = title
     self.content = content
     self.featured_img_url = featured_img_url
@@ -16,9 +20,17 @@ class Story(db.Model):
     self.mixedvote_count = mixedvote_count
 
   def __repr__(self):
+    """
+    Returns the object reprensentation
+    """
     return '<Task %r>' % self.content
 
   def to_json(self):
+    """
+    Returns a JSON object
+
+    :return: user JSON object
+    """
     json_story = {
       'title': self.title,
       'content': self.content,

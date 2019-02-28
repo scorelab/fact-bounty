@@ -12,6 +12,7 @@ login_manager.login_view = 'auth.login'
 
 
 def create_app(config_class=config):
+    # create and configure the app
     app = Flask(__name__)
     app.config.from_object(config_class)
 
@@ -21,5 +22,9 @@ def create_app(config_class=config):
 
     from .api import api as api_blueprint
     app.register_blueprint(api_blueprint, url_prefix='/api')
+
+    # If we're running in stand alone mode, run the application
+    if __name__ == '__main__':
+        app.run(debug=True)
 
     return app
