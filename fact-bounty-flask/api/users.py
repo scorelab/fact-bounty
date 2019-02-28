@@ -1,6 +1,6 @@
 from flask import jsonify, request, current_app, url_for
-from . import api
-from models.user import User
+from .. import api
+from .models.user import User
 import bcrypt
 
 
