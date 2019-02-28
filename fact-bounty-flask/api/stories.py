@@ -1,6 +1,6 @@
 from flask import jsonify, request, current_app, url_for
-from . import api
-from '../models/story' import Story
+from .. import api
+from .models.story import Story
 
 
 @api.route('/stories/all')

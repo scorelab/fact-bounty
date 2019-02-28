@@ -1,5 +1,4 @@
 class Story(db.Model):
-
 	title = db.Column(db.Text, required=True)
 	content = db.Column(db.Text, required=True)
 	featured_img_url = db.Column(db.Text, required=True)
