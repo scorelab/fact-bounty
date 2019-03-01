@@ -6,9 +6,9 @@ from flask_bcrypt import Bcrypt
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
-app.config["MYSQL_USER"] = "root"
-app.config["MYSQL_PASSWORD"] = "Iamakata01"
-app.config["MYSQL_DB"] = "users"
+app.config["MYSQL_USER"] = "<YOUR_ROOT_DB_USER>"
+app.config["MYSQL_PASSWORD"] = "<YOUR_DB_PASSWORD>"
+app.config["MYSQL_DB"] = "news"
 app.config["MYSQL_CURSORCLASS"] = "DictCursor"
 
 mysql = MySQL(app)
@@ -69,6 +69,12 @@ def add_task():
         js = jsonify({"error": "user already  exists"})
 
         return jsonify(exception="user already exists"), 404
+
+
+
+
+
+
 
 
 if __name__ == "__main__":

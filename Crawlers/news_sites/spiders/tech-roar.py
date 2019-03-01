@@ -1,32 +1,55 @@
 import scrapy
 from scrapy.spiders import Spider
-from news_sites.items import RoarItem
-from urllib.parse import urljoin
+from news_sites.items import defaultItem
+try:
+    from urllib.parse import urljoin
+except ImportError:
+    from urlparse import urljoin
+
 import datetime
 from scrapy.http import Request
+
 
 class RoarSpider(scrapy.Spider):
     name = "roartech"
     allowed_domains = ["roar.tech"]
     start_urls = ['http://roar.tech/insights/']
+
     def parse(self, response):
         items = []
         for news in response.css('div.article-card'):
             news_data = news.css('::text').extract()
             news_url = news.css('::attr(href)').extract_first()
-            imgs = news.css('img.article-featured-image.wp-post-image ::attr(src)').extract_first()
+            imgs = news.css(
+                'img.article-featured-image.wp-post-image ::attr(src)').extract_first()
 
             news_data = [i.strip() for i in news_data]
             news_data = list(filter(None, news_data))
 
-            item = RoarItem()
+            item = defaultItem()
             item['news_headline'] = news_data[1]
-            item['imgURL'] = imgs
+
             item['news_link'] = news_url
-            r=Request(url=news_url, callback=self.parse_1)
-            r.meta['item']=item
+
+            item['newsInDetails'] = ""
+            item["data"] = ""
+
+            item['image_url'] = imgs
+            item["published_timestamp"] = ""
+            item["author"] = ""
+            item["link"] = ""
+            item["comments"] = ""
+            item["views"] = ""
+            item["moreDetails"] = ""
+            item["datetime"] = ""
+            item["telephone"] = ""
+            item["sub_category"] = ""
+            item["writer"] = ""
+            item["img_src"] = ""
+            r = Request(url=news_url, callback=self.parse_1)
+            r.meta['item'] = item
             yield r
-        yield {'data':items}
+        yield {'data': items}
 
         '''
         next_link = response.xpath('/html/body/div[2]/div/div[1]/div[2]/div/div[1]/div[1]/div[2]/a[4]')
@@ -51,17 +74,16 @@ class RoarSpider(scrapy.Spider):
         texts.pop(3)
         texts.pop(4)
         texts.pop(5)
-        tmp=[]
-        i=0
+        tmp = []
+        i = 0
         while i < len(texts):
             tmp.append(str(texts[i]))
-            i+=1
-            if texts[i]=="How do you feel about this story?":
+            i += 1
+            if texts[i] == "How do you feel about this story?":
                 break
 
         string = ' '.join(tmp)
         item = response.meta['item']
         item['newsInDetails'] = string
-        item['date']=pub_date
+        item['date'] = pub_date
         yield item
-

@@ -1,9 +1,14 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from scrapy.spiders import Spider
-from news_sites.items import CTItem
-from urllib.parse import urljoin
+from news_sites.items import defaultItem
+try:
+    from urllib.parse import urljoin
+except ImportError:
+    from urlparse import urljoin
+
 from scrapy.http import Request
+
 
 class CtodaySpider(scrapy.Spider):
     name = "ctoday"
@@ -13,22 +18,42 @@ class CtodaySpider(scrapy.Spider):
     def parse(self, response):
         items = []
         # panel panel-default panel-latestst
-        i=0
+        i = 0
         for news in response.css('div.article-big'):
-            title = news.css('div.article-content h2 ::attr(title)').extract_first()
-            tmpurl = news.css('div.article-content h2 ::attr(href)').extract_first()
+            title = news.css(
+                'div.article-content h2 ::attr(title)').extract_first()
+            tmpurl = news.css(
+                'div.article-content h2 ::attr(href)').extract_first()
             url = 'http://www.ceylontoday.lk/'+tmpurl
 
-            item = CTItem()
+            item = defaultItem()
             item['news_headline'] = title
             item['link'] = url
-            r=Request(url=url, callback=self.parse_1)
-            r.meta['item']=item
+
+            item['newsInDetails'] = ""
+            item["data"] = ""
+            item['news_link'] = ""
+            item['image_url'] = ""
+            item["published_timestamp"] = ""
+            item["author"] = ""
+
+            item["comments"] = ""
+            item["views"] = ""
+            item["moreDetails"] = ""
+            item["datetime"] = ""
+            item["telephone"] = ""
+            item["sub_category"] = ""
+            item["writer"] = ""
+            item["img_src"] = ""
+
+            r = Request(url=url, callback=self.parse_1)
+            r.meta['item'] = item
             yield r
             items.append(item)
         yield {"data": items}
 
-        next_urls = response.css('div.block-content div.pagination div.pagination ::attr(href)').extract()
+        next_urls = response.css(
+            'div.block-content div.pagination div.pagination ::attr(href)').extract()
         tmp_next = next_urls[len(next_urls) - 1]
         real_next = 'http://www.ceylontoday.lk/'+tmp_next
         yield scrapy.Request(real_next, callback=self.parse)
@@ -38,7 +63,7 @@ class CtodaySpider(scrapy.Spider):
         path = path.css('::text').extract()
         path = [i.strip() for i in path]
         path = list(filter(None, path))
-        s=' '.join(path)
+        s = ' '.join(path)
         item = response.meta['item']
-        item['data']=s
+        item['data'] = s
         yield item

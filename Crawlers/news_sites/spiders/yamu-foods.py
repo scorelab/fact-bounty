@@ -1,11 +1,16 @@
 #!/usr/bin/python3
 import scrapy
 from scrapy.spiders import Spider
-from news_sites.items import GeneralItem
-from urllib.parse import urljoin
+from news_sites.items import defaultItem
+try:
+    from urllib.parse import urljoin
+except ImportError:
+    from urlparse import urljoin
+
 import datetime
 from scrapy.http import Request
 import re
+
 
 class FoodSpider(scrapy.Spider):
     name = "yamu-foods"
@@ -16,19 +21,36 @@ class FoodSpider(scrapy.Spider):
         items = []
         for news in response.css('a.front-group-item.item'):
             # print(news_arr)
-            item = GeneralItem()
-            #append to items object
-            item['news_headline']=news.css('h3.front-h3 ::text').extract_first().strip()
-            item['datetime']="not in use"
+            item = defaultItem()
+            # append to items object
+            item['news_headline'] = news.css(
+                'h3.front-h3 ::text').extract_first().strip()
+            item['datetime'] = "not in use"
             news_url = news.css('::attr(href)').extract_first()
-            item['link']=news_url
-            r=Request(url=news_url, callback=self.parse_1)
-            r.meta['item']=item
+            item['link'] = news_url
+
+            item['newsInDetails'] = ""
+            item["data"] = ""
+            item['news_link'] = news_url
+            item['image_url'] = ""
+            item["published_timestamp"] = ""
+            item["author"] = ""
+
+            item["comments"] = ""
+            item["views"] = ""
+            item["moreDetails"] = ""
+
+            item["telephone"] = ""
+            item["sub_category"] = ""
+            item["writer"] = ""
+            item["img_src"] = ""
+            r = Request(url=news_url, callback=self.parse_1)
+            r.meta['item'] = item
             yield r
             items.append(item)
-        yield {"newsInDetails":items}
+        yield {"newsInDetails": items}
 
-        for i in range(1,8):
+        for i in range(1, 8):
             next_page = "https://www.yamu.lk/recipe?page="+str(i)
             yield scrapy.Request(next_page, callback=self.parse)
 

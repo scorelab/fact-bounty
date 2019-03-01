@@ -1,35 +1,59 @@
 import scrapy
 from scrapy.spiders import Spider
-from news_sites.items import EconomyNextItem
-from urllib.parse import urljoin
+from news_sites.items import defaultItem
+try:
+    from urllib.parse import urljoin
+except ImportError:
+    from urlparse import urljoin
+
 import datetime
 from scrapy.http import Request
 import re
 
+
 class EconomyNextSpider(scrapy.Spider):
     name = "economynext"
     allowed_domains = ["economynext.com"]
-    start_urls = ['http://www.economynext.com/Apparel-2--4-9.html', 
-                    'http://www.economynext.com/Construction_and_Real_Estate-2--4-10.html',
-                    'http://www.economynext.com/General_Industry-2--4-11.html']
+    start_urls = ['http://www.economynext.com/Apparel-2--4-9.html',
+                  'http://www.economynext.com/Construction_and_Real_Estate-2--4-10.html',
+                  'http://www.economynext.com/General_Industry-2--4-11.html']
 
     def parse(self, response):
         items = []
         for news in response.css('div.related-block ul.article-array li#ban15'):
             # print(news_arr)
-            item = EconomyNextItem()
-            #append to items object
-            item['news_headline']=news.css('a ::text')[0].extract()
-            item['datetime']=news.css('a ::text')[1].extract().rstrip()
-            news_url = "http://economynext.com/"+news.css('a ::attr(href)')[0].extract()
-            item['link']=news_url
-            r=Request(url=news_url, callback=self.parse_1)
-            r.meta['item']=item
+            item = defaultItem()
+            # append to items object
+            item['news_headline'] = news.css('a ::text')[0].extract()
+            item['datetime'] = news.css('a ::text')[1].extract().rstrip()
+            news_url = "http://economynext.com/" + \
+                news.css('a ::attr(href)')[0].extract()
+            item['link'] = news_url
+
+            item['newsInDetails'] = ""
+            item["data"] = ""
+            item['news_link'] = ""
+            item['image_url'] = ""
+            item["published_timestamp"] = ""
+            item["author"] = ""
+
+            item["comments"] = ""
+            item["views"] = ""
+            item["moreDetails"] = ""
+
+            item["telephone"] = ""
+            item["sub_category"] = ""
+            item["writer"] = ""
+            item["img_src"] = ""
+
+            r = Request(url=news_url, callback=self.parse_1)
+            r.meta['item'] = item
             yield r
             items.append(item)
-        yield {"newsInDetails":items}
+        yield {"newsInDetails": items}
 
-        next_page = response.css('div.page-pager a.next ::attr(href)').extract_first()
+        next_page = response.css(
+            'div.page-pager a.next ::attr(href)').extract_first()
         if next_page is not None:
             print(next_page)
             next_page = "http://economynext.com/"+str(next_page)

@@ -24,7 +24,11 @@
 
 import scrapy
 from scrapy.spiders import Spider
-from urllib.parse import urljoin
+try:
+    from urllib.parse import urljoin
+except ImportError:
+     from urlparse import urljoin
+
 from scrapy.http import Request
 
 class CitySpider(scrapy.Spider):

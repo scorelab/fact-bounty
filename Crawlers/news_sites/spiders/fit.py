@@ -1,7 +1,11 @@
 import scrapy
 from scrapy.spiders import Spider
-from news_sites.items import FtItem
-from urllib.parse import urljoin
+from news_sites.items import defaultItem
+try:
+    from urllib.parse import urljoin
+except ImportError:
+    from urlparse import urljoin
+
 # import datetime
 from scrapy.http import Request
 
@@ -10,26 +14,43 @@ class FitSpider(scrapy.Spider):
     name = "fit"
     allowed_domains = ["ft.lk"]
     start_urls = ['http://www.ft.lk/it-telecom-tech']
-                  # 'http://www.ft.lk/it-telecom-tech','http://www.ft.lk/travel-tourism','http://www.ft.lk/financial-services','http://www.ft.lk/agriculture','http://www.ft.lk/entertainment-sectors','http://www.ft.lk/fashionlifestyle','http://www.ft.lk/energy','http://www.ft.lk/international','http://www.ft.lk/management']
+    # 'http://www.ft.lk/it-telecom-tech','http://www.ft.lk/travel-tourism','http://www.ft.lk/financial-services','http://www.ft.lk/agriculture','http://www.ft.lk/entertainment-sectors','http://www.ft.lk/fashionlifestyle','http://www.ft.lk/energy','http://www.ft.lk/international','http://www.ft.lk/management']
+
     def parse(self, response):
         items = []
         # today = datetime.datetime.now().strftime("%Y-%m-%d") # get current date
         for news in response.css('div.row.cat-zero'):
             # newss = news.css('h2#ban9 a ::text').extract_first()
-            newsDataWithErrors=news.css('::text').extract()
+            newsDataWithErrors = news.css('::text').extract()
             url = news.css('::attr(href)').extract_first()
             filterErrors = [i.strip() for i in newsDataWithErrors]
             NewsData = list(filter(None, filterErrors))
-            item = FtItem()
-            item['news_headline']=NewsData[0]
-            item['date'] = NewsData[1]
+            item = defaultItem()
+            item['news_headline'] = NewsData[0]
+
             # item['newsDetails']=NewsData[2]
             item['news_link'] = url
-            r=Request(url=url, callback=self.parse_1)
-            r.meta['item']=item
+
+            item['newsInDetails'] = ""
+            item["data"] = ""
+
+            item['image_url'] = ""
+            item["published_timestamp"] = ""
+            item["author"] = ""
+            item["link"] = ""
+            item["comments"] = ""
+            item["views"] = ""
+            item["moreDetails"] = ""
+            item["datetime"] = NewsData[1]
+            item["telephone"] = ""
+            item["sub_category"] = ""
+            item["writer"] = ""
+            item["img_src"] = ""
+            r = Request(url=url, callback=self.parse_1)
+            r.meta['item'] = item
             yield r
             items.append(item)
-        yield {'data':items}
+        yield {'data': items}
 
         for i in range(20, 11660, 20):
             next_url = "http://www.ft.lk/news/"+str(i)
@@ -44,12 +65,13 @@ class FitSpider(scrapy.Spider):
             print("scrpping "+next_url)
             yield scrapy.Request(next_url, callback=self.parse)
         '''
+
     def parse_1(self, response):
         path = response.css('div.row.inner-ft-text')
         path = path.css('p::text').extract()
         path = [i.strip() for i in path]
         path = list(filter(None, path))
-        s=' '.join(path)
+        s = ' '.join(path)
         item = response.meta['item']
-        item['data']=s
+        item['data'] = s
         yield item

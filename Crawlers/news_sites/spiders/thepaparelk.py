@@ -1,9 +1,14 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from scrapy.spiders import Spider
-from news_sites.items import ThePapareItem
-from urllib.parse import urljoin
+from news_sites.items import defaultItem
+try:
+    from urllib.parse import urljoin
+except ImportError:
+    from urlparse import urljoin
+
 from scrapy.http import Request
+
 
 class ThePapareSpider(scrapy.Spider):
     name = "ThePapare"
@@ -15,34 +20,49 @@ class ThePapareSpider(scrapy.Spider):
         for news in response.css('div.td-block-span12'):
             # data = news.css('meta ::attr(content)').extract()
             # yield(data[0])
-            newsheadlineArr = news.css('div.item-details h3.entry-title.td-module-title a ::attr(title)').extract_first()
+            newsheadlineArr = news.css(
+                'div.item-details h3.entry-title.td-module-title a ::attr(title)').extract_first()
             meta_data = news.css('meta ::attr(content)').extract()
-            news_href = news.css('div.item-details h3.entry-title.td-module-title a ::attr(href)').extract_first()
+            news_href = news.css(
+                'div.item-details h3.entry-title.td-module-title a ::attr(href)').extract_first()
             print("********************************************")
             headline = newsheadlineArr
-            news_link= news_href
+            news_link = news_href
             writer = meta_data[1]
             datetime = meta_data[2]
             img = meta_data[4]
             comments = meta_data[5]
 
             # assign tp item
-            item = ThePapareItem()
+            item = defaultItem()
             item['news_headline'] = headline
             item['news_link'] = news_link
-            item['date'] = datetime
+
             item['writer'] = writer
             item['img_src'] = img
             item['comments'] = comments
 
+            item['newsInDetails'] = ""
+            item["data"] = ""
+
+            item['image_url'] = ""
+            item["published_timestamp"] = ""
+            item["author"] = ""
+            item["link"] = ""
+
+            item["views"] = ""
+            item["moreDetails"] = ""
+            item["datetime"] = datetime
+            item["telephone"] = ""
+            item["sub_category"] = ""
+
             r = Request(url=news_link, callback=self.parse_1)
-            r.meta['item']=item
+            r.meta['item'] = item
             yield r
 
             items.append(item)
 
-        yield {"data":items}
-
+        yield {"data": items}
 
     def parse_1(self, response):
         path = response.css('div.td-post-content p ::text').extract()
