@@ -12,7 +12,7 @@ class Story(db.Model):
     approved_count = db.Column(db.Integer, nullable=False)
     fake_count = db.Column(db.Integer, nullable=False)
     mixedvote_count = db.Column(db.Integer, nullable=False)
-    date_added = db.Column(db.DateTime, default=datetime.now())
+    date_added = db.Column(db.Text, default=datetime.now())
 
     def __init__(self, title, content, featured_img_url, approved_count, fake_count, mixedvote_count):
         """
@@ -47,10 +47,3 @@ class Story(db.Model):
             'date_added': self.date_added
         }
         return json_story
-
-    @staticmethod
-    def from_json(json_post):
-        body = json_post.get('body')
-        if body is None or body == '':
-            raise ValidationError('story does not have a body')
-        return Story(body=body)
