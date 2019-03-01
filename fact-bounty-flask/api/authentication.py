@@ -1,7 +1,7 @@
 from flask import jsonify, g, abort
 from flask_httpauth import HTTPBasicAuth
 from .models.user import User
-from .. import api
+from . import api
 
 auth = HTTPBasicAuth()
 
