@@ -1,6 +1,12 @@
+from flask import current_app
 import datetime
 from ...app import db
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from passlib.apps import custom_app_context as pwd_context
+from itsdangerous import (TimedJSONWebSignatureSerializer
+                          as Serializer, BadSignature, SignatureExpired)
+from flask_httpauth import HTTPBasicAuth
+
+auth = HTTPBasicAuth()
 
 
 class User(db.Model):
@@ -11,23 +17,22 @@ class User(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
-    password = db.Column(db.String(20), nullable=False)
-    email = db.Column(db.String(100), unique=True, nullable=False)
+    password = db.Column(db.String(128))
+    email = db.Column(db.String(100), unique=True)
     date = db.Column(db.DateTime, default=datetime.datetime.now())
 
-    def __init__(self, username, password, email):
+    def __init__(self, name, email):
         """
         Initializes the user instance
         """
-        self.name = username
-        self.password = password
+        self.name = name
         self.email = email
 
     def __repr__(self):
         """
         Returns the object reprensentation
         """
-        return '<User %r>' % self.username
+        return '<User %r>' % self.name
 
     def generate_auth_token(self, expiration):
         """
@@ -62,7 +67,9 @@ class User(db.Model):
         s = Serializer(current_app.config['SECRET_KEY'])
         try:
             data = s.loads(token)
-        except:
+        except SignatureExpired:
+            return None
+        except BadSignature:
             return None
 
         return User.query.get(data['id'])
@@ -73,7 +80,7 @@ class User(db.Model):
 
         :param password: password for encryption
         """
-        self.password_hash = pwd_context.encrypt(password)
+        self.password = pwd_context.encrypt(password)
 
     def verify_password(self, password):
         """
@@ -81,4 +88,4 @@ class User(db.Model):
 
         :param password: password for verification
         """
-        return pwd_context.verify(password, self.password_hash)
+        return pwd_context.verify(password, self.password)

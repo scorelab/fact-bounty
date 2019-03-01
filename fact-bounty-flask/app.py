@@ -6,6 +6,7 @@ from .api.models.story import Story
 
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
+db.create_all(app=create_app('default'))
 
 @app.shell_context_processor
 def make_shell_context():

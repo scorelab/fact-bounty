@@ -1,7 +1,7 @@
-from flask import jsonify, request, current_app, url_for
+from flask import jsonify, request, current_app, url_for, g, abort
 from . import api
 from .models.user import User
-import bcrypt
+from ..app import db
 
 # Routes for user authentication 
 
@@ -17,17 +17,25 @@ def add_user():
     name = request.form['name']
     email = request.form['email']
     password = request.form['password']
+    password2 = request.form['password2']
+    print('check1')
+    if password != password2:
+        abort(400) # password not same
 
-    pass_enc = str(bcrypt.hashpw(password.encode(
-        'utf-8'),  bcrypt.gensalt(10)))[2:-1]
+    if name is None or password is None or email is None:
+        abort(400) # missing arguments
+    if User.query.filter_by(email=email).first() is not None:
+        abort(400) # existing user
 
-    user = User(name=name, email=email, password=pass_enc)
+    user = User(name=name, email=email)
+
+    user.hash_password(password)
 
     db.session.add(user)
     db.session.commit()
     return jsonify({
         'response': 'User ' + name + 'created successfully'
-    })
+    }), 201
 
 # A route to login user
 @api.route('/users/login', methods=['POST'])
