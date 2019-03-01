@@ -1,49 +1,56 @@
+from datetime import datetime
+from ... import db
+
 class Story(db.Model):
-  """ This model holds information about Story """
-	title = db.Column(db.Text, required=True)
-	content = db.Column(db.Text, required=True)
-	featured_img_url = db.Column(db.Text, required=True)
-  approved_count = db.Column(db.Integer, required=True)
-	fake_count = db.Column(db.Integer, required=True)
-	mixedvote_count = db.Column(db.Integer, required=True)
-	date_added = db.Column(db.DateTime, default=datetime.datetime.now())
+    """ This model holds information about Story """
 
-  def __init__(self, title, content, featured_img_url, fake_count, mixedvote_count):
-    """
-    Initialize the instance
-    """
-    self.title = title
-    self.content = content
-    self.featured_img_url = featured_img_url
-    self.approved_count = approved_count
-    self.fake_count = fake_count
-    self.mixedvote_count = mixedvote_count
+    __tablename__ = 'story'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.Text, nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    featured_img_url = db.Column(db.Text, nullable=False)
+    approved_count = db.Column(db.Integer, nullable=False)
+    fake_count = db.Column(db.Integer, nullable=False)
+    mixedvote_count = db.Column(db.Integer, nullable=False)
+    date_added = db.Column(db.DateTime, default=datetime.now())
 
-  def __repr__(self):
-    """
-    Returns the object reprensentation
-    """
-    return '<Task %r>' % self.content
+    def __init__(self, title, content, featured_img_url, approved_count, fake_count, mixedvote_count):
+        """
+        Initialize the instance
+        """
+        self.title = title
+        self.content = content
+        self.featured_img_url = featured_img_url
+        self.approved_count = approved_count
+        self.fake_count = fake_count
+        self.mixedvote_count = mixedvote_count
 
-  def to_json(self):
-    """
-    Returns a JSON object
+    def __repr__(self):
+        """
+        Returns the object reprensentation
+        """
+        return '<Task %r>' % self.content
 
-    :return: user JSON object
-    """
-    json_story = {
-      'title': self.title,
-      'content': self.content,
-      'featured_img_url': self.featured_img_url,
-      'approved_count': self.approved_count,
-      'fake_count': self.fake_count,
-      'mixedvote_count': self.mixedvote_count,
-      'date_added': self.date_added
-    }
-  
-  @staticmethod
-  def from_json(json_post):
-    body = json_post.get('body')
-    if body is None or body == '':
-      raise ValidationError('story does not have a body')
-    return Story(body=body)
+    def to_json(self):
+        """
+        Returns a JSON object
+
+        :return: user JSON object
+        """
+        json_story = {
+            'title': self.title,
+            'content': self.content,
+            'featured_img_url': self.featured_img_url,
+            'approved_count': self.approved_count,
+            'fake_count': self.fake_count,
+            'mixedvote_count': self.mixedvote_count,
+            'date_added': self.date_added
+        }
+        return json_story
+
+    @staticmethod
+    def from_json(json_post):
+        body = json_post.get('body')
+        if body is None or body == '':
+            raise ValidationError('story does not have a body')
+        return Story(body=body)

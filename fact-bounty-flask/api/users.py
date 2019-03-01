@@ -1,12 +1,12 @@
 from flask import jsonify, request, current_app, url_for
-from .. import api
+from . import api
 from .models.user import User
 import bcrypt
 
 # Routes for user authentication 
 
 # A route to register user
-@api.route('/users/register', method=['POST'])
+@api.route('/users/register', methods=['POST'])
 def add_user():
     """
     Creates the new user

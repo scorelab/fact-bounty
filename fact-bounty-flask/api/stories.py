@@ -1,6 +1,7 @@
 from flask import jsonify, request, current_app, url_for
-from .. import api
+from . import api
 from .models.story import Story
+from .. import db
 
 # Routes for stories
 
@@ -42,8 +43,9 @@ def change_upvote():
     :return: updated JSON object
     """
     id = request.form['story_id']
+    value = request.form['change_val']
     story = Story.query.get_or_404(id)
-    story['approved_count'] = approved_count
+    story['approved_count'] = value
     db.session.add(story)
     db.session.commit()
     return jsonify(story.to_json())
@@ -51,7 +53,7 @@ def change_upvote():
 
 # A route to change downvote count of a story
 @api.route('/stories/change-downvote-count')
-def change_upvote():    
+def change_downvote():    
     """
     Update downvote-count
     
@@ -59,8 +61,9 @@ def change_upvote():
     :return: updated JSON object
     """
     id = request.form['story_id']
+    value = request.form['change_val']
     story = Story.query.get_or_404(id)
-    story['approved_count'] = approved_count
+    story['fake_count'] = value
     db.session.add(story)
     db.session.commit()
     return jsonify(story.to_json())
@@ -68,7 +71,7 @@ def change_upvote():
 
 # A route to change mixedvote count of a story
 @api.route('/stories/change-mixedvote-count')
-def change_upvote():
+def change_mixvote():
     """
     Update mixedvote-count
     
@@ -76,8 +79,9 @@ def change_upvote():
     :return: updated JSON object
     """
     id = request.form['story_id']
+    value = request.form['change_val']
     story = Story.query.get_or_404(id)
-    story['approved_count'] = approved_count
+    story['mixedvote_count'] = value
     db.session.add(story)
     db.session.commit()
     return jsonify(story.to_json())
