@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-import scrapy
-from scrapy.spiders import Spider
-from news_sites.items import DailyMirrorSportsItem
 from urllib.parse import urljoin
+
+import scrapy
 from scrapy.http import Request
+
+from news_sites.items import DailyMirrorSportsItem
 
 
 class DailymirrorSportsSpider(scrapy.Spider):
@@ -30,7 +31,7 @@ class DailymirrorSportsSpider(scrapy.Spider):
             'a.nextpostslink ::attr(href)').extract_first()
         if next_link is not None:
             next_url = urljoin(response.url, str(next_link))
-            print("scrpping "+next_url)
+            print("scrpping " + next_url)
             yield scrapy.Request(next_url, callback=self.parse)
 
     def parse_1(self, response):

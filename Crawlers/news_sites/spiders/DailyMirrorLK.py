@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from scrapy.spiders import Spider
-from news_sites.items import DailyMirrorItem
-from urllib.parse import urljoin
 from scrapy.http import Request
+
+from news_sites.items import DailyMirrorItem
 
 
 class DailymirrorlkSpider(scrapy.Spider):
@@ -12,6 +11,7 @@ class DailymirrorlkSpider(scrapy.Spider):
     # start_urls = ['http://www.dailymirror.lk/news']
     # 'http://www.dailymirror.lk/news'
     start_urls = ['http://www.dailymirror.lk/financial-news']
+
     # , 'http://www.dailymirror.lk/financial-news', 'http://www.dailymirror.lk/other']
 
     def parse(self, response):
@@ -31,7 +31,7 @@ class DailymirrorlkSpider(scrapy.Spider):
             item['published_timestamp'] = obj[1]
             item['comments'] = obj[2]
             item['views'] = obj[3]
-            #item['moreDetails'] = obj[4]
+            # item['moreDetails'] = obj[4]
             item['link'] = news_url
             r = Request(url=news_url, callback=self.parse_1)
             r.meta['item'] = item
@@ -42,7 +42,7 @@ class DailymirrorlkSpider(scrapy.Spider):
             # yield {"data": items}
 
         for i in range(30, 1890, 30):
-            next_url = "http://www.dailymirror.lk/financial-news/"+str(i)
+            next_url = "http://www.dailymirror.lk/financial-news/" + str(i)
             yield scrapy.Request(next_url, callback=self.parse)
 
         '''

@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from scrapy.spiders import Spider
-from news_sites.items import DailyMirrorSportsItem
-from urllib.parse import urljoin
 from scrapy.http import Request
+
+from news_sites.items import DailyMirrorSportsItem
 
 
 class DailymirrorTravelSpider(scrapy.Spider):
@@ -35,7 +34,7 @@ class DailymirrorTravelSpider(scrapy.Spider):
         #     yield scrapy.Request(next_url, callback=self.parse)
 
         for i in range(30, 420, 30):
-            next_url = "http://www.dailymirror.lk/travel/"+str(i)
+            next_url = "http://www.dailymirror.lk/travel/" + str(i)
             yield scrapy.Request(next_url, callback=self.parse)
 
     def parse_1(self, response):

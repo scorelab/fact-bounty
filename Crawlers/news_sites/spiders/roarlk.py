@@ -1,9 +1,7 @@
 import scrapy
-from scrapy.spiders import Spider
-from news_sites.items import RoarItem
-from urllib.parse import urljoin
-import datetime
 from scrapy.http import Request
+
+from news_sites.items import RoarItem
 
 
 class RoarSpider(scrapy.Spider):
@@ -11,7 +9,8 @@ class RoarSpider(scrapy.Spider):
     allowed_domains = ["roar.lk"]
     start_urls = ['https://roar.lk/category/economy/page/%d/' %
                   (n) for n in range(1, 5)]
-    #start_urls = ['http://roar.lk/features/','http://roar.lk/reports/','http://roar.lk/category/economy/','http://roar.lk/category/editorial/','http://roar.lk/category/environment-wildlife/','http://roar.life/']
+
+    # start_urls = ['http://roar.lk/features/','http://roar.lk/reports/','http://roar.lk/category/economy/','http://roar.lk/category/editorial/','http://roar.lk/category/environment-wildlife/','http://roar.life/']
 
     def parse(self, response):
         items = []

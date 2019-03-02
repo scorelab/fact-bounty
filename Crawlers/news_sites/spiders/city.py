@@ -23,9 +23,6 @@
 """
 
 import scrapy
-from scrapy.spiders import Spider
-from urllib.parse import urljoin
-from scrapy.http import Request
 
 
 class CitySpider(scrapy.Spider):
@@ -40,8 +37,8 @@ class CitySpider(scrapy.Spider):
         prefix = "http://www.fallingrain.com"
         arr = []
         for news in response.css('ul ::attr(href)').extract():
-            if(news != '/world/CE/00/'):
-                arr.append(prefix+news)
+            if (news != '/world/CE/00/'):
+                arr.append(prefix + news)
             else:
                 print("pass none")
         for i in arr:

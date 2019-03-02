@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from scrapy.spiders import Spider
-from news_sites.items import CTItem
-from urllib.parse import urljoin
 from scrapy.http import Request
+
+from news_sites.items import CTItem
 
 
 class CtodaySpider(scrapy.Spider):
@@ -20,7 +19,7 @@ class CtodaySpider(scrapy.Spider):
                 'div.article-content h2 ::attr(title)').extract_first()
             tmpurl = news.css(
                 'div.article-content h2 ::attr(href)').extract_first()
-            url = 'http://www.ceylontoday.lk/'+tmpurl
+            url = 'http://www.ceylontoday.lk/' + tmpurl
 
             item = CTItem()
             item['news_headline'] = title
@@ -34,7 +33,7 @@ class CtodaySpider(scrapy.Spider):
         next_urls = response.css(
             'div.block-content div.pagination div.pagination ::attr(href)').extract()
         tmp_next = next_urls[len(next_urls) - 1]
-        real_next = 'http://www.ceylontoday.lk/'+tmp_next
+        real_next = 'http://www.ceylontoday.lk/' + tmp_next
         yield scrapy.Request(real_next, callback=self.parse)
 
     def parse_1(self, response):

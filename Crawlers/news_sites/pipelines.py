@@ -6,9 +6,6 @@
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import pymongo
 from scrapy.conf import settings
-from scrapy.exceptions import DropItem
-from scrapy import log
-import hashlib
 
 
 class NewsSitesPipeline(object):

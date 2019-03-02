@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from scrapy.spiders import Spider
-from news_sites.items import DailyMirrorSportsItem
-from urllib.parse import urljoin
 from scrapy.http import Request
+
+from news_sites.items import DailyMirrorSportsItem
 
 
 class DM_medicine(scrapy.Spider):

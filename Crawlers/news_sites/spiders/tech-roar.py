@@ -1,9 +1,7 @@
 import scrapy
-from scrapy.spiders import Spider
-from news_sites.items import RoarItem
-from urllib.parse import urljoin
-import datetime
 from scrapy.http import Request
+
+from news_sites.items import RoarItem
 
 
 class RoarSpider(scrapy.Spider):

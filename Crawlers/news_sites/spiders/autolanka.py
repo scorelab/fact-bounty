@@ -1,10 +1,6 @@
 import scrapy
-from scrapy.spiders import Spider
+
 from news_sites.items import AutoLankaItem
-from urllib.parse import urljoin
-import datetime
-from scrapy.http import Request
-import re
 
 
 class CarSpider(scrapy.Spider):
@@ -31,5 +27,5 @@ class CarSpider(scrapy.Spider):
 
         for i in range(2, 277):
             next_page = "http://www.autolanka.com/cars/?page="
-            next_page = next_page+str(i)
+            next_page = next_page + str(i)
             yield scrapy.Request(next_page, callback=self.parse)

@@ -1,11 +1,8 @@
 #!/usr/bin/python3
 import scrapy
-from scrapy.spiders import Spider
-from news_sites.items import GeneralItem
-from urllib.parse import urljoin
-import datetime
 from scrapy.http import Request
-import re
+
+from news_sites.items import GeneralItem
 
 
 class FoodSpider(scrapy.Spider):
@@ -31,7 +28,7 @@ class FoodSpider(scrapy.Spider):
         yield {"newsInDetails": items}
 
         for i in range(1, 8):
-            next_page = "https://www.yamu.lk/recipe?page="+str(i)
+            next_page = "https://www.yamu.lk/recipe?page=" + str(i)
             yield scrapy.Request(next_page, callback=self.parse)
 
     def parse_1(self, response):

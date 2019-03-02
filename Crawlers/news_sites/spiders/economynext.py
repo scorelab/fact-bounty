@@ -1,10 +1,7 @@
 import scrapy
-from scrapy.spiders import Spider
-from news_sites.items import EconomyNextItem
-from urllib.parse import urljoin
-import datetime
 from scrapy.http import Request
-import re
+
+from news_sites.items import EconomyNextItem
 
 
 class EconomyNextSpider(scrapy.Spider):
@@ -23,7 +20,7 @@ class EconomyNextSpider(scrapy.Spider):
             item['news_headline'] = news.css('a ::text')[0].extract()
             item['datetime'] = news.css('a ::text')[1].extract().rstrip()
             news_url = "http://economynext.com/" + \
-                news.css('a ::attr(href)')[0].extract()
+                       news.css('a ::attr(href)')[0].extract()
             item['link'] = news_url
             r = Request(url=news_url, callback=self.parse_1)
             r.meta['item'] = item
@@ -35,7 +32,7 @@ class EconomyNextSpider(scrapy.Spider):
             'div.page-pager a.next ::attr(href)').extract_first()
         if next_page is not None:
             print(next_page)
-            next_page = "http://economynext.com/"+str(next_page)
+            next_page = "http://economynext.com/" + str(next_page)
             yield scrapy.Request(next_page, callback=self.parse)
 
     def parse_1(self, response):

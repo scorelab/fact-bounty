@@ -1,15 +1,15 @@
 import scrapy
-from scrapy.spiders import Spider
-from news_sites.items import FtItem
-from urllib.parse import urljoin
 # import datetime
 from scrapy.http import Request
+
+from news_sites.items import FtItem
 
 
 class FitSpider(scrapy.Spider):
     name = "fit"
     allowed_domains = ["ft.lk"]
     start_urls = ['http://www.ft.lk/it-telecom-tech']
+
     # 'http://www.ft.lk/it-telecom-tech','http://www.ft.lk/travel-tourism','http://www.ft.lk/financial-services','http://www.ft.lk/agriculture','http://www.ft.lk/entertainment-sectors','http://www.ft.lk/fashionlifestyle','http://www.ft.lk/energy','http://www.ft.lk/international','http://www.ft.lk/management']
 
     def parse(self, response):
@@ -33,7 +33,7 @@ class FitSpider(scrapy.Spider):
         yield {'data': items}
 
         for i in range(20, 11660, 20):
-            next_url = "http://www.ft.lk/news/"+str(i)
+            next_url = "http://www.ft.lk/news/" + str(i)
             yield scrapy.Request(next_url, callback=self.parse)
 
         '''

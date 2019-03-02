@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from scrapy.spiders import Spider
-from news_sites.items import LDItem
-from urllib.parse import urljoin
 from scrapy.http import Request
+
+from news_sites.items import LDItem
 
 
 class LankadeepaSpider(scrapy.Spider):
@@ -23,7 +22,7 @@ class LankadeepaSpider(scrapy.Spider):
                 'div.simple-thumb p.timeandauthor small ::text').extract_first()
             # content = news.css('div.simple-thumb p.catexcerpt ::text').extract_first()
             item = LDItem()
-            if(news_url != None):
+            if (news_url != None):
                 # print(news_url)
                 # print(title)
                 # print(str(timedate))
