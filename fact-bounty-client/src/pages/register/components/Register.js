@@ -83,13 +83,22 @@ class Register extends Component {
 	}
 	onSubmit = e => {
 		e.preventDefault()
-		const newUser = {
-			name: this.state.name,
-			email: this.state.email,
-			password: this.state.password,
-			password2: this.state.password2
+		const { name, email, password, password2} = this.state;
+		if(password === password2) {
+			const newUser = {
+				name,
+				email,
+				password,
+				password2
+			}
+			this.props.registerUser(newUser, this.props.history)
+		}else {
+			const passwordError = "Password don't match"
+			const errors = {
+				password2: passwordError
+			}
+			this.setState({errors})
 		}
-		this.props.registerUser(newUser, this.props.history)
 	}
 
 	render() {
