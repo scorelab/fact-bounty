@@ -37,7 +37,7 @@ class Story(db.Model):
         """
         Returns a JSON object
 
-        :return: user JSON object
+        :return: story JSON object
         """
         json_story = {
             'title': self.title,
@@ -49,3 +49,11 @@ class Story(db.Model):
             'date_added': self.date_added
         }
         return json_story
+
+    def save(self):
+        """
+        Save a story to the database.
+        This includes creating a new story and editing one.
+        """
+        db.session.add(self)
+        db.session.commit()
