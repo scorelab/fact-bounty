@@ -40,8 +40,7 @@ class User(db.Model):
         Generate authorization token
 
         """
-        s = Serializer(current_app.config['SECRET_KEY'],
-                       expires_in=expiration)
+        s = Serializer(current_app.config['SECRET_KEY'], expires_in=expiration)
         return s.dumps({'id': self.id}).decode('utf-8')
 
     def to_json(self):

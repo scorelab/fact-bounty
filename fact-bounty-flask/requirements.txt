@@ -10,3 +10,4 @@ MarkupSafe==1.1.1
 SQLAlchemy==1.2.18
 Werkzeug==0.14.1
 WTForms==2.2.1
+passlib==1.7.1
