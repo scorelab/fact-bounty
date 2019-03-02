@@ -1,9 +1,8 @@
 import scrapy
-from scrapy.spiders import Spider
-from news_sites.items import NFItem
-from urllib.parse import urljoin
 # import datetime
 from scrapy.http import Request
+
+from news_sites.items import NFItem
 
 
 class NewsFirstSpider(scrapy.Spider):
@@ -41,7 +40,7 @@ class NewsFirstSpider(scrapy.Spider):
 
         for i in range(1, 2528):
             next_url = "http://newsfirst.lk/english/category/local/page/" + \
-                str(i)
+                       str(i)
             yield scrapy.Request(next_url, callback=self.parse)
 
     def parse_1(self, response):

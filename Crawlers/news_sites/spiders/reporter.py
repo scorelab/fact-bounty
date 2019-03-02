@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
-#!/usr/bin/python3
+# !/usr/bin/python3
 import scrapy
-from scrapy.spiders import Spider
-from news_sites.items import adaDeraneItem
-from urllib.parse import urljoin
 from scrapy.http import Request
+
+from news_sites.items import adaDeraneItem
 
 
 class reporterSpider(scrapy.Spider):

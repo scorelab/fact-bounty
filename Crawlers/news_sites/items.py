@@ -25,9 +25,9 @@ class NFItem(scrapy.Item):
 
 class CTItem(scrapy.Item):
     news_headline = scrapy.Field()
-    #published_timestamp = scrapy.Field()
-    #comments = scrapy.Field()
-    #views = scrapy.Field()
+    # published_timestamp = scrapy.Field()
+    # comments = scrapy.Field()
+    # views = scrapy.Field()
     # moreDetails=scrapy.Field()
     link = scrapy.Field()
     data = scrapy.Field()

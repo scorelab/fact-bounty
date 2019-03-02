@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from scrapy.spiders import Spider
-from news_sites.items import ThePapareItem
-from urllib.parse import urljoin
 from scrapy.http import Request
+
+from news_sites.items import ThePapareItem
 
 
 class ThePapareSpider(scrapy.Spider):

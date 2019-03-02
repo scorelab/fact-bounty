@@ -1,9 +1,9 @@
-import scrapy
-from scrapy.spiders import Spider
-from news_sites.items import PulseItem
 from urllib.parse import urljoin
-import datetime
+
+import scrapy
 from scrapy.http import Request
+
+from news_sites.items import PulseItem
 
 
 class PulseSpider(scrapy.Spider):
@@ -35,7 +35,7 @@ class PulseSpider(scrapy.Spider):
         next_link = next_link[0]  # extract_first()
         if next_link is not None:
             next_url = urljoin(response.url, str(next_link))
-            print("scrpping "+next_url)
+            print("scrpping " + next_url)
             yield scrapy.Request(next_url, callback=self.parse)
 
     def parse_1(self, response):

@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from scrapy.spiders import Spider
-from news_sites.items import adaDeraneItem
-from urllib.parse import urljoin
 from scrapy.http import Request
+
+from news_sites.items import adaDeraneItem
 
 
 class slgurdianSpider(scrapy.Spider):
     name = "slg"
     allowed_domains = ["slguardian.org"]
-    start_urls = ['http://www.slguardian.org/?cat=53', 'http://www.slguardian.org/?cat=46', 'http://www.slguardian.org/?cat=4167', 'http://www.slguardian.org/?cat=64', 'http://www.slguardian.org/?cat=1232', 'http://www.slguardian.org/?cat=109',
-                  'http://www.slguardian.org/?cat=7', 'http://www.slguardian.org/?cat=13', 'http://www.slguardian.org/?cat=4445', 'http://www.slguardian.org/?cat=75']
+    start_urls = ['http://www.slguardian.org/?cat=53', 'http://www.slguardian.org/?cat=46',
+                  'http://www.slguardian.org/?cat=4167', 'http://www.slguardian.org/?cat=64',
+                  'http://www.slguardian.org/?cat=1232', 'http://www.slguardian.org/?cat=109',
+                  'http://www.slguardian.org/?cat=7', 'http://www.slguardian.org/?cat=13',
+                  'http://www.slguardian.org/?cat=4445', 'http://www.slguardian.org/?cat=75']
 
     def parse(self, response):
         items = []

@@ -1,10 +1,7 @@
 import scrapy
-from scrapy.spiders import Spider
-from news_sites.items import chaptersItem
-from urllib.parse import urljoin
-import datetime
 from scrapy.http import Request
-import re
+
+from news_sites.items import chaptersItem
 
 
 class ChaptersSpider(scrapy.Spider):
@@ -30,7 +27,7 @@ class ChaptersSpider(scrapy.Spider):
 
         for i in range(2, 104):
             next_url = "http://chapters.lk/index.php?route=product/category&path=60_75&page=" + \
-                str(i)
+                       str(i)
             yield scrapy.Request(next_url, callback=self.parse)
 
     def parse_1(self, response):

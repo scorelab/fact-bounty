@@ -6,16 +6,18 @@ Created on Thu Jun  8 05:13:16 2017
 """
 
 import scrapy
-#from scrapy.spider import Spider
-from news_sites.items import adaDeraneItem
-#from urllib.parse import urljoin
+# from urllib.parse import urljoin
 from scrapy.http import Request
+
+# from scrapy.spider import Spider
+from news_sites.items import adaDeraneItem
 
 
 class RAWSpider(scrapy.Spider):
     name = "raw"
     allowed_domains = ["raw.lk"]
-    start_urls = ["http://www.raw.lk/news", "http://www.raw.lk/gossip", "http://www.raw.lk/foreign_news", "http://www.raw.lk/sports",
+    start_urls = ["http://www.raw.lk/news", "http://www.raw.lk/gossip", "http://www.raw.lk/foreign_news",
+                  "http://www.raw.lk/sports",
                   "http://www.raw.lk/investigation", "http://www.raw.lk/entertainment"]
 
     def parse(self, response):

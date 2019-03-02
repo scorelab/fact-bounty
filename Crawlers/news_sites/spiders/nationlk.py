@@ -1,9 +1,10 @@
-from urllib.parse import urljoin
-import scrapy
-from scrapy.spiders import Spider
-from news_sites.items import NationlkItem
 import datetime
+from urllib.parse import urljoin
+
+import scrapy
 from scrapy.http import Request
+
+from news_sites.items import NationlkItem
 
 
 class NationLKSpider(scrapy.Spider):
@@ -49,7 +50,7 @@ class NationLKSpider(scrapy.Spider):
         '''
         a = response.css('div.page-nav.td-pb-padding-side')
         next_page = a.css('a ::attr(href)').extract()
-        next_page = next_page[len(next_page)-1]
+        next_page = next_page[len(next_page) - 1]
         if next_page is not None:
             next_url = urljoin(response.url, str(next_page))
             print("scrpping " + next_url)

@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from scrapy.spiders import Spider
-from news_sites.items import ReadMeItem
-from urllib.parse import urljoin
 from scrapy.http import Request
+
+from news_sites.items import ReadMeItem
 
 
 class DailymirrorlkSpider(scrapy.Spider):
@@ -27,7 +26,7 @@ class DailymirrorlkSpider(scrapy.Spider):
             item['news_headline'] = obj[1]
             item['date'] = obj[2]
             item['writer'] = obj[4]
-            #item['moreDetails'] = obj[4]
+            # item['moreDetails'] = obj[4]
             item['news_link'] = news_url
             r = Request(url=news_url, callback=self.parse_1)
             r.meta['item'] = item

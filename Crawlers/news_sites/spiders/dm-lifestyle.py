@@ -1,10 +1,7 @@
 import scrapy
-from scrapy.spiders import Spider
-from news_sites.items import GeneralItem
-from urllib.parse import urljoin
-import datetime
 from scrapy.http import Request
-import re
+
+from news_sites.items import GeneralItem
 
 
 class LifeStyleSpider(scrapy.Spider):

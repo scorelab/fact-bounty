@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from scrapy.spiders import Spider
-from news_sites.items import adaDeraneItem
-#from urllib.parse import urljoin
+# from urllib.parse import urljoin
 from scrapy.http import Request
+
+from news_sites.items import adaDeraneItem
 
 
 class BizadaDeranaSpider(scrapy.Spider):
     name = "bizada"
     allowed_domains = ["adaderana.lk"]
-    start_urls = ['http://bizenglish.adaderana.lk/category/top-news/', 'http://bizenglish.adaderana.lk/category/news-2/',
-                  'http://bizenglish.adaderana.lk/category/analysis/', 'http://bizenglish.adaderana.lk/category/features/']
+    start_urls = ['http://bizenglish.adaderana.lk/category/top-news/',
+                  'http://bizenglish.adaderana.lk/category/news-2/',
+                  'http://bizenglish.adaderana.lk/category/analysis/',
+                  'http://bizenglish.adaderana.lk/category/features/']
 
     def parse(self, response):
         items = []
@@ -42,7 +44,7 @@ class BizadaDeranaSpider(scrapy.Spider):
         next_link = response.css(
             'ul.pager a[title*=next] ::attr(href)').extract_first()
         if next_link is not None:
-            #next_url = urljoin(response.url, str(next_link))
+            # next_url = urljoin(response.url, str(next_link))
             print("crawling " + next_link)
             yield scrapy.Request(next_link, callback=self.parse)
 
