@@ -1,9 +1,11 @@
-from flask import jsonify, request, current_app, url_for, g, abort
+from flask import jsonify, request, abort
+
 from . import api
 from .models.user import User
 from ..app import db
 
-# Routes for user authentication 
+
+# Routes for user authentication
 
 # A route to register user
 @api.route('/users/register', methods=['POST'])
@@ -20,12 +22,12 @@ def add_user():
     password2 = request.form['password2']
     print('check1')
     if password != password2:
-        abort(400) # password not same
+        abort(400)  # password not same
 
     if name is None or password is None or email is None:
-        abort(400) # missing arguments
+        abort(400)  # missing arguments
     if User.query.filter_by(email=email).first() is not None:
-        abort(400) # existing user
+        abort(400)  # existing user
 
     user = User(name=name, email=email)
 
@@ -36,6 +38,7 @@ def add_user():
     return jsonify({
         'response': 'User ' + name + 'created successfully'
     }), 201
+
 
 # A route to login user
 @api.route('/users/login', methods=['POST'])

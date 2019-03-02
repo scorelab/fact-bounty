@@ -1,7 +1,9 @@
-from flask import jsonify, request, current_app, url_for
+from flask import jsonify, request, current_app
+
 from . import api
 from .models.story import Story
 from .. import db
+
 
 # Routes for stories
 
@@ -15,6 +17,7 @@ def get_all():
     """
     stories = Story.query.all()
     return jsonify({'Stories': [story.to_json() for story in stories]})
+
 
 # A route to return stories in range
 @api.route('/stories/get-range/<int:page>')
@@ -32,6 +35,7 @@ def get_page(page):
     return jsonify({
         'stories': [story.to_json() for story in stories]
     })
+
 
 # A route to change upvote count of a story
 @api.route('/stories/change-upvote-count', methods=['POST'])
@@ -56,7 +60,7 @@ def change_upvote():
 
 # A route to change downvote count of a story
 @api.route('/stories/change-downvote-count', methods=['POST'])
-def change_downvote():    
+def change_downvote():
     """
     Update fake-count
     

@@ -1,5 +1,7 @@
 from datetime import datetime
+
 from ... import db
+
 
 class Story(db.Model):
     """ This model holds information about Story """
