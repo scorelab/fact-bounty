@@ -20,7 +20,6 @@ def add_user():
     email = request.form['email']
     password = request.form['password']
     password2 = request.form['password2']
-    print('check1')
     if password != password2:
         abort(400)  # password not same
 
