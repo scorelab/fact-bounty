@@ -60,13 +60,16 @@ class TopNavBar extends Component {
 						<Button color="primary" style={styles.navbarLinks} >ABOUT</Button>
 					</Link>
 					<Button color="primary" style={styles.navbarLinks}
-						onClick={this.handleToggle} aria-haspopup="true"
-						aria-owns={anchorEl ? 'simple-menu' : undefined}>
+							onClick={this.handleToggle} aria-haspopup="true"
+							aria-owns={anchorEl ? 'simple-menu' : undefined}>
 						<Person /> <ExpandMore />
 					</Button>
 					<Menu id="simple-menu" anchorEl={anchorEl}
-						open={Boolean(anchorEl)} onClose={this.handleClose}>
+						  open={Boolean(anchorEl)} onClose={this.handleClose}>
+						<MenuItem key="placeholder" style={{display: "none"}} />
+						<Link to="/login" style={styles.link} >
 						<MenuItem onClick={this.handleClose}>Login</MenuItem>
+						</Link>
 					</Menu>
 				</Toolbar>
 			</AppBar>
