@@ -1,7 +1,7 @@
 bcrypt==3.1.6
 cffi==1.12.2
 Click==7.0
-elasticsearch==6.2.0
+elasticsearch==6.3.1
 Flask==1.0.2
 Flask-Bcrypt==0.7.1
 Flask-HTTPAuth==3.2.4
