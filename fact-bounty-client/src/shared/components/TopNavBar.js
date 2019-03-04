@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
-import Button from '@material-ui/core/Button'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
-import { Person, ExpandMore } from '@material-ui/icons'
-import { Menu, MenuItem } from '@material-ui/core'
-import { Link } from 'react-router-dom'
+import React, {Component}   from 'react'
+import Button               from '@material-ui/core/Button'
+import AppBar               from '@material-ui/core/AppBar'
+import Toolbar              from '@material-ui/core/Toolbar'
+import Typography           from '@material-ui/core/Typography'
+import {ExpandMore, Person} from '@material-ui/icons'
+import {Menu, MenuItem}     from '@material-ui/core'
+import {Link}               from 'react-router-dom'
 
 const styles = {
 	navbar: {
@@ -33,10 +33,10 @@ class TopNavBar extends Component {
 
 	state = {
 		anchorEl: null
-	};
+	}
 
 	handleToggle = event => {
-		this.setState({ anchorEl: event.currentTarget })
+		this.setState({anchorEl: event.currentTarget})
 	}
 
 	handleClose = () => {
@@ -46,7 +46,7 @@ class TopNavBar extends Component {
 	}
 
 	render() {
-		const { anchorEl } = this.state
+		const {anchorEl} = this.state
 		return (
 			<AppBar position="fixed" color="default" style={styles.navbar}>
 				<Toolbar>
@@ -57,15 +57,15 @@ class TopNavBar extends Component {
 						<Button color="primary" style={styles.navbarLinks}>HOME</Button>
 					</Link>
 					<Link to="/about" style={styles.link}>
-						<Button color="primary" style={styles.navbarLinks} >ABOUT</Button>
+						<Button color="primary" style={styles.navbarLinks}>ABOUT</Button>
 					</Link>
 					<Button color="primary" style={styles.navbarLinks}
-						onClick={this.handleToggle} aria-haspopup="true"
-						aria-owns={anchorEl ? 'simple-menu' : undefined}>
-						<Person /> <ExpandMore />
+							onClick={this.handleToggle} aria-haspopup="true"
+							aria-owns={anchorEl ? 'simple-menu' : undefined}>
+						<Person/> <ExpandMore/>
 					</Button>
 					<Menu id="simple-menu" anchorEl={anchorEl}
-						open={Boolean(anchorEl)} onClose={this.handleClose}>
+						  open={Boolean(anchorEl)} onClose={this.handleClose}>
 						<Link to="/login">
 							<MenuItem>Login</MenuItem>
 						</Link>

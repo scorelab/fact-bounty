@@ -1,25 +1,24 @@
-import React, { Component } from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
-import jwt_decode from 'jwt-decode'
-import { Provider } from 'react-redux'
+import React, {Component}                       from 'react'
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import MuiThemeProvider                         from '@material-ui/core/styles/MuiThemeProvider'
+import jwt_decode                               from 'jwt-decode'
+import {Provider}                               from 'react-redux'
 
-import setAuthToken from './utils/setAuthToken'
-import { logoutUser, setCurrentUser } from './actions/authActions'
-import store from './core/store'
-import theme from './core/theme'
+import setAuthToken                 from './utils/setAuthToken'
+import {logoutUser, setCurrentUser} from './actions/authActions'
+import store                        from './core/store'
+import theme                        from './core/theme'
 import './App.sass'
-
 // import Landing      from './components/landing/Landing'
 // import Register     from './components/register/Register'
 // import Login        from './components/login/Login'
-import PrivateRoute from './core/PrivateRoute'
+import PrivateRoute                 from './core/PrivateRoute'
 // import Dashboard    from './components/dashboard/Dashboard'
-import Landing from './pages/landing/components/Landing'
-import Register from './pages/register/components/Register'
-import Login from './pages/login/components/Login'
-import Dashboard from './pages/dashboard/components/Dashboard'
-import MainLayout from './pages/main/components/MainLayout'
+import Landing                      from './pages/landing/components/Landing'
+import Register                     from './pages/register/components/Register'
+import Login                        from './pages/login/components/Login'
+import Dashboard                    from './pages/dashboard/components/Dashboard'
+import MainLayout                   from './pages/main/components/MainLayout'
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -50,12 +49,12 @@ class App extends Component {
 				<Router>
 					<MuiThemeProvider theme={theme}>
 						<div className="App">
-							<Route path="/" component={MainLayout} />
-							<Route exact path="/landing" component={Landing} />
-							<Route exact path="/register" component={Register} />
-							<Route exact path="/login" component={Login} />
+							<Route path="/" component={MainLayout}/>
+							<Route exact path="/landing" component={Landing}/>
+							<Route exact path="/register" component={Register}/>
+							<Route exact path="/login" component={Login}/>
 							<Switch>
-								<PrivateRoute exact path="/dashboard" component={Dashboard} />
+								<PrivateRoute exact path="/dashboard" component={Dashboard}/>
 							</Switch>
 						</div>
 					</MuiThemeProvider>

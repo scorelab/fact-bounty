@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import '../Posts.sass'
-import Post from './Post'
-import { connect } from 'react-redux'
-import { fetchPosts } from '../actions/postActions'
-import InfiniteScroll from 'react-infinite-scroller'
+import Post               from './Post'
+import {connect}          from 'react-redux'
+import {fetchPosts}       from '../actions/postActions'
+import InfiniteScroll     from 'react-infinite-scroller'
 
 class Posts extends Component {
 
@@ -18,7 +18,7 @@ class Posts extends Component {
 		var items = []
 		this.props.posts.map(post => {
 			items.push(
-				<Post key={post._id} post={post} />
+				<Post key={post._id} post={post}/>
 			)
 		})
 		return (
@@ -47,4 +47,4 @@ const mapStatetoProps = state => ({
 	loading: state.posts.loading
 })
 
-export default connect(mapStatetoProps, { fetchPosts })(Posts)
+export default connect(mapStatetoProps, {fetchPosts})(Posts)

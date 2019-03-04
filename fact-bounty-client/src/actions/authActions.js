@@ -1,6 +1,5 @@
-
-import setAuthToken from '../utils/setAuthToken'
-import { SET_CURRENT_USER, USER_LOADING } from './types'
+import setAuthToken                     from '../utils/setAuthToken'
+import {SET_CURRENT_USER, USER_LOADING} from './types'
 
 // Set logged in user
 export const setCurrentUser = decoded => {

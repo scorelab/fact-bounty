@@ -1,5 +1,5 @@
-import setAuthToken from '../../../utils/setAuthToken'
-import { setCurrentUser } from '../../../actions/authActions'
+import setAuthToken     from '../../../utils/setAuthToken'
+import {setCurrentUser} from '../../../actions/authActions'
 
 // Log user out
 export const logoutUser = () => dispatch => {

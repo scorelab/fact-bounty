@@ -1,4 +1,5 @@
 import axios from 'axios'
+
 export const FETCH_POSTS = 'FETCH_POSTS'
 export const LOADING = 'LOADING'
 export const APPROVE_VOTE_COMPLETE = 'VOTE_COMPLETE'
@@ -9,7 +10,7 @@ export const INCREMENT_PAGE = 'INCREMENT_PAGE'
 export const NO_MORE = 'NO_MORE'
 
 export const fetchPosts = (page) => dispatch => {
-	dispatch({ type: LOADING })
+	dispatch({type: LOADING})
 	fetch('/api/stories/get-range/' + page)
 		.then(res => res.json())
 		.then(posts => {
@@ -17,7 +18,7 @@ export const fetchPosts = (page) => dispatch => {
 				type: FETCH_POSTS,
 				payload: posts.docs
 			})
-			dispatch({ type: INCREMENT_PAGE })
+			dispatch({type: INCREMENT_PAGE})
 		})
 		.catch(err => {
 			console.error('Server response invalid', err)
@@ -25,7 +26,7 @@ export const fetchPosts = (page) => dispatch => {
 }
 
 export const approveVote = (voteId) => dispatch => {
-	dispatch({ type: LOADING })
+	dispatch({type: LOADING})
 	axios({
 		baseURL: 'http://localhost:7000',
 		url: '/api/stories/change-upvote-count',
@@ -34,7 +35,7 @@ export const approveVote = (voteId) => dispatch => {
 			story_id: voteId,
 			change_val: 1
 		},
-		headers: { 'Access-Control-Allow-Origin': '*' }
+		headers: {'Access-Control-Allow-Origin': '*'}
 	})
 		.then(res => {
 			dispatch({
@@ -51,7 +52,7 @@ export const approveVote = (voteId) => dispatch => {
 }
 
 export const fakeVote = (voteId) => dispatch => {
-	dispatch({ type: LOADING })
+	dispatch({type: LOADING})
 	axios({
 		baseURL: 'http://localhost:7000',
 		url: '/api/stories/change-downvote-count',
@@ -60,7 +61,7 @@ export const fakeVote = (voteId) => dispatch => {
 			story_id: voteId,
 			change_val: 1
 		},
-		headers: { 'Access-Control-Allow-Origin': '*' }
+		headers: {'Access-Control-Allow-Origin': '*'}
 	})
 		.then(res => {
 			dispatch({
@@ -77,7 +78,7 @@ export const fakeVote = (voteId) => dispatch => {
 }
 
 export const mixVote = (voteId) => dispatch => {
-	dispatch({ type: LOADING })
+	dispatch({type: LOADING})
 	axios({
 		baseURL: 'http://localhost:7000',
 		url: '/api/stories/change-mixedvote-count',
@@ -86,7 +87,7 @@ export const mixVote = (voteId) => dispatch => {
 			story_id: voteId,
 			change_val: 1
 		},
-		headers: { 'Access-Control-Allow-Origin': '*' }
+		headers: {'Access-Control-Allow-Origin': '*'}
 	})
 		.then(res => {
 			dispatch({

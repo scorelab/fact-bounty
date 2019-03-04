@@ -1,5 +1,5 @@
-import axios from 'axios'
-import { GET_ERRORS } from '../../../core/types'
+import axios        from 'axios'
+import {GET_ERRORS} from '../../../core/types'
 
 // Register User
 export const registerUser = (userData, history) => dispatch => {

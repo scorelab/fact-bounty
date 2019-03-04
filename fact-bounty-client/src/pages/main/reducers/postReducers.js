@@ -1,4 +1,13 @@
-import { FETCH_POSTS, LOADING, APPROVE_VOTE_COMPLETE, VOTE_ERROR, FAKE_VOTE_COMPLETE, MIX_VOTE_COMPLETE, NO_MORE, INCREMENT_PAGE } from '../actions/postActions'
+import {
+	APPROVE_VOTE_COMPLETE,
+	FAKE_VOTE_COMPLETE,
+	FETCH_POSTS,
+	INCREMENT_PAGE,
+	LOADING,
+	MIX_VOTE_COMPLETE,
+	NO_MORE,
+	VOTE_ERROR
+} from '../actions/postActions'
 
 const initialState = {
 	items: [],
