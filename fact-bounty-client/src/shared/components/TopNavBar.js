@@ -66,10 +66,14 @@ class TopNavBar extends Component {
 					</Button>
 					<Menu id="simple-menu" anchorEl={anchorEl}
 						  open={Boolean(anchorEl)} onClose={this.handleClose}>
-						<Link to="/login">
+						<Link to="/login" style={styles.link}>
 							<MenuItem>Login</MenuItem>
 						</Link>
+						<Link to="/register" style={styles.link}>
+							<MenuItem>Register</MenuItem>
+						</Link>
 					</Menu>
+					
 				</Toolbar>
 			</AppBar>
 		)
