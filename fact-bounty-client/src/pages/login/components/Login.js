@@ -142,7 +142,7 @@ class Login extends Component {
 							Login
 						</Button>
 						<div style={{'paddingTop': "4px", "float": "right"}}>
-						<Link component={RouterLink} to="/register">Not Registred Yet? Register Here</Link>
+						<Link component={RouterLink} to="/register"> Don't have an account? Sign up!</Link>
 						</div>
 					</form>
 				</Paper>
