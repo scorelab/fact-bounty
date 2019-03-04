@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import PropTypes          from 'prop-types'
 import {connect}          from 'react-redux'
 import classnames         from 'classnames'
+import { Link as RouterLink } from 'react-router-dom'
 
 import compose          from 'recompose/compose'
 import Avatar           from '@material-ui/core/Avatar'
@@ -9,6 +10,7 @@ import Button           from '@material-ui/core/Button'
 import CssBaseline      from '@material-ui/core/CssBaseline'
 import FormControl      from '@material-ui/core/FormControl'
 import Input            from '@material-ui/core/Input'
+import Link             from '@material-ui/core/Link'
 import InputLabel       from '@material-ui/core/InputLabel'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Paper            from '@material-ui/core/Paper'
@@ -139,6 +141,9 @@ class Login extends Component {
 								color="primary" className={this.props.classes.submit}>
 							Login
 						</Button>
+						<div style={{'paddingTop': "4px", "float": "right"}}>
+						<Link component={RouterLink} to="/register">Not Registred Yet? Register Here</Link>
+						</div>
 					</form>
 				</Paper>
 			</main>
