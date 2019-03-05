@@ -11,7 +11,7 @@
     "jwt-decode": "^2.2.0",
     "node-sass": "^4.11.0",
     "react": "^16.7.0",
-    "react-dom": "^16.7.0",
+    "react-dom": "^16.8.4",
     "react-infinite-scroller": "^1.2.4",
     "react-lines-ellipsis": "^0.14.0",
     "react-redux": "^6.0.0",
