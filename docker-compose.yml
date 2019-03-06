@@ -11,6 +11,11 @@ services:
   mongo:
     image: mongo
   
+  flask_server:
+    build: ./fact-bounty-flask
+    ports:
+      - 5000:5000
+      
   client:
     build: ./fact-bounty-client
     ports:
