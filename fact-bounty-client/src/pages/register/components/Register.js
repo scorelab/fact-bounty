@@ -136,7 +136,7 @@ class Register extends Component {
 								   className={classnames('', {
 									   invalid: errors.email
 								   })}/>
-							<span className="red-text">{errors.name}</span>
+							<span className="red-text">{errors.email}</span>
 						</FormControl>
 
 						<FormControl margin="normal" required fullWidth>
