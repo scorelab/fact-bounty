@@ -4,6 +4,22 @@ import { connect } from "react-redux";
 
 import { logoutUser } from "../actions/dashboardActions";
 
+const styles = {
+  container: {
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
+    height: "75vh"
+  },
+  button: {
+    width: "150px",
+    borderRadius: "3px",
+    letterSpacing: "1.5px",
+    padding: "3%",
+    marginTop: "1rem"
+  }
+};
+
 class Dashboard extends Component {
   onLogoutClick = e => {
     e.preventDefault();
@@ -13,7 +29,7 @@ class Dashboard extends Component {
   render() {
     const { user } = this.props.auth;
     return (
-      <div style={{ height: "75vh" }} className="container valign-wrapper">
+      <div style={styles.container} className="container valign-wrapper">
         <div className="row">
           <div className="col s12 center-align">
             <h4>
@@ -23,6 +39,13 @@ class Dashboard extends Component {
                 <span style={{ fontFamily: "monospace" }}>MERN</span> app 👏
               </p>
             </h4>
+            <button
+              style={styles.button}
+              onClick={this.onLogoutClick}
+              className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+            >
+              Logout
+            </button>
           </div>
         </div>
       </div>

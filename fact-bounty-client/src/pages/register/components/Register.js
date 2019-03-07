@@ -102,7 +102,9 @@ class Register extends Component {
   onSubmit = e => {
     e.preventDefault();
     const { name, email, password, password2 } = this.state;
-    if (password === password2) {
+    var patt = new RegExp("[a-zA-z s]{4,32}");
+
+    if (password === password2 && patt.test(name)) {
       const newUser = {
         name,
         email,
@@ -111,9 +113,11 @@ class Register extends Component {
       };
       this.props.registerUser(newUser, this.props.history);
     } else {
+      const nameError = "Name should only be alphabet";
       const passwordError = "Password don't match";
       const errors = {
-        password2: passwordError
+        password2: password !== password2 ? passwordError : "",
+        name: patt.test(name) ? "" : nameError
       };
       this.setState({ errors });
     }
@@ -137,7 +141,7 @@ class Register extends Component {
             className={this.props.classes.form}
           >
             <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="email">Name</InputLabel>
+              <InputLabel htmlFor="name">Name</InputLabel>
               <Input
                 onChange={this.onChange}
                 value={this.state.name}
@@ -249,9 +253,7 @@ class Register extends Component {
 Register.propTypes = {
   registerUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
-  history: PropTypes.object,
-  classes: PropTypes.object
+  errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
