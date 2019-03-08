@@ -18,6 +18,7 @@ import Typography       from '@material-ui/core/Typography'
 import withStyles       from '@material-ui/core/styles/withStyles'
 
 import {loginUser} from '../actions/authActions'
+import { red } from '@material-ui/core/colors';
 // import '../styles/login.sass';
 
 const styles = theme => ({
@@ -141,8 +142,8 @@ class Login extends Component {
 								color="primary" className={this.props.classes.submit}>
 							Login
 						</Button>
-						<div style={{'paddingTop': "4px", "float": "right"}}>
-						<Link component={RouterLink} to="/register"> Don't have an account? Sign up!</Link>
+						<div style={{'paddingTop': "6px", "float": "right"}}>
+						Don't have an account? <Link component={RouterLink} to="/register" style={{'color': 'red'}}>Sign up!</Link>
 						</div>
 					</form>
 				</Paper>
