@@ -6,8 +6,12 @@ module.exports = {
     },
     "extends": [
         "eslint:recommended",
-        "plugin:react/recommended"
+        "plugin:react/recommended",
+        "react-app",
+        "plugin:prettier/recommended",
+        "prettier/react"
     ],
+    "parser": "babel-eslint",
     "parserOptions": {
         "ecmaVersion": 2018,
         "sourceType": "module"
@@ -15,22 +19,7 @@ module.exports = {
     "rules": {
         "no-unused-vars": ["off", { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }],
         "no-console": "off",
-        "indent": [
-            "error",
-            "tab"
-        ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "semi": [
-            "error",
-            "never"
-				]
+        "prettier/prettier": "warn"
 		},
 		"settings": {
 			"react": {
