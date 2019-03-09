@@ -22,18 +22,18 @@ class Test_Login(unittest.TestCase):
         response = self.app.get('/api/stories/all')
         res = response.data.decode('ASCII')
         res = json.loads(res)
-        assert response.status_code == 200
-        assert res['message'] == 'Stories successfully fetched'
-        assert isinstance(res['stories'], (list)) is True
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(res['message'], 'Stories successfully fetched')
+        self.assertTrue(isinstance(res['stories'], (list)))
     
     def test_fetch_range_of_stories_200(self):
         """Fetch range of stories"""
         response = self.app.get('/api/stories/get-range/1')
         res = response.data.decode('ASCII')
         res = json.loads(res)
-        assert response.status_code == 200
-        assert res['message'] == 'Stories successfully fetched'
-        assert isinstance(res['stories'], (list)) is True
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(res['message'], 'Stories successfully fetched')
+        self.assertTrue(isinstance(res['stories'], (list)))
 
 if __name__ == "__main__":
     unittest.main()
