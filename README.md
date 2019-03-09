@@ -1,5 +1,7 @@
 # Fact Bounty
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7574ef8d36d8451fa979a42e2884504f)](https://app.codacy.com/app/ivantha/fact-Bounty?utm_source=github.com&utm_medium=referral&utm_content=scorelab/fact-Bounty&utm_campaign=Badge_Grade_Settings)
+
 The recent decade has witnessed the birth of social media ecosystems that brings social organizations, media content and various stakeholders together, and now it appears significant advantages of comprehensiveness, diversity and wisdom that provide users with higher quality of experiences. Meanwhile, social media ecosystems suffer from security, privacy and trustworthiness threats. How to leverage the power of intelligent crowds to improve the ecosystem’s efficacy and efficiency, as well as ensure its security and privacy become burning and challenging issues.
 
 #### Fact Bounty is a crowd sourced fact checking platform.
