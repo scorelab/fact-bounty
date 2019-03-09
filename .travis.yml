@@ -1,0 +1,13 @@
+# Config file for automatic testing at travis-ci.org
+language: python
+env:
+- FLASK_APP=app.py FLASK_DEBUG=1
+python:
+  - 3.5
+  - 3.6
+install:
+  - pip install -r fact-bounty-flask/requirements.txt
+
+script: 
+    - cd fact-bounty-flask
+    - flask test
