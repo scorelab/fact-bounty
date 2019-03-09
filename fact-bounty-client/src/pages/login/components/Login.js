@@ -51,6 +51,10 @@ const styles = theme => ({
 	submit: {
 		marginTop: theme.spacing.unit * 3,
 	},
+	forgotPass: {
+		marginTop: "8px",
+		textAlign: 'center'
+	}
 })
 
 class Login extends Component {
@@ -142,7 +146,7 @@ class Login extends Component {
 								color="primary" className={this.props.classes.submit}>
 							Login
 						</Button>
-						<div style={{'paddingTop': "6px", "float": "right"}}>
+						<div className={this.props.classes.forgotPass}>
 						Don't have an account? <Link component={RouterLink} to="/register" style={{'color': 'red'}}>Sign up!</Link>
 						</div>
 					</form>
