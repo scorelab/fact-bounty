@@ -54,6 +54,9 @@ const styles = theme => ({
 	forgotPass: {
 		marginTop: "8px",
 		textAlign: 'center'
+	},
+	link: {
+		color: '#E90E58'
 	}
 })
 
@@ -147,7 +150,7 @@ class Login extends Component {
 							Login
 						</Button>
 						<div className={this.props.classes.forgotPass}>
-						Don't have an account? <Link component={RouterLink} to="/register" style={{'color': 'red'}}>Sign up!</Link>
+						Don't have an account? <Link component={RouterLink} to="/register" className={this.props.classes.link}>Sign up!</Link>
 						</div>
 					</form>
 				</Paper>
