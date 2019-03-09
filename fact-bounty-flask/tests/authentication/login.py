@@ -27,25 +27,25 @@ class Test_Login(unittest.TestCase):
         response = self.app.post('/api/users/login',data=dict(email=USER_DATA['email'],password=USER_DATA['password']),follow_redirects=True)
         res = response.data.decode('ASCII')
         res = json.loads(res)
-        assert response.status_code == 200
-        assert res['message'] =='You logged in successfully.'
-        assert res['access_token'] != ''
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(res['message'], 'You logged in successfully.')
+        self.assertNotEqual(res['access_token'],'')
 
     def test_sees_error_message_if_password_is_incorrect(self):
         """Show error if password is incorrect."""
         response = self.app.post('/api/users/login',data=dict(email=USER_DATA['email'],password=USER_DATA['password']+'x'),follow_redirects=True)
         res = response.data.decode('ASCII')
         res = json.loads(res)
-        assert response.status_code == 401
-        assert res['message'] == 'Invalid email or password, Please try again'
+        self.assertEqual(response.status_code, 401)
+        self.assertEqual(res['message'], 'Invalid email or password, Please try again')
 
     def test_sees_error_message_if_username_doesnt_exist(self):
         """Show error if username doesn't exist."""
         response = self.app.post('/api/users/login',data=dict(email=USER_DATA['email'],password=USER_DATA['password']+'x'),follow_redirects=True)
         res = response.data.decode('ASCII')
         res = json.loads(res)
-        assert response.status_code == 401
-        assert res['message'] == 'Invalid email or password, Please try again'
+        self.assertEqual(response.status_code, 401)
+        self.assertEqual(res['message'], 'Invalid email or password, Please try again')
 
 if __name__ == "__main__":
     unittest.main()
