@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames";
+import { Link as RouterLink } from "react-router-dom";
 
 import compose from "recompose/compose";
 import Avatar from "@material-ui/core/Avatar";
@@ -14,6 +15,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
+import Link from "@material-ui/core/Link";
 
 import { registerUser } from "../actions/newUserActions";
 //import "../styles/register.sass"
@@ -188,6 +190,12 @@ class Register extends Component {
               Sign Up
             </Button>
           </form>
+          <p>
+            Already have an account?{" "}
+            <Link component={RouterLink} to="/login">
+              Login.
+            </Link>
+          </p>
         </Paper>
       </main>
     );
