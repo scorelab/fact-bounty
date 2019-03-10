@@ -28,7 +28,7 @@ export const fetchPosts = page => dispatch => {
 export const approveVote = voteId => dispatch => {
   dispatch({ type: LOADING });
   axios({
-    baseURL: "http://localhost:7000",
+    baseURL: "http://localhost:5000",
     url: "/api/stories/change-upvote-count",
     method: "post",
     data: {
@@ -54,7 +54,7 @@ export const approveVote = voteId => dispatch => {
 export const fakeVote = voteId => dispatch => {
   dispatch({ type: LOADING });
   axios({
-    baseURL: "http://localhost:7000",
+    baseURL: "http://localhost:5000",
     url: "/api/stories/change-downvote-count",
     method: "post",
     data: {
@@ -80,7 +80,7 @@ export const fakeVote = voteId => dispatch => {
 export const mixVote = voteId => dispatch => {
   dispatch({ type: LOADING });
   axios({
-    baseURL: "http://localhost:7000",
+    baseURL: "http://localhost:5000",
     url: "/api/stories/change-mixedvote-count",
     method: "post",
     data: {
