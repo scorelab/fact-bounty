@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames";
+import { Link as RouterLink } from "react-router-dom";
 
 import compose from "recompose/compose";
 import Avatar from "@material-ui/core/Avatar";
@@ -14,6 +15,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
+import Link from "@material-ui/core/Link";
 
 import { loginUser } from "../actions/authActions";
 // import '../styles/login.sass';
@@ -154,6 +156,12 @@ class Login extends Component {
               Login
             </Button>
           </form>
+          <p>
+            Dont have an account?{" "}
+            <Link component={RouterLink} to="/register">
+              Create One.
+            </Link>
+          </p>
         </Paper>
       </main>
     );
