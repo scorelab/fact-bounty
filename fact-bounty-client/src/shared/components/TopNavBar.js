@@ -47,7 +47,7 @@ class TopNavBar extends Component {
   render() {
     const { anchorEl } = this.state;
     return (
-      <AppBar position="fixed" color="default" style={styles.navbar}>
+      <AppBar position="static" color="default" style={styles.navbar}>
         <Toolbar>
           <Link to="/" style={styles.navbarTitle}>
             <Typography variant="h4" color="primary">
