@@ -6,6 +6,10 @@ import Typography from "@material-ui/core/Typography";
 import { ExpandMore, Person } from "@material-ui/icons";
 import { Menu, MenuItem } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
+import { logoutUser } from "../../pages/dashboard/actions/dashboardActions";
 
 const styles = {
   navbar: {
@@ -30,22 +34,39 @@ const styles = {
 };
 
 class TopNavBar extends Component {
-  state = {
-    anchorEl: null
-  };
+  constructor() {
+    super();
+    this.state = {};
+  }
 
-  handleToggle = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-
-  handleClose = () => {
-    this.setState(state => ({
-      anchorEl: null
-    }));
+  onLogoutClick = e => {
+    e.preventDefault();
+    this.props.logoutUser();
   };
 
   render() {
-    const { anchorEl } = this.state;
+    const { isAuthenticated } = this.props.auth;
+    const guestLinks = (
+      <div>
+        <Link to="/register" style={styles.link}>
+          <Button color="primary" style={styles.navbarLinks}>
+            Sign Up
+          </Button>
+        </Link>
+        <Link to="/login" style={styles.link}>
+          <Button color="primary" style={styles.navbarLinks}>
+            Login
+          </Button>
+        </Link>
+      </div>
+    );
+
+    const authLinks = (
+      <Button style={styles.navbarLinks} onClick={this.onLogoutClick}>
+        Logout
+      </Button>
+    );
+
     return (
       <AppBar position="fixed" color="default" style={styles.navbar}>
         <Toolbar>
@@ -64,20 +85,23 @@ class TopNavBar extends Component {
               ABOUT
             </Button>
           </Link>
-          <Link to="/register" style={styles.link}>
-            <Button color="primary" style={styles.navbarLinks}>
-              Sign Up
-            </Button>
-          </Link>
-          <Link to="/login" style={styles.link}>
-            <Button color="primary" style={styles.navbarLinks}>
-              Login
-            </Button>
-          </Link>
+          {isAuthenticated ? authLinks : guestLinks}
         </Toolbar>
       </AppBar>
     );
   }
 }
 
-export default TopNavBar;
+TopNavBar.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(
+  mapStateToProps,
+  { logoutUser }
+)(TopNavBar);
