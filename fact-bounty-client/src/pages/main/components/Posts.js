@@ -17,7 +17,7 @@ class Posts extends Component {
 		const loader = <div className="loader" key={0}>Loading ...</div>
 		var items = []
 		this.props.posts.map(post => {
-			items.push(
+			return items.push(
 				<Post key={post._id} post={post} />
 			)
 		})
