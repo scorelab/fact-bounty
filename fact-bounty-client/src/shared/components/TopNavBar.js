@@ -1,4 +1,6 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -6,6 +8,11 @@ import Typography from "@material-ui/core/Typography";
 import { ExpandMore, Person } from "@material-ui/icons";
 import { Menu, MenuItem } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import Avatar from "@material-ui/core/Avatar";
+import IconButton from "@material-ui/core/IconButton";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import { logoutUser } from "../../pages/dashboard/actions/dashboardActions";
 
 const styles = {
   navbar: {
@@ -26,6 +33,12 @@ const styles = {
   },
   link: {
     textDecoration: "none"
+  },
+  avatar: {
+    background: "#0388A6"
+  },
+  menu: {
+    marginTop: "6vh"
   }
 };
 
@@ -34,18 +47,64 @@ class TopNavBar extends Component {
     anchorEl: null
   };
 
-  handleToggle = event => {
+  openMenu = event => {
     this.setState({ anchorEl: event.currentTarget });
   };
 
-  handleClose = () => {
+  closeMenu = () => {
     this.setState(state => ({
       anchorEl: null
     }));
   };
+  handleLogout = () => {
+    this.closeMenu();
+    this.props.logoutUser();
+  };
 
   render() {
     const { anchorEl } = this.state;
+    const { auth } = this.props;
+
+    const NotAuthenticated = (
+      <Fragment>
+        <Link to="/register" style={styles.link}>
+          <Button color="primary" style={styles.navbarLinks}>
+            Sign Up
+          </Button>
+        </Link>
+        <Link to="/login" style={styles.link}>
+          <Button color="primary" style={styles.navbarLinks}>
+            Login
+          </Button>
+        </Link>
+      </Fragment>
+    );
+
+    const Authenticated = name => {
+      return (
+        <Fragment>
+          <IconButton onClick={this.openMenu} style={styles.navbarLinks}>
+            <Avatar style={styles.avatar}>{name[0]}</Avatar>
+          </IconButton>
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={this.closeMenu}
+            style={styles.menu}
+          >
+            <MenuItem>
+              <ListItemIcon>
+                <Avatar style={styles.avatar}>{name[0]}</Avatar>
+              </ListItemIcon>
+              <ListItemText inset primary={name} />
+            </MenuItem>
+            <MenuItem>Profile</MenuItem>
+            <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
+          </Menu>
+        </Fragment>
+      );
+    };
+
     return (
       <AppBar position="fixed" color="default" style={styles.navbar}>
         <Toolbar>
@@ -64,20 +123,27 @@ class TopNavBar extends Component {
               ABOUT
             </Button>
           </Link>
-          <Link to="/register" style={styles.link}>
-            <Button color="primary" style={styles.navbarLinks}>
-              Sign Up
-            </Button>
-          </Link>
-          <Link to="/login" style={styles.link}>
-            <Button color="primary" style={styles.navbarLinks}>
-              Login
-            </Button>
-          </Link>
+          {auth.isAuthenticated
+            ? Authenticated(auth.user.name)
+            : NotAuthenticated}
         </Toolbar>
       </AppBar>
     );
   }
 }
 
-export default TopNavBar;
+TopNavBar.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(
+  mapStateToProps,
+  { logoutUser }
+)(TopNavBar);
