@@ -3,6 +3,7 @@ from flask_login import LoginManager
 from flask_pagedown import PageDown
 from flask_sqlalchemy import SQLAlchemy
 from elasticsearch import Elasticsearch
+from flask_cors import CORS
 
 from .config import config
 
@@ -18,6 +19,7 @@ def create_app(config_name):
     app = Flask(__name__)
     app.config.from_object(config[config_name])
 
+    CORS(app)
     db.init_app(app)
     login_manager.init_app(app)
     pagedown.init_app(app)
