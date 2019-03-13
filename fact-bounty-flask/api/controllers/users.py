@@ -7,13 +7,15 @@ class Register(MethodView):
 
 	def post(self):
 		"""Handle POST request for this view. Url --> /api/users/register"""
+		# getting JSON data from request
+		post_data = request.get_json(silent=True)
 
-		user = User.query.filter_by(email=request.form['email']).first()
+		# Querying the database with requested email
+		user = User.query.filter_by(email=post_data['email']).first()
 
 		if not user:
 			# There is no user so we'll try to register them
 			try:
-				post_data = request.get_json(silent=True)
 				# Register the user
 				name = post_data['name']
 				email = post_data['email']
