@@ -26,7 +26,7 @@ class Test_Register(unittest.TestCase):
 
     def test_can_register(self):
         """Register a new user."""
-        response = self.app.post('/api/users/register', data=dict(name=USER_DATA['name'],email=USER_DATA['email'], password=USER_DATA['password'],password2=USER_DATA['password2']), follow_redirects=True)
+        response = self.app.post('/api/users/register', data=json.dumps(dict(name=USER_DATA['name'],email=USER_DATA['email'], password=USER_DATA['password'],password2=USER_DATA['password2'])),content_type='application/json', follow_redirects=True)
         res = response.data.decode('ASCII')
         res = json.loads(res)
         self.assertEqual(response.status_code, 201)
@@ -34,7 +34,7 @@ class Test_Register(unittest.TestCase):
 
     def test_sees_error_message_if_passwords_dont_match(self):
         """Show error if passwords don't match."""
-        response = self.app.post('/api/users/register',data=dict(name=USER_DATA['name'],email=USER_DATA['email']+'x',password=USER_DATA['password'],password2=USER_DATA['password2']+'x'),follow_redirects=True)
+        response = self.app.post('/api/users/register',data=json.dumps(dict(name=USER_DATA['name'],email=USER_DATA['email']+'x', password=USER_DATA['password'],password2=USER_DATA['password2']+'x')),content_type='application/json',follow_redirects=True)
         res = response.data.decode('ASCII')
         res = json.loads(res)
         self.assertEqual(response.status_code, 401)
@@ -42,7 +42,7 @@ class Test_Register(unittest.TestCase):
 
     def test_sees_error_message_if_user_already_registered(self):
         """Show error if user already registered."""
-        response = self.app.post('/api/users/register',data=dict(name=USER_DATA['name'],email=USER_DATA['email'],password=USER_DATA['password'],password2=USER_DATA['password2']),follow_redirects=True)
+        response = self.app.post('/api/users/register',data=json.dumps(dict(name=USER_DATA['name'],email=USER_DATA['email'], password=USER_DATA['password'],password2=USER_DATA['password2'])),content_type='application/json',follow_redirects=True)
         res = response.data.decode('ASCII')
         res = json.loads(res)
         self.assertEqual(response.status_code, 202)

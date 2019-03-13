@@ -24,7 +24,7 @@ class Test_Login(unittest.TestCase):
 
     def test_can_log_in_returns_200(self):
         """Login successful."""
-        response = self.app.post('/api/users/login',data=dict(email=USER_DATA['email'],password=USER_DATA['password']),follow_redirects=True)
+        response = self.app.post('/api/users/login', data=json.dumps(dict(email=USER_DATA['email'],password=USER_DATA['password'])),content_type='application/json',follow_redirects=True)
         res = response.data.decode('ASCII')
         res = json.loads(res)
         self.assertEqual(response.status_code, 200)
@@ -33,7 +33,7 @@ class Test_Login(unittest.TestCase):
 
     def test_sees_error_message_if_password_is_incorrect(self):
         """Show error if password is incorrect."""
-        response = self.app.post('/api/users/login',data=dict(email=USER_DATA['email'],password=USER_DATA['password']+'x'),follow_redirects=True)
+        response = self.app.post('/api/users/login', data=json.dumps(dict(email=USER_DATA['email'],password=USER_DATA['password']+'x')),content_type='application/json',follow_redirects=True)
         res = response.data.decode('ASCII')
         res = json.loads(res)
         self.assertEqual(response.status_code, 401)
@@ -41,7 +41,7 @@ class Test_Login(unittest.TestCase):
 
     def test_sees_error_message_if_username_doesnt_exist(self):
         """Show error if username doesn't exist."""
-        response = self.app.post('/api/users/login',data=dict(email=USER_DATA['email'],password=USER_DATA['password']+'x'),follow_redirects=True)
+        response = self.app.post('/api/users/login', data=json.dumps(dict(email=USER_DATA['email'] + 'x',password=USER_DATA['password'])),content_type='application/json',follow_redirects=True)
         res = response.data.decode('ASCII')
         res = json.loads(res)
         self.assertEqual(response.status_code, 401)
