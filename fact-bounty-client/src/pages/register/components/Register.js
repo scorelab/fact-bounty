@@ -68,7 +68,12 @@ class Register extends Component {
       password2: "",
       errors: {},
       showPassword: false,
-      showPassword2: false
+      showPassword2: false,
+      nameValid: false,
+      emailValid: false,
+      passwordValid: false,
+      password2Valid: false,
+      formValid: false
     };
   }
 
@@ -88,7 +93,10 @@ class Register extends Component {
   }
 
   onChange = e => {
-    this.setState({ [e.target.id]: e.target.value });
+    let { id, value } = e.target;
+    this.setState({ [id]: value }, () => {
+      this.validateField(id, value);
+    });
   };
 
   handleClickShowPassword = () => {
@@ -97,6 +105,57 @@ class Register extends Component {
 
   handleClickShowPassword2 = () => {
     this.setState(state => ({ showPassword2: !state.showPassword2 }));
+  };
+
+  validateField = (fieldName, value) => {
+    let {
+      nameValid,
+      emailValid,
+      passwordValid,
+      password2Valid,
+      errors
+    } = this.state;
+
+    switch (fieldName) {
+      case "name":
+        nameValid = value.match(/^[a-zA-Z ]{2,30}$/i);
+        errors.name = nameValid ? "" : "Invalid Name";
+        break;
+      case "email":
+        emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+        errors.email = emailValid ? "" : "Invalid E-mail";
+        break;
+      case "password":
+        passwordValid = value.length >= 8;
+        errors.password = passwordValid ? "" : "Too short!";
+        break;
+      case "password2":
+        password2Valid = value === this.state.password;
+        errors.password2 = password2Valid ? "" : "Password don't match";
+        break;
+      default:
+        break;
+    }
+    this.setState(
+      {
+        errors,
+        nameValid,
+        emailValid,
+        passwordValid,
+        password2Valid
+      },
+      this.validateForm
+    );
+  };
+
+  validateForm = () => {
+    this.setState({
+      formValid:
+        this.state.emailValid &&
+        this.state.nameValid &&
+        this.state.passwordValid &&
+        this.state.password2Valid
+    });
   };
 
   onSubmit = e => {
@@ -152,7 +211,9 @@ class Register extends Component {
                   invalid: errors.name
                 })}
               />
-              <span className="red-text">{errors.name}</span>
+              <Typography component="span" variant="caption" color="error">
+                {errors.name}
+              </Typography>
             </FormControl>
 
             <FormControl margin="normal" required fullWidth>
@@ -167,7 +228,9 @@ class Register extends Component {
                   invalid: errors.email
                 })}
               />
-              <span className="red-text">{errors.email}</span>
+              <Typography component="span" variant="caption" color="error">
+                {errors.email}
+              </Typography>
             </FormControl>
 
             <FormControl margin="normal" required fullWidth>
@@ -196,7 +259,9 @@ class Register extends Component {
                   </InputAdornment>
                 }
               />
-              <span className="red-text">{errors.password}</span>
+              <Typography component="span" variant="caption" color="error">
+                {errors.password}
+              </Typography>
             </FormControl>
 
             <FormControl margin="normal" required fullWidth>
@@ -225,7 +290,9 @@ class Register extends Component {
                   </InputAdornment>
                 }
               />
-              <span className="red-text">{errors.password2}</span>
+              <Typography component="span" variant="caption" color="error">
+                {errors.password2}
+              </Typography>
             </FormControl>
 
             <Button
@@ -234,6 +301,7 @@ class Register extends Component {
               variant="contained"
               color="primary"
               className={this.props.classes.submit}
+              disabled={!this.state.formValid}
             >
               Sign Up
             </Button>
