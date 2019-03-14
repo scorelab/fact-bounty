@@ -65,7 +65,10 @@ class Login extends Component {
       email: "",
       password: "",
       errors: {},
-      showPassword: false
+      showPassword: false,
+      emailValid: false,
+      passwordValid: false,
+      formValid: false
     };
   }
 
@@ -91,8 +94,43 @@ class Login extends Component {
     this.setState(state => ({ showPassword: !state.showPassword }));
   };
   onChange = e => {
-    this.setState({ [e.target.id]: e.target.value });
+    let { id, value } = e.target;
+    this.setState({ [id]: value }, () => {
+      this.validateField(id, value);
+    });
   };
+
+  validateField = (fieldName, value) => {
+    let { emailValid, passwordValid, errors } = this.state;
+
+    switch (fieldName) {
+      case "email":
+        emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+        errors.email = emailValid ? "" : "Invalid E-mail";
+        break;
+      case "password":
+        passwordValid = value.length > 0;
+        errors.password = passwordValid ? "" : "Password cannot be left blank!";
+        break;
+      default:
+        break;
+    }
+    this.setState(
+      {
+        errors,
+        emailValid,
+        passwordValid
+      },
+      this.validateForm
+    );
+  };
+
+  validateForm = () => {
+    this.setState({
+      formValid: this.state.emailValid && this.state.passwordValid
+    });
+  };
+
   onSubmit = e => {
     e.preventDefault();
     const userData = {
@@ -144,10 +182,10 @@ class Login extends Component {
                   invalid: errors.email || errors.emailnotfound
                 })}
               />
-              <span className="red-text">
+              <Typography component="span" variant="caption" color="error">
                 {errors.email}
                 {errors.emailnotfound}
-              </span>
+              </Typography>
             </FormControl>
 
             <FormControl margin="normal" required fullWidth>
@@ -177,10 +215,11 @@ class Login extends Component {
                   </InputAdornment>
                 }
               />
-              <span className="red-text">
+              <Typography component="span" variant="caption" color="error">
                 {errors.password}
                 {errors.passwordincorrect}
-              </span>
+              </Typography>
+              <span className="red-text" />
             </FormControl>
 
             <Button
@@ -189,12 +228,13 @@ class Login extends Component {
               variant="contained"
               color="primary"
               className={this.props.classes.submit}
+              disabled={!this.state.formValid}
             >
               Login
             </Button>
           </form>
           <p>
-            Dont have an account?{" "}
+            Don&apos;t have an account?&nbsp;
             <Link component={RouterLink} to="/register">
               Create One.
             </Link>
