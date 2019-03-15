@@ -9,7 +9,6 @@ export const loginUser = userData => dispatch => {
     .post("/api/users/login", userData)
     .then(res => {
       // Save to localStorage
-
       // Set token to localStorage
       const { token } = res.data;
       localStorage.setItem("jwtToken", token);
@@ -26,10 +25,14 @@ export const loginUser = userData => dispatch => {
         payload: decoded
       });
     })
-    .catch(err =>
-      dispatch({
+    .catch(err => {
+      let payload = err.response.data;
+      if (typeof payload === "string") {
+        payload = { fetch: err.response.data };
+      }
+      return dispatch({
         type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
+        payload
+      });
+    });
 };

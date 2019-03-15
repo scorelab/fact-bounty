@@ -22,6 +22,8 @@ import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Link from "@material-ui/core/Link";
 
+import Toast from "../../../shared/components/Snackbar";
+import { updateError } from "../../../shared/actions/errorActions";
 import { registerUser } from "../actions/newUserActions";
 //import "../styles/register.sass"
 
@@ -73,23 +75,29 @@ class Register extends Component {
       emailValid: false,
       passwordValid: false,
       password2Valid: false,
-      formValid: false
+      formValid: false,
+      openToast: false
     };
   }
 
   componentDidMount() {
     // If logged in and user navigates to Register page, should redirect them to dashboard
+    this.props.updateError({});
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/dashboard");
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({
-        errors: nextProps.errors
-      });
+  static getDerivedStateFromProps(props, state) {
+    if (props.errors) {
+      const errors = props.errors;
+      let openToast = false;
+      if (errors.fetch) {
+        openToast = true;
+      }
+      return { errors, openToast };
     }
+    return null;
   }
 
   onChange = e => {
@@ -157,9 +165,15 @@ class Register extends Component {
         this.state.password2Valid
     });
   };
+  closeToast = () => {
+    // Remove error from store
+    this.props.updateError({});
+    this.setState({ openToast: false });
+  };
 
   onSubmit = e => {
     e.preventDefault();
+    // Remove error from store
     const { name, email, password, password2 } = this.state;
     var patt = new RegExp("[a-zA-z s]{4,32}");
 
@@ -178,16 +192,24 @@ class Register extends Component {
         password2: password !== password2 ? passwordError : "",
         name: patt.test(name) ? "" : nameError
       };
-      this.setState({ errors });
+      this.props.updateError(errors);
     }
   };
 
   render() {
-    const { errors } = this.state;
+    const { errors, openToast } = this.state;
     return (
       <main className={this.props.classes.main}>
         <CssBaseline />
         <Paper className={this.props.classes.paper}>
+          {errors.fetch ? (
+            <Toast
+              open={openToast}
+              onClose={this.closeToast}
+              message="Something went wrong, Try again later"
+              variant="error"
+            />
+          ) : null}
           <Avatar className={this.props.classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
@@ -321,7 +343,10 @@ class Register extends Component {
 Register.propTypes = {
   registerUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+  errors: PropTypes.object.isRequired,
+  history: PropTypes.object,
+  classes: PropTypes.object,
+  updateError: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -335,6 +360,6 @@ export default compose(
   }),
   connect(
     mapStateToProps,
-    { registerUser }
+    { registerUser, updateError }
   )
 )(Register);
