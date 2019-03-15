@@ -7,7 +7,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, Redirect } from "react-router-dom";
 
 import compose from "recompose/compose";
 import Avatar from "@material-ui/core/Avatar";
@@ -22,6 +22,8 @@ import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Link from "@material-ui/core/Link";
 
+import Toast from "../../../shared/components/Snackbar";
+import { updateError } from "../../../shared/actions/errorActions";
 import { loginUser } from "../actions/authActions";
 // import '../styles/login.sass';
 
@@ -68,26 +70,33 @@ class Login extends Component {
       showPassword: false,
       emailValid: false,
       passwordValid: false,
-      formValid: false
+      formValid: false,
+      openToast: false,
+      redirect: false
     };
   }
 
   componentDidMount() {
     // If logged in and user navigates to Login page, should redirect them to dashboard
+    this.props.updateError({});
     if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/dashboard");
+      this.setState({ redirect: true });
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.auth.isAuthenticated) {
-      this.props.history.push("/"); // push user to dashboard when they login
+  static getDerivedStateFromProps(props, state) {
+    if (props.auth.isAuthenticated) {
+      return { redirect: true };
     }
-    if (nextProps.errors) {
-      this.setState({
-        errors: nextProps.errors
-      });
+    if (props.errors) {
+      const errors = props.errors;
+      let openToast = false;
+      if (errors.fetch) {
+        openToast = true;
+      }
+      return { errors, openToast };
     }
+    return null;
   }
 
   handleClickShowPassword = () => {
@@ -137,7 +146,13 @@ class Login extends Component {
       email: this.state.email,
       password: this.state.password
     };
-    this.props.loginUser(userData); // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
+    // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
+    this.props.loginUser(userData);
+  };
+  closeToast = () => {
+    // remove error from store after notifying user
+    this.props.updateError({});
+    this.setState({ openToast: false });
   };
 
   onKeyDown = e => {
@@ -154,11 +169,22 @@ class Login extends Component {
   };
 
   render() {
-    const { errors } = this.state;
+    const { errors, openToast, redirect } = this.state;
+    if (redirect) {
+      return <Redirect to="/dashboard" />;
+    }
     return (
       <main className={this.props.classes.main}>
         <CssBaseline />
         <Paper className={this.props.classes.paper}>
+          {errors.fetch ? (
+            <Toast
+              open={openToast}
+              onClose={this.closeToast}
+              message="Something went wrong, Try again later"
+              variant="error"
+            />
+          ) : null}
           <Avatar className={this.props.classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
@@ -250,7 +276,8 @@ Login.propTypes = {
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   history: PropTypes.object,
-  classes: PropTypes.object
+  classes: PropTypes.object,
+  updateError: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -264,6 +291,6 @@ export default compose(
   }),
   connect(
     mapStateToProps,
-    { loginUser }
+    { loginUser, updateError }
   )
 )(Login);
