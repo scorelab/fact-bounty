@@ -15,6 +15,10 @@ module.exports = function validateRegisterInput(data) {
 		errors.name = 'Name field is required'
 	}
 
+	if(Validator.isAlpha(data.name)){
+		errors.name = 'Name field can only have alphabets.'
+	}
+
 	// Email checks
 	if (Validator.isEmpty(data.email)) {
 		errors.email = 'Email field is required'
