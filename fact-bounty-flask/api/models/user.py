@@ -107,6 +107,9 @@ class User(db.Model):
         """
         return Bcrypt().check_password_hash(self.password, password)
 
+    def update_password(self, password):
+        self.password = Bcrypt().generate_password_hash(password).decode()
+    
     def save(self):
         """
         Save a user to the database.
