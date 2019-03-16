@@ -102,6 +102,19 @@ class Login extends Component {
     this.props.loginUser(userData); // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
   };
 
+  onKeyDown = e => {
+    if (e.getModifierState("CapsLock")) {
+      const passwordError = "Caps Lock is on!";
+      const errors = {
+        password: passwordError
+      };
+      this.setState({ errors });
+    } else {
+      const errors = {};
+      this.setState({ errors });
+    }
+  };
+
   render() {
     const { errors } = this.state;
     return (
@@ -141,6 +154,7 @@ class Login extends Component {
               <InputLabel htmlFor="password">Password</InputLabel>
               <Input
                 onChange={this.onChange}
+                onKeyDownCapture={this.onKeyDown}
                 value={this.state.password}
                 error={errors.password}
                 id="password"
