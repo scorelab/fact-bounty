@@ -24,20 +24,20 @@ class MongodbPipeline(object):
         db = connection[settings['MONGODB_DB']]
         self.collection = db["news_db"]
 
-    @classmethod
-    def from_crawler(cls, crawler):
-        return cls(
-            mongo_uri=crawler.settings.get('MONGODB_URL'),
-            mongo_db=crawler.settings.get('MONGODB_DB', 'defautlt-test')
-        )
+    # @classmethod
+    # def from_crawler(cls, crawler):
+    #     return cls(
+    #         mongo_uri=crawler.settings.get('MONGODB_URL'),
+    #         mongo_db=crawler.settings.get('MONGODB_DB', 'defautlt-test')
+    #     )
 
-    def open_spider(self, spider):
-        self.client = pymongo.MongoClient(self.mongo_uri)
-        self.db = self.client[self.mongo_db]
+    # def open_spider(self, spider):
+    #     self.client = pymongo.MongoClient(self.mongo_uri)
+    #     self.db = self.client[self.mongo_db]
 
-    def close_spider(self, spider):
-        self.client.close()
+    # def close_spider(self, spider):
+    #     self.client.close()
 
-    def process_item(self, item, spider):
-        self.db[self.collection_name].insert(dict(item))
-        return item
+    # def process_item(self, item, spider):
+    #     self.db[self.collection_name].insert(dict(item))
+    #     return item
