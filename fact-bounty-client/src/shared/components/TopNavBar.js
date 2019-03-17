@@ -7,8 +7,10 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
 import { Menu, MenuItem } from "@material-ui/core";
+import Snackbar from "@material-ui/core/Snackbar";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { logoutUser } from "../../pages/dashboard/actions/dashboardActions";
@@ -92,7 +94,14 @@ class TopNavBar extends Component {
   }
 
   state = {
-    anchorEl: null
+    anchorEl: null,
+    open: false,
+    vertical: "top",
+    horizontal: "center"
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
   };
 
   openMenu = event => {
@@ -106,11 +115,12 @@ class TopNavBar extends Component {
   };
   handleLogout = () => {
     this.closeMenu();
+    this.setState({ open: true, vertical: "top", horizontal: "center" });
     this.props.logoutUser();
   };
 
   render() {
-    const { anchorEl } = this.state;
+    const { anchorEl, vertical, horizontal, open } = this.state;
     const { auth } = this.props;
 
     const NotAuthenticated = (
@@ -261,6 +271,34 @@ class TopNavBar extends Component {
               : NotAuthenticated}
           </ul>
         </div>
+        <Snackbar
+          anchorOrigin={{ vertical, horizontal }}
+          open={open}
+          onClose={this.handleClose}
+          ContentProps={{
+            "aria-describedby": "message-id"
+          }}
+          message={
+            <span id="message-id">
+              You have been logged out.
+              <Link to="/login" style={styles.link}>
+                <Button onClick={this.handleClose} style={{ color: "red" }}>
+                  LOGIN again!
+                </Button>
+              </Link>
+            </span>
+          }
+          action={[
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="inherit"
+              onClick={this.handleClose}
+            >
+              <CloseIcon />
+            </IconButton>
+          ]}
+        />
       </div>
     );
   }
