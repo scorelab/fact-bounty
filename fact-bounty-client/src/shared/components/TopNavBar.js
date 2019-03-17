@@ -146,7 +146,9 @@ class TopNavBar extends Component {
               </ListItemIcon>
               <ListItemText inset primary={name} />
             </MenuItem>
-            <MenuItem>Profile</MenuItem>
+            <Link onClick={this.closeMenu} to="/dashboard" style={styles.link}>
+              <MenuItem>Profile</MenuItem>
+            </Link>
             <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
           </Menu>
         </Fragment>
