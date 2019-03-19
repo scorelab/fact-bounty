@@ -60,7 +60,7 @@ class Login(MethodView):
 			# Try to authenticate the found user using their password
 			if user and user.verify_password(data['password']):
 				# Generate the access token. This will be used as the authorization header
-				access_token = user.generate_auth_token(user_id=user.id, expiration=3600)
+				access_token = user.generate_auth_token(user_id=user.id, user_name=user.name, expiration=3600)
 				if access_token:
 					response = {
 						'message': 'You logged in successfully.',

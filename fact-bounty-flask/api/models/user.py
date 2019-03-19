@@ -39,7 +39,7 @@ class User(db.Model):
         """
         return '<User %r>' % self.name
 
-    def generate_auth_token(self, expiration, user_id):
+    def generate_auth_token(self, expiration, user_id,user_name):
         """
         Generate authorization token
 
@@ -49,7 +49,8 @@ class User(db.Model):
             payload = {
                 'exp': datetime.utcnow() + timedelta(seconds=expiration),
                 'iat': datetime.utcnow(),
-                'sub': user_id
+                'sub': user_id,
+                'name':user_name
             }
             # create the byte string token using the payload and the SECRET key
             jwt_string = jwt.encode(
