@@ -34,27 +34,22 @@ def test(coverage):
     """Run the unit tests."""
     if coverage and not os.environ.get('FLASK_COVERAGE'):
         import subprocess
-        os.environ.get['FLASK_COVERAGE'] = '1'
+        os.environ['FLASK_COVERAGE'] = '1'
         sys.exit(subprocess.call(sys.argv))
     
     import unittest
-    testmodules = [
-    'fact-bounty-flask.tests.authentication.register',
-    'fact-bounty-flask.tests.authentication.login',
-    'fact-bounty-flask.tests.story_test'
-    ]
-    suite = unittest.TestSuite()
-    for t in testmodules:
-        try:
-            # If the module defines a suite() function, call it to get the suite.
-            mod = __import__(t, globals(), locals(), ['suite'])
-            suitefn = getattr(mod, 'suite')
-            suite.addTest(suitefn())
-        except (ImportError, AttributeError):
-            # else, just load all the test cases from the module.
-            suite.addTest(unittest.defaultTestLoader.loadTestsFromName(t))
-
-    unittest.TextTestRunner().run(suite)
+    tests = unittest.TestLoader().discover('tests')
+    unittest.TextTestRunner(verbosity=2).run(tests)
+    if COV:
+        COV.stop()
+        COV.save()
+        print('Coverage Summary:')
+        COV.report()
+        basedir = os.path.abspath(os.path.dirname(__file__))
+        covdir = os.path.join(basedir, 'tmp/coverage')
+        COV.html_report(directory=covdir)
+        print('HTML version: file://%s/index.html' %covdir)
+        COV.erase()
 
 @app.cli.command()
 def deploy():
