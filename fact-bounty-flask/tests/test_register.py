@@ -29,7 +29,7 @@ class Test_Register(unittest.TestCase):
         response = self.app.post('/api/users/register', data=json.dumps(dict(name=USER_DATA['name'],email=USER_DATA['email'], password=USER_DATA['password'],password2=USER_DATA['password2'])),content_type='application/json', follow_redirects=True)
         res = response.data.decode('ASCII')
         res = json.loads(res)
-        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.status_code, 202)
         self.assertEqual(res['message'], 'You registered successfully. Please log in.')
 
     def test_sees_error_message_if_passwords_dont_match(self):
