@@ -196,6 +196,11 @@ class Login extends Component {
             onSubmit={this.onSubmit}
             className={this.props.classes.form}
           >
+            <Typography component="span" variant="caption" color="error">
+              {this.props.errors.message !== undefined
+                ? this.props.errors.message
+                : null}
+            </Typography>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="email">Email Address</InputLabel>
               <Input
