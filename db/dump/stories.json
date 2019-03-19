@@ -1,7 +1,4 @@
 [{
-    "_id": {
-      "$oid": "5c591db23cfc782afd0a23f4"
-    },
     "title": "A",
     "content": "A content",
     "featured_img_url": "A url",
@@ -13,9 +10,6 @@
     }
   },
   {
-    "_id": {
-      "$oid": "5c591e38a745c02afdeb840b"
-    },
     "title": "B",
     "content": "B content",
     "featured_img_url": "B url",
@@ -27,9 +21,6 @@
     }
   },
   {
-    "_id": {
-      "$oid": "5c591e4aa745c02afdeb840c"
-    },
     "title": "C",
     "content": "C content",
     "featured_img_url": "C url",
@@ -41,9 +32,6 @@
     }
   },
   {
-    "_id": {
-      "$oid": "5c591e71a745c02afdeb840d"
-    },
     "title": "D",
     "content": "D content",
     "featured_img_url": "D url",
@@ -55,9 +43,6 @@
     }
   },
   {
-    "_id": {
-      "$oid": "5c591ed4a745c02afdeb840e"
-    },
     "title": "E",
     "content": "E content",
     "featured_img_url": "E url",
@@ -69,9 +54,6 @@
     }
   },
   {
-    "_id": {
-      "$oid": "5c591ee5a745c02afdeb840f"
-    },
     "title": "F",
     "content": "F content",
     "featured_img_url": "F url",
@@ -83,9 +65,6 @@
     }
   },
   {
-    "_id": {
-      "$oid": "5c591ef5a745c02afdeb8410"
-    },
     "title": "G",
     "content": "G content",
     "featured_img_url": "G url",

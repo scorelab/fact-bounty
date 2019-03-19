@@ -11,7 +11,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 class Config:
     """Default Flask configuration inherited by all environments. Use this for development environments."""
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'hard to guess string'
-    POSTS_PER_PAGE = 20
+    POSTS_PER_PAGE = 4
 
     @staticmethod
     def init_app(app):
