@@ -233,7 +233,7 @@ class Register extends Component {
               <Input
                 onChange={this.onChange}
                 value={this.state.name}
-                error={errors.name}
+                error={!!errors.name}
                 id="name"
                 type="text"
                 className={classnames("", {
@@ -250,7 +250,7 @@ class Register extends Component {
               <Input
                 onChange={this.onChange}
                 value={this.state.email}
-                error={errors.email}
+                error={!!errors.email}
                 id="email"
                 type="email"
                 className={classnames("", {
@@ -267,7 +267,7 @@ class Register extends Component {
               <Input
                 onChange={this.onChange}
                 value={this.state.password}
-                error={errors.password}
+                error={!!errors.password}
                 id="password"
                 type={this.state.showPassword ? "text" : "password"}
                 className={classnames("", {
@@ -298,7 +298,7 @@ class Register extends Component {
               <Input
                 onChange={this.onChange}
                 value={this.state.password2}
-                error={errors.password2}
+                error={!!errors.password2}
                 id="password2"
                 type={this.state.showPassword2 ? "text" : "password"}
                 className={classnames("", {
