@@ -136,6 +136,10 @@ class Register extends Component {
       case "password":
         passwordValid = value.length >= 8;
         errors.password = passwordValid ? "" : "Too short!";
+        password2Valid = value === this.state.password2;
+        if (password2Valid && passwordValid) {
+          errors.password2 = null;
+        }
         break;
       case "password2":
         password2Valid = value === this.state.password;
