@@ -25,7 +25,6 @@ import Link from "@material-ui/core/Link";
 import Toast from "../../../shared/components/Snackbar";
 import { updateError } from "../../../shared/actions/errorActions";
 import { registerUser } from "../actions/newUserActions";
-//import "../styles/register.sass"
 
 const styles = theme => ({
   main: {
@@ -40,12 +39,11 @@ const styles = theme => ({
     }
   },
   paper: {
-    marginTop: theme.spacing.unit * 12,
+    marginTop: theme.spacing.unit * 6,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme
-      .spacing.unit * 3}px`
+    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px`
   },
   avatar: {
     margin: theme.spacing.unit,
@@ -57,6 +55,13 @@ const styles = theme => ({
   },
   submit: {
     marginTop: theme.spacing.unit * 3
+  },
+  input: {
+    paddingLeft: 4,
+    height: 20
+  },
+  link: {
+    color: "blue"
   }
 });
 
@@ -198,10 +203,11 @@ class Register extends Component {
 
   render() {
     const { errors, openToast } = this.state;
+    const { classes } = this.props;
     return (
-      <main className={this.props.classes.main}>
+      <main className={classes.main}>
         <CssBaseline />
-        <Paper className={this.props.classes.paper}>
+        <Paper className={classes.paper}>
           {errors.fetch ? (
             <Toast
               open={openToast}
@@ -210,17 +216,13 @@ class Register extends Component {
               variant="error"
             />
           ) : null}
-          <Avatar className={this.props.classes.avatar}>
+          <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign Up
           </Typography>
-          <form
-            noValidate
-            onSubmit={this.onSubmit}
-            className={this.props.classes.form}
-          >
+          <form noValidate onSubmit={this.onSubmit} className={classes.form}>
             <Typography component="span" variant="caption" color="error">
               {typeof this.props.errors !== "object" ? this.props.errors : null}
             </Typography>
@@ -232,6 +234,7 @@ class Register extends Component {
                 error={errors.name}
                 id="name"
                 type="text"
+                classes={{ input: classes.input }}
                 className={classnames("", {
                   invalid: errors.name
                 })}
@@ -247,6 +250,7 @@ class Register extends Component {
                 onChange={this.onChange}
                 value={this.state.email}
                 error={errors.email}
+                classes={{ input: classes.input }}
                 id="email"
                 type="email"
                 className={classnames("", {
@@ -264,6 +268,7 @@ class Register extends Component {
                 onChange={this.onChange}
                 value={this.state.password}
                 error={errors.password}
+                classes={{ input: classes.input }}
                 id="password"
                 type={this.state.showPassword ? "text" : "password"}
                 className={classnames("", {
@@ -295,6 +300,7 @@ class Register extends Component {
                 onChange={this.onChange}
                 value={this.state.password2}
                 error={errors.password2}
+                classes={{ input: classes.input }}
                 id="password2"
                 type={this.state.showPassword2 ? "text" : "password"}
                 className={classnames("", {
@@ -324,8 +330,8 @@ class Register extends Component {
               type="submit"
               fullWidth
               variant="contained"
-              color="primary"
-              className={this.props.classes.submit}
+              color="secondary"
+              className={classes.submit}
               disabled={!this.state.formValid}
             >
               Sign Up
@@ -333,7 +339,7 @@ class Register extends Component {
           </form>
           <p>
             Already have an account?{" "}
-            <Link component={RouterLink} to="/login">
+            <Link component={RouterLink} to="/login" className={classes.link}>
               Login.
             </Link>
           </p>

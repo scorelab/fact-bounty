@@ -25,7 +25,6 @@ import Link from "@material-ui/core/Link";
 import Toast from "../../../shared/components/Snackbar";
 import { updateError } from "../../../shared/actions/errorActions";
 import { loginUser } from "../actions/authActions";
-// import '../styles/login.sass';
 
 const styles = theme => ({
   main: {
@@ -57,6 +56,13 @@ const styles = theme => ({
   },
   submit: {
     marginTop: theme.spacing.unit * 3
+  },
+  input: {
+    paddingLeft: 4,
+    height: 20
+  },
+  link: {
+    color: "blue"
   }
 });
 
@@ -170,13 +176,14 @@ class Login extends Component {
 
   render() {
     const { errors, openToast, redirect } = this.state;
+    const { classes } = this.props;
     if (redirect) {
       return <Redirect to="/dashboard" />;
     }
     return (
-      <main className={this.props.classes.main}>
+      <main className={classes.main}>
         <CssBaseline />
-        <Paper className={this.props.classes.paper}>
+        <Paper className={classes.paper}>
           {errors.fetch ? (
             <Toast
               open={openToast}
@@ -185,17 +192,13 @@ class Login extends Component {
               variant="error"
             />
           ) : null}
-          <Avatar className={this.props.classes.avatar}>
+          <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Login
           </Typography>
-          <form
-            noValidate
-            onSubmit={this.onSubmit}
-            className={this.props.classes.form}
-          >
+          <form noValidate onSubmit={this.onSubmit} className={classes.form}>
             <Typography component="span" variant="caption" color="error">
               {this.props.errors.message !== undefined
                 ? this.props.errors.message
@@ -209,6 +212,7 @@ class Login extends Component {
                 error={errors.email}
                 id="email"
                 type="email"
+                classes={{ input: classes.input }}
                 className={classnames("", {
                   invalid: errors.email || errors.emailnotfound
                 })}
@@ -227,6 +231,7 @@ class Login extends Component {
                 value={this.state.password}
                 error={errors.password}
                 id="password"
+                classes={{ input: classes.input }}
                 type={this.state.showPassword ? "text" : "password"}
                 className={classnames("", {
                   invalid: errors.password || errors.passwordincorrect
@@ -257,8 +262,8 @@ class Login extends Component {
               type="submit"
               fullWidth
               variant="contained"
-              color="primary"
-              className={this.props.classes.submit}
+              color="secondary"
+              className={classes.submit}
               disabled={!this.state.formValid}
             >
               Login
@@ -266,7 +271,11 @@ class Login extends Component {
           </form>
           <p>
             Don&apos;t have an account?&nbsp;
-            <Link component={RouterLink} to="/register">
+            <Link
+              component={RouterLink}
+              to="/register"
+              className={classes.link}
+            >
               Create One.
             </Link>
           </p>
