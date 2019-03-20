@@ -206,7 +206,7 @@ class Login extends Component {
               <Input
                 onChange={this.onChange}
                 value={this.state.email}
-                error={errors.email}
+                error={!!errors.email}
                 id="email"
                 type="email"
                 className={classnames("", {
@@ -225,7 +225,7 @@ class Login extends Component {
                 onChange={this.onChange}
                 onKeyDownCapture={this.onKeyDown}
                 value={this.state.password}
-                error={errors.password}
+                error={!!errors.password}
                 id="password"
                 type={this.state.showPassword ? "text" : "password"}
                 className={classnames("", {
