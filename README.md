@@ -18,7 +18,66 @@ Change directry to the folder.
 
 `cd fact-Bounty/`
 
-And run npm install in both fact-bounty-client and fact-bounty-server folders.
+## Using flask backend server
+
+Run npm install in fact-bounty-client folder.
+
+```
+ cd fact-bounty-client/
+ npm install
+
+ ```
+
+ Install virtual environment globally.
+
+```
+ pip install virtualenv
+
+```
+
+### Dependencies
+
+Create and fire up your virtual environment in the fact-bounty-flask folder:
+    
+```
+ cd ../fact-bounty-flask/
+ virtualenv -p python3 venv
+ source venv/bin/activate
+
+```
+
+### Environment Variables
+
+Create a .env file in the fact-bounty-flask folder and add the following:
+    
+```
+export FLASK_APP="app.py"
+export FLASK_ENV="development"
+export SECRET_KEY="some-very-long-string-of-random-characters-CHANGE-TO-YOUR-LIKING"
+export FLASK_CONFIG="development"
+
+```
+
+### Install your requirements
+
+```
+(venv)$ pip install -r requirements.txt
+    
+```
+
+### How to Use
+
+Run the flask server in the fact-bounty-flask folder:
+    
+`(venv)$ flask run`
+
+start the npm server in fact-bounty-client directory.
+
+`npm start`
+
+## Using node.js backend server
+
+Run npm install in both fact-bounty-client and fact-bounty-server folders.
 
 ```
  cd fact-bounty-server/
@@ -54,6 +113,7 @@ start the npm server in both directories. use,
 `npm start`
 
 And use [localhost:3000](https://) to browse.
+
 
 > **NOTE**: This version is only supporting for Chrome browser. And make sure to instal the extension -> Redux Dev Tools in chrome extension library.
 >
