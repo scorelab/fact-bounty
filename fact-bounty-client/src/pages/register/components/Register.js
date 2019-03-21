@@ -22,6 +22,7 @@ import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Link from "@material-ui/core/Link";
 
+import OauthContainer from "../../../shared/OAuthContainer";
 import Toast from "../../../shared/components/Snackbar";
 import { updateError } from "../../../shared/actions/errorActions";
 import { registerUser } from "../actions/newUserActions";
@@ -220,6 +221,7 @@ class Register extends Component {
           <Typography component="h1" variant="h5">
             Sign Up
           </Typography>
+          <OauthContainer />
           <form
             noValidate
             onSubmit={this.onSubmit}
