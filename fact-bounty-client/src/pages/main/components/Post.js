@@ -140,7 +140,9 @@ class Post extends Component {
                 </div>
                 <div className="details">
                   <div className="title">{post.title}</div>
-                  <div className="date">{post.date_added.$date}</div>
+                  <div className="date">
+                    {new Date(post.date_added.$date).toUTCString()}
+                  </div>
                   <div className="content">
                     {content}
                     {post.content.length > 320 ? "..." : ""}
