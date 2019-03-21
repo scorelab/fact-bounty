@@ -1,9 +1,9 @@
-import Button from "@material-ui/core/Button";
 import React from "react";
 import { GoogleLogin } from "react-google-login";
 
 import { OauthUser } from "./actions/OAuthUser";
-import styles from "./index.css";
+
+import "./index.css";
 
 class GoogleContainer extends React.Component {
   constructor(props, context) {
@@ -30,19 +30,13 @@ class GoogleContainer extends React.Component {
   render() {
     return (
       <GoogleLogin
-        render={renderProps => (
-          <Button className={styles.fbauth} onClick={renderProps.onClick}>
-            <img
-              style={{ width: "14px", marginRight: "7px" }}
-              src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
-              alt="icon"
-            />
-            Login with Google
-          </Button>
-        )}
+        className="googleSignin"
+        style={{ width: "15rem" }}
+        buttonText="Login with google"
         clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
         onSuccess={this.responseGoogle}
         onFailure={this.errors}
+        icon="true"
       />
     );
   }

@@ -189,7 +189,6 @@ class Login extends Component {
           <Typography component="h1" variant="h5">
             Login
           </Typography>
-          <OauthContainer />
           <form
             noValidate
             onSubmit={this.onSubmit}
@@ -218,7 +217,6 @@ class Login extends Component {
                 {errors.emailnotfound}
               </Typography>
             </FormControl>
-
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="password">Password</InputLabel>
               <Input
@@ -253,7 +251,6 @@ class Login extends Component {
               </Typography>
               <span className="red-text" />
             </FormControl>
-
             <Button
               type="submit"
               fullWidth
@@ -264,6 +261,27 @@ class Login extends Component {
             >
               Login
             </Button>
+
+            <div
+              style={{
+                width: "100%",
+                height: 14,
+                margin: "30px 0px",
+                borderBottom: "1px solid #00000033",
+                textAlign: "center"
+              }}
+            >
+              <span
+                style={{
+                  fontSize: 20,
+                  padding: "0px 5px",
+                  backgroundColor: "white"
+                }}
+              >
+                OR
+              </span>
+            </div>
+            <OauthContainer />
           </form>
           <p>
             Don&apos;t have an account?&nbsp;

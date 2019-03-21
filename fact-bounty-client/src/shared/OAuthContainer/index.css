@@ -68,12 +68,24 @@
   width: 100%;
 }
 
+.googleSignin{
+    width: 15rem;
+    align-items: center;
+    justify-content: center
+}
+
 .fbauth {
   background-color: #4c69ba;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px 0px, rgba(0, 0, 0, 0.24) 0px 0px 1px 0px;
+  display:flex;
+  align-items: center;
+  justify-content: center;
   color: white;
   border: 0;
-  padding: 6px 8px;
+  border-radius:2px;
+  padding: 6px 6px;
   font-size: 14px;
+  width: 15rem;
   cursor: pointer;
-  margin-bottom: 7px;
+  margin-bottom: 15px;
 }

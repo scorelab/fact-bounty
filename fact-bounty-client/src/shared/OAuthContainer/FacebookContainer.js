@@ -1,6 +1,6 @@
 import React from "react";
 import FacebookLogin from "react-facebook-login";
-import Button from "@material-ui/core/Button";
+import { FaFacebookSquare } from "react-icons/fa";
 
 import { OauthUser } from "./actions/OAuthUser";
 import "./index.css";
@@ -28,17 +28,23 @@ class FacebookContainer extends React.Component {
   render() {
     return (
       <FacebookLogin
-        render={renderProps => (
-          <Button onClick={renderProps.onClick}>
-            <i className="fa fa-facebook" /> Login with facebook
-          </Button>
-        )}
         appId={process.env.REACT_APP_FACEBOOK_CLIENT_ID}
-        // autoLoad
         cssClass="fbauth"
+        textButton="Login with facebook"
         fields="name,email,picture.width(400).height(400)"
         callback={this.responseFacebook}
-        // icon={<i style={{ color: "#29487d" }} className="fa fa-facebook" />}
+        icon={
+          <div
+            style={{
+              display: "inline-flex",
+              padding: "10px 10px",
+              alignItems: "center",
+              justifyContent: "center"
+            }}
+          >
+            <FaFacebookSquare />
+          </div>
+        }
       />
     );
   }

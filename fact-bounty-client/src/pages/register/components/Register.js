@@ -218,7 +218,7 @@ class Register extends Component {
           <Typography component="h1" variant="h5">
             Sign Up
           </Typography>
-          <OauthContainer />
+
           <form
             noValidate
             onSubmit={this.onSubmit}
@@ -337,6 +337,26 @@ class Register extends Component {
             >
               Sign Up
             </Button>
+            <div
+              style={{
+                width: "100%",
+                height: 14,
+                margin: "30px 0px",
+                borderBottom: "1px solid #00000033",
+                textAlign: "center"
+              }}
+            >
+              <span
+                style={{
+                  fontSize: 20,
+                  padding: "0px 5px",
+                  backgroundColor: "white"
+                }}
+              >
+                OR
+              </span>
+            </div>
+            <OauthContainer />
           </form>
           <p>
             Already have an account?{" "}
