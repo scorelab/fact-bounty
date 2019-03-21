@@ -12,13 +12,17 @@ export const NO_MORE = "NO_MORE";
 export const fetchPosts = page => dispatch => {
   dispatch({ type: LOADING });
   fetch("/api/stories/get-range/" + page)
-    .then(res => res.json())
+    .then(res => {
+      return res.json();
+    })
     .then(posts => {
-      dispatch({
-        type: FETCH_POSTS,
-        payload: posts.docs
-      });
-      dispatch({ type: INCREMENT_PAGE });
+      if (Object.keys(posts.stories).length !== 0) {
+        dispatch({
+          type: FETCH_POSTS,
+          payload: posts.stories
+        });
+        dispatch({ type: INCREMENT_PAGE });
+      }
     })
     .catch(err => {
       console.error("Server response invalid", err);

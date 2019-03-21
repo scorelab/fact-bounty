@@ -85,7 +85,12 @@ class Post extends Component {
 
   render() {
     const { post, classes } = this.props;
-    const content = post.content.slice(0, 320);
+    var m = {};
+    var k,
+      i = 1;
+    m = this.props.post;
+    k = Object.keys(m);
+
     const totalVotes =
       post.approved_count + post.fake_count + post.mixedvote_count;
     const highestVotes = this.findHighestVotesColor(post);
@@ -117,72 +122,76 @@ class Post extends Component {
         </div>
       </div>
     );
-    return (
-      <div className="hover-container">
-        <Card className={classes.card}>
-          <CardContent style={styles.cardContent}>
-            <div className="container">
-              <div className="image">
-                <img src={postImg1} alt="fact-bounty" className="post-img" />
-              </div>
-              <div className="details">
-                <div className="title">{post.title}</div>
-                <div className="date">{post.date}</div>
-                <div className="content">
-                  {content}
-                  {post.content.length > 320 ? "..." : ""}
+
+    if (k.length !== 0) {
+      const content = post[k[i]].content.slice(0, 320);
+      return (
+        <div className="hover-container">
+          <Card className={classes.card}>
+            <CardContent style={styles.cardContent}>
+              <div className="container">
+                <div className="image">
+                  <img src={postImg1} alt="fact-bounty" className="post-img" />
                 </div>
-                {post.content.length > 320 ? (
-                  <div className="read-more">Read more</div>
-                ) : (
-                  ""
-                )}
+                <div className="details">
+                  <div className="title">{post[k[i]].title}</div>
+                  <div className="date">{post[k[i]].date_added.$date}</div>
+                  <div className="content">
+                    {content}
+                    {post[k[i]].content.length > 320 ? "..." : ""}
+                  </div>
+                  {post[k[i]].content.length > 320 ? (
+                    <div className="read-more">Read more</div>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </div>
+              {votes}
+            </CardContent>
+          </Card>
+          <div className="btn-column">
+            <div
+              className="true-transition"
+              onClick={() => this.handleClick("approve")}
+            >
+              <div className="true-btn">
+                <Icon className={classes.icon}>check_circle_outline</Icon>
+              </div>
+              <div className="true-btn-hover">
+                <Icon className={classes.trueBtnHover}>check_circle</Icon>
+                <div className="true-label">True</div>
               </div>
             </div>
-            {votes}
-          </CardContent>
-        </Card>
-        <div className="btn-column">
-          <div
-            className="true-transition"
-            onClick={() => this.handleClick("approve")}
-          >
-            <div className="true-btn">
-              <Icon className={classes.icon}>check_circle_outline</Icon>
+            <div
+              className="fake-transition"
+              onClick={() => this.handleClick("fake")}
+            >
+              <div className="fake-btn">
+                <Cancel className={classes.icon} />
+              </div>
+              <div className="fake-btn-hover">
+                <Icon className={classes.fakeBtnHover}>cancel</Icon>
+                <div className="fake-label">Fake</div>
+              </div>
             </div>
-            <div className="true-btn-hover">
-              <Icon className={classes.trueBtnHover}>check_circle</Icon>
-              <div className="true-label">True</div>
-            </div>
-          </div>
-          <div
-            className="fake-transition"
-            onClick={() => this.handleClick("fake")}
-          >
-            <div className="fake-btn">
-              <Cancel className={classes.icon} />
-            </div>
-            <div className="fake-btn-hover">
-              <Icon className={classes.fakeBtnHover}>cancel</Icon>
-              <div className="fake-label">Fake</div>
+            <div
+              className="mix-transition"
+              onClick={() => this.handleClick("mix")}
+            >
+              <div className="mix-btn">
+                <ReportProblem className={classes.icon} />
+              </div>
+              <div className="mix-btn-hover">
+                <Icon className={classes.mixBtnHover}>report_problem</Icon>
+                <div className="mix-label">Mixture</div>
+              </div>
             </div>
           </div>
-          <div
-            className="mix-transition"
-            onClick={() => this.handleClick("mix")}
-          >
-            <div className="mix-btn">
-              <ReportProblem className={classes.icon} />
-            </div>
-            <div className="mix-btn-hover">
-              <Icon className={classes.mixBtnHover}>report_problem</Icon>
-              <div className="mix-label">Mixture</div>
-            </div>
-          </div>
+          <div className="total-vote-count">{totalVotes} votes</div>
         </div>
-        <div className="total-vote-count">{totalVotes} votes</div>
-      </div>
-    );
+      );
+    }
   }
 }
 
