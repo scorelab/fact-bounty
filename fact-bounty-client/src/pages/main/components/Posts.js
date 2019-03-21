@@ -20,7 +20,9 @@ class Posts extends Component {
       </div>
     );
     var items = [];
-    items = this.props.posts.map(post => <Post key={post._id} post={post} />);
+    var a = 0;
+    items = this.props.posts.map(post => <Post key={a++} post={post} />);
+
     return (
       <InfiniteScroll
         pageStart={0}
