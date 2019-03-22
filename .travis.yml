@@ -5,9 +5,12 @@ env:
 python:
   - 3.5
   - 3.6
+services:
+  - elasticsearch
 install:
   - pip install -r fact-bounty-flask/requirements.txt
-
+before_script:
+  - sleep 10
 script: 
     - cd fact-bounty-flask
     - flask test
