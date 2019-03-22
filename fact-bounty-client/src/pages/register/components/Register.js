@@ -22,7 +22,7 @@ import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Link from "@material-ui/core/Link";
 
-import Toast from "../../../shared/components/Snackbar";
+import Toast from "../../../shared/components/Snackbar/Snackbar";
 import { updateError } from "../../../shared/actions/errorActions";
 import { registerUser } from "../actions/newUserActions";
 //import "../styles/register.sass"

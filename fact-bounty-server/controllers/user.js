@@ -32,7 +32,6 @@ exports.userRegister = function (req, res, next) {
 }
 
 
-
 // @desc Login user and return JWT token
 // @access Public
 exports.userLogin = function (req, res, next) {
