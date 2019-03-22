@@ -3,10 +3,10 @@ from datetime import datetime, timedelta
 from flask import current_app
 from flask_bcrypt import Bcrypt
 from flask_httpauth import HTTPBasicAuth
-from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
+from itsdangerous import (
+    TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
 # from passlib.apps import custom_app_context as pwd_context
 import jwt
-
 
 from ...app import db
 
@@ -21,17 +21,20 @@ class User(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
-    password = db.Column(db.String(128), nullable=False)
+    password = db.Column(db.String(128))
     email = db.Column(db.String(100), nullable=False, unique=True)
     date = db.Column(db.DateTime, default=datetime.now())
+    type = db.Column(db.String(50), default='remote')
 
-    def __init__(self, name, email, password):
+    def __init__(self, name, email, password, _type='remote'):
         """
         Initializes the user instance
         """
         self.name = name
         self.email = email
-        self.password = Bcrypt().generate_password_hash(password).decode()
+        if (password):
+            self.password = Bcrypt().generate_password_hash(password).decode()
+        self.type = _type
 
     def __repr__(self):
         """
@@ -39,7 +42,7 @@ class User(db.Model):
         """
         return '<User %r>' % self.name
 
-    def generate_auth_token(self, expiration, user_id,user_name):
+    def generate_auth_token(self, expiration, user_id, user_name):
         """
         Generate authorization token
 
@@ -50,7 +53,7 @@ class User(db.Model):
                 'exp': datetime.utcnow() + timedelta(seconds=expiration),
                 'iat': datetime.utcnow(),
                 'sub': user_id,
-                'name':user_name
+                'name': user_name
             }
             # create the byte string token using the payload and the SECRET key
             jwt_string = jwt.encode(
@@ -63,7 +66,6 @@ class User(db.Model):
         except Exception as e:
             # return an error in string format if an exception occurs
             return str(e)
-
 
     def to_json(self):
         """
