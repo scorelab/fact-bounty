@@ -18,8 +18,8 @@ from . import create_app, db
 from .api.models.user import User
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
-migrate = Migrate(app, db)
 db.create_all(app=create_app('default'))
+migrate = Migrate(app, db)
 
 
 @app.shell_context_processor
@@ -50,6 +50,7 @@ def test(coverage):
         print('HTML version: file://%s/index.html' %covdir)
         COV.erase()
     print(result)
+
 @app.cli.command()
 def deploy():
     # migrate database to latest revision
