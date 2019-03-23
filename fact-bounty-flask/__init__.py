@@ -6,6 +6,7 @@ from elasticsearch import Elasticsearch
 from flask_cors import CORS
 
 from .config import config
+from . import commands
 
 db = SQLAlchemy()
 pagedown = PageDown()
@@ -21,6 +22,7 @@ def create_app(config_name):
 
     register_extensions(app)
     register_blueprint(app)
+    register_commands(app)
 
     return app
 
@@ -40,4 +42,9 @@ def register_blueprint(app):
     return None
 
 def register_commands(app):
-    """Regiter Click commands"""
+    """Register Click commands."""
+    app.cli.add_command(commands.deploy)
+    app.cli.add_command(commands.test)
+    app.cli.add_command(commands.lint)
+    app.cli.add_command(commands.clean)
+    app.cli.add_command(commands.urls)
