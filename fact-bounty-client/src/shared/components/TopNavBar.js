@@ -27,7 +27,8 @@ const styles = {
   navbar: {
     backgroundColor: "#fafafa",
     zIndex: "15",
-    display: window.innerWidth > breakpoints.mobile ? "block" : "none"
+    display: window.innerWidth > breakpoints.mobile ? "block" : "none",
+    position: "fixed"
   },
   navbarTitle: {
     flexGrow: 2,
@@ -46,8 +47,8 @@ const styles = {
   navbarLinks: {
     letterSpacing: "1px",
     fontWeight: "500",
-    marginLeft: "24px",
-    fontSize: "1rem"
+    marginLeft: "24px"
+    // fontSize: "1rem"
   },
   link: {
     textDecoration: "none"
