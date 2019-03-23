@@ -9,6 +9,7 @@ import { approveVote, fakeVote, mixVote } from "../actions/postActions";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import PropTypes from "prop-types";
+import { Redirect } from "react-router-dom";
 
 const styles = {
   cardContent: {
@@ -41,10 +42,11 @@ const styles = {
 };
 
 class Post extends Component {
-  componentDidMount() {
-    this.setState({
-      postContent: this.props.post.content
-    });
+  constructor(props) {
+    super(props);
+    this.state = {
+      redirect: false
+    };
   }
 
   findHighestVotesColor(post) {
@@ -72,7 +74,11 @@ class Post extends Component {
   }
 
   handleClick = value => {
-    if (value === "approve") {
+    if (this.props.auth === false) {
+      this.setState({
+        redirect: true
+      });
+    } else if (value === "approve") {
       this.props.approveVote(this.props.post._id);
     } else if (value === "fake") {
       this.props.fakeVote(this.props.post._id);
@@ -84,108 +90,112 @@ class Post extends Component {
   };
 
   render() {
-    const { post, classes } = this.props;
+    if (this.state.redirect) {
+      return <Redirect to="/login" />;
+    } else {
+      const { post, classes } = this.props;
 
-    const totalVotes =
-      post.approved_count + post.fake_count + post.mixedvote_count;
-    const highestVotes = this.findHighestVotesColor(post);
-    const votes = (
-      <div className="vote-status" style={{ backgroundColor: highestVotes }}>
-        <div
-          className="votes true-votes"
-          style={{ width: (post.approved_count / totalVotes) * 100 + "%" }}
-        >
-          <span className="vote-value">
-            {this.displayVote(post.approved_count, totalVotes)}
-          </span>
+      const totalVotes =
+        post.approved_count + post.fake_count + post.mixedvote_count;
+      const highestVotes = this.findHighestVotesColor(post);
+      const votes = (
+        <div className="vote-status" style={{ backgroundColor: highestVotes }}>
+          <div
+            className="votes true-votes"
+            style={{ width: (post.approved_count / totalVotes) * 100 + "%" }}
+          >
+            <span className="vote-value">
+              {this.displayVote(post.approved_count, totalVotes)}
+            </span>
+          </div>
+          <div
+            className="votes fake-votes"
+            style={{ width: (post.fake_count / totalVotes) * 100 + "%" }}
+          >
+            <span className="vote-value">
+              {this.displayVote(post.fake_count, totalVotes)}
+            </span>
+          </div>
+          <div
+            className="votes mix-votes"
+            style={{ width: (post.mixedvote_count / totalVotes) * 100 + "%" }}
+          >
+            <span className="vote-value">
+              {this.displayVote(post.mixedvote_count, totalVotes)}
+            </span>
+          </div>
         </div>
-        <div
-          className="votes fake-votes"
-          style={{ width: (post.fake_count / totalVotes) * 100 + "%" }}
-        >
-          <span className="vote-value">
-            {this.displayVote(post.fake_count, totalVotes)}
-          </span>
-        </div>
-        <div
-          className="votes mix-votes"
-          style={{ width: (post.mixedvote_count / totalVotes) * 100 + "%" }}
-        >
-          <span className="vote-value">
-            {this.displayVote(post.mixedvote_count, totalVotes)}
-          </span>
-        </div>
-      </div>
-    );
+      );
 
-    // if (k.length !== 0) {
-    const content = post.content.slice(0, 320);
-    return (
-      <div className="hover-container">
-        <Card className={classes.card}>
-          <CardContent style={styles.cardContent}>
-            <div className="container">
-              <div className="image">
-                <img src={postImg1} alt="fact-bounty" className="post-img" />
-              </div>
-              <div className="details">
-                <div className="title">{post.title}</div>
-                <div className="date">{post.date_added.$date}</div>
-                <div className="content">
-                  {content}
-                  {post.content.length > 320 ? "..." : ""}
+      // if (k.length !== 0) {
+      const content = post.content.slice(0, 320);
+      return (
+        <div className="hover-container">
+          <Card className={classes.card}>
+            <CardContent style={styles.cardContent}>
+              <div className="container">
+                <div className="image">
+                  <img src={postImg1} alt="fact-bounty" className="post-img" />
                 </div>
-                {post.content.length > 320 ? (
-                  <div className="read-more">Read more</div>
-                ) : (
-                  ""
-                )}
+                <div className="details">
+                  <div className="title">{post.title}</div>
+                  <div className="date">{post.date_added.$date}</div>
+                  <div className="content">
+                    {content}
+                    {post.content.length > 320 ? "..." : ""}
+                  </div>
+                  {post.content.length > 320 ? (
+                    <div className="read-more">Read more</div>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </div>
+              {votes}
+            </CardContent>
+          </Card>
+          <div className="btn-column">
+            <div
+              className="true-transition"
+              onClick={() => this.handleClick("approve")}
+            >
+              <div className="true-btn">
+                <Icon className={classes.icon}>check_circle_outline</Icon>
+              </div>
+              <div className="true-btn-hover">
+                <Icon className={classes.trueBtnHover}>check_circle</Icon>
+                <div className="true-label">True</div>
               </div>
             </div>
-            {votes}
-          </CardContent>
-        </Card>
-        <div className="btn-column">
-          <div
-            className="true-transition"
-            onClick={() => this.handleClick("approve")}
-          >
-            <div className="true-btn">
-              <Icon className={classes.icon}>check_circle_outline</Icon>
+            <div
+              className="fake-transition"
+              onClick={() => this.handleClick("fake")}
+            >
+              <div className="fake-btn">
+                <Cancel className={classes.icon} />
+              </div>
+              <div className="fake-btn-hover">
+                <Icon className={classes.fakeBtnHover}>cancel</Icon>
+                <div className="fake-label">Fake</div>
+              </div>
             </div>
-            <div className="true-btn-hover">
-              <Icon className={classes.trueBtnHover}>check_circle</Icon>
-              <div className="true-label">True</div>
-            </div>
-          </div>
-          <div
-            className="fake-transition"
-            onClick={() => this.handleClick("fake")}
-          >
-            <div className="fake-btn">
-              <Cancel className={classes.icon} />
-            </div>
-            <div className="fake-btn-hover">
-              <Icon className={classes.fakeBtnHover}>cancel</Icon>
-              <div className="fake-label">Fake</div>
+            <div
+              className="mix-transition"
+              onClick={() => this.handleClick("mix")}
+            >
+              <div className="mix-btn">
+                <ReportProblem className={classes.icon} />
+              </div>
+              <div className="mix-btn-hover">
+                <Icon className={classes.mixBtnHover}>report_problem</Icon>
+                <div className="mix-label">Mixture</div>
+              </div>
             </div>
           </div>
-          <div
-            className="mix-transition"
-            onClick={() => this.handleClick("mix")}
-          >
-            <div className="mix-btn">
-              <ReportProblem className={classes.icon} />
-            </div>
-            <div className="mix-btn-hover">
-              <Icon className={classes.mixBtnHover}>report_problem</Icon>
-              <div className="mix-label">Mixture</div>
-            </div>
-          </div>
+          <div className="total-vote-count">{totalVotes} votes</div>
         </div>
-        <div className="total-vote-count">{totalVotes} votes</div>
-      </div>
-    );
+      );
+    }
   }
 }
 // }
@@ -195,12 +205,14 @@ Post.propTypes = {
   approveVote: PropTypes.func,
   mixVote: PropTypes.func,
   post: PropTypes.object,
-  classes: PropTypes.object
+  classes: PropTypes.object,
+  auth: PropTypes.bool
 };
 
 const mapStateToProps = state => ({
   loading: state.posts.loading,
-  error: state.posts.error
+  error: state.posts.error,
+  auth: state.auth.isAuthenticated
 });
 
 export default compose(
