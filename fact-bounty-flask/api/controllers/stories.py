@@ -48,6 +48,7 @@ class GetRange(MethodView):
             for story in search['hits']['hits']:
                 PID = story['_id']
                 source = story['_source']
+                source['_id'] = PID
                 stories.append(source)
         except Exception as e:
             # An error occured, therefore return a string message containing the error
