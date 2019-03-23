@@ -19,6 +19,7 @@ import Register from "./pages/register/components/Register";
 import Login from "./pages/login/components/Login";
 import Dashboard from "./pages/dashboard/components/Dashboard";
 import MainLayout from "./pages/main/components/MainLayout";
+import TopNavBar from "./shared/components/TopNavBar";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -49,6 +50,7 @@ class App extends Component {
         <Router>
           <MuiThemeProvider theme={theme}>
             <div className="App">
+              <TopNavBar />
               <Route path="/" component={MainLayout} />
               <Route exact path="/landing" component={Landing} />
               <Route exact path="/register" component={Register} />
