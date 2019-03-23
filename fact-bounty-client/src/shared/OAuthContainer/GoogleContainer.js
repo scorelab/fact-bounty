@@ -28,13 +28,12 @@ class GoogleContainer extends React.Component {
 
   render() {
     const { errors } = this.state;
-    console.log(errors);
     return (
       <GoogleLogin
         render={renderProps => (
           <Button className={styles.fbauth} onClick={renderProps.onClick}>
             <img
-              style={{ width: "14px" }}
+              style={{ width: "14px", marginRight: "7px" }}
               src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
               alt="icon"
             />

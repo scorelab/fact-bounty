@@ -1,4 +1,3 @@
-
 .facebookIconLogin,
 .googleIconLogin {
   width: 60px;
@@ -56,32 +55,25 @@
 }
 
 .socialIconsLogin {
-  justify-content: space-evenly;
+  /* justify-content: space-evenly; */
   display: flex;
-  padding: 9% 6%;
+  /* padding: 9% 6%; */
 }
 
 .socialIconsSignup {
-  justify-content: space-between;
+  align-items: center;
   display: flex;
   flex-direction: column;
+  padding: 7px;
   width: 100%;
-  /* padding: 4% 15%; */
 }
 
 .fbauth {
-  background: transparent;
+  background-color: #4c69ba;
+  color: white;
   border: 0;
-}
-
-.fbauth {
-  border: 1px solid #ccc;
-  border-radius: 2px;
-  color: #979797;
-  display: flex;
-  justify-content: baseline;
-  width: 249px;
-  height: 40px;
-  justify-content: space-around;
-  align-items: center;
+  padding: 6px 8px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 7px;
 }

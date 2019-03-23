@@ -3,7 +3,7 @@ import FacebookLogin from "react-facebook-login";
 import Button from "@material-ui/core/Button";
 
 import { OauthUser } from "./actions/OAuthUser";
-import styles from "./index.css";
+import "./index.css";
 
 class FacebookContainer extends React.Component {
   constructor(props, context) {
@@ -27,20 +27,19 @@ class FacebookContainer extends React.Component {
 
   render() {
     const { errors } = this.state;
-    console.log(errors);
     return (
       <FacebookLogin
-        appId={process.env.REACT_APP_FACEBOOK_CLIENT_ID}
-        // autoLoad
-        cssClass={styles.fbauth}
-        fields="name,email,picture.width(400).height(400)"
-        callback={this.responseFacebook}
-        icon={<i style={{ color: "#29487d" }} className="fa fa-facebook" />}
         render={renderProps => (
           <Button onClick={renderProps.onClick}>
             <i className="fa fa-facebook" /> Login with facebook
           </Button>
         )}
+        appId={process.env.REACT_APP_FACEBOOK_CLIENT_ID}
+        // autoLoad
+        cssClass="fbauth"
+        fields="name,email,picture.width(400).height(400)"
+        callback={this.responseFacebook}
+        // icon={<i style={{ color: "#29487d" }} className="fa fa-facebook" />}
       />
     );
   }

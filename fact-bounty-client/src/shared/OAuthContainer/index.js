@@ -1,11 +1,10 @@
 import React from "react";
 
-import styles from "./index.css";
+import "./index.css";
 
 class OauthContainer extends React.Component {
   constructor(props, context) {
     super(props, context);
-
     this.state = {
       FacebookContainer: null,
       GoogleContainer: null
@@ -18,15 +17,17 @@ class OauthContainer extends React.Component {
     this.setState({
       loading: false,
       FacebookContainer: (
-        <FacebookContainer class={styles.facebookIconSignup} />
+        // <FacebookContainer class={styles.facebookIconSignup} />
+        <FacebookContainer />
       ),
-      GoogleContainer: <GoogleContainer class={styles.googleIconSignup} />
+      // GoogleContainer: <GoogleContainer class={styles.googleIconSignup} />
+      GoogleContainer: <GoogleContainer />
     });
   }
 
   render() {
     return (
-      <div className={styles.socialIconsSignup}>
+      <div className="socialIconsSignup">
         {this.state.FacebookContainer}
         {this.state.GoogleContainer}
       </div>
