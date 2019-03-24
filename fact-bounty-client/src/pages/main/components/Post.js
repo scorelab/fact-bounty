@@ -1,15 +1,16 @@
 import React, { Component } from "react";
 import { Card, CardContent, Icon } from "@material-ui/core";
-import postImg1 from "../flag1.jpg";
 import { withStyles } from "@material-ui/core/styles";
-import "../Posts.sass";
 import ReportProblem from "@material-ui/icons/ReportProblemOutlined";
 import Cancel from "@material-ui/icons/CancelOutlined";
-import { approveVote, fakeVote, mixVote } from "../actions/postActions";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
+
+import { approveVote, fakeVote, mixVote } from "../actions/postActions";
+import postImg1 from "../flag1.jpg";
+import "../Posts.sass";
 
 const styles = {
   cardContent: {

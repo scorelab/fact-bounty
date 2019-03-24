@@ -9,11 +9,7 @@ import { logoutUser, setCurrentUser } from "./actions/authActions";
 import store from "./core/store";
 import theme from "./core/theme";
 import "./App.sass";
-// import Landing      from './components/landing/Landing'
-// import Register     from './components/register/Register'
-// import Login        from './components/login/Login'
 import PrivateRoute from "./core/PrivateRoute";
-// import Dashboard    from './components/dashboard/Dashboard'
 import Landing from "./pages/landing/components/Landing";
 import Register from "./pages/register/components/Register";
 import Login from "./pages/login/components/Login";

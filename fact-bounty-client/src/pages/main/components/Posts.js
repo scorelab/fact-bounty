@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import "../Posts.sass";
-import Post from "./Post";
 import { connect } from "react-redux";
-import { fetchPosts } from "../actions/postActions";
 import InfiniteScroll from "react-infinite-scroller";
 import PropTypes from "prop-types";
+
+import { fetchPosts } from "../actions/postActions";
+import "../Posts.sass";
+import Post from "./Post";
 
 class Posts extends Component {
   loadItems() {
