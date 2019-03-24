@@ -20,6 +20,7 @@ import Login from "./pages/login/components/Login";
 import Dashboard from "./pages/dashboard/components/Dashboard";
 import MainLayout from "./pages/main/components/MainLayout";
 import TopNavBar from "./shared/components/TopNavBar";
+import NotFound from "./pages/notFound/components/404.js";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -58,6 +59,7 @@ class App extends Component {
               <Switch>
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
               </Switch>
+              <Route component={NotFound} />
             </div>
           </MuiThemeProvider>
         </Router>
