@@ -13,7 +13,7 @@ Flask-Login==0.4.1
 Flask-Migrate==2.4.0
 Flask-PageDown==0.2.2
 Flask-SQLAlchemy==2.3.2
-isort==4.3.10
+isort==4.3.16
 itsdangerous==1.1.0
 Jinja2==2.10
 lazy-object-proxy==1.3.1
