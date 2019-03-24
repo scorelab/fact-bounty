@@ -6,9 +6,7 @@ import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-
 import { Link as RouterLink, Redirect } from "react-router-dom";
-
 import compose from "recompose/compose";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -26,7 +24,6 @@ import OauthContainer from "../../../shared/OAuthContainer";
 import Toast from "../../../shared/components/Snackbar";
 import { updateError } from "../../../shared/actions/errorActions";
 import { loginUser } from "../actions/authActions";
-// import '../styles/login.sass';
 
 const styles = theme => ({
   main: {
