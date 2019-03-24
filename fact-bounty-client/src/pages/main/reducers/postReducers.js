@@ -20,7 +20,7 @@ const initialState = {
 export default function(state = initialState, action) {
   switch (action.type) {
     case FETCH_POSTS: {
-      const more = action.payload.length < 7 ? false : true;
+      const more = action.payload.length < 4 ? false : true;
       return {
         ...state,
         items: state.items.concat(action.payload),

@@ -22,7 +22,8 @@ import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Link from "@material-ui/core/Link";
 
-import Toast from "../../../shared/components/Snackbar/Snackbar";
+import OauthContainer from "../../../shared/OAuthContainer";
+import Toast from "../../../shared/components/Snackbar";
 import { updateError } from "../../../shared/actions/errorActions";
 import { loginUser } from "../actions/authActions";
 // import '../styles/login.sass';
@@ -191,6 +192,7 @@ class Login extends Component {
           <Typography component="h1" variant="h5">
             Login
           </Typography>
+          <OauthContainer />
           <form
             noValidate
             onSubmit={this.onSubmit}

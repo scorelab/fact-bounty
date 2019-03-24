@@ -37,7 +37,7 @@ class GetRange(MethodView):
     :return: JSON object with range of stories and HTTP status code 200.
     """
     def get(self, page):
-        stories = {}
+        stories = []
         try:
             search = current_app.elasticsearch.search(
                 index='factbounty', doc_type='story', body={
@@ -48,7 +48,8 @@ class GetRange(MethodView):
             for story in search['hits']['hits']:
                 PID = story['_id']
                 source = story['_source']
-                stories[PID] = source
+                source['_id'] = PID
+                stories.append(source)
         except Exception as e:
             # An error occured, therefore return a string message containing the error
             response = {

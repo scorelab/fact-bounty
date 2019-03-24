@@ -18,7 +18,7 @@ Change directry to the folder.
 
 `cd fact-Bounty/`
 
-## Using flask backend server
+## Set up react server
 
 Run npm install in fact-bounty-client folder.
 
@@ -28,87 +28,74 @@ Run npm install in fact-bounty-client folder.
 
  ```
 
- Install virtual environment globally.
+## Set up flask server
 
-```
- pip install virtualenv
+### Technologies required
+*   **[Python3](https://www.python.org/downloads/)** - A programming language that lets you work more quickly (The universe loves speed!).
+*   **[Flask](flask.pocoo.org/)** - A microframework for Python based on Werkzeug, Jinja 2 and good intentions
+*   **[Virtualenv](https://virtualenv.pypa.io/en/stable/)** - A tool to create isolated virtual environments
+*   **[SQLite](https://www.sqlite.org/)** - An in-process library that implements a self-contained, serverless, zero-configuration, transactional SQL database engine
+*   **[Elasticsearch](https://www.elastic.co/downloads/elasticsearch)** - A search engine based on the Lucene library
+*   Minor dependencies can be found in the requirements.txt file.
 
-```
+### Installation / Usage
+ * First ensure you have python3 globally installed in your computer. If not, you can get python3 [here](https://www.python.org).
 
-### Dependencies
+ * After this, ensure you have installed virtualenv globally as well. If not, run this:
+    ```
+    $ pip install virtualenv
+    ```
 
-Create and fire up your virtual environment in the fact-bounty-flask folder:
-    
-```
- cd ../fact-bounty-flask/
- virtualenv -p python3 venv
- source venv/bin/activate
+ * #### Dependencies
 
-```
+    1. Create and fire up your virtual environment in python3:
+    ```
+        $ virtualenv -p python3 venv
+        $ source venv/bin/activate
+    ```
+        For *Windows* you can use - 
+    ```
+        $ venv/Scipts/activate.bat
+    ```
 
-### Environment Variables
+*   #### Environment Variables
+    Create a .env file and add the following:
+    ```
+	   export FLASK_APP="app.py"
+	   export FLASK_ENV="development"
+	   export SECRET_KEY="some-very-long-string-of-random-characters-CHANGE-TO-YOUR-LIKING"
+	   export FLASK_CONFIG="development"
+    ```
 
-Create a .env file in the fact-bounty-flask folder and add the following:
-    
-```
-export FLASK_APP="app.py"
-export FLASK_ENV="development"
-export SECRET_KEY="some-very-long-string-of-random-characters-CHANGE-TO-YOUR-LIKING"
-export FLASK_CONFIG="development"
+    Save the file.
 
-```
+*   #### Install your requirements
+    ```
+        (venv)$ pip install -r requirements.txt
+    ```
 
-### Install your requirements
+*   #### Running It
+    On your terminal, run the server using this one simple command:
+    ```
+        (venv)$ flask run
+    ```
 
-```
-(venv)$ pip install -r requirements.txt
-    
-```
+*   #### Add sample data
+    Browse to db folder and run:
+    ```
+        (venv)$ python add_es.py
+    ```
+
 
 ### How to Use
+
+Use two terminals, one for fact-bounty-flask and the other for fact-bounty-client.
 
 Run the flask server in the fact-bounty-flask folder:
     
 `(venv)$ flask run`
 
 start the npm server in fact-bounty-client directory.
-
-`npm start`
-
-## Using node.js backend server
-
-Run npm install in both fact-bounty-client and fact-bounty-server folders.
-
-```
- cd fact-bounty-server/
- npm install
- 
- cd ..
- 
- cd fact-bounty-client/
- npm install
-```
-
-Change the MongoDB url to user local mongodb database url in *fact-Bounty/fact-bounty-server/config/keys-example.js*.
-
-ex:
-```
-module.exports = {
-        mongoURI: "mongodb://localhost:27017/admin",
-        secretOrKey: "secret"
-}
-```
-And rename the **keys-example.js** file to **keys.js**
-
-#### How to Use
-
-Start the mongodb server in your local machine
-
-`sudo service mongod start`
-
-Use two terminals, one for fact-bounty-server and the other fot fact-bounty-client.
-
-start the npm server in both directories. use,
 
 `npm start`
 
