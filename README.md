@@ -25,7 +25,6 @@ Run npm install in fact-bounty-client folder.
 ```
  cd fact-bounty-client/
  npm install
-
  ```
 
 ## Set up flask server
