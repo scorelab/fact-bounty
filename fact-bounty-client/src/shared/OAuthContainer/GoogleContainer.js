@@ -1,21 +1,13 @@
-<<<<<<< HEAD
-import React from "react";
-=======
 import React, { Fragment, Component } from "react";
 import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
->>>>>>> fix: google login
 import { GoogleLogin } from "react-google-login";
 
 import { OauthUser } from "./actions/OAuthUser";
 
-<<<<<<< HEAD
-import "./index.css";
-=======
 import Toast from "../components/Snackbar";
 import styles from "./index.css";
->>>>>>> fix: google login
 
 class GoogleContainer extends Component {
   constructor(props, context) {
