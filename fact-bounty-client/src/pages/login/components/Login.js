@@ -211,6 +211,7 @@ class Login extends Component {
                 className={classnames("", {
                   invalid: errors.email || errors.emailnotfound
                 })}
+                autoComplete="on"
               />
               <Typography component="span" variant="caption" color="error">
                 {errors.email}
@@ -230,6 +231,7 @@ class Login extends Component {
                 className={classnames("", {
                   invalid: errors.password || errors.passwordincorrect
                 })}
+                autoComplete="on"
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
