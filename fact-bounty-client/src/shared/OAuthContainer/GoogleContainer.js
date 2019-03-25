@@ -27,7 +27,6 @@ class GoogleContainer extends React.Component {
   };
 
   render() {
-    const { errors } = this.state;
     return (
       <GoogleLogin
         render={renderProps => (

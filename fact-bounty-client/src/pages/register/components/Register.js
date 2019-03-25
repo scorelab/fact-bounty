@@ -233,6 +233,7 @@ class Register extends Component {
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="name">Name</InputLabel>
               <Input
+                autoComplete="on"
                 onChange={this.onChange}
                 value={this.state.name}
                 error={!!errors.name}
@@ -250,6 +251,7 @@ class Register extends Component {
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="email">Email Address</InputLabel>
               <Input
+                autoComplete="on"
                 onChange={this.onChange}
                 value={this.state.email}
                 error={!!errors.email}
@@ -267,6 +269,7 @@ class Register extends Component {
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="password">Password</InputLabel>
               <Input
+                autoComplete="on"
                 onChange={this.onChange}
                 value={this.state.password}
                 error={!!errors.password}
@@ -298,6 +301,7 @@ class Register extends Component {
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="password2">Confirm Password</InputLabel>
               <Input
+                autoComplete="on"
                 onChange={this.onChange}
                 value={this.state.password2}
                 error={!!errors.password2}

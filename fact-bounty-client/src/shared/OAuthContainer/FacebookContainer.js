@@ -26,7 +26,6 @@ class FacebookContainer extends React.Component {
   };
 
   render() {
-    const { errors } = this.state;
     return (
       <FacebookLogin
         render={renderProps => (
