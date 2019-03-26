@@ -49,17 +49,15 @@ class App extends Component {
           <MuiThemeProvider theme={theme}>
             <div className="App">
               <TopNavBar />
-              <div className="router-container">
-                <Switch>
-                  <Route exact path="/" component={MainLayout} />
-                  <Route exact path="/about" component={About} />
-                  <Route exact path="/landing" component={Landing} />
-                  <Route exact path="/register" component={Register} />
-                  <Route exact path="/login" component={Login} />
-                  <PrivateRoute exact path="/dashboard" component={Dashboard} />
-                  <Route component={NotFound} />
-                </Switch>
-              </div>
+              <Switch>
+                <Route path="/" exact component={MainLayout} />
+                <Route exact path="/about" component={About} />
+                <PrivateRoute exact path="/dashboard" component={Dashboard} />
+                <Route exact path="/landing" component={Landing} />
+                <Route exact path="/register" component={Register} />
+                <Route exact path="/login" component={Login} />
+                <Route path="*" component={NotFound} />
+              </Switch>
             </div>
           </MuiThemeProvider>
         </Router>

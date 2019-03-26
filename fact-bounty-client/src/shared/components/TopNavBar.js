@@ -28,7 +28,8 @@ const styles = {
     backgroundColor: "#fafafa",
     zIndex: "15",
     display: window.innerWidth > breakpoints.mobile ? "block" : "none",
-    position: "fixed"
+    position: "fixed",
+    top: 0
   },
   navbarTitle: {
     flexGrow: 2,

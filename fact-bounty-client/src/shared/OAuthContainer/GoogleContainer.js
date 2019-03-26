@@ -49,23 +49,19 @@ class GoogleContainer extends Component {
           />
         )}
         <GoogleLogin
-          render={renderProps => (
-            <Button className={styles.fbauth} onClick={renderProps.onClick}>
-              <img
-                style={{ width: "14px", marginRight: "7px" }}
-                src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
-                alt="icon"
-              />
-              {this.props.button_type === "Signup"
-                ? "Signup with Google"
-                : this.props.button_type === "Login"
-                ? "Login with Google"
-                : null}
-            </Button>
-          )}
+          className="googleSignin"
+          style={{ width: "15rem" }}
+          buttonText={
+            this.props.button_type === "Signup"
+              ? "Signup with Google"
+              : this.props.button_type === "Login"
+              ? "Login with Google"
+              : null
+          }
           clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
           onSuccess={this.responseGoogle}
           onFailure={this.errors}
+          icon="true"
         />
       </Fragment>
     );
