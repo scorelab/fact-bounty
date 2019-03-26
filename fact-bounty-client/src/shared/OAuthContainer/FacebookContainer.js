@@ -1,6 +1,9 @@
 import React from "react";
 import FacebookLogin from "react-facebook-login";
 import { FaFacebookSquare } from "react-icons/fa";
+import Button from "@material-ui/core/Button";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 import { OauthUser } from "./actions/OAuthUser";
 import "./index.css";
@@ -21,7 +24,7 @@ class FacebookContainer extends React.Component {
         name: res.name,
         email: res.email
       };
-      OauthUser(creds);
+      this.props.OauthUser(creds);
     }
   };
 
@@ -50,4 +53,17 @@ class FacebookContainer extends React.Component {
   }
 }
 
-export default FacebookContainer;
+FacebookContainer.propTypes = {
+  OauthUser: PropTypes.func.isRequired
+};
+
+const mapStateToProps = null;
+
+const mapDispatchToProps = {
+  OauthUser
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FacebookContainer);
