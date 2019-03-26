@@ -33,7 +33,13 @@ class FacebookContainer extends React.Component {
       <FacebookLogin
         appId={process.env.REACT_APP_FACEBOOK_CLIENT_ID}
         cssClass="fbauth"
-        textButton="Login with facebook"
+        textButton={
+          this.props.button_type === "Signup"
+            ? "Signup with Facebook"
+            : this.props.button_type === "Login"
+            ? "Login with Facebook"
+            : null
+        }
         fields="name,email,picture.width(400).height(400)"
         callback={this.responseFacebook}
         icon={
@@ -54,7 +60,8 @@ class FacebookContainer extends React.Component {
 }
 
 FacebookContainer.propTypes = {
-  OauthUser: PropTypes.func.isRequired
+  OauthUser: PropTypes.func.isRequired,
+  button_type: PropTypes.string
 };
 
 const mapStateToProps = null;

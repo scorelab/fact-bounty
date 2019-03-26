@@ -281,7 +281,7 @@ class Login extends Component {
                 OR
               </span>
             </div>
-            <OauthContainer />
+            <OauthContainer button_type="Login" />
           </form>
           <p>
             Don&apos;t have an account?&nbsp;
