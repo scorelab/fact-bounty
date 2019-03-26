@@ -356,7 +356,7 @@ class Register extends Component {
                 OR
               </span>
             </div>
-            <OauthContainer />
+            <OauthContainer button_type="Signup" />
           </form>
           <p>
             Already have an account?{" "}

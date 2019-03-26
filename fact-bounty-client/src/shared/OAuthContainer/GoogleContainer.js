@@ -56,7 +56,11 @@ class GoogleContainer extends Component {
                 src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
                 alt="icon"
               />
-              Login with Google
+              {this.props.button_type === "Signup"
+                ? "Signup with Google"
+                : this.props.button_type === "Login"
+                ? "Login with Google"
+                : null}
             </Button>
           )}
           clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
@@ -69,7 +73,8 @@ class GoogleContainer extends Component {
 }
 
 GoogleContainer.propTypes = {
-  OauthUser: PropTypes.func.isRequired
+  OauthUser: PropTypes.func.isRequired,
+  button_type: PropTypes.string
 };
 
 const mapStateToProps = null;
