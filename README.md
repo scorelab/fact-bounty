@@ -85,7 +85,52 @@ Run npm install in fact-bounty-client folder.
         (venv)$ python add_es.py
     ```
 
+### How to install Elasticsearch and start elasticsearch server
 
+*   #### Elasticsearch v6.7.0 can be installed as follows:
+    ```
+        (venv)$ wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.7.0.deb
+        (venv)$ wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.7.0.deb.sha512
+        (venv)$ shasum -a 512 -c elasticsearch-6.7.0.deb.sha512 
+        (venv)$ sudo dpkg -i elasticsearch-6.7.0.deb
+
+    ```
+
+*   #### Check whether your system uses `init` or `systemd` by running command:
+    ```
+        (venv)$ ps -p 1
+    ```
+
+*   #### Running Elasticsearch with SysV `init`
+    Use the update-rc.d command to configure Elasticsearch to start automatically when the system boots up:
+    ```
+        (venv)$ sudo update-rc.d elasticsearch defaults 95 10
+    ```
+    Elasticsearch can be started and stopped using the service command:
+    ```
+        (venv)$ sudo -i service elasticsearch start
+        (venv)$ sudo -i service elasticsearch stop
+    ```
+
+*   #### Running Elasticsearch with SysV `systemd`
+    To configure Elasticsearch to start automatically when the system boots up, run the following commands:
+    ```
+        (venv)$ sudo /bin/systemctl daemon-reload
+        (venv)$ sudo /bin/systemctl enable elasticsearch.service
+    ```
+    Elasticsearch can be started and stopped using the service command:
+    ```
+        (venv)$ sudo systemctl start elasticsearch.service
+        (venv)$ sudo systemctl stop elasticsearch.service
+    ```
+
+*   #### Check Elasticsearch server is running by:
+    `CURL` request:
+    ```
+        (venv)$ curl -X GET "localhost:9200/"
+    ```
+    or open [https://localhost:9200](https://localhost:9200)
+    
 ### How to Use
 
 Use two terminals, one for fact-bounty-flask and the other for fact-bounty-client.
