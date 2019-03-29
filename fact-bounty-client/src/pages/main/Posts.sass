@@ -2,6 +2,9 @@ $mix-color: #0288d1
 $true-color: #009688
 $fake-color: #f4511e
 
+$width-name: max-width
+$width-target: 768px
+
 .postLayout
   display: grid
   grid-template-columns: 25% 50% 25%
@@ -204,3 +207,45 @@ $fake-color: #f4511e
   font-size: 0.8rem
   text-align: left
   width: 60px
+
+@media only screen and ($width-name: $width-target) 
+  .hover-container 
+    width: 100%
+    padding: 0 
+
+  .postLayout
+    grid-template-columns: 5% 90% 5%
+
+  .btn-column
+    display: block
+    position: relative
+    padding: 1% 5%
+
+    .true-transition
+      display: inline
+      margin: 0 10% 0 0
+
+    .true-label
+      display: inline
+      top: -10px
+
+    .fake-transition
+      display: inline
+      margin: 0 10% 0 7%
+
+    .fake-label
+      display: inline
+      top: -10px
+
+    .mix-transition
+      display: inline
+      margin: 0 10% 0 7%
+    
+    .mix-label
+      display: inline
+      top: -10px
+  
+  .total-vote-count
+    position: absolute
+    bottom: 16px
+    
