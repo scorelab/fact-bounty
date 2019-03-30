@@ -151,7 +151,7 @@ And use [localhost:3000](https://) to browse.
 
 ### Running with Docker
 
-1. Change the MongoDB url to user local mongodb database url in *fact-Bounty/fact-bounty-server/config/keys-example.js*.
+1. Set DEV_DATABASE_URL as environment variable in fact-bounty-flask else it will connect to default i.e `data-dev.sqlite`.
 2. In the root of the project directory, run `docker-compose build`
    - If you are on Linux machine, execute the following steps to install compose. 
      ```
