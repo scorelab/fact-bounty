@@ -1,16 +1,24 @@
 # Config file for automatic testing at travis-ci.org
 language: python
 env:
-- FLASK_APP=app.py FLASK_DEBUG=1
+  - FLASK_APP=app.py FLASK_DEBUG=1
+  - DOCKER_COMPOSE_VERSION=1.4.2
 python:
   - 3.5
   - 3.6
 services:
   - elasticsearch
+  - docker
 install:
   - pip install -r fact-bounty-flask/requirements.txt
 before_script:
   - sleep 10
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - docker-compose up --build -d
 script: 
-    - cd fact-bounty-flask
-    - flask test
+  - cd fact-bounty-flask
+  - flask test
+after_script:
+  - docker-compose down
+
