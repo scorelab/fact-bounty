@@ -40,7 +40,7 @@ export default function(state = initialState, action) {
         loading: false,
         items: state.items.map(post => {
           if (post._id === action.id) {
-            post.approved_count += 1;
+            post.approved_count = action.count;
           }
           return post;
         })
