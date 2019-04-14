@@ -29,22 +29,24 @@ export const fetchPosts = page => dispatch => {
     });
 };
 
-export const approveVote = voteId => dispatch => {
+export const approveVote = (voteId, user_id) => dispatch => {
   dispatch({ type: LOADING });
   axios({
-    baseURL: "http://localhost:5000",
     url: "/api/stories/change-upvote-count",
+    baseURL: "http://localhost:5000",
     method: "post",
     data: {
       story_id: voteId,
-      change_val: 1
+      change_val: 1,
+      user: user_id
     },
     headers: { "Access-Control-Allow-Origin": "*" }
   })
     .then(res => {
       dispatch({
         type: APPROVE_VOTE_COMPLETE,
-        id: voteId
+        id: voteId,
+        count: res.data.updated_count
       });
     })
     .catch(res => {
@@ -58,7 +60,6 @@ export const approveVote = voteId => dispatch => {
 export const fakeVote = voteId => dispatch => {
   dispatch({ type: LOADING });
   axios({
-    baseURL: "http://localhost:5000",
     url: "/api/stories/change-downvote-count",
     method: "post",
     data: {
@@ -84,7 +85,6 @@ export const fakeVote = voteId => dispatch => {
 export const mixVote = voteId => dispatch => {
   dispatch({ type: LOADING });
   axios({
-    baseURL: "http://localhost:5000",
     url: "/api/stories/change-mixedvote-count",
     method: "post",
     data: {

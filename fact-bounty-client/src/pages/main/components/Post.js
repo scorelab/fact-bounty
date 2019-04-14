@@ -80,7 +80,7 @@ class Post extends Component {
         redirect: true
       });
     } else if (value === "approve") {
-      this.props.approveVote(this.props.post._id);
+      this.props.approveVote(this.props.post._id, this.props.user_id);
     } else if (value === "fake") {
       this.props.fakeVote(this.props.post._id);
     } else if (value === "mix") {
@@ -209,13 +209,15 @@ Post.propTypes = {
   mixVote: PropTypes.func,
   post: PropTypes.object,
   classes: PropTypes.object,
-  auth: PropTypes.bool
+  auth: PropTypes.bool,
+  user_id: PropTypes.string
 };
 
 const mapStateToProps = state => ({
   loading: state.posts.loading,
   error: state.posts.error,
-  auth: state.auth.isAuthenticated
+  auth: state.auth.isAuthenticated,
+  user_id: state.auth.user.sub
 });
 
 export default compose(

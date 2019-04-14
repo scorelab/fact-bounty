@@ -1,6 +1,7 @@
 from flask.views import MethodView
 from flask import make_response, request, jsonify, current_app
 from elasticsearch.helpers import scan
+import sys
 
 class AllStories(MethodView):
     """
@@ -70,32 +71,83 @@ class ChangeUpvote(MethodView):
     
     :param request: the request being processed
     """
+    # def post(self):
+    #     try:
+    #         # extract data from request
+    #         data = request.get_json(silent=True)
+    #         _id = data['story_id']
+    #         value = data['change_val']
+    #         user_id = data['user']
+    #         # get earlier count of that story
+    #         count = current_app.elasticsearch.get(index='factbounty', doc_type='story', id=_id)['_source']['approved_count']
+    #     except Exception as e:
+    #         response = {
+    #             'message': str(e)
+    #         }
+    #         return make_response(jsonify(response)), 404
+
+    #     # now update the story vote
+    #     try:
+    #         current_app.elasticsearch.update(index='factbounty', doc_type='story', id=_id, body={"doc": {"approved_count": (count + value)}})
+    #         doc = {
+    #             'user_id': user_id,
+    #             'story_id': _id,
+    #             'vote': 'approve' 
+    #         }
+    #         res = current_app.elasticsearch.index(index='factbounty-user-votes', doc_type='votes', body=doc)
+    #     except Exception as e:
+    #         response = {
+    #             'message': str(e)
+    #         }
+    #         return make_response(jsonify(response)), 500
+
+    #     response = {
+    #         'message': 'Changed upvote successfully'
+    #     } 
+    #     return make_response(jsonify(response)), 200
+
     def post(self):
         try:
             # extract data from request
             data = request.get_json(silent=True)
             _id = data['story_id']
             value = data['change_val']
-
+            user_id = data['user']
             # get earlier count of that story
+            user_vote_search = {
+                "query": {
+		            "bool": {
+                        "must": [
+                            {"match": {"user_id": "8"}},
+                            {"match": {"story_id": "5"}}
+                        ]
+		            }
+	            }
+            }
             count = current_app.elasticsearch.get(index='factbounty', doc_type='story', id=_id)['_source']['approved_count']
+            result = current_app.elasticsearch.search(index='factbounty-user-votes', doc_type='votes', body=user_vote_search)
+            if (result['hits']['total'] != 0):
+                story_id = result['hits']['hits'][0]['_id']
+                prev_vote = result['hits']['hits'][0]['_source']['vote']
+                current_app.elasticsearch.update(index='factbounty-user-votes', doc_type='votes', id=story_id, body={"doc": {"vote": "approve", "value": value}})
+            else:
+                doc = {
+                    'user_id': user_id,
+                    'story_id': _id,
+                    'vote': 'approve',
+                    'value': value
+                }
+                current_app.elasticsearch.index(index='factbounty-user-votes', doc_type='votes', body=doc)
+                current_app.elasticsearch.update(index='factbounty', doc_type='story', id=_id, body={"doc": {"approved_count": (count + value)}})
+                count += 1
         except Exception as e:
             response = {
                 'message': str(e)
             }
             return make_response(jsonify(response)), 404
-
-        # now update the story vote
-        try:
-            current_app.elasticsearch.update(index='factbounty', doc_type='story', id=_id, body={"doc": {"approved_count": (count + value)}})
-        except Exception as e:
-            response = {
-                'message': str(e)
-            }
-            return make_response(jsonify(response)), 500
-
         response = {
-            'message': 'Changed upvote successfully'
+            'message': 'Changed upvote successfully',
+            'updated_count': count
         } 
         return make_response(jsonify(response)), 200
 
