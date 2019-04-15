@@ -68,7 +68,9 @@ export default function(state = initialState, action) {
         loading: false,
         items: state.items.map(post => {
           if (post._id === action.id) {
-            post.mixedvote_count += 1;
+            post.approved_count = action.approved_count;
+            post.fake_count = action.fake_count;
+            post.mixedvote_count = action.mixedvote_count;
           }
           return post;
         })
