@@ -79,12 +79,12 @@ class Post extends Component {
       this.setState({
         redirect: true
       });
-    } else if (value === "approve") {
+    } else if (value === "approve" && this.props.loading === false) {
       this.props.approveVote(this.props.post._id, this.props.user_id);
-    } else if (value === "fake") {
-      this.props.fakeVote(this.props.post._id);
+    } else if (value === "fake" && this.props.loading === false) {
+      this.props.fakeVote(this.props.post._id, this.props.user_id);
     } else if (value === "mix") {
-      this.props.mixVote(this.props.post._id);
+      this.props.mixVote(this.props.post._id, this.props.user_id);
     } else {
       console.error("Wrong vote type received ", value);
     }
@@ -210,7 +210,8 @@ Post.propTypes = {
   post: PropTypes.object,
   classes: PropTypes.object,
   auth: PropTypes.bool,
-  user_id: PropTypes.string
+  user_id: PropTypes.number,
+  loading: PropTypes.bool
 };
 
 const mapStateToProps = state => ({

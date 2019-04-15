@@ -33,7 +33,6 @@ export const approveVote = (voteId, user_id) => dispatch => {
   dispatch({ type: LOADING });
   axios({
     url: "/api/stories/change-upvote-count",
-    baseURL: "http://localhost:5000",
     method: "post",
     data: {
       story_id: voteId,
@@ -46,7 +45,9 @@ export const approveVote = (voteId, user_id) => dispatch => {
       dispatch({
         type: APPROVE_VOTE_COMPLETE,
         id: voteId,
-        count: res.data.updated_count
+        approved_count: res.data.votes.approved_count,
+        fake_count: res.data.votes.fake_count,
+        mixedvote_count: res.data.votes.mixedvote_count
       });
     })
     .catch(res => {
@@ -57,21 +58,25 @@ export const approveVote = (voteId, user_id) => dispatch => {
     });
 };
 
-export const fakeVote = voteId => dispatch => {
+export const fakeVote = (voteId, user_id) => dispatch => {
   dispatch({ type: LOADING });
   axios({
     url: "/api/stories/change-downvote-count",
     method: "post",
     data: {
       story_id: voteId,
-      change_val: 1
+      change_val: 1,
+      user: user_id
     },
     headers: { "Access-Control-Allow-Origin": "*" }
   })
     .then(res => {
       dispatch({
-        type: FAKE_VOTE_COMPLETE,
-        id: voteId
+        type: APPROVE_VOTE_COMPLETE,
+        id: voteId,
+        approved_count: res.data.votes.approved_count,
+        fake_count: res.data.votes.fake_count,
+        mixedvote_count: res.data.votes.mixedvote_count
       });
     })
     .catch(res => {
@@ -86,6 +91,7 @@ export const mixVote = voteId => dispatch => {
   dispatch({ type: LOADING });
   axios({
     url: "/api/stories/change-mixedvote-count",
+    baseURL: "http://localhost:5000",
     method: "post",
     data: {
       story_id: voteId,
