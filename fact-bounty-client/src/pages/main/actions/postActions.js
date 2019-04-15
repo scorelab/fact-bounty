@@ -87,7 +87,7 @@ export const fakeVote = (voteId, user_id) => dispatch => {
     });
 };
 
-export const mixVote = voteId => dispatch => {
+export const mixVote = (voteId, user_id) => dispatch => {
   dispatch({ type: LOADING });
   axios({
     url: "/api/stories/change-mixedvote-count",
@@ -95,14 +95,18 @@ export const mixVote = voteId => dispatch => {
     method: "post",
     data: {
       story_id: voteId,
-      change_val: 1
+      change_val: 1,
+      user: user_id
     },
     headers: { "Access-Control-Allow-Origin": "*" }
   })
     .then(res => {
       dispatch({
         type: MIX_VOTE_COMPLETE,
-        id: voteId
+        id: voteId,
+        approved_count: res.data.votes.approved_count,
+        fake_count: res.data.votes.fake_count,
+        mixedvote_count: res.data.votes.mixedvote_count
       });
     })
     .catch(res => {
