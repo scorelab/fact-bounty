@@ -1,6 +1,7 @@
 # Fact Bounty
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7574ef8d36d8451fa979a42e2884504f)](https://app.codacy.com/app/ivantha/fact-Bounty?utm_source=github.com&utm_medium=referral&utm_content=scorelab/fact-Bounty&utm_campaign=Badge_Grade_Settings)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fscorelab%2Ffact-Bounty.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fscorelab%2Ffact-Bounty?ref=badge_shield)
 
 The recent decade has witnessed the birth of social media ecosystems that brings social organizations, media content and various stakeholders together, and now it appears significant advantages of comprehensiveness, diversity and wisdom that provide users with higher quality of experiences. Meanwhile, social media ecosystems suffer from security, privacy and trustworthiness threats. How to leverage the power of intelligent crowds to improve the ecosystem’s efficacy and efficiency, as well as ensure its security and privacy become burning and challenging issues.
 
@@ -165,3 +166,7 @@ And use [localhost:3000](https://) to browse.
 - First fork the repository and clone it.
 - You can open issue regarding any problem according to the given issue template.
 - Make changes and do the PR according to the given template.
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fscorelab%2Ffact-Bounty.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fscorelab%2Ffact-Bounty?ref=badge_large)
