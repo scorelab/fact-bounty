@@ -80,11 +80,44 @@ class Post extends Component {
         redirect: true
       });
     } else if (value === "approve" && this.props.loading === false) {
-      this.props.approveVote(this.props.post._id, this.props.user_id);
+      this.props.approveVote(
+        this.props.post._id,
+        this.props.user_id,
+        this.props.currentVote.voteType !== "approve"
+          ? 1
+          : this.props.currentVote.voteValue === 1
+          ? -1
+          : 1,
+        this.props.currentVote.voteIndex,
+        this.props.currentVote.voteId,
+        this.props.currentVote.voteType
+      );
     } else if (value === "fake" && this.props.loading === false) {
-      this.props.fakeVote(this.props.post._id, this.props.user_id);
-    } else if (value === "mix") {
-      this.props.mixVote(this.props.post._id, this.props.user_id);
+      this.props.fakeVote(
+        this.props.post._id,
+        this.props.user_id,
+        this.props.currentVote.voteType !== "fake"
+          ? 1
+          : this.props.currentVote.voteValue === 1
+          ? -1
+          : 1,
+        this.props.currentVote.voteIndex,
+        this.props.currentVote.voteId,
+        this.props.currentVote.voteType
+      );
+    } else if (value === "mix" && this.props.loading === false) {
+      this.props.mixVote(
+        this.props.post._id,
+        this.props.user_id,
+        this.props.currentVote.voteType !== "mix"
+          ? 1
+          : this.props.currentVote.voteValue === 1
+          ? -1
+          : 1,
+        this.props.currentVote.voteIndex,
+        this.props.currentVote.voteId,
+        this.props.currentVote.voteType
+      );
     } else {
       console.error("Wrong vote type received ", value);
     }
@@ -93,7 +126,10 @@ class Post extends Component {
   userVoteButton(voteType) {
     const { classes } = this.props;
     if (voteType === "approve") {
-      if (this.props.currentVote.voteType === "approve") {
+      if (
+        this.props.currentVote.voteType === "approve" &&
+        this.props.currentVote.voteValue === 1
+      ) {
         return (
           <div className="true-btn" style={{ opacity: 1 }}>
             <Icon className={classes.trueBtnHover}>check_circle</Icon>
@@ -107,7 +143,10 @@ class Post extends Component {
         );
       }
     } else if (voteType === "fake") {
-      if (this.props.currentVote.voteType === "fake") {
+      if (
+        this.props.currentVote.voteType === "fake" &&
+        this.props.currentVote.voteValue === 1
+      ) {
         return (
           <div className="fake-btn" style={{ opacity: 1 }}>
             <Icon className={classes.fakeBtnHover}>cancel</Icon>
@@ -121,7 +160,10 @@ class Post extends Component {
         );
       }
     } else if (voteType === "mix") {
-      if (this.props.currentVote.voteType === "mix") {
+      if (
+        this.props.currentVote.voteType === "mix" &&
+        this.props.currentVote.voteValue === 1
+      ) {
         return (
           <div className="mix-btn" style={{ opacity: 1 }}>
             <Icon className={classes.mixBtnHover}>report_problem</Icon>
@@ -263,7 +305,6 @@ Post.propTypes = {
   auth: PropTypes.bool,
   user_id: PropTypes.number,
   loading: PropTypes.bool,
-  userVotes: PropTypes.array,
   currentVote: PropTypes.object
 };
 
@@ -271,8 +312,7 @@ const mapStateToProps = state => ({
   loading: state.posts.loading,
   error: state.posts.error,
   auth: state.auth.isAuthenticated,
-  user_id: state.auth.user.sub,
-  userVotes: state.auth.userVotes
+  user_id: state.auth.user.sub
 });
 
 export default compose(

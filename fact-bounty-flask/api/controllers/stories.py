@@ -78,6 +78,8 @@ class ChangeUpvote(MethodView):
             _id = data['story_id']
             value = data['change_val']
             user_id = data['user']
+            vote_id = data['voteId']
+            prev_vote = data['prevVote']
             # get earlier count of that story
             user_vote_search = {
                 "query": {
@@ -99,14 +101,10 @@ class ChangeUpvote(MethodView):
             approved_count = votes['approved_count']
             fake_count = votes['fake_count']
             mixedvote_count = votes['mixedvote_count'] 
-            result = current_app.elasticsearch.search(index='factbounty-user-votes', doc_type='votes', body=user_vote_search)
-            if (result['hits']['total'] != 0):
-                vote_id = result['hits']['hits'][0]['_id']
-                prev_vote = result['hits']['hits'][0]['_source']['vote']
-                prev_value = result['hits']['hits'][0]['_source']['value']
+            if (vote_id != -1):
                 current_app.elasticsearch.update(index='factbounty-user-votes', doc_type='votes', id=vote_id, 
                     body={"doc": {"vote": "approve", "value": value}})
-                if (prev_vote == 'approve' and prev_value != value):
+                if (prev_vote == 'approve'):
                     current_app.elasticsearch.update(index='factbounty', doc_type='story', id=_id, body={"doc": 
                         {"approved_count": (approved_count + value)}})
                     approved_count += value
@@ -119,7 +117,7 @@ class ChangeUpvote(MethodView):
                     current_app.elasticsearch.update(index='factbounty', doc_type='story', id=_id, body={"doc": 
                         {"approved_count": (approved_count + value), "mixedvote_count": (mixedvote_count - value)}})
                     approved_count += value
-                    mixedvote_count -= value
+                    mixedvote_count -= value                
             else:
                 doc = {
                     'user_id': user_id,
@@ -127,7 +125,8 @@ class ChangeUpvote(MethodView):
                     'vote': 'approve',
                     'value': value
                 }
-                current_app.elasticsearch.index(index='factbounty-user-votes', doc_type='votes', body=doc)
+                newVoteID = current_app.elasticsearch.index(index='factbounty-user-votes', doc_type='votes', body=doc)['_id']
+                vote_id = newVoteID
                 current_app.elasticsearch.update(index='factbounty', doc_type='story', id=_id, body={"doc": {"approved_count": (approved_count + value)}})
                 approved_count += value
         except Exception as e:
@@ -137,7 +136,8 @@ class ChangeUpvote(MethodView):
             return make_response(jsonify(response)), 500
         response = {
             'message': 'Changed upvote successfully',
-            'votes': {'approved_count': approved_count, 'fake_count': fake_count, 'mixedvote_count': mixedvote_count}
+            'votes': {'approved_count': approved_count, 'fake_count': fake_count, 'mixedvote_count': mixedvote_count},
+            'voteId': vote_id
         } 
         return make_response(jsonify(response)), 200
 
@@ -155,6 +155,9 @@ class ChangeDownvote(MethodView):
             _id = data['story_id']
             value = data['change_val']
             user_id = data['user']
+            vote_id = data['voteId']
+            prev_vote = data['prevVote']
+
             # get earlier count of that story
             user_vote_search = {
                 "query": {
@@ -176,13 +179,9 @@ class ChangeDownvote(MethodView):
             approved_count = votes['approved_count']
             fake_count = votes['fake_count']
             mixedvote_count = votes['mixedvote_count'] 
-            result = current_app.elasticsearch.search(index='factbounty-user-votes', doc_type='votes', body=user_vote_search)
-            if (result['hits']['total'] != 0):
-                vote_id = result['hits']['hits'][0]['_id']
-                prev_vote = result['hits']['hits'][0]['_source']['vote']
-                prev_value = result['hits']['hits'][0]['_source']['value']
+            if (vote_id != -1):
                 current_app.elasticsearch.update(index='factbounty-user-votes', doc_type='votes', id=vote_id, body={"doc": {"vote": "fake", "value": value}})
-                if (prev_vote == 'fake' and prev_value != value):
+                if (prev_vote == 'fake'):
                     current_app.elasticsearch.update(index='factbounty', doc_type='story', id=_id, body={"doc": {"fake_count": (fake_count + value)}})
                     fake_count += value
                 elif (prev_vote == 'approve'):
@@ -200,7 +199,8 @@ class ChangeDownvote(MethodView):
                     'vote': 'fake',
                     'value': value
                 }
-                current_app.elasticsearch.index(index='factbounty-user-votes', doc_type='votes', body=doc)
+                newVoteID = current_app.elasticsearch.index(index='factbounty-user-votes', doc_type='votes', body=doc)['_id']
+                vote_id = newVoteID
                 current_app.elasticsearch.update(index='factbounty', doc_type='story', id=_id, body={"doc": {"fake_count": (fake_count + value)}})
                 fake_count += value
         except Exception as e:
@@ -210,7 +210,8 @@ class ChangeDownvote(MethodView):
             return make_response(jsonify(response)), 500
         response = {
             'message': 'Changed upvote successfully',
-            'votes': {'approved_count': approved_count, 'fake_count': fake_count, 'mixedvote_count': mixedvote_count}
+            'votes': {'approved_count': approved_count, 'fake_count': fake_count, 'mixedvote_count': mixedvote_count},
+            'voteId': vote_id
         } 
         return make_response(jsonify(response)), 200
 
@@ -229,6 +230,8 @@ class ChangeMixvote(MethodView):
             _id = data['story_id']
             value = data['change_val']
             user_id = data['user']
+            vote_id = data['voteId']
+            prev_vote = data['prevVote']
             # get earlier count of that story
             user_vote_search = {
                 "query": {
@@ -250,13 +253,9 @@ class ChangeMixvote(MethodView):
             approved_count = votes['approved_count']
             fake_count = votes['fake_count']
             mixedvote_count = votes['mixedvote_count'] 
-            result = current_app.elasticsearch.search(index='factbounty-user-votes', doc_type='votes', body=user_vote_search)
-            if (result['hits']['total'] != 0):
-                vote_id = result['hits']['hits'][0]['_id']
-                prev_vote = result['hits']['hits'][0]['_source']['vote']
-                prev_value = result['hits']['hits'][0]['_source']['value']
+            if (vote_id != -1):
                 current_app.elasticsearch.update(index='factbounty-user-votes', doc_type='votes', id=vote_id, body={"doc": {"vote": "mix", "value": value}})
-                if (prev_vote == 'mix' and prev_value != value):
+                if (prev_vote == 'mix'):
                     current_app.elasticsearch.update(index='factbounty', doc_type='story', id=_id, body={"doc": {"mixedvote_count": (mixedvote_count + value)}})
                     mixedvote_count += value
                 elif (prev_vote == 'approve'):
@@ -274,7 +273,8 @@ class ChangeMixvote(MethodView):
                     'vote': 'mix',
                     'value': value
                 }
-                current_app.elasticsearch.index(index='factbounty-user-votes', doc_type='votes', body=doc)
+                newVoteID = current_app.elasticsearch.index(index='factbounty-user-votes', doc_type='votes', body=doc)['_id']
+                vote_id = newVoteID
                 current_app.elasticsearch.update(index='factbounty', doc_type='story', id=_id, body={"doc": {"mixedvote_count": (mixedvote_count + value)}})
                 mixedvote_count += value
         except Exception as e:
@@ -282,10 +282,10 @@ class ChangeMixvote(MethodView):
                 'message': str(e)
             }
             return make_response(jsonify(response)), 500
-
         response = {
             'message': 'Changed upvote successfully',
-            'votes': {'approved_count': approved_count, 'fake_count': fake_count, 'mixedvote_count': mixedvote_count}
+            'votes': {'approved_count': approved_count, 'fake_count': fake_count, 'mixedvote_count': mixedvote_count},
+            'voteId': vote_id
         }
         return make_response(jsonify(response)), 200
 
@@ -308,7 +308,9 @@ class LoadUserVotes(MethodView):
             result = current_app.elasticsearch.search(index='factbounty-user-votes', doc_type='votes', body=search_query)['hits']
             if (result['total'] > 0):
                 for user_vote in result['hits']:
-                    votes.append(user_vote['_source'])
+                    element = user_vote['_source']
+                    element['_id'] = user_vote['_id']
+                    votes.append(element)
         except Exception as e:
             response = {
                 'message': str(e)

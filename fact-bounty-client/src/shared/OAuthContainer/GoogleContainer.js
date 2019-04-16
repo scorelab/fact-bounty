@@ -1,5 +1,5 @@
 import React, { Fragment, Component } from "react";
-import Button from "@material-ui/core/Button";
+// import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { GoogleLogin } from "react-google-login";
@@ -7,7 +7,7 @@ import { GoogleLogin } from "react-google-login";
 import { OauthUser } from "./actions/OAuthUser";
 
 import Toast from "../components/Snackbar";
-import styles from "./index.css";
+// import styles from "./index.css";
 
 class GoogleContainer extends Component {
   constructor(props, context) {
