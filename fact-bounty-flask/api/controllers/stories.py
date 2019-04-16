@@ -289,11 +289,42 @@ class ChangeMixvote(MethodView):
         }
         return make_response(jsonify(response)), 200
 
+class LoadUserVotes(MethodView):
+    # Retrieve user voted posts
+    def post(self):
+        votes = []
+        try:
+            data = request.get_json(silent=True)
+            user_id = data['user']
+            search_query = {
+                "query": {
+                    "bool": {
+                        "must": [
+                            {"match": {"user_id": user_id}}
+                        ]
+                    }
+                }
+            }
+            result = current_app.elasticsearch.search(index='factbounty-user-votes', doc_type='votes', body=search_query)['hits']
+            if (result['total'] > 0):
+                for user_vote in result['hits']:
+                    votes.append(user_vote['_source'])
+        except Exception as e:
+            response = {
+                'message': str(e)
+            }
+            return make_response(jsonify(response))
+        response = {
+            'message': 'Retrieved user votes successfully',
+            'user_votes': votes
+        }
+        return make_response(jsonify(response)), 200
 
 storyController = {
     'allstories': AllStories.as_view('all_stories'),
     'getrange': GetRange.as_view('get_range'),
     'changedownvote': ChangeDownvote.as_view('change_downvote'),
     'changemixvote': ChangeMixvote.as_view('change_mixvote'),
-    'changeupvote': ChangeUpvote.as_view('change_upvote')
+    'changeupvote': ChangeUpvote.as_view('change_upvote'),
+    'loaduservotes': LoadUserVotes.as_view('load_user_votes')
 }

@@ -18,6 +18,9 @@ import MainLayout from "./pages/main/components/MainLayout";
 import TopNavBar from "./shared/components/TopNavBar";
 import NotFound from "./pages/notFound/components/404.js";
 import About from "./pages/about/About";
+import { loadUserVotes } from "./core/userVotes";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {

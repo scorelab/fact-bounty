@@ -91,7 +91,6 @@ export const mixVote = (voteId, user_id) => dispatch => {
   dispatch({ type: LOADING });
   axios({
     url: "/api/stories/change-mixedvote-count",
-    baseURL: "http://localhost:5000",
     method: "post",
     data: {
       story_id: voteId,
