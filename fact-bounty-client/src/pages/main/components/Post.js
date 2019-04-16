@@ -90,12 +90,60 @@ class Post extends Component {
     }
   };
 
+  userVoteButton(voteType) {
+    const { classes } = this.props;
+    if (voteType === "approve") {
+      if (this.props.currentVote.voteType === "approve") {
+        return (
+          <div className="true-btn" style={{ opacity: 1 }}>
+            <Icon className={classes.trueBtnHover}>check_circle</Icon>
+          </div>
+        );
+      } else {
+        return (
+          <div className="true-btn">
+            <Icon className={classes.icon}>check_circle_outline</Icon>
+          </div>
+        );
+      }
+    } else if (voteType === "fake") {
+      if (this.props.currentVote.voteType === "fake") {
+        return (
+          <div className="fake-btn" style={{ opacity: 1 }}>
+            <Icon className={classes.fakeBtnHover}>cancel</Icon>
+          </div>
+        );
+      } else {
+        return (
+          <div className="fake-btn">
+            <Cancel className={classes.icon} />
+          </div>
+        );
+      }
+    } else if (voteType === "mix") {
+      if (this.props.currentVote.voteType === "mix") {
+        return (
+          <div className="mix-btn" style={{ opacity: 1 }}>
+            <Icon className={classes.mixBtnHover}>report_problem</Icon>
+          </div>
+        );
+      } else {
+        return (
+          <div className="mix-btn">
+            <ReportProblem className={classes.icon} />
+          </div>
+        );
+      }
+    } else {
+      console.warn("Wrong vote type");
+    }
+  }
+
   render() {
     if (this.state.redirect) {
       return <Redirect to="/login" />;
     } else {
       const { post, classes } = this.props;
-
       const totalVotes =
         post.approved_count + post.fake_count + post.mixedvote_count;
       const highestVotes = this.findHighestVotesColor(post);
@@ -162,9 +210,10 @@ class Post extends Component {
               className="true-transition"
               onClick={() => this.handleClick("approve")}
             >
-              <div className="true-btn">
+              {/* <div className="true-btn">
                 <Icon className={classes.icon}>check_circle_outline</Icon>
-              </div>
+              </div> */}
+              {this.userVoteButton("approve")}
               <div className="true-btn-hover">
                 <Icon className={classes.trueBtnHover}>check_circle</Icon>
                 <div className="true-label">True</div>
@@ -174,9 +223,10 @@ class Post extends Component {
               className="fake-transition"
               onClick={() => this.handleClick("fake")}
             >
-              <div className="fake-btn">
+              {/* <div className="fake-btn">
                 <Cancel className={classes.icon} />
-              </div>
+              </div> */}
+              {this.userVoteButton("fake")}
               <div className="fake-btn-hover">
                 <Icon className={classes.fakeBtnHover}>cancel</Icon>
                 <div className="fake-label">Fake</div>
@@ -186,9 +236,10 @@ class Post extends Component {
               className="mix-transition"
               onClick={() => this.handleClick("mix")}
             >
-              <div className="mix-btn">
+              {/* <div className="mix-btn">
                 <ReportProblem className={classes.icon} />
-              </div>
+              </div> */}
+              {this.userVoteButton("mix")}
               <div className="mix-btn-hover">
                 <Icon className={classes.mixBtnHover}>report_problem</Icon>
                 <div className="mix-label">Mixture</div>
@@ -211,14 +262,17 @@ Post.propTypes = {
   classes: PropTypes.object,
   auth: PropTypes.bool,
   user_id: PropTypes.number,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  userVotes: PropTypes.array,
+  currentVote: PropTypes.object
 };
 
 const mapStateToProps = state => ({
   loading: state.posts.loading,
   error: state.posts.error,
   auth: state.auth.isAuthenticated,
-  user_id: state.auth.user.sub
+  user_id: state.auth.user.sub,
+  userVotes: state.auth.userVotes
 });
 
 export default compose(

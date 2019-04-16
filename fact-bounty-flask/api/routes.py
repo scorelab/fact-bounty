@@ -47,3 +47,9 @@ api.add_url_rule(
     view_func=storyController['changemixvote'],
     methods=['POST']
 )
+
+api.add_url_rule(
+    '/stories/load-user-votes',
+    view_func=storyController['loaduservotes'],
+    methods=['POST']
+)
