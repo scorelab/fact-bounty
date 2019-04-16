@@ -127,7 +127,6 @@ export default function(state = initialState, action) {
         ...state,
         userVotes: state.userVotes.map(item => {
           if (item.story_id === action.postId) {
-            console.log(action.voteId);
             return { ...item, _id: action.voteId };
           } else {
             return item;

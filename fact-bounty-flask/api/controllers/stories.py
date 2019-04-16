@@ -1,7 +1,6 @@
 from flask.views import MethodView
 from flask import make_response, request, jsonify, current_app
 from elasticsearch.helpers import scan
-import sys
 
 class AllStories(MethodView):
     """
@@ -80,17 +79,8 @@ class ChangeUpvote(MethodView):
             user_id = data['user']
             vote_id = data['voteId']
             prev_vote = data['prevVote']
+            prev_value = data['prevValue']
             # get earlier count of that story
-            user_vote_search = {
-                "query": {
-		            "bool": {
-                        "must": [
-                            {"match": {"user_id": user_id}},
-                            {"match": {"story_id": _id}}
-                        ]
-		            }
-	            }
-            }
             votes = current_app.elasticsearch.get(index='factbounty', doc_type='story', id=_id)['_source']
         except Exception as e:
             response = {
@@ -100,24 +90,20 @@ class ChangeUpvote(MethodView):
         try:
             approved_count = votes['approved_count']
             fake_count = votes['fake_count']
-            mixedvote_count = votes['mixedvote_count'] 
+            mixedvote_count = votes['mixedvote_count']
             if (vote_id != -1):
-                current_app.elasticsearch.update(index='factbounty-user-votes', doc_type='votes', id=vote_id, 
-                    body={"doc": {"vote": "approve", "value": value}})
-                if (prev_vote == 'approve'):
-                    current_app.elasticsearch.update(index='factbounty', doc_type='story', id=_id, body={"doc": 
-                        {"approved_count": (approved_count + value)}})
-                    approved_count += value
-                elif (prev_vote == 'fake'):
-                    current_app.elasticsearch.update(index='factbounty', doc_type='story', id=_id, body={"doc": 
-                        {"approved_count": (approved_count + value), "fake_count": (fake_count - value)}})
+                current_app.elasticsearch.update(index='factbounty-user-votes', doc_type='votes', id=vote_id, body={"doc": {"vote": "approve", "value": value}})
+                if (prev_vote == 'fake' and prev_value == 1):
+                    current_app.elasticsearch.update(index='factbounty', doc_type='story', id=_id, body={"doc": {"approved_count": (approved_count + value), "fake_count": (fake_count - value)}})
                     approved_count += value
                     fake_count -= value
-                elif (prev_vote == 'mix'):
-                    current_app.elasticsearch.update(index='factbounty', doc_type='story', id=_id, body={"doc": 
-                        {"approved_count": (approved_count + value), "mixedvote_count": (mixedvote_count - value)}})
+                elif (prev_vote == 'mix' and prev_value == 1):
+                    current_app.elasticsearch.update(index='factbounty', doc_type='story', id=_id, body={"doc": {"approved_count": (approved_count + value), "mixedvote_count": (mixedvote_count - value)}})
                     approved_count += value
-                    mixedvote_count -= value                
+                    mixedvote_count -= value
+                else:
+                    current_app.elasticsearch.update(index='factbounty', doc_type='story', id=_id, body={"doc": {"approved_count": (approved_count + value)}})
+                    approved_count += value
             else:
                 doc = {
                     'user_id': user_id,
@@ -157,18 +143,8 @@ class ChangeDownvote(MethodView):
             user_id = data['user']
             vote_id = data['voteId']
             prev_vote = data['prevVote']
-
+            prev_value = data['prevValue']
             # get earlier count of that story
-            user_vote_search = {
-                "query": {
-		            "bool": {
-                        "must": [
-                            {"match": {"user_id": user_id}},
-                            {"match": {"story_id": _id}}
-                        ]
-		            }
-	            }
-            }
             votes = current_app.elasticsearch.get(index='factbounty', doc_type='story', id=_id)['_source']
         except Exception as e:
             response = {
@@ -178,20 +154,20 @@ class ChangeDownvote(MethodView):
         try:
             approved_count = votes['approved_count']
             fake_count = votes['fake_count']
-            mixedvote_count = votes['mixedvote_count'] 
+            mixedvote_count = votes['mixedvote_count']
             if (vote_id != -1):
                 current_app.elasticsearch.update(index='factbounty-user-votes', doc_type='votes', id=vote_id, body={"doc": {"vote": "fake", "value": value}})
-                if (prev_vote == 'fake'):
-                    current_app.elasticsearch.update(index='factbounty', doc_type='story', id=_id, body={"doc": {"fake_count": (fake_count + value)}})
-                    fake_count += value
-                elif (prev_vote == 'approve'):
+                if (prev_vote == 'approve' and prev_value == 1):
                     current_app.elasticsearch.update(index='factbounty', doc_type='story', id=_id, body={"doc": {"fake_count": (fake_count + value), "approved_count": (approved_count - value)}})
                     fake_count += value
                     approved_count -= value
-                elif (prev_vote == 'mix'):
+                elif (prev_vote == 'mix' and prev_value == 1):
                     current_app.elasticsearch.update(index='factbounty', doc_type='story', id=_id, body={"doc": {"fake_count": (fake_count + value), "mixedvote_count": (mixedvote_count - value)}})
                     fake_count += value
                     mixedvote_count -= value
+                else:
+                    current_app.elasticsearch.update(index='factbounty', doc_type='story', id=_id, body={"doc": {"fake_count": (fake_count + value)}})
+                    fake_count += value
             else:
                 doc = {
                     'user_id': user_id,
@@ -232,17 +208,9 @@ class ChangeMixvote(MethodView):
             user_id = data['user']
             vote_id = data['voteId']
             prev_vote = data['prevVote']
+            prev_value = data['prevValue']
+
             # get earlier count of that story
-            user_vote_search = {
-                "query": {
-		            "bool": {
-                        "must": [
-                            {"match": {"user_id": user_id}},
-                            {"match": {"story_id": _id}}
-                        ]
-		            }
-	            }
-            }
             votes = current_app.elasticsearch.get(index='factbounty', doc_type='story', id=_id)['_source']
         except Exception as e:
             response = {
@@ -252,20 +220,20 @@ class ChangeMixvote(MethodView):
         try:
             approved_count = votes['approved_count']
             fake_count = votes['fake_count']
-            mixedvote_count = votes['mixedvote_count'] 
+            mixedvote_count = votes['mixedvote_count']
             if (vote_id != -1):
                 current_app.elasticsearch.update(index='factbounty-user-votes', doc_type='votes', id=vote_id, body={"doc": {"vote": "mix", "value": value}})
-                if (prev_vote == 'mix'):
-                    current_app.elasticsearch.update(index='factbounty', doc_type='story', id=_id, body={"doc": {"mixedvote_count": (mixedvote_count + value)}})
-                    mixedvote_count += value
-                elif (prev_vote == 'approve'):
+                if (prev_vote == 'approve' and prev_value == 1):
                     current_app.elasticsearch.update(index='factbounty', doc_type='story', id=_id, body={"doc": {"mixedvote_count": (mixedvote_count + value), "approved_count": (approved_count - value)}})
                     mixedvote_count += value
                     approved_count -= value
-                elif (prev_vote == 'fake'):
+                elif (prev_vote == 'fake' and prev_value == 1):
                     current_app.elasticsearch.update(index='factbounty', doc_type='story', id=_id, body={"doc": {"mixedvote_count": (mixedvote_count + value), "fake_count": (fake_count - value)}})
                     mixedvote_count += value
                     fake_count -= value
+                else:
+                    current_app.elasticsearch.update(index='factbounty', doc_type='story', id=_id, body={"doc": {"mixedvote_count": (mixedvote_count + value)}})
+                    mixedvote_count += value
             else:
                 doc = {
                     'user_id': user_id,
