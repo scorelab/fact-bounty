@@ -3,10 +3,9 @@ import { connect } from "react-redux";
 import InfiniteScroll from "react-infinite-scroller";
 import PropTypes from "prop-types";
 
-import { fetchPosts, VOTE_ERROR } from "../actions/postActions";
+import { fetchPosts, loadUserVotes } from "../actions/postActions";
 import "../Posts.sass";
 import Post from "./Post";
-import { loadUserVotes } from "../../../core/userVotes";
 
 class Posts extends Component {
   componentDidMount() {
@@ -30,11 +29,21 @@ class Posts extends Component {
     var items = [];
     var a = 0;
     items = this.props.posts.map(post => {
-      let voteStatus = { voteType: "", voteValue: -1 };
+      let voteStatus = {
+        voteType: "",
+        voteValue: -1,
+        voteIndex: -1,
+        voteId: -1
+      };
       for (let i = 0; i < this.props.userVotes.length; i++) {
         const vote = this.props.userVotes[i];
         if (vote.story_id === post._id) {
-          voteStatus = { voteType: vote.vote, voteValue: vote.value };
+          voteStatus = {
+            voteType: vote.vote,
+            voteValue: vote.value,
+            voteIndex: i,
+            voteId: vote._id
+          };
           break;
         }
       }
@@ -65,7 +74,7 @@ Posts.propTypes = {
   loading: PropTypes.bool,
   fetchPosts: PropTypes.func,
   loadUserVotes: PropTypes.func,
-  user_id: PropTypes.string,
+  user_id: PropTypes.number,
   userVotes: PropTypes.array,
   isAuth: PropTypes.bool
 };
@@ -77,7 +86,7 @@ const mapStatetoProps = state => ({
   loading: state.posts.loading,
   isAuth: state.auth.isAuthenticated,
   user_id: state.auth.user.sub,
-  userVotes: state.auth.userVotes
+  userVotes: state.posts.userVotes
 });
 
 export default connect(

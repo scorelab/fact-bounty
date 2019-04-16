@@ -6,7 +6,10 @@ import {
   LOADING,
   MIX_VOTE_COMPLETE,
   NO_MORE,
-  VOTE_ERROR
+  VOTE_ERROR,
+  LOAD_USER_VOTES,
+  USER_VOTE,
+  UPDATE_USER_VOTE
 } from "../actions/postActions";
 
 const initialState = {
@@ -14,7 +17,8 @@ const initialState = {
   loading: false,
   error: String,
   nextPage: 1,
-  hasMore: true
+  hasMore: true,
+  userVotes: []
 };
 
 export default function(state = initialState, action) {
@@ -96,6 +100,40 @@ export default function(state = initialState, action) {
         hasMore: false
       };
     }
+    case LOAD_USER_VOTES:
+      return {
+        ...state,
+        userVotes: action.payload
+      };
+    case USER_VOTE:
+      if (action.payload.voteIndex === -1) {
+        return {
+          ...state,
+          userVotes: [...state.userVotes, action.payload.vote]
+        };
+      } else {
+        return {
+          ...state,
+          loading: true,
+          userVotes: [
+            ...state.userVotes.slice(0, action.payload.voteIndex),
+            action.payload.vote,
+            ...state.userVotes.slice(action.payload.voteIndex + 1)
+          ]
+        };
+      }
+    case UPDATE_USER_VOTE:
+      return {
+        ...state,
+        userVotes: state.userVotes.map(item => {
+          if (item.story_id === action.postId) {
+            console.log(action.voteId);
+            return { ...item, _id: action.voteId };
+          } else {
+            return item;
+          }
+        })
+      };
     default: {
       return state;
     }
