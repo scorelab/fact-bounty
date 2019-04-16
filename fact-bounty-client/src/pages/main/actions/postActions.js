@@ -38,7 +38,8 @@ export const approveVote = (
   voteValue,
   voteIndex,
   voteId,
-  voteType
+  voteType,
+  prevValue
 ) => dispatch => {
   const userVotePayload = {
     voteIndex: voteIndex,
@@ -51,6 +52,18 @@ export const approveVote = (
     }
   };
   dispatch({ type: USER_VOTE, payload: userVotePayload });
+  console.log(
+    "story_id > ",
+    postId,
+    "< change_val > ",
+    voteValue,
+    "< voteId > ",
+    voteId,
+    "< prevVote > ",
+    voteType,
+    "< prevValue > ",
+    prevValue
+  );
   axios({
     url: "/api/stories/change-upvote-count",
     method: "post",
@@ -59,6 +72,7 @@ export const approveVote = (
       change_val: voteValue,
       voteId: voteId,
       prevVote: voteType,
+      prevValue: prevValue,
       user: user_id
     },
     headers: { "Access-Control-Allow-Origin": "*" }
@@ -93,7 +107,8 @@ export const fakeVote = (
   voteValue,
   voteIndex,
   voteId,
-  voteType
+  voteType,
+  prevValue
 ) => dispatch => {
   const userVotePayload = {
     voteIndex: voteIndex,
@@ -106,6 +121,18 @@ export const fakeVote = (
     }
   };
   dispatch({ type: USER_VOTE, payload: userVotePayload });
+  console.log(
+    "story_id > ",
+    postId,
+    "< change_val > ",
+    voteValue,
+    "< voteId > ",
+    voteId,
+    "< prevVote > ",
+    voteType,
+    "< prevValue > ",
+    prevValue
+  );
   axios({
     url: "/api/stories/change-downvote-count",
     method: "post",
@@ -114,6 +141,7 @@ export const fakeVote = (
       change_val: voteValue,
       voteId: voteId,
       prevVote: voteType,
+      prevValue: prevValue,
       user: user_id
     },
     headers: { "Access-Control-Allow-Origin": "*" }
@@ -148,7 +176,8 @@ export const mixVote = (
   voteValue,
   voteIndex,
   voteId,
-  voteType
+  voteType,
+  prevValue
 ) => dispatch => {
   const userVotePayload = {
     voteIndex: voteIndex,
@@ -161,6 +190,18 @@ export const mixVote = (
     }
   };
   dispatch({ type: USER_VOTE, payload: userVotePayload });
+  console.log(
+    "story_id > ",
+    postId,
+    "< change_val > ",
+    voteValue,
+    "< voteId > ",
+    voteId,
+    "< prevVote > ",
+    voteType,
+    "< prevValue > ",
+    prevValue
+  );
   axios({
     url: "/api/stories/change-mixedvote-count",
     method: "post",
@@ -169,6 +210,7 @@ export const mixVote = (
       change_val: voteValue,
       voteId: voteId,
       prevVote: voteType,
+      prevValue: prevValue,
       user: user_id
     },
     headers: { "Access-Control-Allow-Origin": "*" }

@@ -90,7 +90,8 @@ class Post extends Component {
           : 1,
         this.props.currentVote.voteIndex,
         this.props.currentVote.voteId,
-        this.props.currentVote.voteType
+        this.props.currentVote.voteType,
+        this.props.currentVote.voteValue
       );
     } else if (value === "fake" && this.props.loading === false) {
       this.props.fakeVote(
@@ -103,7 +104,8 @@ class Post extends Component {
           : 1,
         this.props.currentVote.voteIndex,
         this.props.currentVote.voteId,
-        this.props.currentVote.voteType
+        this.props.currentVote.voteType,
+        this.props.currentVote.voteValue
       );
     } else if (value === "mix" && this.props.loading === false) {
       this.props.mixVote(
@@ -116,7 +118,8 @@ class Post extends Component {
           : 1,
         this.props.currentVote.voteIndex,
         this.props.currentVote.voteId,
-        this.props.currentVote.voteType
+        this.props.currentVote.voteType,
+        this.props.currentVote.voteValue
       );
     } else {
       console.error("Wrong vote type received ", value);
