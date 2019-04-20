@@ -16,11 +16,6 @@ if os.environ.get('FLASK_COVERAGE'):
     COV.start()
 
 @click.command()
-def deploy():
-    # migrate database to latest revision
-    upgrade()
-
-@click.command()
 @click.option('--coverage/--no-coverage', default=False,
               help='Run tests under code coverage.')
 def test(coverage):
