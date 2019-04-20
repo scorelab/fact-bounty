@@ -52,5 +52,6 @@ config = {
     'development': DevelopmentConfig,
     'testing': TestingConfig,
     'docker': DockerConfig,
+    'production': ProductionConfig,
     'default': DevelopmentConfig
 }
