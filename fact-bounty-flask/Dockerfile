@@ -8,7 +8,7 @@ WORKDIR /usr/fact-bounty/fact-bounty-flask
 
 COPY requirements.txt requirements.txt
 RUN python -m venv venv
-RUN venv/bin/pip --no-cache-dir install -r --silent requirements.txt
+RUN venv/bin/pip --no-cache-dir install -r requirements.txt
 COPY . /usr/fact-bounty/fact-bounty-flask
 
 EXPOSE 5000
