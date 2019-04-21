@@ -10,4 +10,4 @@ while true; do
     sleep 5
 done
 
-flask run
+exec gunicorn -b :5000 --access-logfile - --error-logfile - fact-bounty-flask:app
