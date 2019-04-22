@@ -9,6 +9,7 @@ RUN mkdir -p /usr/fact-bounty/fact-bounty-flask
 WORKDIR /usr/fact-bounty/fact-bounty-flask
 
 COPY requirements.txt requirements.txt
+COPY docker.txt docker.txt
 RUN python -m venv venv
 RUN venv/bin/pip --no-cache-dir install -r docker.txt
 COPY . ./
