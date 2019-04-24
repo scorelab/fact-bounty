@@ -6,9 +6,7 @@ import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-
 import { Link as RouterLink, Redirect } from "react-router-dom";
-
 import compose from "recompose/compose";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -26,7 +24,6 @@ import OauthContainer from "../../../shared/OAuthContainer";
 import Toast from "../../../shared/components/Snackbar";
 import { updateError } from "../../../shared/actions/errorActions";
 import { loginUser } from "../actions/authActions";
-// import '../styles/login.sass';
 
 const styles = theme => ({
   main: {
@@ -192,7 +189,6 @@ class Login extends Component {
           <Typography component="h1" variant="h5">
             Login
           </Typography>
-          <OauthContainer />
           <form
             noValidate
             onSubmit={this.onSubmit}
@@ -214,13 +210,13 @@ class Login extends Component {
                 className={classnames("", {
                   invalid: errors.email || errors.emailnotfound
                 })}
+                autoComplete="on"
               />
               <Typography component="span" variant="caption" color="error">
                 {errors.email}
                 {errors.emailnotfound}
               </Typography>
             </FormControl>
-
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="password">Password</InputLabel>
               <Input
@@ -233,6 +229,7 @@ class Login extends Component {
                 className={classnames("", {
                   invalid: errors.password || errors.passwordincorrect
                 })}
+                autoComplete="on"
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
@@ -254,7 +251,6 @@ class Login extends Component {
               </Typography>
               <span className="red-text" />
             </FormControl>
-
             <Button
               type="submit"
               fullWidth
@@ -265,6 +261,27 @@ class Login extends Component {
             >
               Login
             </Button>
+
+            <div
+              style={{
+                width: "100%",
+                height: 14,
+                margin: "30px 0px",
+                borderBottom: "1px solid #00000033",
+                textAlign: "center"
+              }}
+            >
+              <span
+                style={{
+                  fontSize: 20,
+                  padding: "0px 5px",
+                  backgroundColor: "white"
+                }}
+              >
+                OR
+              </span>
+            </div>
+            <OauthContainer button_type="Login" />
           </form>
           <p>
             Don&apos;t have an account?&nbsp;

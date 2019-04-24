@@ -9,17 +9,15 @@ import { logoutUser, setCurrentUser } from "./actions/authActions";
 import store from "./core/store";
 import theme from "./core/theme";
 import "./App.sass";
-// import Landing      from './components/landing/Landing'
-// import Register     from './components/register/Register'
-// import Login        from './components/login/Login'
 import PrivateRoute from "./core/PrivateRoute";
-// import Dashboard    from './components/dashboard/Dashboard'
 import Landing from "./pages/landing/components/Landing";
 import Register from "./pages/register/components/Register";
 import Login from "./pages/login/components/Login";
 import Dashboard from "./pages/dashboard/components/Dashboard";
 import MainLayout from "./pages/main/components/MainLayout";
 import TopNavBar from "./shared/components/TopNavBar";
+import NotFound from "./pages/notFound/components/404.js";
+import About from "./pages/about/About";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -51,13 +49,17 @@ class App extends Component {
           <MuiThemeProvider theme={theme}>
             <div className="App">
               <TopNavBar />
-              <Route path="/" component={MainLayout} />
-              <Route exact path="/landing" component={Landing} />
-              <Route exact path="/register" component={Register} />
-              <Route exact path="/login" component={Login} />
-              <Switch>
-                <PrivateRoute exact path="/dashboard" component={Dashboard} />
-              </Switch>
+              <div className="router-container">
+                <Switch>
+                  <Route exact path="/" component={MainLayout} />
+                  <Route exact path="/about" component={About} />
+                  <Route exact path="/landing" component={Landing} />
+                  <Route exact path="/register" component={Register} />
+                  <Route exact path="/login" component={Login} />
+                  <PrivateRoute exact path="/dashboard" component={Dashboard} />
+                  <Route component={NotFound} />
+                </Switch>
+              </div>
             </div>
           </MuiThemeProvider>
         </Router>

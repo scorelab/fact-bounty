@@ -5,13 +5,12 @@ import { GET_ERRORS, SET_CURRENT_USER } from "../../../core/types";
 
 export const OauthUser = creds => dispatch => {
   axios
-    .post("/api/users/oauth", JSON.stringify(creds))
+    .post("/api/users/oauth", creds)
     .then(res => {
-      const { token } = res.data;
+      const token = res.data.access_token;
       localStorage.setItem("jwtToken", token);
 
       setAuthToken(token);
-
       const decoded = jwt_decode(token);
 
       dispatch({

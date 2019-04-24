@@ -1,15 +1,16 @@
 import React, { Component } from "react";
 import { Card, CardContent, Icon } from "@material-ui/core";
-import postImg1 from "../flag1.jpg";
 import { withStyles } from "@material-ui/core/styles";
-import "../Posts.sass";
 import ReportProblem from "@material-ui/icons/ReportProblemOutlined";
 import Cancel from "@material-ui/icons/CancelOutlined";
-import { approveVote, fakeVote, mixVote } from "../actions/postActions";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
+
+import { approveVote, fakeVote, mixVote } from "../actions/postActions";
+import postImg1 from "../flag1.jpg";
+import "../Posts.sass";
 
 const styles = {
   cardContent: {
@@ -78,23 +79,116 @@ class Post extends Component {
       this.setState({
         redirect: true
       });
-    } else if (value === "approve") {
-      this.props.approveVote(this.props.post._id);
-    } else if (value === "fake") {
-      this.props.fakeVote(this.props.post._id);
-    } else if (value === "mix") {
-      this.props.mixVote(this.props.post._id);
+    } else if (value === "approve" && this.props.loading === false) {
+      this.props.approveVote(
+        this.props.post._id,
+        this.props.user_id,
+        this.props.currentVote.voteType !== "approve"
+          ? 1
+          : this.props.currentVote.voteValue === 1
+          ? -1
+          : 1,
+        this.props.currentVote.voteIndex,
+        this.props.currentVote.voteId,
+        this.props.currentVote.voteType,
+        this.props.currentVote.voteValue
+      );
+    } else if (value === "fake" && this.props.loading === false) {
+      this.props.fakeVote(
+        this.props.post._id,
+        this.props.user_id,
+        this.props.currentVote.voteType !== "fake"
+          ? 1
+          : this.props.currentVote.voteValue === 1
+          ? -1
+          : 1,
+        this.props.currentVote.voteIndex,
+        this.props.currentVote.voteId,
+        this.props.currentVote.voteType,
+        this.props.currentVote.voteValue
+      );
+    } else if (value === "mix" && this.props.loading === false) {
+      this.props.mixVote(
+        this.props.post._id,
+        this.props.user_id,
+        this.props.currentVote.voteType !== "mix"
+          ? 1
+          : this.props.currentVote.voteValue === 1
+          ? -1
+          : 1,
+        this.props.currentVote.voteIndex,
+        this.props.currentVote.voteId,
+        this.props.currentVote.voteType,
+        this.props.currentVote.voteValue
+      );
     } else {
       console.error("Wrong vote type received ", value);
     }
   };
+
+  userVoteButton(voteType) {
+    const { classes } = this.props;
+    if (voteType === "approve") {
+      if (
+        this.props.currentVote.voteType === "approve" &&
+        this.props.currentVote.voteValue === 1
+      ) {
+        return (
+          <div className="true-btn" style={{ opacity: 1 }}>
+            <Icon className={classes.trueBtnHover}>check_circle</Icon>
+          </div>
+        );
+      } else {
+        return (
+          <div className="true-btn">
+            <Icon className={classes.icon}>check_circle_outline</Icon>
+          </div>
+        );
+      }
+    } else if (voteType === "fake") {
+      if (
+        this.props.currentVote.voteType === "fake" &&
+        this.props.currentVote.voteValue === 1
+      ) {
+        return (
+          <div className="fake-btn" style={{ opacity: 1 }}>
+            <Icon className={classes.fakeBtnHover}>cancel</Icon>
+          </div>
+        );
+      } else {
+        return (
+          <div className="fake-btn">
+            <Cancel className={classes.icon} />
+          </div>
+        );
+      }
+    } else if (voteType === "mix") {
+      if (
+        this.props.currentVote.voteType === "mix" &&
+        this.props.currentVote.voteValue === 1
+      ) {
+        return (
+          <div className="mix-btn" style={{ opacity: 1 }}>
+            <Icon className={classes.mixBtnHover}>report_problem</Icon>
+          </div>
+        );
+      } else {
+        return (
+          <div className="mix-btn">
+            <ReportProblem className={classes.icon} />
+          </div>
+        );
+      }
+    } else {
+      console.warn("Wrong vote type");
+    }
+  }
 
   render() {
     if (this.state.redirect) {
       return <Redirect to="/login" />;
     } else {
       const { post, classes } = this.props;
-
       const totalVotes =
         post.approved_count + post.fake_count + post.mixedvote_count;
       const highestVotes = this.findHighestVotesColor(post);
@@ -139,7 +233,9 @@ class Post extends Component {
                 </div>
                 <div className="details">
                   <div className="title">{post.title}</div>
-                  <div className="date">{post.date_added.$date}</div>
+                  <div className="date">
+                    {new Date(post.date_added.$date).toUTCString()}
+                  </div>
                   <div className="content">
                     {content}
                     {post.content.length > 320 ? "..." : ""}
@@ -159,9 +255,10 @@ class Post extends Component {
               className="true-transition"
               onClick={() => this.handleClick("approve")}
             >
-              <div className="true-btn">
+              {/* <div className="true-btn">
                 <Icon className={classes.icon}>check_circle_outline</Icon>
-              </div>
+              </div> */}
+              {this.userVoteButton("approve")}
               <div className="true-btn-hover">
                 <Icon className={classes.trueBtnHover}>check_circle</Icon>
                 <div className="true-label">True</div>
@@ -171,9 +268,10 @@ class Post extends Component {
               className="fake-transition"
               onClick={() => this.handleClick("fake")}
             >
-              <div className="fake-btn">
+              {/* <div className="fake-btn">
                 <Cancel className={classes.icon} />
-              </div>
+              </div> */}
+              {this.userVoteButton("fake")}
               <div className="fake-btn-hover">
                 <Icon className={classes.fakeBtnHover}>cancel</Icon>
                 <div className="fake-label">Fake</div>
@@ -183,9 +281,10 @@ class Post extends Component {
               className="mix-transition"
               onClick={() => this.handleClick("mix")}
             >
-              <div className="mix-btn">
+              {/* <div className="mix-btn">
                 <ReportProblem className={classes.icon} />
-              </div>
+              </div> */}
+              {this.userVoteButton("mix")}
               <div className="mix-btn-hover">
                 <Icon className={classes.mixBtnHover}>report_problem</Icon>
                 <div className="mix-label">Mixture</div>
@@ -206,13 +305,17 @@ Post.propTypes = {
   mixVote: PropTypes.func,
   post: PropTypes.object,
   classes: PropTypes.object,
-  auth: PropTypes.bool
+  auth: PropTypes.bool,
+  user_id: PropTypes.number,
+  loading: PropTypes.bool,
+  currentVote: PropTypes.object
 };
 
 const mapStateToProps = state => ({
   loading: state.posts.loading,
   error: state.posts.error,
-  auth: state.auth.isAuthenticated
+  auth: state.auth.isAuthenticated,
+  user_id: state.auth.user.sub
 });
 
 export default compose(

@@ -1,38 +1,22 @@
-import React from "react";
-
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import FacebookContainer from "./FacebookContainer";
+import GoogleContainer from "./GoogleContainer";
 import "./index.css";
 
-class OauthContainer extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-    this.state = {
-      FacebookContainer: null,
-      GoogleContainer: null
-    };
-  }
-
-  async componentDidMount() {
-    const { default: FacebookContainer } = await import("./FacebookContainer");
-    const { default: GoogleContainer } = await import("./GoogleContainer");
-    this.setState({
-      loading: false,
-      FacebookContainer: (
-        // <FacebookContainer class={styles.facebookIconSignup} />
-        <FacebookContainer />
-      ),
-      // GoogleContainer: <GoogleContainer class={styles.googleIconSignup} />
-      GoogleContainer: <GoogleContainer />
-    });
-  }
-
+class OauthContainer extends Component {
   render() {
     return (
       <div className="socialIconsSignup">
-        {this.state.FacebookContainer}
-        {this.state.GoogleContainer}
+        <FacebookContainer button_type={this.props.button_type} />
+        <GoogleContainer button_type={this.props.button_type} />
       </div>
     );
   }
 }
+
+OauthContainer.propTypes = {
+  button_type: PropTypes.string
+};
 
 export default OauthContainer;

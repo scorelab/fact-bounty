@@ -1,17 +1,7 @@
-import React, { Component } from "react";
-import { Route } from "react-router-dom";
-import Posts from "./Posts";
-import About from "../../about/About";
+import React from "react";
 
-class MainLayout extends Component {
-  render() {
-    return (
-      <div style={{ paddingTop: "74px" }}>
-        <Route exact path={"/"} component={Posts} />
-        <Route path="/about" component={About} />
-      </div>
-    );
-  }
-}
+import Posts from "./Posts";
+
+const MainLayout = () => <Posts />;
 
 export default MainLayout;

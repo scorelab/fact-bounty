@@ -6,9 +6,7 @@ import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-
 import { Link as RouterLink } from "react-router-dom";
-
 import compose from "recompose/compose";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -26,7 +24,6 @@ import OauthContainer from "../../../shared/OAuthContainer";
 import Toast from "../../../shared/components/Snackbar";
 import { updateError } from "../../../shared/actions/errorActions";
 import { registerUser } from "../actions/newUserActions";
-//import "../styles/register.sass"
 
 const styles = theme => ({
   main: {
@@ -221,7 +218,7 @@ class Register extends Component {
           <Typography component="h1" variant="h5">
             Sign Up
           </Typography>
-          <OauthContainer />
+
           <form
             noValidate
             onSubmit={this.onSubmit}
@@ -233,6 +230,7 @@ class Register extends Component {
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="name">Name</InputLabel>
               <Input
+                autoComplete="on"
                 onChange={this.onChange}
                 value={this.state.name}
                 error={!!errors.name}
@@ -250,6 +248,7 @@ class Register extends Component {
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="email">Email Address</InputLabel>
               <Input
+                autoComplete="on"
                 onChange={this.onChange}
                 value={this.state.email}
                 error={!!errors.email}
@@ -267,6 +266,7 @@ class Register extends Component {
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="password">Password</InputLabel>
               <Input
+                autoComplete="on"
                 onChange={this.onChange}
                 value={this.state.password}
                 error={!!errors.password}
@@ -298,6 +298,7 @@ class Register extends Component {
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="password2">Confirm Password</InputLabel>
               <Input
+                autoComplete="on"
                 onChange={this.onChange}
                 value={this.state.password2}
                 error={!!errors.password2}
@@ -336,6 +337,26 @@ class Register extends Component {
             >
               Sign Up
             </Button>
+            <div
+              style={{
+                width: "100%",
+                height: 14,
+                margin: "30px 0px",
+                borderBottom: "1px solid #00000033",
+                textAlign: "center"
+              }}
+            >
+              <span
+                style={{
+                  fontSize: 20,
+                  padding: "0px 5px",
+                  backgroundColor: "white"
+                }}
+              >
+                OR
+              </span>
+            </div>
+            <OauthContainer button_type="Signup" />
           </form>
           <p>
             Already have an account?{" "}
