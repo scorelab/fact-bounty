@@ -1,13 +1,11 @@
 # Config file for automatic testing at travis-ci.org
 language: python
 env:
-  - FLASK_APP=app.py FLASK_DEBUG=1
-  - DOCKER_COMPOSE_VERSION=1.4.2
+  - FLASK_APP=app.py FLASK_DEBUG=1 DOCKER_COMPOSE_VERSION=1.4.2
 python:
   - 3.5
   - 3.6
 services:
-  - elasticsearch
   - docker
 install:
   - pip install -r fact-bounty-flask/requirements.txt
