@@ -11,8 +11,11 @@ WORKDIR /usr/fact-bounty/fact-bounty-flask
 COPY requirements.txt requirements.txt
 COPY docker.txt docker.txt
 RUN python -m venv venv
-RUN venv/bin/pip --no-cache-dir install -r docker.txt
+RUN venv/bin/pip install -r docker.txt
 COPY . ./
+
+RUN dos2unix boot.sh
+RUN chmod +x boot.sh
 
 EXPOSE 5000
 
