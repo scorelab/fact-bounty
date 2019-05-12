@@ -1,0 +1,91 @@
+.facebookIconLogin,
+.googleIconLogin {
+  width: 60px;
+  height: 60px;
+  background-color: #f6f6f6;
+  text-align: center;
+  border-radius: 100%;
+  color: black;
+  border: 1px solid rgba(90, 88, 88, 0.12);
+  padding: 6%;
+}
+
+.facebookIconSignup {
+  width: 120px;
+  height: 40px;
+  background-image: url('/icons/facebook.svg');
+  background-size: contain;
+  content: 'Facebook Login';
+  background-repeat: no-repeat;
+  background-color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  color: black;
+  border: 1px solid #cccccc;
+  padding: 4%;
+}
+
+.facebookIconSignup::after {
+  content: 'facebook';
+}
+
+.googleIconSignup::before {
+  display: none;
+  content: 'google';
+}
+
+.googleIconSignup {
+  width: 120px;
+  height: 40px;
+  background-image: url('/icons/gmail.svg');
+  /* content: 'Facebook Login'; */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  color: black;
+  border: 1px solid #cccccc;
+  padding: 4%;
+}
+
+.facebookIconSignup:focus,
+.googleIconSignup:focus {
+  background-color: #fff;
+}
+
+.socialIconsLogin {
+  /* justify-content: space-evenly; */
+  display: flex;
+  /* padding: 9% 6%; */
+}
+
+.socialIconsSignup {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 7px;
+  width: 100%;
+}
+
+.googleSignin{
+    width: 15rem;
+    align-items: center;
+    justify-content: center
+}
+
+.fbauth {
+  background-color: #4c69ba;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px 0px, rgba(0, 0, 0, 0.24) 0px 0px 1px 0px;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border: 0;
+  border-radius:2px;
+  padding: 6px 6px;
+  font-size: 14px;
+  width: 15rem;
+  cursor: pointer;
+  margin-bottom: 15px;
+}

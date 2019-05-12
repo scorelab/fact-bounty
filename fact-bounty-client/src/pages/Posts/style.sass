@@ -1,0 +1,205 @@
+$mix-color: #0288d1
+$true-color: #009688
+$fake-color: #f4511e
+
+.postLayout
+  display: grid
+  grid-template-columns: 25% 50% 25%
+  grid-template-rows: auto
+  min-height: calc(100vh - 64px)
+
+.vote-status
+  height: 4px
+  transition: 0.2s ease
+  display: flex
+  position: relative
+
+  .votes
+    display: flex
+    justify-content: center
+    align-items: center
+    transition: 0.2s ease
+    opacity: 0
+
+  .true-votes
+    background-color: $true-color
+
+  .fake-votes
+    background-color: $fake-color
+
+  .mix-votes
+    background-color: $mix-color
+
+  .vote-value
+    font-size: 0.8rem
+    font-weight: 600
+    color: #fafafa
+    opacity: 0
+    transition: 0.2s ease
+
+.hover-container
+  padding: 0 45px
+  transition: 0.2s ease
+  position: relative
+
+.hover-container:hover
+  .vote-status
+    height: 18px
+
+  .btn-column
+    opacity: 1
+
+  .votes
+    opacity: 1
+
+  .vote-value
+    opacity: 1
+
+  .total-vote-count
+    opacity: 0.6
+
+.container
+  overflow: hidden
+  display: flex
+
+  .image
+    padding: 12px
+
+    .post-img
+      max-height: 150px
+      width: 125px
+      border-radius: 4px
+      margin: auto
+
+  .details
+    padding: 12px 22px 2px 22px
+    width: 100%
+    position: relative
+    min-height: 125px
+
+    .title
+      font-size: 1.2rem
+      font-weight: 500
+      margin-bottom: 5px
+
+    .date
+      font-size: 0.8rem
+      opacity: 0.7
+      margin-bottom: 12px
+
+    .content
+      text-align: justify
+      margin-bottom: 15px
+      line-height: 1.3
+      font-size: 14px
+
+    a
+      text-decoration: none
+      color: #424242
+
+    .read-more
+      text-decoration: none
+      color: #9E9E9E
+      font-size: 0.7rem
+      text-align: right
+      position: absolute
+      bottom: 4px
+      right: 6px
+      font-weight: 500
+      cursor: pointer
+
+    .read-more:hover
+      color: #795548
+
+.btn-column
+  position: absolute
+  top: 0
+  right: 10px
+  transition: 0.2s ease
+  opacity: 0
+
+.true-transition
+  margin-bottom: 5px
+  cursor: pointer
+
+.true-transition:hover
+  .true-btn
+    display: none
+
+  .true-btn-hover
+    display: inherit
+
+.true-btn
+  display: inherit
+  opacity: 0.5
+
+.true-btn-hover
+  display: none
+  position: relative
+
+.fake-btn
+  display: inherit
+  opacity: 0.5
+
+.fake-btn-hover
+  display: none
+  position: relative
+  cursor: pointer
+
+.fake-transition:hover
+  .fake-btn
+    display: none
+
+  .fake-btn-hover
+    display: inherit
+
+.true-label
+  color: $true-color
+  position: absolute
+  top: 6px
+  left: 40px
+  font-weight: 600
+
+.fake-label
+  color: $fake-color
+  position: absolute
+  top: 6px
+  left: 40px
+  font-weight: 600
+
+.mix-btn
+  display: inherit
+  opacity: 0.5
+
+.mix-btn-hover
+  display: none
+  position: relative
+
+.mix-transition
+  cursor: pointer
+
+.mix-transition:hover
+  .mix-btn
+    display: none
+
+  .mix-btn-hover
+    display: inherit
+
+.fake-transition
+  margin-bottom: 5px
+
+.mix-label
+  color: $mix-color
+  position: absolute
+  top: 6px
+  left: 40px
+  font-weight: 600
+
+.total-vote-count
+  position: absolute
+  right: -22px
+  bottom: 2px
+  opacity: 0
+  font-size: 0.8rem
+  text-align: left
+  width: 60px

@@ -1,0 +1,32 @@
+.notFoundContainer {
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(to bottom, #1d858a 0%, #1baeb8 4%, #13d4e2 100%);
+}
+
+.notFoundContainer div {
+  margin: 4em;
+}
+
+.notFoundImg {
+  height: 20%;
+  width: 20%;
+}
+
+.notFoundSpan {
+  color: #ffe600;
+  font-size: 3.5em;
+  margin: 20px;
+}
+
+.notFoundSpan1 {
+  color: #ffe600;
+  font-size: 2em;
+  margin: 20px;
+}
+
+.notFoundSpan2 {
+  color: #ffe600;
+  font-size: 1.3em;
+  margin: 20px;
+}
