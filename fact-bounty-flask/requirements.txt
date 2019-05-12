@@ -29,7 +29,7 @@ pycparser==2.19
 pyflakes==2.1.1
 PyJWT==1.7.1
 python-dateutil==2.8.0
-python-dotenv==0.10.1
+python-dotenv==0.10.2
 python-editor==1.0.4
 six==1.12.0
 SQLAlchemy==1.2.18
