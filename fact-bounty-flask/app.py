@@ -8,13 +8,19 @@ if os.path.exists(dotenv_path):
 
 import sys
 from flask_migrate import Migrate, upgrade
+from flasgger import Swagger, swag_from
 from . import create_app, db
 from .api.models.user import User
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 db.create_all(app=create_app('default'))
 migrate = Migrate(app, db)
-
+app.config['SWAGGER'] = {
+	'title': 'Fact Bounty',
+	'uiversion': 2,
+	'parse': True
+}
+swag = Swagger(app)
 
 @app.shell_context_processor
 def make_shell_context():
