@@ -1,13 +1,10 @@
 from flask.views import MethodView
 from flask import make_response, request, jsonify, current_app
 from elasticsearch.helpers import scan
+from flasgger import swag_from
 
 class AllStories(MethodView):
-    """
-    Retrieve stories
-
-    :return: JSON object with all stories and HTTP status code 200.
-    """
+    @swag_from('../../docs/stories/get_all.yml')
     def get(self):
         doc = {'query': {'match_all': {}}}
         stories = {}
@@ -31,11 +28,7 @@ class AllStories(MethodView):
 
 
 class GetRange(MethodView):
-    """
-    Retrieve stories in range
-    
-    :return: JSON object with range of stories and HTTP status code 200.
-    """
+    @swag_from('../../docs/stories/get_range.yml')
     def get(self, page):
         stories = []
         try:
@@ -65,11 +58,7 @@ class GetRange(MethodView):
 
 
 class ChangeUpvote(MethodView):
-    """
-    Update upvote-count
-    
-    :param request: the request being processed
-    """
+    @swag_from('../../docs/stories/upvote.yml')
     def post(self):
         try:
             # extract data from request
@@ -129,11 +118,7 @@ class ChangeUpvote(MethodView):
 
 
 class ChangeDownvote(MethodView):
-    """
-    Update fake-count
-    
-    :param request: the request being processed
-    """
+    @swag_from('../../docs/stories/downvote.yml')
     def post(self):
         try:
             # extract data from request
@@ -193,13 +178,8 @@ class ChangeDownvote(MethodView):
 
 
 class ChangeMixvote(MethodView):
-    """
-    Update mixedvote-count
-    
-    :param request: the request being processed
-    """
+    @swag_from('../../docs/stories/mixvote.yml')
     def post(self):
-
         try:
             # extract data from request
             data = request.get_json(silent=True)

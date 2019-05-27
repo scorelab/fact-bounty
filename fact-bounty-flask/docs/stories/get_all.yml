@@ -1,0 +1,5 @@
+Retrieve stories
+---
+responses:
+  200:
+    description: JSON object with all stories.

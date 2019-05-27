@@ -1,0 +1,9 @@
+Update fake-count
+---
+parameters:
+  - name: request
+    type: json
+    required: true
+responses:
+  200:
+    description: Changed downvote successfully

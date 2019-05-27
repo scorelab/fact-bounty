@@ -1,0 +1,9 @@
+Update upvote-count
+---
+parameters:
+  - name: request
+    type: json
+    required: true
+responses:
+  200:
+    description: Changed upvote successfully
