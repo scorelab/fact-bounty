@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
 
-from news_sites.items import adaDeraneItem
+from news_sites.items import NewsSitesItem
 
 
 class amSpider(scrapy.Spider):
@@ -11,31 +11,22 @@ class amSpider(scrapy.Spider):
                   'http://am.lk/si-economy', 'http://am.lk/sports']
 
     def parse(self, response):
-        items = []
-        i = 0
-        for news in response.css('div.itemContainer'):
-            news_headline = news.css(
-                'div.catItemHeader h3.catItemTitle a ::text').extract_first()
-            image = news.css(
-                'div.catitemimageblock span.catitemimage a img ::attr(src)').extract_first()
-            news_url = news.css(
-                'div.catItemHeader h3.catItemTitle a ::attr(href)').extract_first()
-            published_date = news.css(
-                'div.catItemMetaInfo span.catItemDateCreated ::text').extract_first()
-            data = news.css(
-                'div.catItemBody div.catItemIntroText p ::text').extract()
-            string_of_data = ' '.join(data)
+        for news_url in response.css('.catItemTitle a ::attr("href")').extract():
+            yield response.follow(news_url, callback=self.parse_article)
 
-            item = adaDeraneItem()
-            item['news_headline'] = news_headline
-            item['date'] = published_date
-            item['news_link'] = news_url
-            item['image_url'] = image
-            item['newsInDetails'] = string_of_data
-            items.append(item)
-        yield {'data': items}
+        next_page = response.css('.next::attr("href")').extract_first()
+        if next_page is not None:
+            yield response.follow(next_page, callback=self.parse)
 
-        next_link = response.css(
-            'div.k2Pagination ul.pagination li.next ::attr(href)').extract_first()
-        next_link = "http://am.lk" + next_link
-        yield scrapy.Request(next_url, callback=self.parse)
+
+    def parse_article(self, response):
+        item = NewsSitesItem()
+
+        item['author'] = 'http://am.lk'
+        item['title'] = response.css('.itemTitle::text').extract_first()
+        item['date']  = response.css('.itemDateCreated::text').extract()[1]
+        item['imageLink'] = response.css('#k2Container img::attr(src)').extract_first()
+        item['source'] = 'http://am.lk'
+        item['content'] = ' \n '.join(response.css('#k2Container p::text').extract())
+
+        yield item
