@@ -2,46 +2,34 @@
 import scrapy
 from scrapy.http import Request
 
-from news_sites.items import CTItem
+from ..items import NewsSitesItem
 
 
 class CtodaySpider(scrapy.Spider):
     name = "ctoday"
     allowed_domains = ["ceylontoday.lk"]
-    start_urls = ['http://www.ceylontoday.lk/category.php?id=1']
+    start_urls = ['http://www.ceylontoday.lk/news/8', 'http://www.ceylontoday.lk/news/5',
+                  'http://www.ceylontoday.lk/news/14', 'http://www.ceylontoday.lk/news/7',
+                  'http://www.ceylontoday.lk/news/4', 'http://www.ceylontoday.lk/news/6',
+                  'http://www.ceylontoday.lk/news/2', 'http://www.ceylontoday.lk/news/15']
 
     def parse(self, response):
-        items = []
-        # panel panel-default panel-latestst
-        i = 0
-        for news in response.css('div.article-big'):
-            title = news.css(
-                'div.article-content h2 ::attr(title)').extract_first()
-            tmpurl = news.css(
-                'div.article-content h2 ::attr(href)').extract_first()
-            url = 'http://www.ceylontoday.lk/' + tmpurl
+        for news_url in response.css('.news-text-link').extract():
+            yield response.follow(news_url, callback=self.parse_article)
 
-            item = CTItem()
-            item['news_headline'] = title
-            item['link'] = url
-            r = Request(url=url, callback=self.parse_1)
-            r.meta['item'] = item
-            yield r
-            items.append(item)
-        yield {"data": items}
+        # next_page = response.css('').extract_first()
+        # if next_page is not None:
+        #     yield response.follow(next_page, callback=self.parse)
 
-        next_urls = response.css(
-            'div.block-content div.pagination div.pagination ::attr(href)').extract()
-        tmp_next = next_urls[len(next_urls) - 1]
-        real_next = 'http://www.ceylontoday.lk/' + tmp_next
-        yield scrapy.Request(real_next, callback=self.parse)
 
-    def parse_1(self, response):
-        path = response.css('div.shortcode-content')
-        path = path.css('::text').extract()
-        path = [i.strip() for i in path]
-        path = list(filter(None, path))
-        s = ' '.join(path)
-        item = response.meta['item']
-        item['data'] = s
+    def parse_article(self, response):
+        item = NewsSitesItem()
+
+        item['author'] = response.css('.news-meta-author-text::text').extract_first()
+        item['title'] = response.css('.news-title::text').extract_first()
+        item['date']  = response.css('.news-meta-date-text::text').extract_first()
+        item['imageLink'] = response.css('.news-main-img::attr(src)').extract_first()
+        item['source'] = 'http://www.ceylontoday.lk'
+        item['content'] = ' \n '.join(response.css('.news-content-holder::text').extract())
+
         yield item

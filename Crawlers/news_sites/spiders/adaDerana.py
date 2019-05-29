@@ -2,7 +2,7 @@
 import scrapy
 from scrapy.http import Request
 
-from news_sites.items import adaDeraneItem
+from news_sites.items import NewsSitesItem
 
 
 class adaDeranaSpider(scrapy.Spider):
@@ -12,37 +12,17 @@ class adaDeranaSpider(scrapy.Spider):
                   'http://www.adaderana.lk/entertainment-news', 'http://www.adaderana.lk/technology-news']
 
     def parse(self, response):
-        items = []
-        # panel panel-default panel-latestst
-        i = 0
-        for news in response.css('div.sports'):
-            news_headline = news.css(
-                'div.story-text h4 a ::text').extract_first()
-            news_url = news.css(
-                'div.story-text h4 a ::attr(href)').extract_first()
-            image_url = news.css(
-                'div.col-xs-3.thumb-image a img ::attr(src)').extract_first()
-            date_time = news.css(
-                'div.col-xs-12.comments span ::text').extract_first()
+        for news_url in response.css('.hidden-xs a::attr("href")').extract():
+            yield response.follow(news_url, callback=self.parse_article)
 
-            item = adaDeraneItem()
-            item['news_headline'] = news_headline
-            item['date'] = date_time
-            item['news_link'] = news_url
-            item['image_url'] = image_url
+    def parse_article(self, response):
+        item = NewsSitesItem()
 
-            r = Request(url=news_url, callback=self.parse_1)
-            r.meta['item'] = item
-            yield r
-            items.append(item)
-        yield {'data': items}
-        # yield {"data": items}
+        item['author'] = 'http://www.adaderana.lk'
+        item['title'] = response.css('h1::text').extract_first()
+        item['date']  = response.css('.news-datestamp::text').extract_first()
+        item['imageLink'] = response.css('.news-banner .img-responsive::attr(src)').extract_first()
+        item['source'] = 'http://www.adaderana.lk'
+        item['content'] = ' \n '.join(response.css('.news-content p::text').extract())
 
-        # No next page
-
-    def parse_1(self, response):
-        path = response.css('div.newsContent p ::text').extract()
-        s = ' '.join(path)
-        item = response.meta['item']
-        item['newsInDetails'] = s
         yield item
