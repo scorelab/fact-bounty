@@ -23,7 +23,7 @@
     "react-scripts": "^2.1.8",
     "recompose": "^0.30.0",
     "redux": "^4.0.1",
-    "redux-form": "^8.1.0",
+    "redux-form": "^8.2.2",
     "redux-thunk": "^2.3.0",
     "typeface-roboto": "0.0.54"
   },
