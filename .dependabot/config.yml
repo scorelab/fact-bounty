@@ -1,14 +1,16 @@
 version: 1
 
 update_configs:
-  - package_manager: "javascript"
+  - allowed_updates:
+    - match:
+        update_type: "security"
+    package_manager: "javascript"
     directory: "/fact-bounty-client"
     update_schedule: "weekly"
 
-  - package_manager: "python"
+  - allowed_updates:
+    - match:
+        update_type: "security"
+    package_manager: "python"
     directory: "/fact-bounty-flask"
     update_schedule: "weekly"
-  
-  allowed_updates:
-    - match:
-      update_type: "security"
