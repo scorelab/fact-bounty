@@ -67,6 +67,14 @@ ROBOTSTXT_OBEY = True
 #ITEM_PIPELINES = {
 #    'news_sites.pipelines.NewsSitesPipeline': 300,
 #}
+ITEM_PIPELINES = {
+    'scrapyelasticsearch.scrapyelasticsearch.ElasticSearchPipeline': 500
+}
+
+ELASTICSEARCH_SERVERS = ['http://localhost:9200']
+ELASTICSEARCH_INDEX = 'test'
+ELASTICSEARCH_INDEX_DATE_FORMAT = '%Y-%m-%d'
+ELASTICSEARCH_TYPE = 'story'
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
