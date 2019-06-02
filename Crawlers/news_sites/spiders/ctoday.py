@@ -14,7 +14,7 @@ class CtodaySpider(scrapy.Spider):
                   'http://www.ceylontoday.lk/news/2', 'http://www.ceylontoday.lk/news/15']
 
     def parse(self, response):
-        for news_url in response.css('.news-text-link').extract():
+        for news_url in response.css('.news-text-link::attr(href)').extract():
             yield response.follow(news_url, callback=self.parse_article)
 
         # next_page = response.css('').extract_first()
@@ -25,11 +25,11 @@ class CtodaySpider(scrapy.Spider):
     def parse_article(self, response):
         item = NewsSitesItem()
 
-        item['author'] = response.css('.news-meta-author-text::text').extract_first()
+        item['author'] = ' '.join(response.css('.news-meta-author-text::text').extract())
         item['title'] = response.css('.news-title::text').extract_first()
-        item['date']  = response.css('.news-meta-date-text::text').extract_first()
+        item['date']  = ' '.join(response.css('.news-meta-date-text::text').extract())
         item['imageLink'] = response.css('.news-main-img::attr(src)').extract_first()
         item['source'] = 'http://www.ceylontoday.lk'
-        item['content'] = ' \n '.join(response.css('.news-content-holder::text').extract())
+        item['content'] = response.css('.news-content-holder::attr(innerhtml)').extract_first().replace('<p>', '').replace('</p>', '\n')
 
         yield item
