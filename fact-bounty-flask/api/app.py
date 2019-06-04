@@ -9,7 +9,7 @@ from api.extensions import db, pagedown, login_manager
 
 def create_app(config_name):
     # create and configure the app
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder="../build/static", template_folder="../build")
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
 
