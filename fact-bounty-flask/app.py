@@ -8,19 +8,21 @@ if os.path.exists(dotenv_path):
 
 import sys
 from flask_migrate import Migrate, upgrade
-from . import create_app, db
-from .api.models.user import User
+from api.app import create_app
+# from api.user.model import User
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
-db.create_all(app=create_app('default'))
-migrate = Migrate(app, db)
 
+# db = current_app.db
+# db.create_all(app=create_app('default'))
 
-@app.shell_context_processor
-def make_shell_context():
-    return dict(db=db, User=User)
+# migrate = Migrate(app, db)
 
-@app.cli.command()
-def deploy():
-    # migrate database to latest revision
-    upgrade()
+# @app.shell_context_processor
+# def make_shell_context():
+#     return dict(db=db, User=User)
+
+# @app.cli.command()
+# def deploy():
+#     # migrate database to latest revision
+#     upgrade()

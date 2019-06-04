@@ -1,30 +1,28 @@
 from datetime import datetime, timedelta
+import jwt
 
 from flask import current_app
 from flask_bcrypt import Bcrypt
 from flask_httpauth import HTTPBasicAuth
 from itsdangerous import (
     TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
-# from passlib.apps import custom_app_context as pwd_context
-import jwt
-
-from ...app import db
+from api.database import Column, Model, db
 
 auth = HTTPBasicAuth()
 
 
-class User(db.Model):
+class User(Model):
     """
     This model holds information about a user registered
     """
     __tablename__ = 'user'
 
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), nullable=False)
-    password = db.Column(db.String(128))
-    email = db.Column(db.String(100), nullable=False, unique=True)
-    date = db.Column(db.DateTime, default=datetime.now())
-    type = db.Column(db.String(50), default='remote')
+    id = Column(db.Integer, primary_key=True)
+    name = Column(db.String(80), nullable=False)
+    password = Column(db.String(128))
+    email = Column(db.String(100), nullable=False, unique=True)
+    date = Column(db.DateTime, default=datetime.now())
+    type = Column(db.String(50), default='remote')
 
     def __init__(self, name, email, password, _type='remote'):
         """

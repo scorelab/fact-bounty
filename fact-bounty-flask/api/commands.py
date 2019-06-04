@@ -12,7 +12,7 @@ from werkzeug.exceptions import MethodNotAllowed, NotFound
 
 COV = None
 if os.environ.get('FLASK_COVERAGE'):
-    COV = coverage.coverage(branch=True, include='api/*')
+    COV = coverage.coverage(branch=True, include='./*')
     COV.start()
 
 @click.command()

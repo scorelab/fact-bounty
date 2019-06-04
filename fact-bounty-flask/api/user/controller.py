@@ -1,6 +1,6 @@
 from flask.views import MethodView
 from flask import make_response, request, jsonify
-from ..models.user import User
+from .model import User
 
 
 class Register(MethodView):
