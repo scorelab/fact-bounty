@@ -10,6 +10,7 @@ from flask.cli import with_appcontext
 from flask_migrate import upgrade
 from werkzeug.exceptions import MethodNotAllowed, NotFound
 
+
 COV = None
 if os.environ.get('FLASK_COVERAGE'):
     COV = coverage.coverage(branch=True, include='./*')
@@ -137,3 +138,8 @@ def urls(url, order):
 
     for row in rows:
         click.echo(str_template.format(*row[:column_length]))
+
+@click.command()
+def deploy():
+    # migrate database to latest revision
+    upgrade()

@@ -3,7 +3,7 @@ from elasticsearch import Elasticsearch
 from flask_cors import CORS
 
 from api import commands
-from api import user
+from api import user, stories
 from api.config import config
 from api.extensions import db, pagedown, login_manager
 
@@ -40,3 +40,14 @@ def register_commands(app):
     app.cli.add_command(commands.lint)
     app.cli.add_command(commands.clean)
     app.cli.add_command(commands.urls)
+
+def register_shellcontext(app):
+    """Register shell context objects."""
+    def shell_context():
+        """Shell context objects."""
+        return {
+            'db': db,
+            'User': user.model.User
+        }
+
+    app.shell_context_processor(shell_context)
