@@ -30,8 +30,8 @@ def register_extensions(app):
 
 def register_blueprint(app):
     """Register Flask blueprints."""
-    app.register_blueprint(user.views.blueprint, url_prefix='/api')
-    app.register_blueprint(stories.views.blueprint, url_prefix='/api')
+    app.register_blueprint(user.views.userprint, url_prefix='/api')
+    app.register_blueprint(stories.views.storyprint, url_prefix='/api')
     return None
 
 def register_commands(app):
