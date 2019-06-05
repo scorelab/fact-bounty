@@ -12,6 +12,7 @@ class Config:
     """Default Flask configuration inherited by all environments. Use this for development environments."""
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'hard to guess string'
     POSTS_PER_PAGE = 4
+    ES_URL = os.environ.get('ELASTIC_SEARCH_URL') or 'http://localhost:9200'
 
     @staticmethod
     def init_app(app):
@@ -25,7 +26,6 @@ class DevelopmentConfig(Config):
         or 'sqlite:///' + os.path.join(basedir, 'data-dev.sqlite')
     # needs to be removed in further versions
     SQLALCHEMY_TRACK_MODIFICATIONS = True
-    ES_URL = 'http://localhost:9200'
 
 class TestingConfig(Config):
     TESTING = True
@@ -36,12 +36,10 @@ class TestingConfig(Config):
 class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'data-dev.sqlite')
-    ES_URL = os.environ.get('ELASTIC_SEARCH_URL') or 'http://localhost:9200'
     ES_USERNAME = os.environ.get('ELASTIC_SEARCH_USERNAME')
     ES_PASSWORD = os.environ.get('ELASTIC_SEARCH_PASSWORD')
 
 class DockerConfig(Config):
-    ES_URL = 'http://localhost:9200'
     @classmethod
     def init_app(cls, app):
         ProductionConfig.init_app(app)
