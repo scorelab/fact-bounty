@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask
 from elasticsearch import Elasticsearch
 from flask_cors import CORS
@@ -26,7 +28,13 @@ def register_extensions(app):
     db.init_app(app)
     login_manager.init_app(app)
     pagedown.init_app(app)
-    app.elasticsearch = Elasticsearch()
+
+    if os.environ.get('FLASK_CONFIG') == "development":
+        print("======== DEEVEVEVEVEVEVEVEV ========");
+        app.elasticsearch = Elasticsearch()
+    else:
+        print("======== PRODDD ========");
+        app.elasticsearch = Elasticsearch([os.environ.get('ELASTIC_SEARCH_URL')], http_auth=(os.environ.get('ELASTIC_SEARCH_USERNAME'), os.environ.get('ELASTIC_SEARCH_PASSWORD')))
     return None
 
 def register_blueprint(app):
