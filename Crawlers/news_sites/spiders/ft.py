@@ -11,7 +11,7 @@ class FtSpider(scrapy.Spider):
         temp = response.css('.bottom-text::attr(href)').extract()
 
         # remove duplicate categories
-        categories = [] 
+        categories = []
         [categories.append(x) for x in temp if x not in categories]
 
         for category in categories:
@@ -22,7 +22,7 @@ class FtSpider(scrapy.Spider):
         temp = response.css('.cat-header').xpath('../@href').extract()
         
         # remove duplicates
-        news_urls = [] 
+        news_urls = []
         [news_urls.append(x) for x in temp if x not in news_urls]
 
         # crawl article from each news page
@@ -33,7 +33,7 @@ class FtSpider(scrapy.Spider):
         next_page = response.css('.active+ li a::attr(href)').extract_first()
         if next_page is not None:
             yield response.follow(next_page, callback=self.parse)
-    
+
     def parse_article(self, response):
         item = NewsSitesItem()
 

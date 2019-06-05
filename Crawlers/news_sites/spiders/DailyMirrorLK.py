@@ -9,7 +9,7 @@ class DailymirrorSpider(scrapy.Spider):
         categories = response.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "hrbo", " " ))]')
         categories = categories.xpath('../@href')
         for category in categories:
-            try: 
+            try:
                 int(category.split('/')[-1])
             except ValueError:
                 continue
@@ -23,7 +23,7 @@ class DailymirrorSpider(scrapy.Spider):
         next_page = response.css('.page-numbers::attr("href")').extract_first()
         if next_page is not None:
             yield response.follow(next_page, callback=self.parse)
-    
+
     def parse_article(self, response):
         item = NewsSitesItem()
 

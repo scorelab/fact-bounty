@@ -1,5 +1,4 @@
 import scrapy
-
 from ..items import NewsSitesItem
 
 
@@ -16,13 +15,13 @@ class NewsFirstSpider(scrapy.Spider):
         temp = response.css('.news-lf-section a::attr(href)').extract()
 
         # remove duplicate urls
-        news_urls = [] 
+        news_urls = []
         [news_urls.append(x) for x in temp if x not in news_urls]
 
-        # remove 
+        # remove
         if '#' in news_urls:
             news_urls.remove('#')
-        
+
         for news_url in news_urls:
             yield response.follow(news_url, callback=self.parse_article)
 

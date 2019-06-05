@@ -21,7 +21,7 @@ class RAWSpider(scrapy.Spider):
             url = news_url.css('.cat-header::attr(href)').extract_first()
             img_url = news_url.css('.img-responsive::attr(src)').extract_first()
             yield response.follow(url, callback=self.parse_article, meta={'img_url': img_url})
-        
+
         myurl = response.request.url
         category = myurl.split("/")[3]
         i = 0
