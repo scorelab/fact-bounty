@@ -40,3 +40,4 @@ Werkzeug==0.14.1
 wrapt==1.11.1
 WTForms==2.2.1
 gunicorn==19.9.0
+certifi==2019.3.9
