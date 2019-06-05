@@ -1,8 +1,8 @@
 import os
 
 from flask import Flask
-from elasticsearch import Elasticsearch
 from flask_cors import CORS
+from elasticsearch import Elasticsearch
 
 from api import commands
 from api import user, stories
@@ -28,14 +28,11 @@ def register_extensions(app):
     db.init_app(app)
     login_manager.init_app(app)
     pagedown.init_app(app)
-
     if os.environ.get('FLASK_CONFIG') == "development":
-        print("======== DEEVEVEVEVEVEVEVEV ========");
-        app.elasticsearch = Elasticsearch()
+        es = Elasticsearch([app.config['ES_URL']])
     else:
-        print("======== PRODDD ========");
-        app.elasticsearch = Elasticsearch([os.environ.get('ELASTIC_SEARCH_URL')], http_auth=(os.environ.get('ELASTIC_SEARCH_USERNAME'), os.environ.get('ELASTIC_SEARCH_PASSWORD')))
-    return None
+        es = Elasticsearch([app.config['ES_URL']], http_auth=(app.config["ES_USERNAME"], app.config["ES_PASSWORD"]))
+    app.elasticsearch = es
 
 def register_blueprint(app):
     """Register Flask blueprints."""
