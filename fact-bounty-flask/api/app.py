@@ -15,6 +15,7 @@ def create_app(config_name):
 
     register_extensions(app)
     register_blueprint(app)
+    register_shellcontext(app)
     register_commands(app)
 
     return app

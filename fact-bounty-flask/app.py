@@ -16,3 +16,6 @@ app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 @app.route('/')
 def default_route():
         return render_template('index.html')
+
+from api.extensions import db
+db.create_all(app=create_app(os.getenv('FLASK_CONFIG') or 'default'))
