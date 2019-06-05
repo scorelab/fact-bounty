@@ -1,7 +1,7 @@
 # Config file for automatic testing at travis-ci.org
 language: python
 env:
-  - FLASK_APP=app.py FLASK_DEBUG=1 DOCKER_COMPOSE_VERSION=1.4.2
+  - FLASK_APP=app.py FLASK_CONFIG=testing DOCKER_COMPOSE_VERSION=1.4.2
 python:
   - 3.5
   - 3.6
@@ -19,4 +19,3 @@ script:
   - flask test
 after_script:
   - docker-compose down
-
