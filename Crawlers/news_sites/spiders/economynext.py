@@ -17,7 +17,7 @@ class EconomyNextSpider(scrapy.Spider):
         temp = response.css('.related-block a:nth-child(1)::attr(href)').extract()
 
         # remove duplicates
-        news_urls = [] 
+        news_urls = []
         [news_urls.append(x) for x in temp if x not in news_urls]
 
         # crawl article from each news page
@@ -28,7 +28,7 @@ class EconomyNextSpider(scrapy.Spider):
         next_page = response.css('.next::attr(href)').extract_first()
         if next_page is not None:
             yield response.follow(next_page, callback=self.parse)
-    
+
     def parse_article(self, response):
         item = NewsSitesItem()
 

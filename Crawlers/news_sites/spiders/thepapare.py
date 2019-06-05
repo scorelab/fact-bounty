@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from scrapy.http import Request
 
 from ..items import NewsSitesItem
 
@@ -15,9 +14,9 @@ class ThePapareSpider(scrapy.Spider):
         temp = response.css('.td_module_10 .td-module-title a::attr(href)').extract()
 
         # remove duplicate urls
-        news_urls = [] 
+        news_urls = []
         [news_urls.append(x) for x in temp if x not in news_urls]
-        
+
         for news_url in news_urls:
             yield response.follow(news_url, callback=self.parse_article)
 

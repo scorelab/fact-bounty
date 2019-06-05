@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import scrapy
-
 from ..items import NewsSitesItem
 
 
@@ -19,7 +18,7 @@ class ReporterSpider(scrapy.Spider):
         temp = response.css('.entry-title a::attr(href)').extract()
 
         # remove duplicates
-        news_urls = [] 
+        news_urls = []
         [news_urls.append(x) for x in temp if x not in news_urls]
 
         # crawl article from each news page
@@ -29,10 +28,10 @@ class ReporterSpider(scrapy.Spider):
         # proceed to next page
         # .fa-angle-double-right
         next_page = response.css('.fa-angle-double-right')
-        next_page = response.xpath('../@href').extract_first();        
+        next_page = response.xpath('../@href').extract_first()
         if next_page is not None:
             yield response.follow(next_page, callback=self.parse)
-    
+
     def parse_article(self, response):
         item = NewsSitesItem()
 
