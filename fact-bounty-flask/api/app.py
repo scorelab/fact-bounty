@@ -3,9 +3,11 @@ import os
 from flask import Flask
 from flask_cors import CORS
 from elasticsearch import Elasticsearch
+from apscheduler.schedulers.background import BackgroundScheduler
+from scrapyd_api import ScrapydAPI
 
 from api import commands
-from api import user, stories
+from api import user, stories, crawler
 from api.config import config
 from api.extensions import db, pagedown, login_manager
 
@@ -34,10 +36,18 @@ def register_extensions(app):
         es = Elasticsearch([app.config['ES_URL']], http_auth=(app.config["ES_USERNAME"], app.config["ES_PASSWORD"]))
     app.elasticsearch = es
 
+    scrapyd = ScrapydAPI('http://localhost:6800')
+    scheduler = BackgroundScheduler()
+    app.scheduler = scheduler
+    app.scrapy = scrapyd
+    scheduler.start()
+
+
 def register_blueprint(app):
     """Register Flask blueprints."""
     app.register_blueprint(user.views.userprint, url_prefix='/api')
     app.register_blueprint(stories.views.storyprint, url_prefix='/api')
+    app.register_blueprint(crawler.views.blueprint, url_prefix='/api/crawler')
     return None
 
 def register_commands(app):
