@@ -1,4 +1,5 @@
 alembic==1.0.8
+apscheduler==3.6.0
 astroid==2.2.3
 bcrypt==3.1.6
 cffi==1.12.2
@@ -31,6 +32,7 @@ PyJWT==1.7.1
 python-dateutil==2.8.0
 python-dotenv==0.10.1
 python-editor==1.0.4
+python-scrapyd-api==2.1.2
 six==1.12.0
 SQLAlchemy==1.2.18
 tornado==6.0
