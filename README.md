@@ -61,10 +61,18 @@ Run npm install in fact-bounty-client folder.
 *   #### Environment Variables
     Create a .env file and add the following:
     ```
-	   export FLASK_APP="app.py"
-	   export FLASK_ENV="development"
-	   export SECRET_KEY="some-very-long-string-of-random-characters-CHANGE-TO-YOUR-LIKING"
-	   export FLASK_CONFIG="development"
+        export FLASK_APP="app.py"
+        export SECRET_KEY="some-very-long-string-of-random-characters-CHANGE-TO-YOUR-LIKING"
+        export FLASK_ENV="development"
+        export FLASK_CONFIG="development"
+
+        export DEV_DATABASE_URL=""
+        export TEST_DATABASE_URL=""
+        export DATABASE_URL=""
+
+        export ELASTIC_SEARCH_URL=""
+        export ELASTIC_SEARCH_USERNAME=""
+        export ELASTIC_SEARCH_PASSWORD=""
     ```
 
     Save the file.

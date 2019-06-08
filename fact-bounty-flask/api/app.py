@@ -29,7 +29,7 @@ def register_extensions(app):
     login_manager.init_app(app)
     pagedown.init_app(app)
     if os.environ.get('FLASK_CONFIG') != "production":
-        es = Elasticsearch([app.config['ES_URL']])
+        es = Elasticsearch()
     else:
         es = Elasticsearch([app.config['ES_URL']], http_auth=(app.config["ES_USERNAME"], app.config["ES_PASSWORD"]))
     app.elasticsearch = es
