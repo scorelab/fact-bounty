@@ -3,6 +3,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import make_response, request, jsonify, current_app
 from elasticsearch.helpers import scan
 from .model import Vote
+from flasgger import swag_from
 
 
 class AllStories(MethodView):
@@ -11,7 +12,7 @@ class AllStories(MethodView):
 
     :return: JSON object with all stories and HTTP status code 200.
     """
-
+    @swag_from('../../docs/stories/get_all.yml')
     def get(self):
 
         es_index = current_app.config["ES_INDEX"]
@@ -45,7 +46,7 @@ class GetRange(MethodView):
 
     :return: JSON object with range of stories and HTTP status code 200.
     """
-
+    @swag_from('../../docs/stories/get_range.yml')
     def get(self, page):
         es_index = current_app.config["ES_INDEX"]
         es = current_app.elasticsearch
