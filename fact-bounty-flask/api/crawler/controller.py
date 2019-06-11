@@ -55,7 +55,7 @@ class SetCronJob(MethodView):
             job_id = data['id']
             month = data['month']
             day = data['day']
-            
+
             job = current_app.scheduler.reschedule_job(job_id, trigger='cron', month=month, day=day)
 
             response = {
