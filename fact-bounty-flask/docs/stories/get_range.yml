@@ -1,0 +1,5 @@
+Retrieve stories in range
+---
+responses:
+  200:
+    description: JSON object with range of stories.
