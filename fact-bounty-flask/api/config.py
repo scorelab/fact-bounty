@@ -32,6 +32,11 @@ class Config:
     ES_INDEX = os.environ.get("ELASTIC_SEARCH_INDEX") or "factbounty"
     JWT_BLACKLIST_ENABLED = True
     JWT_BLACKLIST_TOKEN_CHECKS = ["access", "refresh"]
+    SWAGGER = {
+        'title': 'Fact Bounty',
+        'uiversion': '2',
+        'parse': True
+    }
 
     @staticmethod
     def init_app(app):

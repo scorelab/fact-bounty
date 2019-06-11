@@ -6,6 +6,7 @@ from elasticsearch import Elasticsearch
 from apscheduler.schedulers.background import BackgroundScheduler
 from scrapyd_api import ScrapydAPI
 from flask_jwt_extended import JWTManager
+from flasgger import Swagger
 
 from api import commands
 from api import admin, user, stories, crawler, util
@@ -41,8 +42,9 @@ def register_extensions(app):
     mail.init_app(app)
     migrate.init_app(app, db)
     pagedown.init_app(app)
-    if os.environ.get("FLASK_CONFIG") != "production":
-        es = Elasticsearch([app.config["ES_URL"]])
+    swag = Swagger(app)
+    if os.environ.get('FLASK_CONFIG') != "production":
+        es = Elasticsearch([app.config['ES_URL']])
     else:
         es = Elasticsearch(
             [app.config["ES_URL"]],
