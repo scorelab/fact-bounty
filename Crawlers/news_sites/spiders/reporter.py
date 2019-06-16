@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
+import dateutil.parser as dparser
+
 from ..items import NewsSitesItem
 
 
@@ -37,7 +39,11 @@ class ReporterSpider(scrapy.Spider):
 
         item['author'] = 'http://www.reporter.lk/'
         item['title'] = response.css('.entry-title::text').extract_first()
-        item['date']  = response.css('.timeago::text').extract_first()
+        date  = response.css('.timeago::text').extract_first()
+        if date is not None:
+            date = dparser.parse(date,fuzzy=True)
+            date = date.strftime("%d %B, %Y")
+        item['date'] = date
         item['imageLink'] = response.css('#Blog1 img::attr(src)').extract_first()
         item['source'] = 'http://www.reporter.lk/'
         item['content'] = ' \n '.join(response.css('.entry-content::text').extract())

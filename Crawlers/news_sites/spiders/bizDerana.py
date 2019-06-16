@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
-# from urllib.parse import urljoin
 from scrapy.http import Request
+import dateutil.parser as dparser
 
 from ..items import NewsSitesItem
 
@@ -28,9 +28,13 @@ class BizadaDeranaSpider(scrapy.Spider):
 
         item['author'] = 'bizada'
         item['title'] = response.css('.news-header h3::text').extract_first()
-        item['date']  = response.css('.news-date::text').extract()[1]
+        date  = response.css('.news-date::text').extract_first()
+        if date is not None:
+            date = dparser.parse(date,fuzzy=True)
+            date = date.strftime("%d %B, %Y")
+        item['date'] = date
         item['imageLink'] = response.css('.wp-post-image::attr(src)').extract_first()
-        item['source'] = 'http://bizenglish.adaderana.lk'
+        item['source'] = response.url
         item['content'] = ' \n '.join(response.css('.news-text::text').extract())
 
         yield item

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from scrapy.http import Request
+import dateutil.parser as dparser
 
 from news_sites.items import NewsSitesItem
 
@@ -20,7 +20,15 @@ class adaDeranaSpider(scrapy.Spider):
 
         item['author'] = 'http://www.adaderana.lk'
         item['title'] = response.css('h1::text').extract_first()
-        item['date']  = response.css('.news-datestamp::text').extract_first()
+        date  = response.css('.news-datestamp::text').extract_first()
+        if date is not None:
+            date = date.replace("\r", "")
+            date = date.replace("\t", "")
+            date = date.replace("\n", "")
+            date = dparser.parse(date,fuzzy=True)
+            date = date.strftime("%d %B, %Y")
+
+        item['date'] = date
         item['imageLink'] = response.css('.news-banner .img-responsive::attr(src)').extract_first()
         item['source'] = 'http://www.adaderana.lk'
         item['content'] = ' \n '.join(response.css('.news-content p::text').extract())

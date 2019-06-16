@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
+import dateutil.parser as dparser
+
 from ..items import NewsSitesItem
 
 
@@ -35,9 +37,13 @@ class ReadmelkSpider(scrapy.Spider):
 
         item['author'] = response.css('.td-post-title a::text').extract_first()
         item['title'] = response.css('.td-post-title .entry-title::text').extract_first()
-        item['date']  = response.css('.td-post-date-no-dot .td-module-date::text').extract_first()
+        date = response.css('.td-post-date-no-dot .td-module-date::text').extract_first()
+        if date is not None:
+            date = dparser.parse(date,fuzzy=True)
+            date = date.strftime("%d %B, %Y")
+        item['date'] = date
         item['imageLink'] = response.css('.article-photo .set-image-border::attr(src)').extract_first()
         item['source'] = 'http://www.readme.lk/'
-        item['content'] = ' \n '.join(response.css('h2 , .td-post-content p::text').extract())
+        item['content'] = '\n'.join(response.css('h2 , .td-post-content p::text').extract())
 
         yield item

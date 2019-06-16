@@ -1,4 +1,6 @@
 import scrapy
+import dateutil.parser as dparser
+
 from ..items import NewsSitesItem
 
 
@@ -33,12 +35,19 @@ class NewsFirstSpider(scrapy.Spider):
     def parse_article(self, response):
         item = NewsSitesItem()
 
-        item['author'] = response.css('.artical-new-byline::text').extract_first()
-        item['title'] = response.css('.artical-hd-out::text').extract_first()
+        author = response.css('.artical-new-byline::text').extract_first()
+        title = response.css('.artical-hd-out::text').extract_first()
+        item['author'] = " ".join(author.split())
+        item['title'] = " ".join(title.split())
         if response.css('.artical-new-byline::text').extract() and response.css('.artical-new-byline::text').extract()[1]:
-            item['date']  = response.css('.artical-new-byline::text').extract()[1]
+            date = response.css('.artical-new-byline::text').extract()[1]
+            date = dparser.parse(date,fuzzy=True)
+            date = date.strftime("%d %B, %Y")
+            item['date'] = date
+        else:
+            item['date'] = None
         item['imageLink'] = response.css('.main-news-block-artical .img-responsive::attr(src)').extract_first()
         item['source'] = 'https://www.newsfirst.lk'
-        item['content'] = ' \n '.join(response.css('.editor-styles p::text').extract())
+        item['content'] = '\n'.join(response.css('.editor-styles p::text').extract())
 
         yield item

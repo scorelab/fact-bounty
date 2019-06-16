@@ -1,4 +1,6 @@
 import scrapy
+import dateutil.parser as dparser
+
 from ..items import NewsSitesItem
 
 
@@ -27,9 +29,13 @@ class RoarSpider(scrapy.Spider):
 
         item['author'] = response.css('#articleAuthor::text').extract_first()
         item['title'] = response.css('.title::text').extract_first()
-        item['date']  = response.css('#articleDate::text').extract_first()
+        date  = response.css('#articleDate::text').extract_first()
+        if date is not None:
+            date = dparser.parse(date,fuzzy=True)
+            date = date.strftime("%d %B, %Y")
+        item['date'] = date
         item['imageLink'] = None
         item['source'] = 'https://roar.media'
-        item['content'] = ' \n '.join(response.css('#article-body h2 , .inner-article-body > p::text').extract())
+        item['content'] = '\n'.join(response.css('#article-body h2 , .inner-article-body > p::text').extract())
 
         yield item

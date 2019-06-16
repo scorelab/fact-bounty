@@ -5,7 +5,7 @@ from ..items import NewsSitesItem
 
 
 class ThePapareSpider(scrapy.Spider):
-    name = "ThePapare"
+    name = "thepapare"
     allowed_domains = ["thepapare.com"]
     start_urls = ['http://www.thepapare.com/latest-news']
 
@@ -30,9 +30,13 @@ class ThePapareSpider(scrapy.Spider):
 
         item['author'] = response.css('.td-post-author-name a::text').extract_first()
         item['title'] = response.css('.td-post-title .entry-title::text').extract_first()
-        item['date']  = response.css('.td-post-title .td-module-date::text').extract_first()
+        date = response.css('.td-post-title .td-module-date::text').extract_first()
+        if date is not None:
+            date = dparser.parse(date,fuzzy=True)
+            date = date.strftime("%d %B, %Y")
+        item['date'] = date
         item['imageLink'] = response.css('.td-modal-image .td-animation-stack-type0-1::attr(src)').extract_first()
         item['source'] = 'http://www.thepapare.com'
-        item['content'] = ' \n '.join(response.css('.td-post-content p::text').extract())
+        item['content'] = '\n'.join(response.css('.td-post-content p::text').extract())
 
         yield item

@@ -1,4 +1,6 @@
 import scrapy
+import dateutil.parser as dparser
+
 from ..items import NewsSitesItem
 
 
@@ -36,7 +38,12 @@ class EconomyNextSpider(scrapy.Spider):
         item['title'] = response.css('.article-title::text').extract_first()
         date  = response.css('.article-title+ h2::text').extract_first()
         if date is not None:
-            item['date'] = date.split('|')[0]
+            # extract date component and generalize it
+            date = date.split('|')[0]
+            date = dparser.parse(date,fuzzy=True)
+            date = date.strftime("%d %B, %Y")
+        
+            item['date'] = date
         else:
             item['date'] = None
         item['imageLink'] = response.css('.article-photo .set-image-border::attr(src)').extract_first()

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import scrapy
+import dateutil.parser as dparser
 
 from news_sites.items import NewsSitesItem
 
@@ -24,7 +25,15 @@ class amSpider(scrapy.Spider):
 
         item['author'] = 'http://am.lk'
         item['title'] = response.css('.itemTitle::text').extract_first()
-        item['date']  = response.css('.itemDateCreated::text').extract()[1]
+        date  = response.css('.itemDateCreated::text').extract()[1]
+        if date is not None:
+            date = date.replace("\r", "")
+            date = date.replace("\t", "")
+            date = date.replace("\n", "")
+            date = dparser.parse(date,fuzzy=True)
+            date = date.strftime("%d %B, %Y")
+
+        item['date'] = date
         item['imageLink'] = response.css('#k2Container img::attr(src)').extract_first()
         item['source'] = 'http://am.lk'
         item['content'] = ' \n '.join(response.css('#k2Container p::text').extract())
