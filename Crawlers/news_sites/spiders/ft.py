@@ -1,4 +1,6 @@
 import scrapy
+import dateutil.parser as dparser
+
 from ..items import NewsSitesItem
 
 
@@ -39,12 +41,15 @@ class FtSpider(scrapy.Spider):
 
         item['author'] = 'FT'
         item['title'] = response.css('.inner-header::text').extract_first()
-        date  = response.css('.inner-ft-text img::text').extract_first()
+        date = ''.join(response.css('.inner-other::text').extract())
         if date is not None:
-            item['date'] = date.split('/')[-1]
+            date = date.split('/')[-1]
+            date = dparser.parse(date,fuzzy=True)
+            date = date.strftime("%d %B, %Y")
+            item['date'] = date
         else:
             item['date'] = None
-        item['imageLink'] = response.css('.article-photo .set-image-border::attr(src)').extract_first()
+        item['imageLink'] = response.css('.inner-ft-text img::attr(src)').extract_first()
         item['source'] = 'http://ft.lk/'
         item['content'] = ' \n '.join(response.css('.inner-ft-text p::text').extract())
 

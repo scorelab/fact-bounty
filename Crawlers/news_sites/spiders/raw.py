@@ -1,4 +1,5 @@
 import scrapy
+import dateutil.parser as dparser
 
 from ..items import NewsSitesItem
 
@@ -12,16 +13,27 @@ class RAWSpider(scrapy.Spider):
     data = True
 
     def parse(self, response):
+        # fetch news urls from each page
         news_urls = response.css('.cat-zero')
+
+        # if no news_urls are present on this page, i.e. we have proceed ahead of limited pages,
+        # then break the loop
         if news_urls is None or len(news_urls) == 0:
             self.data = False
             return
         
+        # iterate in news_urls
         for news_url in news_urls:
-            url = news_url.css('.cat-header::attr(href)').extract_first()
+            # fetch url to main news page
+            url = news_url.css('.cat-header').xpath('../@href').extract_first()
+
+            # fetch image url from main page as no image is present in article
             img_url = news_url.css('.img-responsive::attr(src)').extract_first()
+
+            # follow the url of news article and fetch news data from it
             yield response.follow(url, callback=self.parse_article, meta={'img_url': img_url})
 
+        # mechanism to follow next page
         myurl = response.request.url
         category = myurl.split("/")[3]
         i = 0
@@ -32,15 +44,19 @@ class RAWSpider(scrapy.Spider):
             if self.data is False:
                 break
 
-
+    # fetch data from news article and create news item from it
     def parse_article(self, response):
         item = NewsSitesItem()
 
         item['author'] = 'raw'
         item['title'] = response.css('.inner-header::text').extract_first()
-        item['date']  = response.css('.inner-other::text').extract_first()
+        date  = response.css('.inner-other::text').extract_first()
+        if date is not None:
+            date = dparser.parse(date,fuzzy=True)
+            date = date.strftime("%d %B, %Y")
+        item['date'] = date
         item['imageLink'] = response.meta.get('img_url')
         item['source'] = 'http://www.raw.lk'
-        item['content'] = ' \n '.join(response.css('.inner-ft-text p::text').extract())
+        item['content'] = '\n'.join(response.css('.inner-ft-text p::text').extract())
 
         yield item

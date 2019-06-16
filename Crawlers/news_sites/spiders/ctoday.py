@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from scrapy.http import Request
+import json
+import dateutil.parser as dparser
 
 from ..items import NewsSitesItem
 
@@ -12,10 +13,18 @@ class CtodaySpider(scrapy.Spider):
                   'http://www.ceylontoday.lk/news/14', 'http://www.ceylontoday.lk/news/7',
                   'http://www.ceylontoday.lk/news/4', 'http://www.ceylontoday.lk/news/6',
                   'http://www.ceylontoday.lk/news/2', 'http://www.ceylontoday.lk/news/15']
+    
+    # base url of api to extract single news article
+    base_url = 'http://site-api.ceylontoday.lk/api/News/getSingleNews?Id='
 
     def parse(self, response):
         for news_url in response.css('.news-text-link::attr(href)').extract():
-            yield response.follow(news_url, callback=self.parse_article)
+            news_id = news_url.split('/')
+            if news_id is not None:
+                news_id = news_id[-1]
+                url = self.base_url + news_id
+
+                yield response.follow(url, callback=self.parse_article)
 
         # next_page = response.css('').extract_first()
         # if next_page is not None:
@@ -23,13 +32,21 @@ class CtodaySpider(scrapy.Spider):
 
 
     def parse_article(self, response):
+        jsonresponse = json.loads(response.body_as_unicode())
+        news = jsonresponse['data'][0]
+
         item = NewsSitesItem()
 
-        item['author'] = ' '.join(response.css('.news-meta-author-text::text').extract())
-        item['title'] = response.css('.news-title::text').extract_first()
-        item['date']  = ' '.join(response.css('.news-meta-date-text::text').extract())
-        item['imageLink'] = response.css('.news-main-img::attr(src)').extract_first()
-        item['source'] = 'http://www.ceylontoday.lk'
-        item['content'] = response.css('.news-content-holder::attr(innerhtml)').extract_first().replace('<p>', '').replace('</p>', '\n')
+        item['author'] = news['Author_Name']
+        item['title'] = news['Title']
+        # extract date component and generalize it
+        date  = news['Publish_Date_String']
+        if date is not None:
+            date = dparser.parse(date,fuzzy=True)
+            date = date.strftime("%d %B, %Y")
+        item['date'] = date
+        item['imageLink'] = news['Header_Image']
+        item['source'] = response.url
+        item['content'] = news['HTML_Content'].replace('<p>', '').replace('</p>', '\n')
 
         yield item
