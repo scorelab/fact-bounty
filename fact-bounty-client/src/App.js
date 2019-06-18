@@ -7,7 +7,7 @@ import AppRouter from './AppRouter'
 import setAuthToken from './helpers/AuthTokenHelper'
 import { logoutUser, setCurrentUser } from './redux/actions/authActions'
 import store from './redux/store'
-import theme from './style/theme'
+import theme from './styles/theme'
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {

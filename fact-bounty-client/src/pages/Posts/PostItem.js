@@ -203,7 +203,7 @@ class PostItem extends Component {
         <div className="hover-container">
           <Card className={classes.card}>
             <CardContent style={styles.cardContent}>
-              <div className="container">
+              <div className="post-container">
                 <div className="image">
                   <img src={postImg1} alt="fact-bounty" className="post-img" />
                 </div>
