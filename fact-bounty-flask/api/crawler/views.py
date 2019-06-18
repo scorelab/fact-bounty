@@ -9,3 +9,9 @@ blueprint.add_url_rule(
     view_func=crawlerController['setcronjob'],
     methods=['GET', 'POST', 'PUT', 'DELETE']
 )
+
+blueprint.add_url_rule(
+    '/crawl_live',
+    view_func=crawlerController['crawlbydate'],
+    methods=['POST']
+)

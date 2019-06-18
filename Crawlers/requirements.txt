@@ -2,3 +2,4 @@ scrapy==1.6.0
 ScrapyElasticSearch==0.9.1
 scrapyd==1.2.0
 Twisted==18.9.0
+python-dateutil==2.8.0
