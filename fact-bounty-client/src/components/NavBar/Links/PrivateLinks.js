@@ -35,11 +35,14 @@ class PrivateLinks extends React.Component {
         <Link to="/" style={styles.link}>
           <Button color="inherit">Home</Button>
         </Link>
+        <Link to="/#about" style={styles.link}>
+          <Button color="inherit">About</Button>
+        </Link>
+        <Link to="/#contact" style={styles.link}>
+          <Button color="inherit">Contact Us</Button>
+        </Link>
         <Link to="/posts" style={styles.link}>
           <Button color="inherit">Posts</Button>
-        </Link>
-        <Link to="/about" style={styles.link}>
-          <Button color="inherit">About</Button>
         </Link>
         <IconButton onClick={this.openMenu} style={styles.navbarLinks}>
           <Avatar style={styles.avatar}>

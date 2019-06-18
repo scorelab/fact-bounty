@@ -1,9 +1,28 @@
 import React, { Component } from 'react'
 import headerImg from '../../assets/img/headerImg.png'
 import Button from '@material-ui/core/Button'
+import Footer from '../../components/Footer'
 import './style.sass'
 
 class Landing extends Component {
+  
+  componentDidMount() {
+    this.initHashScroll()
+  }
+
+  componentDidUpdate() {
+    this.initHashScroll()
+  }
+
+  initHashScroll = () => {
+    if (window.location.hash) {
+      const section = document.querySelector(`${window.location.hash}`)
+      if (section) {
+        section.scrollIntoView()
+      }
+    }
+  }
+
   render() {
     return (
       <div className="landing-container">
@@ -27,8 +46,8 @@ class Landing extends Component {
 
         <hr className="divider" />
 
-        {/* ============= HEADER SECTION ============= */}
-        <div className="container">
+        {/* ============= ABOUT SECTION ============= */}
+        <div className="container" id="about">
           <div className="about">
             <h1>About Factbounty</h1>
 
@@ -67,6 +86,23 @@ class Landing extends Component {
             </div>
           </div>
         </div>
+
+        {/* ============= RECENT POSTS SECTION ============= */}
+        <div className="container" id="recentPosts">
+          <div className="recent-posts">
+            <h1>Recent Posts</h1>
+          </div>
+        </div>
+
+        {/* ============= CONTACT US SECTION ============= */}
+        <div className="container" id="contact">
+          <div className="contact-us">
+            <h1>Contact Us</h1>
+          </div>
+        </div>
+
+        {/* ============= FOOTER SECTION ============= */}
+        <Footer />
       </div>
     )
   }
