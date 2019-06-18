@@ -9,6 +9,13 @@ class FtSpider(scrapy.Spider):
     allowed_domains = ["ft.lk"]
     start_urls = ['http://www.ft.lk']
 
+    
+    def __init__(self, date=None):
+        if date is not None:
+            self.dateToMatch = dparser.parse(date,fuzzy=True).date()
+        else:
+            self.dateToMatch = None
+
     def parse(self, response):
         temp = response.css('.bottom-text::attr(href)').extract()
 
@@ -42,13 +49,19 @@ class FtSpider(scrapy.Spider):
         item['author'] = 'FT'
         item['title'] = response.css('.inner-header::text').extract_first()
         date = ''.join(response.css('.inner-other::text').extract())
-        if date is not None:
-            date = date.split('/')[-1]
-            date = dparser.parse(date,fuzzy=True)
-            date = date.strftime("%d %B, %Y")
-            item['date'] = date
-        else:
-            item['date'] = None
+        if date is None:
+            return
+        
+        date = date.replace("\r", "")
+        date = date.replace("\t", "")
+        date = date.replace("\n", "")
+        date = dparser.parse(date,fuzzy=True).date()
+        
+        # don't add news if we are using dateToMatch and date of news 
+        if self.dateToMatch is not None and self.dateToMatch != date:
+            return
+
+        item['date'] = date.strftime("%d %B, %Y")
         item['imageLink'] = response.css('.inner-ft-text img::attr(src)').extract_first()
         item['source'] = 'http://ft.lk/'
         item['content'] = ' \n '.join(response.css('.inner-ft-text p::text').extract())

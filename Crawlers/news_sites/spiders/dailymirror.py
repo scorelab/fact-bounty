@@ -8,6 +8,13 @@ class DailymirrorSpider(scrapy.Spider):
     name = "dailymirror"
     start_urls = ['http://www.dailymirror.lk/']
 
+    
+    def __init__(self, date=None):
+        if date is not None:
+            self.dateToMatch = dparser.parse(date,fuzzy=True).date()
+        else:
+            self.dateToMatch = None
+
     def parse(self, response):
         categories = response.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "hrbo", " " ))]')
         categories = categories.xpath('../@href').extract()
@@ -37,10 +44,19 @@ class DailymirrorSpider(scrapy.Spider):
         item['title'] = response.css('.innerheader::text').extract_first()
         # extract date component and generalize it
         date  = response.css('.col-12 .gtime::text').extract_first()
-        if date is not None:
-            date = dparser.parse(date,fuzzy=True)
-            date = date.strftime("%d %B, %Y")
-        item['date'] = date
+        if date is None:
+            return
+        
+        date = date.replace("\r", "")
+        date = date.replace("\t", "")
+        date = date.replace("\n", "")
+        date = dparser.parse(date,fuzzy=True).date()
+        
+        # don't add news if we are using dateToMatch and date of news 
+        if self.dateToMatch is not None and self.dateToMatch != date:
+            return
+
+        item['date'] = date.strftime("%d %B, %Y")
         item['imageLink'] = None
         item['source'] = 'http://www.dailymirror.lk'
         item['content'] = '\n'.join(response.css('.inner-content p::text').extract())
