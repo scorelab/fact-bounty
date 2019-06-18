@@ -13,6 +13,7 @@ import PrivateLinks from './Links/PrivateLinks'
 import Toast from '../Toast'
 import { logoutUser } from '../../redux/actions/authActions'
 import styles from './NavBar.style'
+import './styles.sass'
 
 class NavBar extends Component {
   // constructor
@@ -51,7 +52,7 @@ class NavBar extends Component {
     const { drawerIsOpen, toastIsOpen } = this.state
     const { classes, auth } = this.props
     return (
-      <div className={classes.root}>
+      <div className={`${classes.root} nav-bar-container`}>
         <Toast
           isOpen={toastIsOpen}
           handleClose={this.closeToast}
