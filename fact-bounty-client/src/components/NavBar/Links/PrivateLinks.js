@@ -75,7 +75,8 @@ class PrivateLinks extends React.Component {
 const styles = {
   link: {
     color: 'black',
-    textDecoration: 'none'
+    textDecoration: 'none',
+    margin: 5
   },
   avatar: {
     background: '#0388A6'

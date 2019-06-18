@@ -17,7 +17,9 @@ const PublicLinks = () => (
       <Button color="inherit">Sign Up</Button>
     </Link>
     <Link to="/login" style={styles.link}>
-      <Button color="inherit">Login</Button>
+      <Button variant="contained" color="primary">
+        Login
+      </Button>
     </Link>
   </Fragment>
 )
@@ -25,7 +27,8 @@ const PublicLinks = () => (
 const styles = {
   link: {
     color: 'black',
-    textDecoration: 'none'
+    textDecoration: 'none',
+    margin: 5
   }
 }
 
