@@ -1,5 +1,7 @@
 from flask.views import MethodView
 from flask import make_response, request, jsonify, current_app
+import dateutil.parser as dparser
+from datetime import datetime
 from .utils import cron_crawlers
 
 
@@ -30,7 +32,7 @@ class SetCronJob(MethodView):
     def post(self):
         try:
             data = request.get_json(silent=True)
-    
+
             month = data['month']
             day = data['day']
             
@@ -90,6 +92,42 @@ class SetCronJob(MethodView):
             return make_response(jsonify(response)), 404
 
 
+class CrawlByDate(MethodView):
+    def get(self):
+        scrapyd = current_app.scrapy
+        try:
+            data = request.get_json(silent=True)
+
+            today = datetime.now().date()
+
+            live = data['live'] == 'True'
+            
+            if not live:
+                date = data['date']
+                date = dparser.parse(date).date()
+            else:
+                date = datetime.now().date()
+
+
+            spiders = scrapyd.list_spiders('default')
+            tasks = []
+            for spider in spiders:
+                tasks.append(scrapyd.schedule('default', spider, date=date.strftime('%d %B, %Y')))
+
+            response = {
+                'message': 'Started Crawling today news',
+                'tasks': tasks
+            }
+            return make_response(jsonify(response)), 200
+        except Exception as e:
+            # An error occured, therefore return a string message containing the error
+            response = {
+                'message': str(e)
+            }
+            return make_response(jsonify(response)), 404
+
+
 crawlerController = {
     'setcronjob': SetCronJob.as_view('setjob'),
+    'crawlbydate': CrawlByDate.as_view('crawlbydate'),
 }
