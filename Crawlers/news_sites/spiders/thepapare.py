@@ -9,6 +9,13 @@ class ThePapareSpider(scrapy.Spider):
     allowed_domains = ["thepapare.com"]
     start_urls = ['http://www.thepapare.com/latest-news']
 
+    
+    def __init__(self, date=None):
+        if date is not None:
+            self.dateToMatch = dparser.parse(date,fuzzy=True).date()
+        else:
+            self.dateToMatch = None
+
     def parse(self, response):
         # extract news urls from news section
         temp = response.css('.td_module_10 .td-module-title a::attr(href)').extract()
@@ -31,10 +38,19 @@ class ThePapareSpider(scrapy.Spider):
         item['author'] = response.css('.td-post-author-name a::text').extract_first()
         item['title'] = response.css('.td-post-title .entry-title::text').extract_first()
         date = response.css('.td-post-title .td-module-date::text').extract_first()
-        if date is not None:
-            date = dparser.parse(date,fuzzy=True)
-            date = date.strftime("%d %B, %Y")
-        item['date'] = date
+        if date is None:
+            return
+        
+        date = date.replace("\r", "")
+        date = date.replace("\t", "")
+        date = date.replace("\n", "")
+        date = dparser.parse(date,fuzzy=True).date()
+        
+        # don't add news if we are using dateToMatch and date of news 
+        if self.dateToMatch is not None and self.dateToMatch != date:
+            return
+
+        item['date'] = date.strftime("%d %B, %Y")
         item['imageLink'] = response.css('.td-modal-image .td-animation-stack-type0-1::attr(src)').extract_first()
         item['source'] = 'http://www.thepapare.com'
         item['content'] = '\n'.join(response.css('.td-post-content p::text').extract())

@@ -9,6 +9,13 @@ class EconomyNextSpider(scrapy.Spider):
     allowed_domains = ["economynext.com"]
     start_urls = ['http://www.economynext.com/']
 
+    
+    def __init__(self, date=None):
+        if date is not None:
+            self.dateToMatch = dparser.parse(date,fuzzy=True).date()
+        else:
+            self.dateToMatch = None
+
     def parse(self, response):
         categories = response.css('.sub-menu div:nth-child(1) a::attr(href)').extract()
         for category in categories:
@@ -37,15 +44,19 @@ class EconomyNextSpider(scrapy.Spider):
         item['author'] = 'EconomyNext'
         item['title'] = response.css('.article-title::text').extract_first()
         date  = response.css('.article-title+ h2::text').extract_first()
-        if date is not None:
-            # extract date component and generalize it
-            date = date.split('|')[0]
-            date = dparser.parse(date,fuzzy=True)
-            date = date.strftime("%d %B, %Y")
+        if date is None:
+            return
         
-            item['date'] = date
-        else:
-            item['date'] = None
+        date = date.replace("\r", "")
+        date = date.replace("\t", "")
+        date = date.replace("\n", "")
+        date = dparser.parse(date,fuzzy=True).date()
+        
+        # don't add news if we are using dateToMatch and date of news 
+        if self.dateToMatch is not None and self.dateToMatch != date:
+            return
+
+        item['date'] = date.strftime("%d %B, %Y")
         item['imageLink'] = response.css('.article-photo .set-image-border::attr(src)').extract_first()
         item['source'] = 'https://economynext.com/'
         item['content'] = response.css('p::text').extract_first()

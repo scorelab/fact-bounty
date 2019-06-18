@@ -10,6 +10,13 @@ class slgurdianSpider(scrapy.Spider):
     allowed_domains = ["srilankaguardian.org"]
     start_urls = ["http://www.srilankaguardian.org/search"]
 
+    
+    def __init__(self, date=None):
+        if date is not None:
+            self.dateToMatch = dparser.parse(date,fuzzy=True).date()
+        else:
+            self.dateToMatch = None
+
     def parse(self, response):
         # extract news urls from news section
         temp = response.css('.entry-title a::attr(href)').extract()
@@ -49,10 +56,19 @@ class slgurdianSpider(scrapy.Spider):
         item['author'] = response.css('.entry-content div div b::text').extract_first()
         item['title'] = response.css('.entry-title::text').extract_first()
         date  = response.css('.published::text').extract_first()
-        if date is not None:
-            date = dparser.parse(date,fuzzy=True)
-            date = date.strftime("%d %B, %Y")
-        item['date'] = date
+        if date is None:
+            return
+        
+        date = date.replace("\r", "")
+        date = date.replace("\t", "")
+        date = date.replace("\n", "")
+        date = dparser.parse(date,fuzzy=True).date()
+        
+        # don't add news if we are using dateToMatch and date of news 
+        if self.dateToMatch is not None and self.dateToMatch != date:
+            return
+
+        item['date'] = date.strftime("%d %B, %Y")
         item['imageLink'] = response.css('#Blog1 img::attr(src)').extract_first()
         item['source'] = 'http://www.srilankaguardian.org'
         item['content'] = ' \n '.join(response.css('.entry-content div::text').extract())

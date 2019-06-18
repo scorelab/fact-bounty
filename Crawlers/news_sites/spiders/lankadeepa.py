@@ -10,6 +10,13 @@ class LankadeepaSpider(scrapy.Spider):
     allowed_domains = ["lankadeepa.lk"]
     start_urls = ['http://www.lankadeepa.lk/latest_news/1']
 
+    
+    def __init__(self, date=None):
+        if date is not None:
+            self.dateToMatch = dparser.parse(date,fuzzy=True).date()
+        else:
+            self.dateToMatch = None
+
     def parse(self, response):
 
         # fetch news urls from each page
@@ -37,11 +44,19 @@ class LankadeepaSpider(scrapy.Spider):
         item['title'] = response.css('.post-title::text').extract_first()
         # extract date component and generalize it
         date  = response.css('.post-date::text').extract_first()
-        if date is not None:
-            date = date.split('/')[-1]
-            date = dparser.parse(date,fuzzy=True)
-            date = date.strftime("%d %B, %Y")
-        item['date'] = date
+        if date is None:
+            return
+        
+        date = date.replace("\r", "")
+        date = date.replace("\t", "")
+        date = date.replace("\n", "")
+        date = dparser.parse(date,fuzzy=True).date()
+        
+        # don't add news if we are using dateToMatch and date of news 
+        if self.dateToMatch is not None and self.dateToMatch != date:
+            return
+
+        item['date'] = date.strftime("%d %B, %Y")
         item['imageLink'] = response.meta.get('img_url')
         item['source'] = 'http://www.lankadeepa.lk'
         item['content'] = ' \n '.join(response.css('.post-content p::text').extract())

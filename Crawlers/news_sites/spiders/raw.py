@@ -12,6 +12,13 @@ class RAWSpider(scrapy.Spider):
     ]
     data = True
 
+    
+    def __init__(self, date=None):
+        if date is not None:
+            self.dateToMatch = dparser.parse(date,fuzzy=True).date()
+        else:
+            self.dateToMatch = None
+
     def parse(self, response):
         # fetch news urls from each page
         news_urls = response.css('.cat-zero')
@@ -51,10 +58,19 @@ class RAWSpider(scrapy.Spider):
         item['author'] = 'raw'
         item['title'] = response.css('.inner-header::text').extract_first()
         date  = response.css('.inner-other::text').extract_first()
-        if date is not None:
-            date = dparser.parse(date,fuzzy=True)
-            date = date.strftime("%d %B, %Y")
-        item['date'] = date
+        if date is None:
+            return
+        
+        date = date.replace("\r", "")
+        date = date.replace("\t", "")
+        date = date.replace("\n", "")
+        date = dparser.parse(date,fuzzy=True).date()
+        
+        # don't add news if we are using dateToMatch and date of news 
+        if self.dateToMatch is not None and self.dateToMatch != date:
+            return
+
+        item['date'] = date.strftime("%d %B, %Y")
         item['imageLink'] = response.meta.get('img_url')
         item['source'] = 'http://www.raw.lk'
         item['content'] = '\n'.join(response.css('.inner-ft-text p::text').extract())

@@ -17,6 +17,13 @@ class CtodaySpider(scrapy.Spider):
     # base url of api to extract single news article
     base_url = 'http://site-api.ceylontoday.lk/api/News/getSingleNews?Id='
 
+    
+    def __init__(self, date=None):
+        if date is not None:
+            self.dateToMatch = dparser.parse(date).date()
+        else:
+            self.dateToMatch = None
+
     def parse(self, response):
         for news_url in response.css('.news-text-link::attr(href)').extract():
             news_id = news_url.split('/')
@@ -41,10 +48,19 @@ class CtodaySpider(scrapy.Spider):
         item['title'] = news['Title']
         # extract date component and generalize it
         date  = news['Publish_Date_String']
-        if date is not None:
-            date = dparser.parse(date,fuzzy=True)
-            date = date.strftime("%d %B, %Y")
-        item['date'] = date
+        if date is None:
+            return
+        
+        date = date.replace("\r", "")
+        date = date.replace("\t", "")
+        date = date.replace("\n", "")
+        date = dparser.parse(date,fuzzy=True).date()
+        
+        # don't add news if we are using dateToMatch and date of news 
+        if self.dateToMatch is not None and self.dateToMatch != date:
+            return
+
+        item['date'] = date.strftime("%d %B, %Y")
         item['imageLink'] = news['Header_Image']
         item['source'] = response.url
         item['content'] = news['HTML_Content'].replace('<p>', '').replace('</p>', '\n')

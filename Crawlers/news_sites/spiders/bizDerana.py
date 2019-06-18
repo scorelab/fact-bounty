@@ -14,6 +14,13 @@ class BizadaDeranaSpider(scrapy.Spider):
                   'http://bizenglish.adaderana.lk/category/analysis/',
                   'http://bizenglish.adaderana.lk/category/features/']
 
+    
+    def __init__(self, date=None):
+        if date is not None:
+            self.dateToMatch = dparser.parse(date,fuzzy=True).date()
+        else:
+            self.dateToMatch = None
+
     def parse(self, response):
         for news_url in response.css('.business-image .wp-post-image , h3 a::attr("href")').extract():
             yield response.follow(news_url, callback=self.parse_article)
@@ -29,10 +36,19 @@ class BizadaDeranaSpider(scrapy.Spider):
         item['author'] = 'bizada'
         item['title'] = response.css('.news-header h3::text').extract_first()
         date  = response.css('.news-date::text').extract_first()
-        if date is not None:
-            date = dparser.parse(date,fuzzy=True)
-            date = date.strftime("%d %B, %Y")
-        item['date'] = date
+        if date is None:
+            return
+        
+        date = date.replace("\r", "")
+        date = date.replace("\t", "")
+        date = date.replace("\n", "")
+        date = dparser.parse(date,fuzzy=True).date()
+        
+        # don't add news if we are using dateToMatch and date of news 
+        if self.dateToMatch is not None and self.dateToMatch != date:
+            return
+
+        item['date'] = date.strftime("%d %B, %Y")
         item['imageLink'] = response.css('.wp-post-image::attr(src)').extract_first()
         item['source'] = response.url
         item['content'] = ' \n '.join(response.css('.news-text::text').extract())
