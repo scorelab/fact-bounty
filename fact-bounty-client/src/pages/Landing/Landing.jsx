@@ -5,7 +5,7 @@ import Footer from '../../components/Footer'
 import './style.sass'
 
 class Landing extends Component {
-  
+
   componentDidMount() {
     this.initHashScroll()
   }
@@ -35,7 +35,7 @@ class Landing extends Component {
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus non dignissim lectus, vel mattis lacus. Vivamus non dignissim. Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
                 <Button variant="contained" color="primary" style={{ width: 120 }}>
                   EXPLORE
-              </Button>
+                </Button>
               </div>
               <div className="col-md right-section">
                 <img className="header-img" src={headerImg} alt="News" />
@@ -90,7 +90,6 @@ class Landing extends Component {
         {/* ============= RECENT POSTS SECTION ============= */}
         <div className="container" id="recentPosts">
           <div className="recent-posts">
-            <h1>Recent Posts</h1>
           </div>
         </div>
 
@@ -98,6 +97,15 @@ class Landing extends Component {
         <div className="container" id="contact">
           <div className="contact-us">
             <h1>Contact Us</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <form>
+              <input type="text" name="firstname" placeholder="First Name" />
+              <input type="text" name="firstname" placeholder="Email" />
+              <textarea name="message" rows="5" placeholder="Your Message"/>
+            </form>
+            <Button variant="contained" color="primary" style={{ width: 120 }}>
+              SEND
+            </Button>
           </div>
         </div>
 
