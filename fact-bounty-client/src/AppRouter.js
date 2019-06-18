@@ -10,7 +10,6 @@ import Landing from './pages/Landing'
 import Register from './pages/Register'
 import Login from './pages/Login'
 import Posts from './pages/Posts'
-import About from './pages/About'
 import Dashboard from './pages/Dashboard'
 
 class AppRouter extends Component {
@@ -23,7 +22,6 @@ class AppRouter extends Component {
           <Route path="/posts" component={Posts} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
-          <Route exact path="/about" component={About} />
           <Switch>
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
           </Switch>
