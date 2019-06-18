@@ -13,6 +13,7 @@ import PrivateLinks from './Links/PrivateLinks'
 import Toast from '../Toast'
 import { logoutUser } from '../../redux/actions/authActions'
 import styles from './NavBar.style'
+import factbountyLogo from '../../assets/logos/factbountyLogo.png'
 import './styles.sass'
 
 class NavBar extends Component {
@@ -72,15 +73,15 @@ class NavBar extends Component {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" color="inherit" className={classes.grow}>
-              FACT BOUNTY
-            </Typography>
+            <div className="logo-container">
+              <img src={factbountyLogo} alt="logo" />
+            </div>
             <div className={classes.linkButtonsContainer}>
               {auth.isAuthenticated ? (
                 <PrivateLinks handleLogout={this.handleLogout} />
               ) : (
-                <PublicLinks />
-              )}
+                  <PublicLinks />
+                )}
             </div>
           </Toolbar>
         </AppBar>
