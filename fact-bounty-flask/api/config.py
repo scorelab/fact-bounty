@@ -70,7 +70,7 @@ class ProductionConfig(Config):
             secure=secure)
         mail_handler.setLevel(logging.ERROR)
         app.logger.addHandler(mail_handler)
-   
+
 class DockerConfig(Config):
     @classmethod
     def init_app(cls, app):

@@ -7,7 +7,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from scrapyd_api import ScrapydAPI
 
 from api import commands
-from api import user, stories, crawler
+from api import user, stories, crawler, util
 from api.config import config
 from api.extensions import db, mail, pagedown, login_manager
 
@@ -49,6 +49,7 @@ def register_blueprint(app):
     app.register_blueprint(user.views.userprint, url_prefix='/api')
     app.register_blueprint(stories.views.storyprint, url_prefix='/api')
     app.register_blueprint(crawler.views.blueprint, url_prefix='/api/crawler')
+    app.register_blueprint(util.views.utilprint, url_prefix='/api/utils')
     return None
 
 def register_commands(app):
