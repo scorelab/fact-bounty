@@ -11,7 +11,16 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 class Config:
     """Default Flask configuration inherited by all environments. Use this for development environments."""
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'hard to guess string'
-    POSTS_PER_PAGE = 4
+    MAIL_SERVER = os.environ.get('MAIL_SERVER', 'smtp.googlemail.com')
+    MAIL_PORT = int(os.environ.get('MAIL_PORT', '587'))
+    MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS', 'true').lower() in \
+        ['true', 'on', '1']
+    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+    FACTBOUNTY_MAIL_SUBJECT_PREFIX = '[FactBounty] '
+    FACTBOUNTY_MAIL_SENDER = 'FactBounty Admin <factbounty@gmail.com>'
+    FACTBOUNTY_ADMIN = os.environ.get('FACTBOUNTY_ADMIN')
+    POSTS_PER_PAGE = int(os.environ.get('POSTS_PER_PAGE', '4'))
     ES_URL = os.environ.get('ELASTIC_SEARCH_URL') or 'http://localhost:9200'
 
     @staticmethod
@@ -39,6 +48,29 @@ class ProductionConfig(Config):
     ES_USERNAME = os.environ.get('ELASTIC_SEARCH_USERNAME')
     ES_PASSWORD = os.environ.get('ELASTIC_SEARCH_PASSWORD')
 
+    @classmethod
+    def init_app(cls, app):
+        Config.init_app(app)
+
+        # email errors to the administrators
+        import logging
+        from logging.handlers import SMTPHandler
+        credentials = None
+        secure = None
+        if getattr(cls, 'MAIL_USERNAME', None) is not None:
+            credentials = (cls.MAIL_USERNAME, cls.MAIL_PASSWORD)
+            if getattr(cls, 'MAIL_USE_TLS', None):
+                secure = ()
+        mail_handler = SMTPHandler(
+            mailhost=(cls.MAIL_SERVER, cls.MAIL_PORT),
+            fromaddr=cls.FACTBOUNTY_MAIL_SENDER,
+            toaddrs=[cls.FACTBOUNTY_ADMIN],
+            subject=cls.FACTBOUNTY_MAIL_SUBJECT_PREFIX + ' Application Error',
+            credentials=credentials,
+            secure=secure)
+        mail_handler.setLevel(logging.ERROR)
+        app.logger.addHandler(mail_handler)
+   
 class DockerConfig(Config):
     @classmethod
     def init_app(cls, app):

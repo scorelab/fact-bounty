@@ -9,7 +9,7 @@ from scrapyd_api import ScrapydAPI
 from api import commands
 from api import user, stories, crawler
 from api.config import config
-from api.extensions import db, pagedown, login_manager
+from api.extensions import db, mail, pagedown, login_manager
 
 def create_app(config_name):
     # create and configure the app
@@ -29,6 +29,7 @@ def register_extensions(app):
     CORS(app)
     db.init_app(app)
     login_manager.init_app(app)
+    mail.init_app(app)
     pagedown.init_app(app)
     if os.environ.get('FLASK_CONFIG') != "production":
         es = Elasticsearch([app.config['ES_URL']])
