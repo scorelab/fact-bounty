@@ -82,6 +82,11 @@ Run npm install in fact-bounty-client folder.
         (venv)$ pip install -r requirements.txt
     ```
 
+*   #### Set up github pre-hook
+    ```
+        (venv)$ pre-commit install
+    ```
+
 *   #### Running It
     On your terminal, run the server using this one simple command:
     ```
