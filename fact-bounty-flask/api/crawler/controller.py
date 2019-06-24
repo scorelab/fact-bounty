@@ -23,7 +23,7 @@ class SetCronJob(MethodView):
             }
             return make_response(jsonify(response)), 200
         except Exception as e:
-            # An error occured, therefore return a string message containing the error
+            # An error occured, so return a string message containing error
             response = {
                 'message': str(e)
             }
@@ -35,8 +35,9 @@ class SetCronJob(MethodView):
 
             month = data['month']
             day = data['day']
-            
-            job = current_app.scheduler.add_job(cron_crawlers, 'cron', month=month, day=day)
+
+            job = current_app.scheduler.add_job(cron_crawlers, 'cron',
+                                                month=month, day=day)
 
             response = {
                 'message': 'Job created successfully',
@@ -44,7 +45,7 @@ class SetCronJob(MethodView):
             }
             return make_response(jsonify(response)), 200
         except Exception as e:
-            # An error occured, therefore return a string message containing the error
+            # An error occured, so return a string message containing error
             response = {
                 'message': str(e)
             }
@@ -58,7 +59,8 @@ class SetCronJob(MethodView):
             month = data['month']
             day = data['day']
 
-            job = current_app.scheduler.reschedule_job(job_id, trigger='cron', month=month, day=day)
+            job = current_app.scheduler.reschedule_job(job_id, trigger='cron',
+                                                       month=month, day=day)
 
             response = {
                 'message': 'Job updated successfully',
@@ -66,7 +68,7 @@ class SetCronJob(MethodView):
             }
             return make_response(jsonify(response)), 200
         except Exception as e:
-            # An error occured, therefore return a string message containing the error
+            # An error occured, so return a string message containing error
             response = {
                 'message': str(e)
             }
@@ -85,7 +87,7 @@ class SetCronJob(MethodView):
             }
             return make_response(jsonify(response)), 200
         except Exception as e:
-            # An error occured, therefore return a string message containing the error
+            # An error occured, so return a string message containing error
             response = {
                 'message': str(e)
             }
@@ -98,21 +100,19 @@ class CrawlByDate(MethodView):
         try:
             data = request.get_json(silent=True)
 
-            today = datetime.now().date()
-
             live = data['live'] == 'True'
-            
+
             if not live:
                 date = data['date']
                 date = dparser.parse(date).date()
             else:
                 date = datetime.now().date()
 
-
             spiders = scrapyd.list_spiders('default')
             tasks = []
             for spider in spiders:
-                tasks.append(scrapyd.schedule('default', spider, date=date.strftime('%d %B, %Y')))
+                tasks.append(scrapyd.schedule('default', spider,
+                                              date=date.strftime('%d %B, %Y')))
 
             response = {
                 'message': 'Started Crawling today news',
@@ -120,7 +120,7 @@ class CrawlByDate(MethodView):
             }
             return make_response(jsonify(response)), 200
         except Exception as e:
-            # An error occured, therefore return a string message containing the error
+            # An error occured, so return a string message containing error
             response = {
                 'message': str(e)
             }

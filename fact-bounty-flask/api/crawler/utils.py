@@ -1,5 +1,6 @@
 from flask import jsonify, current_app
 
+
 def cron_crawlers():
     scrapyd = current_app.scrapy
 
@@ -9,4 +10,4 @@ def cron_crawlers():
     for spider in spiders:
         tasks.append(scrapyd.schedule('default', spider))
 
-    return jsonify({'tasks_data': tasks, 'status': 'started' })
+    return jsonify({'tasks_data': tasks, 'status': 'started'})

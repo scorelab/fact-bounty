@@ -33,17 +33,20 @@ class Register(MethodView):
                 response = {
                     'message': 'You registered successfully. Please log in.'
                 }
-                # return a response notifying the user that they registered successfully
+                # return a response notifying the user that they registered
+                # successfully
                 return make_response(jsonify(response)), 201
             except Exception as e:
-                # An error occured, therefore return a string message containing the error
+                # An error occured, therefore return a string message
+                # containing the error
                 response = {
                     'message': str(e)
                 }
                 return make_response(jsonify(response)), 401
         else:
             # There is an existing user. We don't want to register users twice
-            # Return a message to the user telling them that they they already exist
+            # Return a message to the user telling them that they they already
+            # exist
             response = {
                 'message': 'User already exists. Please login.'
             }
@@ -61,7 +64,8 @@ class Login(MethodView):
             user = User.query.filter_by(email=data['email']).first()
             # Try to authenticate the found user using their password
             if user and user.verify_password(data['password']):
-                # Generate the access token. This will be used as the authorization header
+                # Generate the access token. This will be used as the
+                # authorization header
                 access_token = user.generate_auth_token(
                     user_id=user.id, user_name=user.name, expiration=3600)
                 if access_token:
@@ -82,12 +86,14 @@ class Login(MethodView):
             response = {
                 'message': str(e)
             }
-            # Return a server error using the HTTP Error Code 500 (Internal Server Error)
+            # Return a server error using the HTTP Error Code 500 (Internal
+            # Server Error)
             return make_response(jsonify(response)), 500
 
 
 class Auth(MethodView):
-    """This class-based view handles user register and access token generation via 3rd sources like facebook, google"""
+    """This class-based view handles user register and access token generation \
+    via 3rd sources like facebook, google"""
 
     def post(self):
         # Querying the database with requested email
@@ -110,10 +116,12 @@ class Auth(MethodView):
                     'message': 'You logged in successfully.',
                     'access_token': access_token.decode()
                 }
-                # return a response notifying the user that they registered successfully
+                # return a response notifying the user that they registered
+                # successfully
                 return make_response(jsonify(response)), 201
             except Exception as e:
-                # An error occured, therefore return a string message containing the error
+                # An error occured, therefore return a string message
+                # containing the error
                 response = {
                     'message': str(e)
                 }

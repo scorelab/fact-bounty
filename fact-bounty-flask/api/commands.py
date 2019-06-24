@@ -3,7 +3,8 @@
 import os
 from glob import glob
 from subprocess import call
-
+import coverage
+import sys
 import click
 from flask import current_app
 from flask.cli import with_appcontext
@@ -15,6 +16,7 @@ COV = None
 if os.environ.get('FLASK_COVERAGE'):
     COV = coverage.coverage(branch=True, include='./*')
     COV.start()
+
 
 @click.command()
 @click.option('--coverage/--no-coverage', default=False,
@@ -36,15 +38,16 @@ def test(coverage):
         basedir = os.path.abspath(os.path.dirname(__file__))
         covdir = os.path.join(basedir, 'tmp/coverage')
         COV.html_report(directory=covdir)
-        print('HTML version: file://%s/index.html' %covdir)
+        print('HTML version: file://%s/index.html' % covdir)
         COV.erase()
+
 
 @click.command()
 @click.option('-f', '--fix-imports', default=False, is_flag=True,
               help='Fix imports using isort, before linting')
 def lint(fix_imports):
     """Lint and check code style with flake8 and isort."""
-    skip = ['requirements', 'venv']
+    skip = ['requirements', 'venv', 'migrations', '__pycache__']
     root_files = glob('*.py')
     root_directories = [
         name for name in next(os.walk('.'))[1] if not name.startswith('.')]
@@ -138,6 +141,7 @@ def urls(url, order):
 
     for row in rows:
         click.echo(str_template.format(*row[:column_length]))
+
 
 @click.command()
 def deploy():

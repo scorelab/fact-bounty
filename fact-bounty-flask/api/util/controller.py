@@ -2,8 +2,12 @@ from flask.views import MethodView
 from flask import make_response, request, jsonify, current_app
 from api.helpers import send_email
 
+
 class ContactUs(MethodView):
-    """This class-based view handles user complaints send through contact us form request"""
+    """This class-based view handles user complaints
+    send through contact us form request
+    """
+
     def post(self):
         try:
             # get the request data
@@ -28,10 +32,12 @@ class ContactUs(MethodView):
             response = {
                 'message': 'Form submitted Successfully!',
             }
-            # return a response notifying the user that form submitted successfully
+            # return a response notifying the user that form submitted
+            # successfully
             return make_response(jsonify(response)), 201
         except Exception as e:
-            # An error occured, therefore return a string message containing the error
+            # An error occured, therefore return a string message containing
+            # the error
             response = {
                 'message': str(e)
             }
