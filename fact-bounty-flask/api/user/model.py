@@ -4,8 +4,9 @@ import jwt
 from flask import current_app
 from flask_bcrypt import Bcrypt
 from flask_httpauth import HTTPBasicAuth
-from itsdangerous import (
-    TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
+# from itsdangerous import (
+#     TimedJSONWebSignatureSerializer as Serializer,
+#     BadSignature, SignatureExpired)
 from api.database import Column, Model, db
 
 auth = HTTPBasicAuth()
