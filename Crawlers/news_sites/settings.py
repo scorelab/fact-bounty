@@ -74,7 +74,6 @@ ITEM_PIPELINES = {
 
 ELASTICSEARCH_SERVERS = ["http://localhost:9200"]
 ELASTICSEARCH_INDEX = "test"
-ELASTICSEARCH_INDEX_DATE_FORMAT = "%Y-%m-%d"
 ELASTICSEARCH_TYPE = "story"
 
 # Enable and configure the AutoThrottle extension (disabled by default)
