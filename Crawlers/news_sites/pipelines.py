@@ -8,4 +8,8 @@
 
 class NewsSitesPipeline(object):
     def process_item(self, item, spider):
+        item["approved_count"] = 0
+        item["fake_count"] = 0
+        item["mixedvote_count"] = 0
+
         return item
