@@ -1,5 +1,6 @@
 # Fact Bounty
 
+[![Build Status](https://travis-ci.com/scorelab/fact-Bounty.svg?branch=master)](https://travis-ci.com/scorelab/fact-Bounty)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7574ef8d36d8451fa979a42e2884504f)](https://app.codacy.com/app/ivantha/fact-Bounty?utm_source=github.com&utm_medium=referral&utm_content=scorelab/fact-Bounty&utm_campaign=Badge_Grade_Settings)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fscorelab%2Ffact-Bounty.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fscorelab%2Ffact-Bounty?ref=badge_shield)
 
