@@ -11,46 +11,45 @@ class Register(MethodView):
         # getting JSON data from request
         post_data = request.get_json(silent=True)
 
+        try:
+            name = post_data["name"]
+            email = post_data["email"]
+            password = post_data["password"]
+            password2 = post_data["password2"]
+        except Exception:
+            response = {"message": "Please provide all the required fields."}
+            return make_response(jsonify(response)), 404
+
         # Querying the database with requested email
-        user = User.query.filter_by(email=post_data['email']).first()
+        user = User.find_by_email(email)
 
-        if not user:
-            # There is no user so we'll try to register them
-            try:
-                # Register the user
-                name = post_data['name']
-                email = post_data['email']
-                password = post_data['password']
-                password2 = post_data['password2']
-                if (password != password2):
-                    response = {
-                        'message': 'Both passwords does not match'
-                    }
-                    return make_response(jsonify(response)), 401
-
-                user = User(email=email, password=password, name=name)
-                user.save()
-                response = {
-                    'message': 'You registered successfully. Please log in.'
-                }
-                # return a response notifying the user that they registered
-                # successfully
-                return make_response(jsonify(response)), 201
-            except Exception as e:
-                # An error occured, therefore return a string message
-                # containing the error
-                response = {
-                    'message': str(e)
-                }
-                return make_response(jsonify(response)), 401
-        else:
+        if user:
             # There is an existing user. We don't want to register users twice
             # Return a message to the user telling them that they they already
             # exist
-            response = {
-                'message': 'User already exists. Please login.'
-            }
+            response = {"message": "User already exists. Please login."}
             return make_response(jsonify(response)), 202
+
+        # There is no user so we'll try to register them
+
+        # If passwords don't match, return error
+        if password != password2:
+            response = {"message": "Both passwords does not match"}
+            return make_response(jsonify(response)), 401
+
+        # Register the user
+        try:
+            user = User(email=email, password=password, name=name)
+            user.save()
+        except Exception:
+            response = {"message": "Something went wrong!!"}
+            return make_response(jsonify(response)), 500
+
+        response = {"message": "You registered successfully. Please log in."}
+
+        # return a response notifying the user that they registered
+        # successfully
+        return make_response(jsonify(response)), 201
 
 
 class Login(MethodView):
@@ -58,37 +57,45 @@ class Login(MethodView):
 
     def post(self):
         """Handle POST request for this view. Url ---> /api/users/login"""
-        try:
-            data = request.get_json(silent=True)
-            # Get the user object using their email (unique to every user)
-            user = User.query.filter_by(email=data['email']).first()
-            # Try to authenticate the found user using their password
-            if user and user.verify_password(data['password']):
-                # Generate the access token. This will be used as the
-                # authorization header
-                access_token = user.generate_auth_token(
-                    user_id=user.id, user_name=user.name, expiration=3600)
-                if access_token:
-                    response = {
-                        'message': 'You logged in successfully.',
-                        'access_token': access_token.decode(),
-                    }
-                    return make_response(jsonify(response)), 200
-            else:
-                # User does not exist. Therefore, we return an error message
-                response = {
-                    'message': 'Invalid email or password, Please try again'
-                }
-                return make_response(jsonify(response)), 401
+        data = request.get_json(silent=True)
 
-        except Exception as e:
-            # Create a response containing an string error message
-            response = {
-                'message': str(e)
-            }
+        try:
+            email = data["email"]
+            password = data["password"]
+        except Exception:
+            response = {"message": "Please provide all the required fields."}
+            return make_response(jsonify(response)), 404
+
+        # Get the user object using their email (unique to every user)
+        user = User.find_by_email(email)
+
+        if not user:
+            # User does not exist. Therefore, we return an error message
+            response = {"message": "Invalid email, Please try again"}
+            return make_response(jsonify(response)), 401
+
+        # Try to authenticate the found user using their password
+        if not user.verify_password(password):
+            response = {"message": "Wrong password, Please try again"}
+            return make_response(jsonify(response)), 402
+
+        access_token = user.generate_auth_token(
+            user_id=user.id, user_name=user.name, expiration=3600
+        )
+
+        if not access_token:
+            response = {"message": "Something went wrong!"}
             # Return a server error using the HTTP Error Code 500 (Internal
             # Server Error)
             return make_response(jsonify(response)), 500
+
+        # Generate the access token. This will be used as the
+        # authorization header
+        response = {
+            "message": "You logged in successfully.",
+            "access_token": access_token.decode(),
+        }
+        return make_response(jsonify(response)), 200
 
 
 class Auth(MethodView):
@@ -98,47 +105,62 @@ class Auth(MethodView):
     def post(self):
         # Querying the database with requested email
         data = request.get_json(silent=True)
-        user = User.query.filter_by(email=data['email']).first()
+
+        try:
+            name = data["name"]
+            email = data["email"]
+            _type = data["type"]
+        except Exception:
+            response = {"message": "Please provide all the required fields."}
+            return make_response(jsonify(response)), 404
+
+        user = User.find_by_email(email)
 
         if not user:
             # There is no user so we'll try to register them
-            try:
-                # Register the user
-                name = data['name']
-                email = data['email']
-                _type = data['type']
-                user = User(email=email, name=name, _type=_type)
-                user.save()
-                access_token = user.generate_auth_token(
-                    user_id=user.id, user_name=user.name, expiration=3600)
+            user = User(email=email, name=name, _type=_type)
 
-                response = {
-                    'message': 'You logged in successfully.',
-                    'access_token': access_token.decode()
-                }
-                # return a response notifying the user that they registered
-                # successfully
-                return make_response(jsonify(response)), 201
-            except Exception as e:
+            try:
+                user.save()
+            except Exception:
                 # An error occured, therefore return a string message
                 # containing the error
-                response = {
-                    'message': str(e)
-                }
-                return make_response(jsonify(response)), 401
+                response = {"message": "Something went wrong!"}
+                return make_response(jsonify(response)), 500
+
+            access_token = user.generate_auth_token(
+                user_id=user.id, user_name=user.name, expiration=3600
+            )
+
+            if not access_token:
+                response = {"message": "Something went wrong!"}
+                # Return a server error using the HTTP Error Code 500 (Internal
+                # Server Error)
+                return make_response(jsonify(response)), 500
+
+            # Generate the access token. This will be used as the
+            # authorization header
+            response = {
+                "message": "You logged in successfully.",
+                "access_token": access_token.decode(),
+            }
+            return make_response(jsonify(response)), 201
+
         else:
             # There is an existing user, Let him login.
             access_token = user.generate_auth_token(
-                user_id=user.id, user_name=user.name, expiration=3600)
+                user_id=user.id, user_name=user.name, expiration=3600
+            )
+
             response = {
-                'message': 'You logged in successfully.',
-                'access_token': access_token.decode()
+                "message": "You logged in successfully.",
+                "access_token": access_token.decode(),
             }
             return make_response(jsonify(response)), 202
 
 
 userController = {
-    'register': Register.as_view('register'),
-    'login': Login.as_view('login'),
-    'auth': Auth.as_view('auth')
+    "register": Register.as_view("register"),
+    "login": Login.as_view("login"),
+    "auth": Auth.as_view("auth"),
 }
