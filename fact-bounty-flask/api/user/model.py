@@ -43,31 +43,6 @@ class User(Model):
         """
         return "<User %r>" % self.name
 
-    def generate_auth_token(self, expiration, user_id, user_name):
-        """
-        Generate authorization token
-
-        """
-        try:
-            # set up a payload with an expiration time
-            payload = {
-                "exp": datetime.utcnow() + timedelta(seconds=expiration),
-                "iat": datetime.utcnow(),
-                "sub": user_id,
-                "name": user_name,
-            }
-            # create the byte string token using the payload and the SECRET key
-            jwt_string = jwt.encode(
-                payload,
-                current_app.config.get("SECRET_KEY"),
-                algorithm="HS256",
-            )
-            return jwt_string
-
-        except Exception as e:
-            # return an error in string format if an exception occurs
-            return str(e)
-
     def to_json(self):
         """
         Returns a JSON object
@@ -81,24 +56,6 @@ class User(Model):
             "date": self.date,
         }
         return user_json
-
-    @staticmethod
-    def verify_auth_token(token):
-        """
-        Verification of authorization token
-
-        :param token: token for verification
-        """
-        try:
-            # try to decode the token using our SECRET variable
-            payload = jwt.decode(token, current_app.config.get("SECRET_KEY"))
-            return payload["sub"]
-        except jwt.ExpiredSignatureError:
-            # the token is expired, return an error string
-            return "Expired token. Please login to get a new token"
-        except jwt.InvalidTokenError:
-            # the token is invalid, return an error string
-            return "Invalid token. Please register or login"
 
     @classmethod
     def find_by_email(cls, email):
@@ -119,3 +76,22 @@ class User(Model):
         """
         db.session.add(self)
         db.session.commit()
+
+
+class RevokedToken(Model):
+    """
+    This model holds information about revoked tokens, users who have looged out
+    """
+
+    __tablename__ = "revoked_tokens"
+    id = Column(db.Integer, primary_key=True)
+    jti = Column(db.String(120))
+
+    def add(self):
+        db.session.add(self)
+        db.session.commit()
+
+    @classmethod
+    def is_jti_blacklisted(cls, jti):
+        query = cls.query.filter_by(jti=jti).first()
+        return bool(query)

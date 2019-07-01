@@ -1,6 +1,14 @@
 from flask.views import MethodView
 from flask import make_response, request, jsonify
-from .model import User
+from flask_jwt_extended import (
+    create_access_token,
+    create_refresh_token,
+    jwt_required,
+    jwt_refresh_token_required,
+    get_jwt_identity,
+    get_raw_jwt,
+)
+from .model import User, RevokedToken
 
 
 class Register(MethodView):
@@ -79,11 +87,10 @@ class Login(MethodView):
             response = {"message": "Wrong password, Please try again"}
             return make_response(jsonify(response)), 402
 
-        access_token = user.generate_auth_token(
-            user_id=user.id, user_name=user.name, expiration=3600
-        )
+        access_token = create_access_token(identity=user.id, fresh=True)
+        refresh_token = create_refresh_token(user.id)
 
-        if not access_token:
+        if not access_token or not refresh_token:
             response = {"message": "Something went wrong!"}
             # Return a server error using the HTTP Error Code 500 (Internal
             # Server Error)
@@ -93,7 +100,8 @@ class Login(MethodView):
         # authorization header
         response = {
             "message": "You logged in successfully.",
-            "access_token": access_token.decode(),
+            "access_token": access_token,
+            "refresh_token": refresh_token,
         }
         return make_response(jsonify(response)), 200
 
@@ -128,9 +136,8 @@ class Auth(MethodView):
                 response = {"message": "Something went wrong!"}
                 return make_response(jsonify(response)), 500
 
-            access_token = user.generate_auth_token(
-                user_id=user.id, user_name=user.name, expiration=3600
-            )
+            access_token = create_access_token(identity=user.id, fresh=True)
+            refresh_token = create_refresh_token(user.id)
 
             if not access_token:
                 response = {"message": "Something went wrong!"}
@@ -142,25 +149,74 @@ class Auth(MethodView):
             # authorization header
             response = {
                 "message": "You logged in successfully.",
-                "access_token": access_token.decode(),
+                "access_token": access_token,
+                "refresh_token": refresh_token,
             }
             return make_response(jsonify(response)), 201
 
         else:
             # There is an existing user, Let him login.
-            access_token = user.generate_auth_token(
-                user_id=user.id, user_name=user.name, expiration=3600
-            )
+            access_token = create_access_token(identity=user.id, fresh=True)
+            refresh_token = create_refresh_token(user.id)
 
             response = {
                 "message": "You logged in successfully.",
-                "access_token": access_token.decode(),
+                "access_token": access_token,
+                "refresh_token": refresh_token,
             }
             return make_response(jsonify(response)), 202
+
+
+class LogoutAccess(MethodView):
+    @jwt_required
+    def post(self):
+        jti = get_raw_jwt()["jti"]
+        try:
+            revoked_token = RevokedToken(jti=jti)
+            revoked_token.add()
+            response = {"message": "Access token has been revoked"}
+            return make_response(jsonify(response)), 200
+        except Exception:
+            response = {"message": "Something went wrong!"}
+            # Return a server error using the HTTP Error Code 500 (Internal
+            # Server Error)
+            return make_response(jsonify(response)), 500
+
+
+class LogoutRefresh(MethodView):
+    @jwt_refresh_token_required
+    def post(self):
+        jti = get_raw_jwt()["jti"]
+        try:
+            revoked_token = RevokedToken(jti=jti)
+            revoked_token.add()
+            response = {"message": "Refresh token has been revoked"}
+            return make_response(jsonify(response)), 200
+        except Exception:
+            response = {"message": "Something went wrong!"}
+            # Return a server error using the HTTP Error Code 500 (Internal
+            # Server Error)
+            return make_response(jsonify(response)), 500
+
+
+class TokenRefresh(MethodView):
+    @jwt_refresh_token_required
+    def post(self):
+        current_user = get_jwt_identity()
+        access_token = create_access_token(identity=current_user, fresh=False)
+
+        response = {
+            "message": "Token refreshed successfully",
+            "access_token": access_token,
+        }
+        return make_response(jsonify(response)), 200
 
 
 userController = {
     "register": Register.as_view("register"),
     "login": Login.as_view("login"),
     "auth": Auth.as_view("auth"),
+    "logout_access": LogoutAccess.as_view("logout_access"),
+    "logout_refresh": LogoutRefresh.as_view("logout_refresh"),
+    "token_refresh": TokenRefresh.as_view("token_refresh"),
 }
