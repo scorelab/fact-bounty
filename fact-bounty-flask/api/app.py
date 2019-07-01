@@ -10,7 +10,7 @@ from flask_jwt_extended import JWTManager
 from api import commands
 from api import user, stories, crawler, util
 from api.config import config
-from api.extensions import db, mail, pagedown, login_manager, migrate
+from api.extensions import db, mail, pagedown, login_manager, migrate, jwt
 
 
 def create_app(config_name):
@@ -55,12 +55,7 @@ def register_extensions(app):
     app.scheduler = scheduler
     app.scrapy = scrapyd
     scheduler.start()
-    jwt = JWTManager(app)
-
-    @jwt.token_in_blacklist_loader
-    def check_if_token_is_blacklist(decypted_token):
-        jti = decypted_token["jti"]
-        return user.model.RevokedToken.is_jti_blacklisted(jti)
+    jwt.init_app(app)
 
 
 def register_blueprint(app):
