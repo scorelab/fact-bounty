@@ -14,6 +14,7 @@ class Config:
     """
 
     SECRET_KEY = os.environ.get("SECRET_KEY") or "hard to guess string"
+    JWT_SECRET_KEY = os.environ.get("SECRET_KEY") or "secret jwt string"
     MAIL_SERVER = os.environ.get("MAIL_SERVER", "smtp.googlemail.com")
     MAIL_PORT = int(os.environ.get("MAIL_PORT", "587"))
     MAIL_USE_TLS = os.environ.get("MAIL_USE_TLS", "true").lower() in [
@@ -29,6 +30,8 @@ class Config:
     POSTS_PER_PAGE = int(os.environ.get("POSTS_PER_PAGE", "4"))
     ES_URL = os.environ.get("ELASTIC_SEARCH_URL") or "http://localhost:9200"
     ES_INDEX = os.environ.get("ELASTIC_SEARCH_INDEX") or "factbounty"
+    JWT_BLACKLIST_ENABLED = True
+    JWT_BLACKLIST_TOKEN_CHECKS = ["access", "refresh"]
 
     @staticmethod
     def init_app(app):
