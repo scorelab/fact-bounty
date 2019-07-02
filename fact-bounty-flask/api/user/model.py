@@ -1,16 +1,11 @@
-from datetime import datetime, timedelta
-import jwt
-
+from datetime import datetime
 from flask import current_app
 from flask_bcrypt import Bcrypt
 
-# from flask_httpauth import HTTPBasicAuth
 # from itsdangerous import (
 #     TimedJSONWebSignatureSerializer as Serializer,
 #     BadSignature, SignatureExpired)
 from api.database import Column, Model, db
-
-# auth = HTTPBasicAuth()
 
 
 class User(Model):
@@ -25,6 +20,7 @@ class User(Model):
     password = Column(db.String(128))
     email = Column(db.String(100), nullable=False, unique=True)
     date = Column(db.DateTime, default=datetime.now())
+    votes = db.relationship("vote", backref="user")
     type = Column(db.String(50), default="remote")
 
     def __init__(self, name, email, password, _type="remote"):
