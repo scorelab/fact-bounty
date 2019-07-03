@@ -62,8 +62,8 @@ class PostItem extends Component {
         this.props.currentVote.voteType !== 'approve'
           ? 1
           : this.props.currentVote.voteValue === 1
-          ? -1
-          : 1,
+            ? -1
+            : 1,
         this.props.currentVote.voteIndex,
         this.props.currentVote.voteId,
         this.props.currentVote.voteType,
@@ -76,8 +76,8 @@ class PostItem extends Component {
         this.props.currentVote.voteType !== 'fake'
           ? 1
           : this.props.currentVote.voteValue === 1
-          ? -1
-          : 1,
+            ? -1
+            : 1,
         this.props.currentVote.voteIndex,
         this.props.currentVote.voteId,
         this.props.currentVote.voteType,
@@ -90,8 +90,8 @@ class PostItem extends Component {
         this.props.currentVote.voteType !== 'mix'
           ? 1
           : this.props.currentVote.voteValue === 1
-          ? -1
-          : 1,
+            ? -1
+            : 1,
         this.props.currentVote.voteIndex,
         this.props.currentVote.voteId,
         this.props.currentVote.voteType,
@@ -200,74 +200,87 @@ class PostItem extends Component {
       // if (k.length !== 0) {
       const content = post.content.slice(0, 320)
       return (
-        <div className="hover-container">
-          <Card className={classes.card}>
-            <CardContent style={styles.cardContent}>
-              <div className="post-container">
-                <div className="image">
-                  <img src={postImg1} alt="fact-bounty" className="post-img" />
-                </div>
-                <div className="details">
-                  <div className="title">{post.title}</div>
-                  <div className="date">
-                    {new Date(post.date_added.$date).toUTCString()}
+        <div className="post-item-wrapper">
+          <div className="hover-container">
+            <Card className={classes.card}>
+              <CardContent style={styles.cardContent}>
+                <div className="post-container">
+
+                  <div className="row">
+                    <div className="col-md-3">
+                      <div className="image">
+                        <img
+                          src={postImg1}
+                          alt="fact-bounty"
+                          className="post-img"
+                        />
+                      </div>
+                    </div>
+                    <div className="col-md-9">
+                      <div className="details">
+                        <div className="title">{post.title}</div>
+                        <div className="date">
+                          {new Date(post.date_added.$date).toUTCString()}
+                        </div>
+                        <div className="content">
+                          {content}
+                          {post.content.length > 320 ? '...' : ''}
+                        </div>
+                        {post.content.length > 320 ? (
+                          <div className="read-more">Read more</div>
+                        ) : (
+                          ''
+                        )}
+                      </div>
+                    </div>
                   </div>
-                  <div className="content">
-                    {content}
-                    {post.content.length > 320 ? '...' : ''}
-                  </div>
-                  {post.content.length > 320 ? (
-                    <div className="read-more">Read more</div>
-                  ) : (
-                    ''
-                  )}
                 </div>
-              </div>
-              {votes}
-            </CardContent>
-          </Card>
-          <div className="btn-column">
-            <div
-              className="true-transition"
-              onClick={() => this.handleClick('approve')}
-            >
-              {/* <div className='true-btn'>
+                {votes}
+              </CardContent>
+            </Card>
+            <div className="btn-column">
+              <div
+                className="true-transition"
+                onClick={() => this.handleClick('approve')}
+              >
+                {/* <div className='true-btn'>
                 <Icon className={classes.icon}>check_circle_outline</Icon>
               </div> */}
-              {this.userVoteButton('approve')}
-              <div className="true-btn-hover">
-                <Icon className={classes.trueBtnHover}>check_circle</Icon>
-                <div className="true-label">True</div>
+                {this.userVoteButton('approve')}
+                <div className="true-btn-hover">
+                  <Icon className={classes.trueBtnHover}>check_circle</Icon>
+                  <div className="true-label">True</div>
+                </div>
               </div>
-            </div>
-            <div
-              className="fake-transition"
-              onClick={() => this.handleClick('fake')}
-            >
-              {/* <div className='fake-btn'>
+              <div
+                className="fake-transition"
+                onClick={() => this.handleClick('fake')}
+              >
+                {/* <div className='fake-btn'>
                 <Cancel className={classes.icon} />
               </div> */}
-              {this.userVoteButton('fake')}
-              <div className="fake-btn-hover">
-                <Icon className={classes.fakeBtnHover}>cancel</Icon>
-                <div className="fake-label">Fake</div>
+                {this.userVoteButton('fake')}
+                <div className="fake-btn-hover">
+                  <Icon className={classes.fakeBtnHover}>cancel</Icon>
+                  <div className="fake-label">Fake</div>
+                </div>
               </div>
-            </div>
-            <div
-              className="mix-transition"
-              onClick={() => this.handleClick('mix')}
-            >
-              {/* <div className='mix-btn'>
+              <div
+                className="mix-transition"
+                onClick={() => this.handleClick('mix')}
+              >
+                {/* <div className='mix-btn'>
                 <ReportProblem className={classes.icon} />
               </div> */}
-              {this.userVoteButton('mix')}
-              <div className="mix-btn-hover">
-                <Icon className={classes.mixBtnHover}>report_problem</Icon>
-                <div className="mix-label">Mixture</div>
+                {this.userVoteButton('mix')}
+                <div className="mix-btn-hover">
+                  <Icon className={classes.mixBtnHover}>report_problem</Icon>
+                  <div className="mix-label">Mixture</div>
+                </div>
               </div>
             </div>
+            <div className="total-vote-count">{totalVotes} votes</div>
           </div>
-          <div className="total-vote-count">{totalVotes} votes</div>
         </div>
       )
     }
