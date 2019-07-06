@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import './styles.sass'
-import Twitter from './js/twitter'
+import Main from './js/main';
+
 
 class TwitterGraph extends Component {
 
@@ -10,7 +11,7 @@ class TwitterGraph extends Component {
         super(props);
         this.state = {
             queryText: '',
-            queryType: ''
+            queryType: 'mixed'
         }
     }
 
@@ -18,9 +19,7 @@ class TwitterGraph extends Component {
         if (this.state.queryText.length === 0) {
             console.error("You must input a valid search query.")
         } else {
-            const initialize_key = 'znlzy-T1dNp-G-NrjmwhxsiY-tg';
-            const tweet = Twitter(initialize_key);
-            tweet.getTweets(this.state.queryText, "en", "", this.state.queryType);
+            const graphApp = Main(this.state.queryText, this.state.queryType)
         }
     }
 
@@ -71,6 +70,7 @@ class TwitterGraph extends Component {
                         </div>
                     </form>
                 </div>
+                <div id="graph-container" style={{ "width": "100%", "height": "80vh", "margin": "0 auto" }}></div>
             </div>
         )
     }
