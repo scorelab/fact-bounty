@@ -11,7 +11,7 @@ import Register from './pages/Register'
 import Login from './pages/Login'
 import Posts from './pages/Posts'
 import Dashboard from './pages/Dashboard'
-import Twitter from './pages/Twitter'
+import TwitterGraph from './pages/TwitterGraph'
 
 class AppRouter extends Component {
   render() {
@@ -23,7 +23,7 @@ class AppRouter extends Component {
           <Route path="/posts" component={Posts} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
-          <Route exact path="/twitter" component={Twitter} />
+          <Route exact path="/twitter" component={TwitterGraph} />
           <Switch>
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
           </Switch>
