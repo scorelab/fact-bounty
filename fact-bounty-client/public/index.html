@@ -24,8 +24,53 @@
   <link href="https://fonts.googleapis.com/css?family=Aladin" rel="stylesheet">
   <title>Fact-Bounty</title>
   <script src="./static/oauth.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.0/sigma.min.js"></script>
+  <script src="./static/sigmaplugins/sigma.layout.forceAtlas2.min.js"></script>
+  <script src="./static/sigmaplugins/sigma.renderers.parallelEdges.min.js"></script>
+  <script src="./static/sigmaplugins/sigma.renderers.snaphot.js"></script>
+  <script src="./static/d3.v3.min.js"></script>
+  <script src="./static/nv.d3.min.js "></script>
+  <script src="./static/config.js"></script>
+  <link rel="stylesheet" href="./static/css/nv.d3.css" />
   <script>
-    // console.log(OAuth)
+    var colors = {
+      node_colors: {
+        "fact_checking": 'darkblue',
+        "claim": 'darkblue',
+        "botscores": [{
+            red: 215,
+            green: 25,
+            blue: 28
+          },
+          {
+            red: 253,
+            green: 174,
+            blue: 97
+          },
+          {
+            red: 255,
+            green: 255,
+            blue: 191
+          },
+          {
+            red: 171,
+            green: 221,
+            blue: 164
+          },
+          {
+            red: 62,
+            green: 182,
+            blue: 229
+          }
+        ]
+      },
+      edge_colors: {
+        "fact_checking": 'rgb(238,210,2)',
+        "fact_checking_dark": 'rgb(169, 171, 2)',
+        "claim": 'darkgray',
+        "claim_dark": 'gray'
+      }
+    }
   </script>
 </head>
 
