@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import headerImg from '../../assets/img/headerImg.png'
+import Icon from '@material-ui/core/Icon'
 import Button from '@material-ui/core/Button'
 import Footer from '../../components/Footer'
 import patch2 from '../../assets/img/patch2.png'
 import patch3 from '../../assets/img/patch3.png'
+import PostsList from '../../components/PostsList'
 import './style.sass'
 
 class Landing extends Component {
@@ -66,6 +68,20 @@ class Landing extends Component {
 
         <hr className="divider" />
 
+        {/* ============= RECENT POSTS SECTION ============= */}
+        <div className="container" id="recentPosts">
+          <div className="recent-posts">
+            <h1>Recent Posts</h1>
+            <PostsList limit={4} />
+            <Link to="/posts">
+              <div className="view-all-btn">
+                <label>View All</label>
+                <Icon fontSize="large">keyboard_arrow_right</Icon>
+              </div>
+            </Link>
+          </div>
+        </div>
+
         {/* ============= ABOUT SECTION ============= */}
         <div className="container" id="about">
           <div className="about">
@@ -111,11 +127,6 @@ class Landing extends Component {
               </div>
             </div>
           </div>
-        </div>
-
-        {/* ============= RECENT POSTS SECTION ============= */}
-        <div className="container" id="recentPosts">
-          <div className="recent-posts" />
         </div>
 
         {/* ============= CONTACT US SECTION ============= */}

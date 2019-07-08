@@ -262,7 +262,7 @@ class PostItem extends Component {
                 <div className="post-container">
                   <div className="image">
                     <img
-                      src={post.source + post.imageLink}
+                      src={post.imageLink ? post.imageLink : placeholder}
                       alt="fact-bounty"
                       className="post-img"
                     />

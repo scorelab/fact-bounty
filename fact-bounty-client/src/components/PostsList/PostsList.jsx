@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import InfiniteScroll from 'react-infinite-scroller'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -30,7 +30,10 @@ class PostsList extends Component {
   }
 
   renderPostList = () => {
-    return this.props.posts.map((post, index) => {
+    const { posts, limit } = this.props
+    const limitedPosts = limit ? posts.slice(0, limit) : posts
+
+    return limitedPosts.map((post, index) => {
       let voteStatus = {
         voteType: '',
         voteValue: -1,
@@ -57,14 +60,13 @@ class PostsList extends Component {
   }
 
   render() {
-    const { posts, loadingPosts } = this.props
-
+    const { posts, loadingPosts, limit } = this.props
     return (
       <AsyncViewWrapper loading={posts.length <= 0 && loadingPosts}>
         <div className="post-list-wrapper">
           <InfiniteScroll
             pageStart={0}
-            hasMore={true}
+            hasMore={!limit || (limit && limit >= posts.length)}
             loadMore={this.loadPosts}
             loader={this.renderLoader()}
           >
@@ -81,6 +83,7 @@ class PostsList extends Component {
 }
 
 PostsList.propTypes = {
+  limit: PropTypes.number,
   posts: PropTypes.array,
   page: PropTypes.number,
   loadingPosts: PropTypes.bool,
