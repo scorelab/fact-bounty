@@ -8,27 +8,27 @@ import './style.sass'
 
 class PostsList extends Component {
   componentDidMount() {
-    if (this.props.isAuth) {
-      this.props.loadUserVotes(this.props.user_id)
+    // if (this.props.isAuth) {
+    //   this.props.loadUserVotes(this.props.user_id)
+    // }
+  }
+
+  loadPosts = () => {
+    if (!this.props.loadingPosts) {
+      this.props.fetchPosts(this.props.page)
     }
   }
 
-  loadItems() {
-    if (!this.props.loading) {
-      this.props.fetchPosts(this.props.nextPage)
-    }
-  }
-
-  render() {
-    const loader = (
+  renderLoader = () => {
+    return (
       <div className="loader" key={0}>
         Loading ...
       </div>
     )
-    var items = []
-    var a = 0
+  }
 
-    items = this.props.posts.map(post => {
+  renderPostList = () => {
+    return this.props.posts.map((post, index) => {
       let voteStatus = {
         voteType: '',
         voteValue: -1,
@@ -51,53 +51,58 @@ class PostsList extends Component {
         }
       }
 
-      return <PostItem key={a++} post={post} currentVote={voteStatus} />
-    })
+      console.log(post);
 
+      return <PostItem key={index} post={post} currentVote={voteStatus} />
+    })
+  }
+
+  render() {
     return (
-      <Fragment>
-        <div className="post-list-wrapper">
-          <InfiniteScroll
-            pageStart={0}
-            loadMore={this.loadItems.bind(this)}
-            hasMore={this.props.hasMore}
-            loader={loader}
-          >
-            <div className="postLayout">
-              <div />
-              <div>{items}</div>
-              <div />
-            </div>
-          </InfiniteScroll>
-        </div>
-      </Fragment>
+      <div className="post-list-wrapper">
+        <InfiniteScroll
+          pageStart={0}
+          hasMore={true}
+          loadMore={this.loadPosts}
+          loader={this.renderLoader()}
+        >
+          <div className="postLayout">
+            <div />
+            <div>{this.renderPostList()}</div>
+            <div />
+          </div>
+        </InfiniteScroll>
+      </div>
     )
   }
 }
 
 PostsList.propTypes = {
   posts: PropTypes.array,
-  nextPage: PropTypes.number,
-  hasMore: PropTypes.bool,
-  loading: PropTypes.bool,
-  fetchPosts: PropTypes.func,
-  loadUserVotes: PropTypes.func,
-  user_id: PropTypes.number,
+  page: PropTypes.number,
+  loadingPosts: PropTypes.bool,
   userVotes: PropTypes.array,
-  isAuth: PropTypes.bool
+  user_id: PropTypes.number,
+  isAuth: PropTypes.bool,
+  fetchPosts: PropTypes.func,
+  loadUserVotes: PropTypes.func
 }
 
 const mapStatetoProps = state => ({
   posts: state.posts.items,
-  nextPage: state.posts.nextPage,
-  hasMore: state.posts.hasMore,
-  loading: state.posts.loading,
+  page: state.posts.page,
+  loadingPosts: state.posts.loading,
+  userVotes: state.posts.userVotes,
   isAuth: state.auth.isAuthenticated,
-  user_id: state.auth.user.sub,
-  userVotes: state.posts.userVotes
+  user_id: state.auth.user.sub
+})
+
+const mapDispatchToProps = dispatch => ({
+  fetchPosts: data => dispatch(fetchPosts(data)),
+  loadUserVotes: data => dispatch(loadUserVotes(data))
 })
 
 export default connect(
   mapStatetoProps,
-  { fetchPosts, loadUserVotes }
+  mapDispatchToProps
 )(PostsList)

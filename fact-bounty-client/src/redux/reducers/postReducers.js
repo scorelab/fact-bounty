@@ -16,26 +16,29 @@ const initialState = {
   items: [],
   loading: false,
   error: String,
-  nextPage: 1,
-  hasMore: true,
+  page: 1,
   userVotes: []
 }
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case FETCH_POSTS: {
-      const more = action.payload.length < 4 ? false : true
-      return {
-        ...state,
-        items: state.items.concat(action.payload),
-        hasMore: more,
-        loading: true
-      }
-    }
     case LOADING: {
       return {
         ...state,
         loading: true
+      }
+    }
+    case FETCH_POSTS: {
+      return {
+        ...state,
+        items: [...state.items, ...action.payload],
+        loading: false
+      }
+    }
+    case INCREMENT_PAGE: {
+      return {
+        ...state,
+        page: state.page + 1
       }
     }
     case APPROVE_VOTE_COMPLETE: {
@@ -85,19 +88,6 @@ export default function(state = initialState, action) {
         ...state,
         loading: false,
         error: action.error
-      }
-    }
-    case INCREMENT_PAGE: {
-      return {
-        ...state,
-        nextPage: state.nextPage + 1,
-        loading: false
-      }
-    }
-    case NO_MORE: {
-      return {
-        ...state,
-        hasMore: false
       }
     }
     case LOAD_USER_VOTES:
