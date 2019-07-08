@@ -20,7 +20,7 @@ class User(Model):
     password = Column(db.String(128))
     email = Column(db.String(100), nullable=False, unique=True)
     date = Column(db.DateTime, default=datetime.now())
-    votes = db.relationship("vote", backref="user")
+    votes = db.relationship("Vote", backref=db.backref("user"))
     type = Column(db.String(50), default="remote")
 
     def __init__(self, name, email, password, _type="remote"):
