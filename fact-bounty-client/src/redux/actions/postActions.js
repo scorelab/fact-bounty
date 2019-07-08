@@ -17,8 +17,10 @@ export const fetchPosts = page => dispatch => {
   dispatch({ type: LOADING })
   PostsService.fetchPosts(page)
     .then(posts => {
-      const stories = posts.data.stories
-      if (Object.keys(stories).length !== 0) {
+      const stories = posts.data ? posts.data.stories : []
+      console.log(stories)
+
+      if (stories.length !== 0) {
         dispatch({
           type: FETCH_POSTS,
           payload: stories
@@ -27,7 +29,7 @@ export const fetchPosts = page => dispatch => {
       }
     })
     .catch(err => {
-      console.error('Server response invalid', err)
+      console.error('Server response invalid:', err)
     })
 }
 
