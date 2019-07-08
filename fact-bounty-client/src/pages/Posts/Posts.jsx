@@ -1,6 +1,4 @@
 import React, { Component, Fragment } from 'react'
-import InfiniteScroll from 'react-infinite-scroller'
-import PropTypes from 'prop-types'
 import Footer from '../../components/Footer'
 import './style.sass'
 import PostsList from '../../components/PostsList'

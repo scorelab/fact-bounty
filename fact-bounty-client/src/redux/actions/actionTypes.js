@@ -10,7 +10,6 @@ export const FAKE_VOTE_COMPLETE = 'FAKE_VOTE_COMPLETE'
 export const MIX_VOTE_COMPLETE = 'MIX_VOTE_COMPLETE'
 export const VOTE_ERROR = 'VOTE_ERROR'
 export const INCREMENT_PAGE = 'INCREMENT_PAGE'
-export const NO_MORE = 'NO_MORE'
 
 export const LOAD_USER_VOTES = 'LOAD_USER_VOTES'
 export const USER_VOTE = 'USER_VOTE'
