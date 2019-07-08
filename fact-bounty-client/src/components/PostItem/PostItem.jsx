@@ -62,8 +62,8 @@ class PostItem extends Component {
         this.props.currentVote.voteType !== 'approve'
           ? 1
           : this.props.currentVote.voteValue === 1
-            ? -1
-            : 1,
+          ? -1
+          : 1,
         this.props.currentVote.voteIndex,
         this.props.currentVote.voteId,
         this.props.currentVote.voteType,
@@ -76,8 +76,8 @@ class PostItem extends Component {
         this.props.currentVote.voteType !== 'fake'
           ? 1
           : this.props.currentVote.voteValue === 1
-            ? -1
-            : 1,
+          ? -1
+          : 1,
         this.props.currentVote.voteIndex,
         this.props.currentVote.voteId,
         this.props.currentVote.voteType,
@@ -90,8 +90,8 @@ class PostItem extends Component {
         this.props.currentVote.voteType !== 'mix'
           ? 1
           : this.props.currentVote.voteValue === 1
-            ? -1
-            : 1,
+          ? -1
+          : 1,
         this.props.currentVote.voteIndex,
         this.props.currentVote.voteId,
         this.props.currentVote.voteType,
@@ -276,18 +276,20 @@ class PostItem extends Component {
                       {post.content.slice(0, 220).trim()}
                       {post.content.length > 220 ? '...' : ''}
                     </div>
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      style={{
-                        width: 100,
-                        padding: 5,
-                        color: 'white',
-                        marginBottom: 15
-                      }}
-                    >
-                      View
-                    </Button>
+                    <div className="btn-container">
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        style={{
+                          width: 100,
+                          padding: 5,
+                          color: 'white',
+                          marginBottom: 15
+                        }}
+                      >
+                        View
+                      </Button>
+                    </div>
                   </div>
                 </div>
                 {this.renderVotes()}
@@ -295,7 +297,7 @@ class PostItem extends Component {
             </Card>
             {this.renderVoteButtons()}
           </div>
-        </div >
+        </div>
       )
     }
   }
