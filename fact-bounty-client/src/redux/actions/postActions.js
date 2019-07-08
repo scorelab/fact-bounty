@@ -18,8 +18,6 @@ export const fetchPosts = page => dispatch => {
   PostsService.fetchPosts(page)
     .then(posts => {
       const stories = posts.data ? posts.data.stories : []
-      console.log(stories)
-
       if (stories.length !== 0) {
         dispatch({
           type: FETCH_POSTS,

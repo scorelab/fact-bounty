@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import InfiniteScroll from 'react-infinite-scroller'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import PropTypes from 'prop-types'
 import { fetchPosts, loadUserVotes } from '../../redux/actions/postActions'
 import PostItem from '../../components/PostItem'
+import AsyncViewWrapper from '../../components/AsyncViewWrapper'
 import './style.sass'
 
 class PostsList extends Component {
@@ -22,7 +24,7 @@ class PostsList extends Component {
   renderLoader = () => {
     return (
       <div className="loader" key={0}>
-        Loading ...
+        <CircularProgress />
       </div>
     )
   }
@@ -50,29 +52,30 @@ class PostsList extends Component {
           }
         }
       }
-
-      console.log(post);
-
       return <PostItem key={index} post={post} currentVote={voteStatus} />
     })
   }
 
   render() {
+    const { posts, loadingPosts } = this.props
+
     return (
-      <div className="post-list-wrapper">
-        <InfiniteScroll
-          pageStart={0}
-          hasMore={true}
-          loadMore={this.loadPosts}
-          loader={this.renderLoader()}
-        >
-          <div className="postLayout">
-            <div />
-            <div>{this.renderPostList()}</div>
-            <div />
-          </div>
-        </InfiniteScroll>
-      </div>
+      <AsyncViewWrapper loading={posts.length <= 0 && loadingPosts}>
+        <div className="post-list-wrapper">
+          <InfiniteScroll
+            pageStart={0}
+            hasMore={true}
+            loadMore={this.loadPosts}
+            loader={this.renderLoader()}
+          >
+            <div className="postLayout">
+              <div />
+              <div>{this.renderPostList()}</div>
+              <div />
+            </div>
+          </InfiniteScroll>
+        </div>
+      </AsyncViewWrapper>
     )
   }
 }
