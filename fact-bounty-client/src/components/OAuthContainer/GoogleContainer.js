@@ -2,7 +2,7 @@ import React, { Fragment, Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { GoogleLogin } from 'react-google-login'
-import { OauthUser } from '../../redux/actions/OAuthActions'
+import { OauthUser } from '../../redux/actions/authActions'
 import Toast from '../Toast'
 
 class GoogleContainer extends Component {

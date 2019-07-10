@@ -27,8 +27,20 @@ const OauthUser = creds => {
   return ApiBuilder.API.post(`/api/users/oauth`, creds)
 }
 
+/**
+ *
+ * POST : tokenRefresh
+ *
+ */
+const tokenRefresh = refresh_token => {
+  return ApiBuilder.API.post(`/api/users/token_refresh`, {
+    refresh_token
+  })
+}
+
 export default {
   loginUser,
   registerUser,
-  OauthUser
+  OauthUser,
+  tokenRefresh
 }

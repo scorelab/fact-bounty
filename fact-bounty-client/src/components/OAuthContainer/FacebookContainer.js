@@ -3,7 +3,7 @@ import FacebookLogin from 'react-facebook-login'
 import { FaFacebookSquare } from 'react-icons/fa'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { OauthUser } from '../../redux/actions/OAuthActions'
+import { OauthUser } from '../../redux/actions/authActions'
 import './index.scss'
 
 class FacebookContainer extends React.Component {

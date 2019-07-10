@@ -1,7 +1,7 @@
+import jwt_decode from 'jwt-decode'
 import setAuthToken from '../../helpers/AuthTokenHelper'
 import { SET_CURRENT_USER, USER_LOADING, GET_ERRORS } from './actionTypes'
 import AuthService from '../../services/AuthService'
-import jwt_decode from 'jwt-decode'
 
 // Set logged in user
 export const setCurrentUser = decoded => {
@@ -20,23 +20,25 @@ export const setUserLoading = () => {
 
 // Log user out
 export const logoutUser = () => dispatch => {
-  // Remove token from local storage
-  localStorage.removeItem('jwtToken')
+  // Remove tokens from local storage
+  localStorage.removeItem('access_token')
+  localStorage.removeItem('refresh_token')
   // Remove auth header for future requests
   setAuthToken(false)
   // Set current user to empty object {} which will set isAuthenticated to false
-  dispatch(setCurrentUser({}))
+  dispatch(setCurrentUser(null))
 }
 
 // Login - get user token
 export const loginUser = userData => dispatch => {
   AuthService.loginUser(userData)
     .then(res => {
+      console.log(res.data)
       // Set token to localStorage
-      const { access_token } = res.data
-      localStorage.setItem('jwtToken', access_token)
+      const { access_token, refresh_token } = res.data
       // Set token to Auth header
-      setAuthToken(access_token)
+      setAuthToken({ access_token, refresh_token })
+
       // Decode token to get user data
       const decoded = jwt_decode(access_token)
       // Set current user
@@ -79,5 +81,39 @@ export const registerUser = (userData, history) => dispatch => {
           payload
         })
       }
+    })
+}
+
+export const OauthUser = creds => dispatch => {
+  AuthService.OauthUser(JSON.stringify(creds))
+    .then(res => {
+      const { access_token, refresh_token } = res.data
+      // Set token to Auth header
+      setAuthToken({ access_token, refresh_token })
+
+      // Decode token to get user data
+      const decoded = jwt_decode(access_token)
+      // Set current user
+      dispatch(setCurrentUser(decoded))
+    })
+    .catch(err => {
+      let payload = err.response.data
+      if (typeof payload === 'string') {
+        payload = { fetch: err.response.data }
+      }
+      return dispatch({
+        type: GET_ERRORS,
+        payload
+      })
+    })
+}
+
+export const tokenRefresh = refresh_token => dispatch => {
+  AuthService.tokenRefresh(refresh_token)
+    .then(res => {
+      console.log(res)
+    })
+    .catch(err => {
+      console.log(err)
     })
 }
