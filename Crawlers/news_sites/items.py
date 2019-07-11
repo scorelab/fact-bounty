@@ -17,3 +17,6 @@ class NewsSitesItem(scrapy.Item):
     date = scrapy.Field()
     imageLink = scrapy.Field()
     source = scrapy.Field()
+    approved_count = scrapy.Field()
+    fake_count = scrapy.Field()
+    mixedvote_count = scrapy.Field()
