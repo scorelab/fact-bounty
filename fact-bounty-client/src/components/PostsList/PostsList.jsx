@@ -88,7 +88,7 @@ PostsList.propTypes = {
   page: PropTypes.number,
   loadingPosts: PropTypes.bool,
   userVotes: PropTypes.array,
-  user_id: PropTypes.number,
+  user: PropTypes.object,
   isAuth: PropTypes.bool,
   fetchPosts: PropTypes.func,
   loadUserVotes: PropTypes.func
@@ -100,7 +100,7 @@ const mapStatetoProps = state => ({
   loadingPosts: state.posts.loading,
   userVotes: state.posts.userVotes,
   isAuth: state.auth.isAuthenticated,
-  user_id: state.auth.user.sub
+  user: state.auth.user
 })
 
 const mapDispatchToProps = dispatch => ({

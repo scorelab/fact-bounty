@@ -58,7 +58,7 @@ class PostItem extends Component {
     } else if (value === 'approve' && this.props.loading === false) {
       this.props.approveVote(
         this.props.post._id,
-        this.props.user_id,
+        this.props.user.id,
         this.props.currentVote.voteType !== 'approve'
           ? 1
           : this.props.currentVote.voteValue === 1
@@ -72,7 +72,7 @@ class PostItem extends Component {
     } else if (value === 'fake' && this.props.loading === false) {
       this.props.fakeVote(
         this.props.post._id,
-        this.props.user_id,
+        this.props.user.id,
         this.props.currentVote.voteType !== 'fake'
           ? 1
           : this.props.currentVote.voteValue === 1
@@ -86,7 +86,7 @@ class PostItem extends Component {
     } else if (value === 'mix' && this.props.loading === false) {
       this.props.mixVote(
         this.props.post._id,
-        this.props.user_id,
+        this.props.user.id,
         this.props.currentVote.voteType !== 'mix'
           ? 1
           : this.props.currentVote.voteValue === 1
@@ -311,7 +311,7 @@ PostItem.propTypes = {
   post: PropTypes.object,
   classes: PropTypes.object,
   auth: PropTypes.bool,
-  user_id: PropTypes.number,
+  user: PropTypes.object,
   loading: PropTypes.bool,
   currentVote: PropTypes.object
 }
@@ -350,7 +350,7 @@ const mapStateToProps = state => ({
   loading: state.posts.loading,
   error: state.posts.error,
   auth: state.auth.isAuthenticated,
-  user_id: state.auth.user.sub
+  user: state.auth.user
 })
 
 export default compose(
