@@ -102,7 +102,7 @@ class Login(MethodView):
             "message": "You logged in successfully.",
             "access_token": access_token,
             "refresh_token": refresh_token,
-            "user_details": user.to_json,
+            "user_details": user.to_json(),
         }
         return make_response(jsonify(response)), 200
 
