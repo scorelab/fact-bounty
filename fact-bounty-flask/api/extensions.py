@@ -39,7 +39,7 @@ def invalid_token_callback(error):
         "message": "Signature verification failed.",
         "error": "invalid_token",
     }
-    return jsonify(make_response(response)), 401
+    return make_response(jsonify(response)), 401
 
 
 @jwt.unauthorized_loader
@@ -48,7 +48,7 @@ def missing_token_callback(error):
         "message": "Request does not contain an access token.",
         "error": "authorization_required",
     }
-    return jsonify(make_response(response)), 401
+    return make_response(jsonify(response)), 401
 
 
 @jwt.needs_fresh_token_loader
@@ -57,7 +57,7 @@ def token_not_fresh_callback():
         "message": "The token is not fresh.",
         "error": "fresh_token_required",
     }
-    return jsonify(make_response(response)), 401
+    return make_response(jsonify(response)), 401
 
 
 @jwt.revoked_token_loader
@@ -66,4 +66,4 @@ def revoked_token_callback():
         "message": "The token has been revoked.",
         "error": "token_revoked",
     }
-    return jsonify(make_response(response)), 401
+    return make_response(jsonify(response)), 401
