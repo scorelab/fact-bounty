@@ -58,7 +58,7 @@ class PrivateLinks extends React.Component {
           <MenuItem>
             <ListItemIcon>
               <Avatar style={styles.avatar}>
-                {auth.user.name ? auth.user.name[0] : 'o'}
+                {auth.user.name ? auth.user.name[0] : 'O'}
               </Avatar>
             </ListItemIcon>
             <ListItemText
@@ -82,7 +82,7 @@ const styles = {
     margin: 5
   },
   avatar: {
-    background: '#0388A6'
+    background: '#1564c0'
   },
   menu: {
     marginTop: '6vh'

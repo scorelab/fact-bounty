@@ -32,15 +32,32 @@ const OauthUser = creds => {
  * POST : tokenRefresh
  *
  */
-const tokenRefresh = refresh_token => {
-  return ApiBuilder.API.post(`/api/users/token_refresh`, {
-    refresh_token
-  })
+const tokenRefresh = () => {
+  return ApiBuilder.API.post(`/api/users/token_refresh`, {})
 }
 
+/**
+ *
+ * POST : revokeAccessToken
+ *
+ */
+const revokeAccessToken = () => {
+  return ApiBuilder.API.post(`/api/users/logout_access`, {})
+}
+
+/**
+ *
+ * POST : revokeRefreshToken
+ *
+ */
+const revokeRefreshToken = () => {
+  return ApiBuilder.API.post(`/api/users/logout_refresh`, {})
+}
 export default {
   loginUser,
   registerUser,
   OauthUser,
-  tokenRefresh
+  tokenRefresh,
+  revokeAccessToken,
+  revokeRefreshToken
 }

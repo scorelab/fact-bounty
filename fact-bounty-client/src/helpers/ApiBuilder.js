@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { APIConstantsDev } from '../constants/ApiConstants'
-import store from '../redux/store'
-import { tokenRefresh } from '../redux/actions/authActions'
+import AuthService from '../services/AuthService'
+import { setAuthToken, saveAcessToken } from './AuthTokenHelper'
 
 const API = axios.create({
   baseURL: APIConstantsDev.API_URL,
@@ -14,7 +14,14 @@ const API = axios.create({
  */
 API.interceptors.request.use(
   request => {
-    request.headers.Authorization = localStorage.access_token
+    if (
+      request.url.includes('token_refresh') ||
+      request.url.includes('logout_refresh')
+    ) {
+      request.headers.Authorization = `Bearer ${localStorage.refresh_token}`
+    } else {
+      request.headers.Authorization = `Bearer ${localStorage.access_token}`
+    }
     return request
   },
   error => {
@@ -49,11 +56,21 @@ API.interceptors.response.use(
       case 401: {
         if (!fetchingAccessToken) {
           fetchingAccessToken = true
-          store
-            .dispatch(tokenRefresh(localStorage.refresh_token))
-            .then(access_token => {
+
+          AuthService.tokenRefresh()
+            .then(res => {
+              const { access_token } = res.data
+              console.log(res)
               fetchingAccessToken = false
+              //update header
+              setAuthToken(access_token)
+              //saving new access_token
+              saveAcessToken(access_token)
+              //invoking callback
               onAccessTokenFetched(access_token)
+            })
+            .catch(err => {
+              console.log(err)
             })
         }
         const retryOriginalRequest = new Promise(resolve => {

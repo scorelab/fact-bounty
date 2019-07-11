@@ -1,13 +1,13 @@
 import jwt_decode from 'jwt-decode'
-import setAuthToken from '../../helpers/AuthTokenHelper'
+import { setAuthToken, saveAllTokens } from '../../helpers/AuthTokenHelper'
 import { SET_CURRENT_USER, USER_LOADING, GET_ERRORS } from './actionTypes'
 import AuthService from '../../services/AuthService'
 
 // Set logged in user
-export const setCurrentUser = decoded => {
+export const setCurrentUser = payload => {
   return {
     type: SET_CURRENT_USER,
-    payload: decoded
+    payload
   }
 }
 
@@ -18,31 +18,26 @@ export const setUserLoading = () => {
   }
 }
 
-// Log user out
-export const logoutUser = () => dispatch => {
-  // Remove tokens from local storage
-  localStorage.removeItem('access_token')
-  localStorage.removeItem('refresh_token')
-  // Remove auth header for future requests
-  setAuthToken(false)
-  // Set current user to empty object {} which will set isAuthenticated to false
-  dispatch(setCurrentUser(null))
-}
-
 // Login - get user token
 export const loginUser = userData => dispatch => {
   AuthService.loginUser(userData)
     .then(res => {
-      console.log(res.data)
       // Set token to localStorage
-      const { access_token, refresh_token } = res.data
+      const { access_token, refresh_token, user_details } = res.data
       // Set token to Auth header
-      setAuthToken({ access_token, refresh_token })
+      setAuthToken(access_token)
+      //Save to localstorage
+      saveAllTokens({ access_token, refresh_token, user_details })
 
       // Decode token to get user data
       const decoded = jwt_decode(access_token)
       // Set current user
-      dispatch(setCurrentUser(decoded))
+      dispatch(
+        setCurrentUser({
+          id: decoded.identity,
+          ...user_details
+        })
+      )
     })
     .catch(err => {
       let payload = err.response.data
@@ -70,7 +65,6 @@ export const registerUser = (userData, history) => dispatch => {
       }
     }) // re-direct to login on successful register
     .catch(err => {
-      console.log('res res  res', err)
       if (err && err.response) {
         let payload = err.response.data
         if (typeof payload === 'string') {
@@ -87,14 +81,22 @@ export const registerUser = (userData, history) => dispatch => {
 export const OauthUser = creds => dispatch => {
   AuthService.OauthUser(JSON.stringify(creds))
     .then(res => {
-      const { access_token, refresh_token } = res.data
+      // Set token to localStorage
+      const { access_token, refresh_token, user_details } = res.data
       // Set token to Auth header
-      setAuthToken({ access_token, refresh_token })
+      setAuthToken(access_token)
+      //Save to localstorage
+      saveAllTokens({ access_token, refresh_token, user_details })
 
       // Decode token to get user data
       const decoded = jwt_decode(access_token)
       // Set current user
-      dispatch(setCurrentUser(decoded))
+      dispatch(
+        setCurrentUser({
+          id: decoded.identity,
+          ...user_details
+        })
+      )
     })
     .catch(err => {
       let payload = err.response.data
@@ -108,12 +110,27 @@ export const OauthUser = creds => dispatch => {
     })
 }
 
-export const tokenRefresh = refresh_token => dispatch => {
-  AuthService.tokenRefresh(refresh_token)
-    .then(res => {
-      console.log(res)
+// Log user out
+export const logoutUser = () => dispatch => {
+  // Remove auth header for future requests
+  setAuthToken(false)
+  // Set current user to empty object {} which will set isAuthenticated to false
+  dispatch(setCurrentUser(null))
+  //revoke the tokens
+  AuthService.revokeRefreshToken()
+    .then(() => {
+      AuthService.revokeAccessToken()
+        .then(() => {
+          // Remove tokens from local storage
+          localStorage.removeItem('access_token')
+          localStorage.removeItem('refresh_token')
+          localStorage.removeItem('user_details')
+        })
+        .catch(err => {
+          console.error(err)
+        })
     })
     .catch(err => {
-      console.log(err)
+      console.error(err)
     })
 }
