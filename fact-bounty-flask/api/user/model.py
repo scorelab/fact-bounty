@@ -45,12 +45,7 @@ class User(Model):
 
         :return: user JSON object
         """
-        user_json = {
-            "name": self.name,
-            "password": self.password,
-            "email": self.email,
-            "date": self.date,
-        }
+        user_json = {"name": self.name, "email": self.email, "date": self.date}
         return user_json
 
     @classmethod
