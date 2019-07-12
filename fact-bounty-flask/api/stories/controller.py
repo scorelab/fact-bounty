@@ -540,6 +540,22 @@ class ChangeUserVote(MethodView):
         return make_response(jsonify(response)), code
 
 
+class GetById(MethodView):
+    def get(self, id):
+        es_index = current_app.config["ES_INDEX"]
+        es = current_app.elasticsearch
+
+        # extract story with given id
+        try:
+            story = es.get(index=es_index, doc_type="story", id=id)["_source"]
+        except Exception:
+            response = {"message": "Please provide correct story id."}
+            return make_response(jsonify(response)), 404
+
+        response = {"message": "Story fetched successfully", "story": story}
+        return make_response(jsonify(response)), 200
+
+
 storyController = {
     "allstories": AllStories.as_view("all_stories"),
     "getrange": GetRange.as_view("get_range"),
@@ -548,4 +564,5 @@ storyController = {
     "changeupvote": ChangeUpvote.as_view("change_upvote"),
     "loaduservotes": LoadUserVotes.as_view("load_user_votes"),
     "changevote": ChangeUserVote.as_view("change_vote"),
+    "getstory": GetById.as_view("get_story"),
 }
