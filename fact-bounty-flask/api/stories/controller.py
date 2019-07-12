@@ -553,12 +553,52 @@ class GetById(MethodView):
             return make_response(jsonify(response)), 404
 
         response = {"message": "Story fetched successfully", "story": story}
+
+
+class SearchStory(MethodView):
+    def get(self, keyword):
+        es_index = current_app.config["ES_INDEX"]
+        es = current_app.elasticsearch
+
+        body = {
+            "query": {
+                "multi_match": {
+                    "query": keyword,
+                    "fields": ["content", "title"],
+                }
+            }
+        }
+
+        stories = []
+        try:
+            res = es.search(index=es_index, doc_type="story", body=body)[
+                "hits"
+            ]["hits"]
+        except Exception:
+            response = {"message": "Something went wrong!"}
+            return make_response(jsonify(response)), 500
+
+        if len(res) == 0:
+            response = {"message": "No story with this keyword found!"}
+            return make_response(jsonify(response)), 204
+
+        for story in res:
+            PID = story["_id"]
+            source = story["_source"]
+            source["_id"] = PID
+            stories.append(source)
+
+        response = {
+            "message": "Stories successfully found",
+            "stories": stories,
+        }
         return make_response(jsonify(response)), 200
 
 
 storyController = {
     "allstories": AllStories.as_view("all_stories"),
     "getrange": GetRange.as_view("get_range"),
+    "search": SearchStory.as_view("search"),
     "changedownvote": ChangeDownvote.as_view("change_downvote"),
     "changemixvote": ChangeMixvote.as_view("change_mixvote"),
     "changeupvote": ChangeUpvote.as_view("change_upvote"),

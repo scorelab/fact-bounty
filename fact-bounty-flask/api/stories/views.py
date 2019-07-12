@@ -21,6 +21,11 @@ storyprint.add_url_rule(
 )
 
 storyprint.add_url_rule(
+    "/stories/search/<string:keyword>",
+    view_func=storyController["search"],
+    methods=["GET"],
+)
+storyprint.add_url_rule(
     "/stories/change-upvote-count",
     view_func=storyController["changeupvote"],
     methods=["POST"],
