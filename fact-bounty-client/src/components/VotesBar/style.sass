@@ -1,0 +1,26 @@
+@import '../../styles/variables.sass'
+
+.votes-bar-container
+    .vote-status
+        height: 18px
+        transition: 0.2s ease
+        display: flex
+        position: relative
+        .votes
+            display: flex
+            justify-content: center
+            align-items: center
+            transition: 0.2s ease
+            opacity: 1
+        .true-votes
+            background-color: $true-color
+        .fake-votes
+            background-color: $fake-color
+        .mix-votes
+            background-color: $mix-color
+        .vote-value
+            font-size: 0.8rem
+            font-weight: 600
+            color: #fafafa
+            opacity: 1
+            transition: 0.2s ease
