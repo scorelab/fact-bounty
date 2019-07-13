@@ -44,6 +44,9 @@ class PrivateLinks extends React.Component {
         <Link to="/posts" style={styles.link}>
           <Button color="inherit">Posts</Button>
         </Link>
+        <Link to="/twitter" style={styles.link}>
+          <Button color="inherit">Twitter</Button>
+        </Link>
         <IconButton onClick={this.openMenu} style={styles.navbarLinks}>
           <Avatar style={styles.avatar}>
             {auth.user.name ? auth.user.name[0] : 'O'}

@@ -12,6 +12,7 @@ import Login from './pages/Login'
 import Posts from './pages/Posts'
 import Dashboard from './pages/Dashboard'
 import TwitterGraph from './pages/TwitterGraph'
+import PostDetailView from './pages/PostDetailView'
 
 class AppRouter extends Component {
   render() {
@@ -20,9 +21,10 @@ class AppRouter extends Component {
         <Fragment>
           <NavBar />
           <Route exact path="/" component={Landing} />
-          <Route path="/posts" component={Posts} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
+          <Route path="/posts" component={Posts} />
+          <Route path="/post/:id" component={PostDetailView} />
           <Route exact path="/twitter" component={TwitterGraph} />
           <Switch>
             <PrivateRoute exact path="/dashboard" component={Dashboard} />

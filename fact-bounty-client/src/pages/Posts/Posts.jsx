@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react'
-import Footer from '../../components/Footer'
 import './style.sass'
 import PostsList from '../../components/PostsList'
 
@@ -15,7 +14,6 @@ class Posts extends Component {
           <hr className="hr" />
           <PostsList />
         </div>
-        <Footer />
       </Fragment>
     )
   }
