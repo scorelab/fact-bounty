@@ -8,7 +8,8 @@ import {
   VOTE_ERROR,
   LOAD_USER_VOTES,
   USER_VOTE,
-  UPDATE_USER_VOTE
+  UPDATE_USER_VOTE,
+  FETCH_POST_BY_ID
 } from '../actions/actionTypes'
 
 const initialState = {
@@ -16,7 +17,8 @@ const initialState = {
   loading: false,
   error: String,
   page: 1,
-  userVotes: []
+  userVotes: [],
+  currentPost: null
 }
 
 export default function(state = initialState, action) {
@@ -31,6 +33,13 @@ export default function(state = initialState, action) {
       return {
         ...state,
         items: [...state.items, ...action.payload],
+        loading: false
+      }
+    }
+    case FETCH_POST_BY_ID: {
+      return {
+        ...state,
+        currentPost: action.payload,
         loading: false
       }
     }

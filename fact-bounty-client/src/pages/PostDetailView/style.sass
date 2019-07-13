@@ -1,19 +1,31 @@
+@import '../../styles/variables.sass'
+
 .post-detail-view-wrapper
   .header
     display: flex
     margin-top: 20px
     justify-content: space-between
     align-items: center
+    .left
+      flex: 3.5
+    .right
+      text-align: right
+      flex: 1
+    .info
+      label
+        margin: 3px
+      a
+        margin-left: 5px
   .hr
     margin-bottom: 20px
   .image
-    float: right
-    margin-left: 10px
-    margin-right: 10px
+    text-align: center
+    margin-bottom: 20px
+    img
+      width: 100%
   .content
-    margin-left: 10px
-    margin-right: 10px
     text-align: justify;
+    margin-bottom: 40px
   .votes-bar-section
     margin: 20px 0px 20px 0px
   
