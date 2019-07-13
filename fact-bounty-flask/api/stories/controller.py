@@ -553,6 +553,7 @@ class GetById(MethodView):
             return make_response(jsonify(response)), 404
 
         response = {"message": "Story fetched successfully", "story": story}
+        return make_response(jsonify(response)), 200
 
 
 class SearchStory(MethodView):
