@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Icon } from '@material-ui/core'
+import PropTypes from 'prop-types'
 import ReportProblem from '@material-ui/icons/ReportProblemOutlined'
 import { withStyles } from '@material-ui/core/styles'
 import compose from 'recompose/compose'
@@ -179,6 +180,21 @@ const styles = {
     color: '#1564c0',
     fontSize: '30px'
   }
+}
+
+VoteButtons.propTypes = {
+  loading: PropTypes.bool,
+  auth: PropTypes.object,
+  user: PropTypes.object,
+  post: PropTypes.object,
+  currentVote: PropTypes.number,
+  approved_count: PropTypes.number,
+  mixedvote_count: PropTypes.number,
+  fake_count: PropTypes.number,
+  approveVote: PropTypes.func,
+  fakeVote: PropTypes.func,
+  mixVote: PropTypes.func,
+  classes: PropTypes.object
 }
 
 export default compose(withStyles(styles))(VoteButtons)
