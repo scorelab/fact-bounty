@@ -11,6 +11,15 @@ const fetchPosts = page => {
 
 /**
  *
+ * GET : fetchPostById
+ *
+ */
+const fetchPostById = postId => {
+  return ApiBuilder.API.get(`/api/stories/get/${postId}`)
+}
+
+/**
+ *
  * POST : fetchPosts
  *
  */
@@ -49,5 +58,6 @@ export default {
   fetchPosts,
   approveVote,
   fakeVote,
-  mixVote
+  mixVote,
+  fetchPostById
 }
