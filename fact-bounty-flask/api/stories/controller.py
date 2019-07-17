@@ -479,7 +479,7 @@ class ChangeUserVote(MethodView):
 
         # fetch user vote of that story
         try:
-            vote = Vote.query.filter_by(story_id=_id, user_id=user_id)
+            vote = Vote.query.filter_by(story_id=_id, user_id=user_id).first()
         except Exception:
             response = {"message": "Something went wrong!"}
             return make_response(jsonify(response)), 500
