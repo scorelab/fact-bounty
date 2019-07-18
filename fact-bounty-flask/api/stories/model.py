@@ -19,6 +19,10 @@ class Vote(Model):
         self.user_id = user_id
         self.value = value
 
+    @classmethod
+    def fetch_user_votes(cls, user_id):
+        return cls.query.filter_by(user_id=user_id).all()
+
     def save(self):
         """
         Save a user to the database.
