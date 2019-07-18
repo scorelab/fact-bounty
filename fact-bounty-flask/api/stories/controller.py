@@ -470,9 +470,9 @@ class ChangeUserVote(MethodView):
         # extract story with given id
         try:
             story = es.get(index=es_index, doc_type="story", id=_id)["_source"]
-            approved_count = story["approved_count"]
-            fake_count = story["fake_count"]
-            mixedvote_count = story["mixedvote_count"]
+            approved_count = int(story["approved_count"])
+            fake_count = int(story["fake_count"])
+            mixedvote_count = int(story["mixedvote_count"])
         except Exception:
             response = {"message": "Please provide correct story id."}
             return make_response(jsonify(response)), 404
