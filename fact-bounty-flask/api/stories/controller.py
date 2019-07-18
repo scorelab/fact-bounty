@@ -77,28 +77,20 @@ class GetRange(MethodView):
 
 class LoadUserVotes(MethodView):
     # Retrieve user voted posts
+    @jwt_required
     def post(self):
-        es_index = current_app.config["ES_INDEX"]
-        es = current_app.elasticsearch
+        # extract user id from token
+        user_id = get_jwt_identity()
 
         votes = []
         try:
-            data = request.get_json(silent=True)
-            user_id = data["user"]
-            search_query = {
-                "query": {"bool": {"must": [{"match": {"user_id": user_id}}]}}
-            }
-            result = es.search(
-                index=es_index, doc_type="votes", body=search_query
-            )["hits"]
-            if result["total"] > 0:
-                for user_vote in result["hits"]:
-                    element = user_vote["_source"]
-                    element["_id"] = user_vote["_id"]
-                    votes.append(element)
-        except Exception as e:
-            response = {"message": str(e)}
-            return make_response(jsonify(response))
+            votes_q = Vote.fetch_user_votes(user_id)
+            for vote in votes_q:
+                votes.append({"story_id": vote.story_id, "value": vote.value})
+        except Exception:
+            response = {"message": "Something went wrong!"}
+            return make_response(jsonify(response)), 500
+
         response = {
             "message": "Retrieved user votes successfully",
             "user_votes": votes,
