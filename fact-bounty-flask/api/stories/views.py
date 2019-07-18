@@ -25,22 +25,6 @@ storyprint.add_url_rule(
     view_func=storyController["search"],
     methods=["GET"],
 )
-storyprint.add_url_rule(
-    "/stories/change-upvote-count",
-    view_func=storyController["changeupvote"],
-    methods=["POST"],
-)
-
-storyprint.add_url_rule(
-    "/stories/change-downvote-count",
-    view_func=storyController["changedownvote"],
-    methods=["POST"],
-)
-storyprint.add_url_rule(
-    "/stories/change-mixedvote-count",
-    view_func=storyController["changemixvote"],
-    methods=["POST"],
-)
 
 storyprint.add_url_rule(
     "/stories/load-user-votes",
