@@ -20,44 +20,28 @@ const fetchPostById = postId => {
 
 /**
  *
- * POST : fetchPosts
+ * POST : changeVoteCount
  *
  */
-const approveVote = (story_id, change_val) => {
-  return ApiBuilder.API.post(`/api/stories/change-upvote-count`, {
+const changeVoteCount = (story_id, vote_value) => {
+  return ApiBuilder.API.post(`/api/stories/change-vote-count`, {
     story_id,
-    change_val
+    vote_value
   })
 }
 
 /**
  *
- * POST : fakeVote
+ * POST : loadUserVotes
  *
  */
-const fakeVote = (story_id, change_val) => {
-  return ApiBuilder.API.post(`/api/stories/change-downvote-count`, {
-    story_id,
-    change_val
-  })
-}
-
-/**
- *
- * POST : mixVote
- *
- */
-const mixVote = (story_id, change_val) => {
-  return ApiBuilder.API.post(`/api/stories/change-mixedvote-count`, {
-    story_id,
-    change_val
-  })
+const loadUserVotes = () => {
+  return ApiBuilder.API.post(`/api/stories/load-user-votes`, {})
 }
 
 export default {
   fetchPosts,
-  approveVote,
-  fakeVote,
-  mixVote,
-  fetchPostById
+  fetchPostById,
+  changeVoteCount,
+  loadUserVotes
 }
