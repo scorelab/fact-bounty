@@ -80,7 +80,7 @@ PostDetailView.propTypes = {
 
 const mapStatetoProps = state => ({
   currentPost: state.posts.currentPost,
-  loading: state.posts.loading
+  loading: state.posts.loadingPosts
 })
 
 const mapDispatchToProps = dispatch => ({

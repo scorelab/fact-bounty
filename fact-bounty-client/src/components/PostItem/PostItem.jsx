@@ -17,10 +17,15 @@ class PostItem extends Component {
       postContent: this.props.post.content
     })
   }
-
   render() {
-    const { post, classes, loading, auth, changeVoteCount } = this.props
-
+    const {
+      post,
+      classes,
+      loading,
+      auth,
+      changeVoteCount,
+      userVote
+    } = this.props
     return (
       <div className="post-item-wrapper">
         <div className="hover-container">
@@ -74,6 +79,7 @@ class PostItem extends Component {
             changeVoteCount={changeVoteCount}
             isAuthenticated={auth.isAuthenticated}
             user={auth.user}
+            userVote={userVote}
           />
         </div>
       </div>
@@ -86,6 +92,7 @@ PostItem.propTypes = {
   classes: PropTypes.object,
   auth: PropTypes.object,
   loading: PropTypes.bool,
+  userVote: PropTypes.number,
   changeVoteCount: PropTypes.func
 }
 
@@ -105,14 +112,19 @@ const styles = {
 }
 
 const mapStateToProps = state => ({
-  loading: state.posts.loading,
+  loading: state.posts.loadingPosts,
   auth: state.auth
+})
+
+const mapDispatchToProps = dispatch => ({
+  changeVoteCount: (story_id, vote_value, userVote) =>
+    dispatch(changeVoteCount(story_id, vote_value, userVote))
 })
 
 export default compose(
   withStyles(styles),
   connect(
     mapStateToProps,
-    { changeVoteCount }
+    mapDispatchToProps
   )
 )(PostItem)
