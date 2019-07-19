@@ -9,8 +9,17 @@ import AsyncViewWrapper from '../../components/AsyncViewWrapper'
 import './style.sass'
 
 class PostsList extends Component {
+  componentDidMount() {
+    this.loadUserVotes()
+  }
+
+  loadUserVotes = () => {
+    this.props.loadUserVotes()
+  }
+
   loadPosts = () => {
-    if (!this.props.loadingPosts) {
+    const { loadingPosts } = this.props
+    if (!loadingPosts) {
       this.props.fetchPosts(this.props.page)
     }
   }
@@ -24,11 +33,18 @@ class PostsList extends Component {
   }
 
   renderPostList = () => {
-    const { posts, limit } = this.props
+    const { posts, userVotes, limit } = this.props
     const limitedPosts = limit ? posts.slice(0, limit) : posts
-
     return limitedPosts.map((post, index) => {
-      return <PostItem key={index} post={post} />
+      console.log(userVotes)
+      const userVote = userVotes.filter(uv => uv.story_id === post._id)
+      return (
+        <PostItem
+          key={index}
+          post={post}
+          userVote={userVote[0] ? userVote[0].value : null}
+        />
+      )
     })
   }
 
@@ -58,23 +74,29 @@ class PostsList extends Component {
 PostsList.propTypes = {
   limit: PropTypes.number,
   posts: PropTypes.array,
-  page: PropTypes.number,
   loadingPosts: PropTypes.bool,
+  page: PropTypes.number,
+  userVotes: PropTypes.array,
+  loadingUserVotes: PropTypes.bool,
   user: PropTypes.object,
   isAuth: PropTypes.bool,
   fetchPosts: PropTypes.func,
+  loadUserVotes: PropTypes.func
 }
 
 const mapStatetoProps = state => ({
   posts: state.posts.items,
   page: state.posts.page,
-  loadingPosts: state.posts.loading,
+  loadingPosts: state.posts.loadingPosts,
+  loadingUserVotes: state.posts.loadingUserVotes,
+  userVotes: state.posts.userVotes,
   isAuth: state.auth.isAuthenticated,
   user: state.auth.user
 })
 
 const mapDispatchToProps = dispatch => ({
   fetchPosts: data => dispatch(fetchPosts(data)),
+  loadUserVotes: () => dispatch(loadUserVotes())
 })
 
 export default connect(
