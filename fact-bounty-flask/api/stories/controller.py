@@ -151,6 +151,9 @@ class ChangeUserVote(MethodView):
         if vote is not None:
             prev_value = vote.value
 
+            # update value column of vote
+            vote.value = vote_value
+
             # update vote count of story based on prev_value
             if prev_value == 1:
                 approved_count -= 1
