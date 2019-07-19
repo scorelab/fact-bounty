@@ -1,76 +1,53 @@
 @import '../../styles/variables.sass'
 
 .vote-buttons-container
-  .btn-column
-    position: absolute
-    top: 0
-    right: -35px
-    transition: 0.2s ease
-    opacity: 0
-  .true-transition
-    margin-bottom: 5px
-    cursor: pointer
-  .true-transition:hover
-    .true-btn
-      display: none
-    .true-btn-hover
-      display: inherit
-  .true-btn
-    display: inherit
-    opacity: 0.5
-  .true-btn-hover
-    display: none
-    position: relative
-  .fake-btn
-    display: inherit
-    opacity: 0.5
-  .fake-btn-hover
-    display: none
-    position: relative
-    cursor: pointer
-  .fake-transition:hover
-    .fake-btn
-      display: none
-    .fake-btn-hover
-      display: inherit
-  .true-label
-    color: $true-color
-    position: absolute
-    top: 6px
-    left: 40px
-    font-weight: 600
-  .fake-label
-    color: $fake-color
-    position: absolute
-    top: 6px
-    left: 40px
-    font-weight: 600
-  .mix-btn
-    display: inherit
-    opacity: 0.5
-  .mix-btn-hover
-    display: none
-    position: relative
-  .mix-transition
-    cursor: pointer
-  .mix-transition:hover
-    .mix-btn
-      display: none
-    .mix-btn-hover
-      display: inherit
-  .fake-transition
-    margin-bottom: 5px
-  .mix-label
-    color: $mix-color
-    position: absolute
-    top: 6px
-    left: 40px
-    font-weight: 600
-  .total-vote-count
-    position: absolute
-    right: -65px
-    bottom: 2px
-    opacity: 0
-    font-size: 0.8rem
-    text-align: left
-    width: 60px
+  opacity: 0
+  transition: 0.2s ease
+  position: absolute
+  top: 0
+  right: -70px
+  .buttons
+    // true
+    .trueBtn
+      display: flex
+      .trueIcon
+        color: $grey
+      .trueLbl
+        opacity: 0
+    .trueBtn:hover
+      .trueIcon
+        color: $true-color
+      .trueLbl
+        color: $true-color
+        opacity: 1
+    // fake
+    .fakeBtn
+      display: flex
+      .fakeIcon
+        color: $grey
+      .fakeLbl
+        opacity: 0
+    .fakeBtn:hover
+      .fakeIcon
+        color: $fake-color
+      .fakeLbl
+        color: $fake-color
+        opacity: 1
+    // mix
+    .mixBtn
+      display: flex
+      .mixIcon
+        color: $grey
+      .mixLbl
+        opacity: 0
+    .mixBtn:hover
+      .mixIcon
+        color: $mix-color
+      .mixLbl
+        color: $mix-color
+        opacity: 1
+      
+  .vote_count
+    margin-top: 10px
+    color: $dark-grey
+    font-size: 14px

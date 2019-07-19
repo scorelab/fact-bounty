@@ -1,200 +1,68 @@
 import React, { Component } from 'react'
 import { Icon } from '@material-ui/core'
+import { Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import ReportProblem from '@material-ui/icons/ReportProblemOutlined'
-import { withStyles } from '@material-ui/core/styles'
-import compose from 'recompose/compose'
-import Cancel from '@material-ui/icons/CancelOutlined'
 import './style.sass'
 
 class VoteButtons extends Component {
-  handleClick = value => {
-    const {
-      loading,
-      auth,
-      user,
-      post,
-      approveVote,
-      fakeVote,
-      mixVote,
-      currentVote
-    } = this.props
-
-    if (auth === false) {
-      this.setState({
-        redirect: true
-      })
-    } else if (value === 'approve' && loading === false) {
-      approveVote(
-        post._id,
-        user.id,
-        currentVote.voteType !== 'approve'
-          ? 1
-          : currentVote.voteValue === 1
-          ? -1
-          : 1,
-        currentVote.voteIndex,
-        currentVote.voteId,
-        currentVote.voteType,
-        currentVote.voteValue
-      )
-    } else if (value === 'fake' && loading === false) {
-      fakeVote(
-        post._id,
-        user.id,
-        currentVote.voteType !== 'fake'
-          ? 1
-          : currentVote.voteValue === 1
-          ? -1
-          : 1,
-        currentVote.voteIndex,
-        currentVote.voteId,
-        currentVote.voteType,
-        currentVote.voteValue
-      )
-    } else if (value === 'mix' && loading === false) {
-      mixVote(
-        post._id,
-        user.id,
-        currentVote.voteType !== 'mix'
-          ? 1
-          : currentVote.voteValue === 1
-          ? -1
-          : 1,
-        currentVote.voteIndex,
-        currentVote.voteId,
-        currentVote.voteType,
-        currentVote.voteValue
-      )
-    } else {
-      console.error('Wrong vote type received ', value)
+  constructor(props) {
+    super(props)
+    this.state = {
+      redirect: false
     }
   }
 
-  userVoteButton(voteType) {
-    const { currentVote, classes } = this.props
-    if (voteType === 'approve') {
-      if (currentVote.voteType === 'approve' && currentVote.voteValue === 1) {
-        return (
-          <div className="true-btn" style={{ opacity: 1 }}>
-            <Icon className={classes.trueBtnHover}>check_circle</Icon>
-          </div>
-        )
-      } else {
-        return (
-          <div className="true-btn">
-            <Icon className={classes.icon}>check_circle_outline</Icon>
-          </div>
-        )
-      }
-    } else if (voteType === 'fake') {
-      if (currentVote.voteType === 'fake' && currentVote.voteValue === 1) {
-        return (
-          <div className="fake-btn" style={{ opacity: 1 }}>
-            <Icon className={classes.fakeBtnHover}>cancel</Icon>
-          </div>
-        )
-      } else {
-        return (
-          <div className="fake-btn">
-            <Cancel className={classes.icon} />
-          </div>
-        )
-      }
-    } else if (voteType === 'mix') {
-      if (currentVote.voteType === 'mix' && currentVote.voteValue === 1) {
-        return (
-          <div className="mix-btn" style={{ opacity: 1 }}>
-            <Icon className={classes.mixBtnHover}>report_problem</Icon>
-          </div>
-        )
-      } else {
-        return (
-          <div className="mix-btn">
-            <ReportProblem className={classes.icon} />
-          </div>
-        )
-      }
-    } else {
-      console.warn('Wrong vote type')
+  handleClick = vote_value => {
+    const { loading, isAuthenticated, user, post, changeVoteCount } = this.props
+
+    if (!isAuthenticated) {
+      this.setState({ redirect: true })
+      return
+    }
+
+    console.log(vote_value)
+    if (!loading) {
+      changeVoteCount(post._id, vote_value)
     }
   }
 
   render() {
-    const { post, classes } = this.props
+    const { post } = this.props
+    const totalVotes =
+      post.approved_count + post.fake_count + post.mixedvote_count
+    if (this.state.redirect) {
+      return <Redirect to="/login" />
+    }
     return (
       <div className="vote-buttons-container">
-        <div className="btn-column">
-          <div
-            className="true-transition"
-            onClick={() => this.handleClick('approve')}
-          >
-            {this.userVoteButton('approve')}
-            <div className="true-btn-hover">
-              <Icon className={classes.trueBtnHover}>check_circle</Icon>
-              <div className="true-label">True</div>
-            </div>
+        <div className="buttons">
+          <div className="trueBtn" onClick={() => this.handleClick(1)}>
+            <Icon className="trueIcon">check_circle</Icon>
+            <label className="trueLbl">True</label>
           </div>
-          <div
-            className="fake-transition"
-            onClick={() => this.handleClick('fake')}
-          >
-            {this.userVoteButton('fake')}
-            <div className="fake-btn-hover">
-              <Icon className={classes.fakeBtnHover}>cancel</Icon>
-              <div className="fake-label">Fake</div>
-            </div>
+          <div className="fakeBtn" onClick={() => this.handleClick(-1)}>
+            <Icon className="fakeIcon">cancel</Icon>
+            <label className="fakeLbl">Fake</label>
           </div>
-          <div
-            className="mix-transition"
-            onClick={() => this.handleClick('mix')}
-          >
-            {this.userVoteButton('mix')}
-            <div className="mix-btn-hover">
-              <Icon className={classes.mixBtnHover}>report_problem</Icon>
-              <div className="mix-label">Mixture</div>
-            </div>
+          <div className="mixBtn" onClick={() => this.handleClick(0)}>
+            <Icon className="mixIcon">report_problem</Icon>
+            <label className="mixLbl">Mix</label>
           </div>
         </div>
-        <div className="total-vote-count">
-          {post.approved_count + post.fake_count + post.mixedvote_count} votes
+        <div className="vote_count">
+          <label>{totalVotes} Vote(s)</label>
         </div>
       </div>
     )
   }
 }
 
-const styles = {
-  icon: {
-    fontSize: '30px'
-  },
-  trueBtnHover: {
-    color: '#009688',
-    fontSize: '30px'
-  },
-  fakeBtnHover: {
-    color: '#f4511e',
-    fontSize: '30px'
-  },
-  mixBtnHover: {
-    color: '#1564c0',
-    fontSize: '30px'
-  }
-}
-
 VoteButtons.propTypes = {
-  loading: PropTypes.bool,
-  auth: PropTypes.object,
-  user: PropTypes.object,
   post: PropTypes.object,
-  currentVote: PropTypes.number,
-  approved_count: PropTypes.number,
-  mixedvote_count: PropTypes.number,
-  fake_count: PropTypes.number,
-  approveVote: PropTypes.func,
-  fakeVote: PropTypes.func,
-  mixVote: PropTypes.func,
-  classes: PropTypes.object
+  loading: PropTypes.bool,
+  isAuthenticated: PropTypes.bool,
+  user: PropTypes.object,
+  changeVoteCount: PropTypes.func
 }
 
-export default compose(withStyles(styles))(VoteButtons)
+export default VoteButtons
