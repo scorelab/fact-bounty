@@ -447,6 +447,7 @@ li {
     left: 3rem;
     right: 3rem;
     overflow: auto;
+    width: auto;
 }
 
 .modal-content h2 {
