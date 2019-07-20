@@ -431,12 +431,21 @@ li {
     margin: auto;
 }
 
-/*.modal-dialog.modal-dialog-fade
-{
-    opacity: .5;
-/*}*/
+.modal-header {
+    align-items: center;
+}
+
+.modal-header .close {
+    margin: 0;
+    padding: 0;
+}
+
 .modal-body {
     overflow: auto;
+}
+
+.modal-body h2 {
+    margin-bottom: 0;
 }
 
 .modal-content {

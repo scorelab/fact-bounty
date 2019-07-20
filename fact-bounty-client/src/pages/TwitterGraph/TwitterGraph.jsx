@@ -364,7 +364,11 @@ class TwitterGraph extends Component {
 
   render() {
     return (
-      <div className={"twitterContainer " + (this.state.show_node_modal ? 'modal-open' : '')}>
+      <div
+        className={
+          'twitterContainer ' + (this.state.show_node_modal ? 'modal-open' : '')
+        }
+      >
         <h2 style={{ textAlign: 'center', marginBottom: '24px' }}>
           Twitter Network
         </h2>
@@ -464,8 +468,10 @@ class TwitterGraph extends Component {
 
         <div
           id="nodeModal"
-          className={"modal  " + (this.state.show_node_modal ? 'modal-show' : '')}
-          onClick={this.toggleNodeModal}
+          className={
+            'modal  ' + (this.state.show_node_modal ? 'modal-show' : '')
+          }
+          // onClick={this.toggleNodeModal}
           role="dialog"
           style={{ opacity: this.state.show_node_modal ? '1' : '0' }}
           aria-labelledby="nodeModalLabel"
