@@ -2,6 +2,7 @@ import Twitter from './twitter'
 import moment from 'moment'
 import HoaxyGraph from './graph'
 import TwitterSearchTimeline from './twitter_search_timeline'
+import { Observable, Subject } from 'rxjs'
 
 var Main = function(query, result_type) {
   console.log('starting main')
@@ -109,6 +110,7 @@ var Main = function(query, result_type) {
   var hoaxyEdges = []
   var show_articles = false
   var checked_articles = []
+  var show_node_modal = false
   var globalTwitterSearchTimeline = new TwitterSearchTimeline({
     updateDateRangeCallback: updateGraph,
     graphAnimation: graphAnimation
@@ -127,6 +129,13 @@ var Main = function(query, result_type) {
     }
   )
   var timeline = globalTwitterSearchTimeline
+
+  //observable
+  var modal$ = new Subject()
+  function getModalObservable() {
+    return modal$
+  }
+
   // **********functions***********
   stopGraphAnimation()
   resetTwitterSearchResults()
@@ -578,18 +587,20 @@ var Main = function(query, result_type) {
     //the timeouts here help with the animation and will need to be adjusted as required
     var prop = 'show_' + modal + '_modal'
     // if (!this[prop] || force === true) //show
-    if (force === true) {
+    if (force === true || !show_node_modal) {
       // this[prop] = true;
+      show_node_modal = true
       document.getElementsByTagName('body')[0].style.overflowY = 'hidden'
       setTimeout(function() {
         modal_opacity = true
+        modal$.next(node_modal_content)
       }, 1)
     } //hide
     else {
       modal_opacity = false
       document.getElementsByTagName('body')[0].style.overflowY = ''
       setTimeout(function() {
-        // v[prop] = false;
+        show_node_modal = false
       }, 100)
     }
   }
@@ -701,6 +712,11 @@ var Main = function(query, result_type) {
     }
     // Dates Equal
     return 0
+  }
+
+  return {
+    getModalObservable: getModalObservable,
+    toggleNodeModal: toggleNodeModal
   }
 }
 

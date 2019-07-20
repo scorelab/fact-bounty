@@ -2,6 +2,7 @@
 import axios from 'axios'
 
 var colors = window.colors
+var TWEET_URL = 'https://twitter.com/%0/status/%1'
 function HoaxyGraph(options) {
   //background: linear-gradient(to bottom, rgb(44,123,182) 0%,rgb(171,217,233) 30%,rgb(255,255,191) 50%,rgb(253,174,97) 70%,rgb(215,25,28) 100%);
 
@@ -1396,7 +1397,6 @@ function HoaxyGraph(options) {
     s.bind('clickNode', function(e) {
       var node = e.data.node.data
 
-      // console.debug(e.data);
       //the following /**/ is for twitter user widget.
       // $('#myModalLabel').html('User:  <a target="_blank" href="https://twitter.com/intent/user?user_id='+e.data.node.id+'">@'+ node.screenName +'</a>');
       node_modal_content.user_id = e.data.node.id
