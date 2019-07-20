@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-no-target-blank */
+/* eslint-disable no-loop-func */
 import React, { Component } from 'react'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
@@ -122,29 +124,35 @@ class TwitterGraph extends Component {
   }
 
   hasQuoted = () => {
+    const rows = []
+    const has_quoted = this.state.node_modal_content.has_quoted
     if (
       this.state.node_modal_content &&
       this.state.node_modal_content.has_quoted_count > 0
     ) {
       let i = 0
       let j = 0
-      this.state.node_modal_content.has_quoted.map(user => {
+      // this.state.node_modal_content.is_retweeted_by.map(user => {
+      for (let user in has_quoted) {
         i++
-        return (
+        const row = (
           <div key={i}>
             <h3>
               Account :{' '}
-              <a target="_blank" href={user.user_url}>
-                {user.screenName}
+              <a target="_blank" href={has_quoted[user].user_url}>
+                {has_quoted[user].screenName}
               </a>
             </h3>
-            {user.article_titles.map((title, index) => {
+            {has_quoted[user].article_titles.map((title, index) => {
               j++
               return (
                 <div key={j}>
                   <div className="article_headline">{title}</div>
                   <div className="modal_links">
-                    <a target="_blank" href={user.tweet_urls[index]}>
+                    <a
+                      target="_blank"
+                      href={has_quoted[user].tweet_urls[index]}
+                    >
                       tweet
                     </a>
                   </div>
@@ -153,36 +161,45 @@ class TwitterGraph extends Component {
             })}
           </div>
         )
-      })
+        rows.push(row)
+      }
+      return rows
+      // })
     } else {
       return <span>nobody</span>
     }
   }
 
   wasQuotedBy = () => {
+    const rows = []
+    const is_quoted_by = this.state.node_modal_content.is_quoted_by
     if (
       this.state.node_modal_content &&
       this.state.node_modal_content.is_quoted_by_count > 0
     ) {
       let i = 0
       let j = 0
-      this.state.node_modal_content.is_quoted_by.map(user => {
+      // this.state.node_modal_content.is_retweeted_by.map(user => {
+      for (let user in is_quoted_by) {
         i++
-        return (
+        const row = (
           <div key={i}>
             <h3>
               Account :{' '}
-              <a target="_blank" href={user.user_url}>
-                {user.screenName}
+              <a target="_blank" href={is_quoted_by[user].user_url}>
+                {is_quoted_by[user].screenName}
               </a>
             </h3>
-            {user.article_titles.map((title, index) => {
+            {is_quoted_by[user].article_titles.map((title, index) => {
               j++
               return (
                 <div key={j}>
                   <div className="article_headline">{title}</div>
                   <div className="modal_links">
-                    <a target="_blank" href={user.tweet_urls[index]}>
+                    <a
+                      target="_blank"
+                      href={is_quoted_by[user].tweet_urls[index]}
+                    >
                       tweet
                     </a>
                   </div>
@@ -191,36 +208,45 @@ class TwitterGraph extends Component {
             })}
           </div>
         )
-      })
+        rows.push(row)
+      }
+      return rows
+      // })
     } else {
       return <span>nobody</span>
     }
   }
 
   wasMentionedBy = () => {
+    const rows = []
+    const is_mentioned_by = this.state.node_modal_content.is_mentioned_by
     if (
       this.state.node_modal_content &&
       this.state.node_modal_content.is_mentioned_by_count > 0
     ) {
       let i = 0
       let j = 0
-      this.state.node_modal_content.is_mentioned_by.map(user => {
+      // this.state.node_modal_content.is_retweeted_by.map(user => {
+      for (let user in is_mentioned_by) {
         i++
-        return (
+        const row = (
           <div key={i}>
             <h3>
               Account :{' '}
-              <a target="_blank" href={user.user_url}>
-                {user.screenName}
+              <a target="_blank" href={is_mentioned_by[user].user_url}>
+                {is_mentioned_by[user].screenName}
               </a>
             </h3>
-            {user.article_titles.map((title, index) => {
+            {is_mentioned_by[user].article_titles.map((title, index) => {
               j++
               return (
                 <div key={j}>
                   <div className="article_headline">{title}</div>
                   <div className="modal_links">
-                    <a target="_blank" href={user.tweet_urls[index]}>
+                    <a
+                      target="_blank"
+                      href={is_mentioned_by[user].tweet_urls[index]}
+                    >
                       tweet
                     </a>
                   </div>
@@ -229,36 +255,45 @@ class TwitterGraph extends Component {
             })}
           </div>
         )
-      })
+        rows.push(row)
+      }
+      return rows
+      // })
     } else {
       return <span>nobody</span>
     }
   }
 
   hasRetweeted = () => {
+    const rows = []
+    const has_retweeted = this.state.node_modal_content.has_retweeted
     if (
       this.state.node_modal_content &&
       this.state.node_modal_content.has_retweeted_count > 0
     ) {
       let i = 0
       let j = 0
-      this.state.node_modal_content.has_retweeted.map(user => {
+      // this.state.node_modal_content.is_retweeted_by.map(user => {
+      for (let user in has_retweeted) {
         i++
-        return (
+        const row = (
           <div key={i}>
             <h3>
               Account :{' '}
-              <a target="_blank" href={user.user_url}>
-                {user.screenName}
+              <a target="_blank" href={has_retweeted[user].user_url}>
+                {has_retweeted[user].screenName}
               </a>
             </h3>
-            {user.article_titles.map((title, index) => {
+            {has_retweeted[user].article_titles.map((title, index) => {
               j++
               return (
                 <div key={j}>
                   <div className="article_headline">{title}</div>
                   <div className="modal_links">
-                    <a target="_blank" href={user.tweet_urls[index]}>
+                    <a
+                      target="_blank"
+                      href={has_retweeted[user].tweet_urls[index]}
+                    >
                       tweet
                     </a>
                   </div>
@@ -267,7 +302,10 @@ class TwitterGraph extends Component {
             })}
           </div>
         )
-      })
+        rows.push(row)
+      }
+      return rows
+      // })
     } else {
       return <span>nobody</span>
     }
@@ -299,7 +337,10 @@ class TwitterGraph extends Component {
                 <div key={j}>
                   <div className="article_headline">{title}</div>
                   <div className="modal_links">
-                    <a target="_blank" href={is_retweeted_by[user].tweet_urls[index]}>
+                    <a
+                      target="_blank"
+                      href={is_retweeted_by[user].tweet_urls[index]}
+                    >
                       tweet
                     </a>
                   </div>
