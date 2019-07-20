@@ -364,7 +364,7 @@ class TwitterGraph extends Component {
 
   render() {
     return (
-      <div className="twitterContainer">
+      <div className={"twitterContainer " + (this.state.show_node_modal ? 'modal-open' : '')}>
         <h2 style={{ textAlign: 'center', marginBottom: '24px' }}>
           Twitter Network
         </h2>
@@ -464,7 +464,7 @@ class TwitterGraph extends Component {
 
         <div
           id="nodeModal"
-          className={this.state.show_node_modal ? 'modal-show modal' : ''}
+          className={"modal  " + (this.state.show_node_modal ? 'modal-show' : '')}
           onClick={this.toggleNodeModal}
           role="dialog"
           style={{ opacity: this.state.show_node_modal ? '1' : '0' }}
