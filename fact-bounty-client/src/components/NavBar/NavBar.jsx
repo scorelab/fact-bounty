@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
+import { Link } from 'react-router-dom'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
@@ -73,7 +74,9 @@ class NavBar extends Component {
               <MenuIcon />
             </IconButton>
             <div className="logo-container">
-              <img src={factbountyLogo} alt="logo" />
+              <Link to="/" style={styles.link}>
+                <img src={factbountyLogo} alt="logo" />
+              </Link>
             </div>
             <div className={classes.linkButtonsContainer}>
               {auth.isAuthenticated ? (
