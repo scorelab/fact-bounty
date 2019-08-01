@@ -7,6 +7,7 @@ import Footer from '../../components/Footer'
 import patch2 from '../../assets/img/patch2.png'
 import patch3 from '../../assets/img/patch3.png'
 import PostsList from '../../components/PostsList'
+import ContactUsForm from '../../components/ContactUsForm'
 import './style.sass'
 
 class Landing extends Component {
@@ -131,18 +132,7 @@ class Landing extends Component {
 
         {/* ============= CONTACT US SECTION ============= */}
         <div className="container" id="contact">
-          <div className="contact-us">
-            <h1>Contact Us</h1>
-            <p>Feel free to contact us for any inquiries or feedback</p>
-            <form>
-              <input type="text" name="firstname" placeholder="First Name" />
-              <input type="text" name="firstname" placeholder="Email" />
-              <textarea name="message" rows="5" placeholder="Your Message" />
-            </form>
-            <Button variant="contained" color="primary" style={{ width: 120 }}>
-              SEND
-            </Button>
-          </div>
+          <ContactUsForm />
         </div>
 
         {/* ============= FOOTER SECTION ============= */}
