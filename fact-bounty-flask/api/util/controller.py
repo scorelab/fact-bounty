@@ -27,7 +27,7 @@ class ContactUs(MethodView):
             """ % (email, message, phone)
 
             # send mail to admin
-            send_email(current_app.config['FLASKY_ADMIN'], subject, body)
+            send_email(current_app.config['FACTBOUNTY_ADMIN'], subject, body)
 
             response = {
                 'message': 'Form submitted Successfully!',
