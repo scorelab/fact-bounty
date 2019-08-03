@@ -63,7 +63,7 @@ class NavBar extends Component {
           isOpen={drawerIsOpen}
           toggleDrawer={this.toggleDrawer}
         />
-        <AppBar position="static" color="default">
+        <AppBar position="static" color="default" className={classes.navBar}>
           <Toolbar>
             <IconButton
               className={classes.menuButton}
