@@ -16,5 +16,9 @@ export default theme => ({
     [theme.breakpoints.down('sm')]: {
       display: 'none'
     }
+  },
+  navBar: {
+    backgroundColor: '#ffffff',
+    boxShadow: 'none'
   }
 })

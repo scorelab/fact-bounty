@@ -213,7 +213,7 @@ var Main = function(query, result_type) {
         if (error.error.status === 429) {
           console.error('Twitter rate limit reached. Try again in 15 minutes.')
         } else {
-          console.log('error >>>>>>', error)
+          console.log('Error : ', error)
           toggleModal('authenticate', true)
         }
       }

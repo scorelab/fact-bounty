@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import './styles.sass'
+import './external.css'
 import Main from './js/main'
 
 class TwitterGraph extends Component {
