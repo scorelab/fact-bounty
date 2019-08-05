@@ -41,11 +41,10 @@ class PrivateLinks extends React.Component {
         <Link to="/#contact" style={styles.link}>
           <Button color="inherit">Contact Us</Button>
         </Link>
-        <Link to="/posts" style={styles.link}>
-          <Button color="inherit">Posts</Button>
-        </Link>
-        <Link to="/twitter" style={styles.link}>
-          <Button color="inherit">Twitter</Button>
+        <Link to="/dashboard" style={styles.link}>
+          <Button color="primary" variant="outlined">
+            Dashboard
+          </Button>
         </Link>
         <IconButton onClick={this.openMenu} style={styles.navbarLinks}>
           <Avatar style={styles.avatar}>
@@ -64,14 +63,8 @@ class PrivateLinks extends React.Component {
                 {auth.user.name ? auth.user.name[0] : 'O'}
               </Avatar>
             </ListItemIcon>
-            <ListItemText
-              inset
-              primary={auth.user.name ? auth.user.name : 'no name'}
-            />
+            {auth.user.name ? auth.user.name : 'no name'}
           </MenuItem>
-          <Link to="/dashboard" style={styles.link}>
-            <MenuItem>Profile</MenuItem>
-          </Link>
           <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
       </Fragment>
