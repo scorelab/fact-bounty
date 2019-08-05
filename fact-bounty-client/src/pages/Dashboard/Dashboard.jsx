@@ -1,34 +1,48 @@
 import React, { Component } from 'react'
+import { Route, Switch } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { logoutUser } from '../../redux/actions/authActions'
-import styles from './Dashboard.style'
+import './style.sass'
+
+//Pages in the dashboard
+import Posts from '../Posts'
+import PostDetailView from '../PostDetailView'
+import TwitterGraph from '../TwitterGraph'
+import DashboardSideNav from '../../components/DashboardSideNav'
 
 class Dashboard extends Component {
-  onLogoutClick = e => {
-    e.preventDefault()
-    this.props.logoutUser()
-  }
-
   render() {
-    const { user } = this.props.auth
+    const { match } = this.props
+
+    const Welcome = () => (
+      <div>
+        <h1>
+          Welcome to your <b>Dashboard!</b>
+        </h1>
+      </div>
+    )
+
     return (
-      <div style={styles.container} className="container valign-wrapper">
+      <div className="dashboard-container">
+        <hr />
         <div className="row">
-          <div className="col s12 center-align">
-            <h4>
-              <b>Hey there!</b>
-              <p className="flow-text grey-text text-darken-1">
-                You are logged into Fact Bounty
-              </p>
-            </h4>
-            <button
-              style={styles.button}
-              onClick={this.onLogoutClick}
-              className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-            >
-              Logout
-            </button>
+          <div className="col-md-2 left-section">
+            <DashboardSideNav />
+          </div>
+          <div className="col-md-10 right-section">
+            <Switch>
+              <Route exact path={`/dashboard`} component={Welcome} />
+              <Route exact path={`${match.url}/posts`} component={Posts} />
+              <Route
+                exact
+                path={`${match.url}/post/:id`}
+                component={PostDetailView}
+              />
+              <Route
+                exact
+                path={`${match.url}/twitter`}
+                component={TwitterGraph}
+              />
+            </Switch>
           </div>
         </div>
       </div>
@@ -37,15 +51,9 @@ class Dashboard extends Component {
 }
 
 Dashboard.propTypes = {
-  logoutUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  match: PropTypes.object
 }
 
-const mapStateToProps = state => ({
-  auth: state.auth
-})
+const mapStateToProps = state => ({})
 
-export default connect(
-  mapStateToProps,
-  { logoutUser }
-)(Dashboard)
+export default Dashboard

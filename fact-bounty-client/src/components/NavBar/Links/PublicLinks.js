@@ -13,6 +13,9 @@ const PublicLinks = () => (
     <Link to="/#contact" style={styles.link}>
       <Button color="inherit">Contact Us</Button>
     </Link>
+    <Link to="/dashboard" style={styles.link}>
+      <Button color="primary">Dashboard</Button>
+    </Link>
     <span style={styles.btnContainer}>
       <Link to="/register" style={styles.link}>
         <Button variant="outlined" color="primary">

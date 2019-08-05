@@ -42,9 +42,7 @@ class PrivateLinks extends React.Component {
           <Button color="inherit">Contact Us</Button>
         </Link>
         <Link to="/dashboard" style={styles.link}>
-          <Button color="primary" variant="outlined">
-            Dashboard
-          </Button>
+          <Button color="primary">Dashboard</Button>
         </Link>
         <IconButton onClick={this.openMenu} style={styles.navbarLinks}>
           <Avatar style={styles.avatar}>
