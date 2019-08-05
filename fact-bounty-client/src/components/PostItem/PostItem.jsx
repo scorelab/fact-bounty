@@ -49,7 +49,7 @@ class PostItem extends Component {
                     {post.content.length > 220 ? '...' : ''}
                   </div>
                   <div className="btn-container">
-                    <Link to={`/post/${post._id}`} style={styles.link}>
+                    <Link to={`post/${post._id}`} style={styles.link}>
                       <Button
                         variant="contained"
                         color="secondary"
