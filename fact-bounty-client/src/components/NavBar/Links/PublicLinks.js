@@ -13,12 +13,6 @@ const PublicLinks = () => (
     <Link to="/#contact" style={styles.link}>
       <Button color="inherit">Contact Us</Button>
     </Link>
-    <Link to="/posts" style={styles.link}>
-      <Button color="inherit">Posts</Button>
-    </Link>
-    <Link to="/twitter" style={styles.link}>
-      <Button color="inherit">Twitter</Button>
-    </Link>
     <span style={styles.btnContainer}>
       <Link to="/register" style={styles.link}>
         <Button variant="outlined" color="primary">
