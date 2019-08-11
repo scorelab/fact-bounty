@@ -7,7 +7,7 @@ const AsyncViewWrapper = ({ loading, children }) => {
   return (
     <div className="async-view-wrapper-container">
       {loading ? (
-        <div className="loader">
+        <div>
           <CircularProgress />
         </div>
       ) : (
