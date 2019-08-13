@@ -8,7 +8,7 @@ from scrapyd_api import ScrapydAPI
 from flask_jwt_extended import JWTManager
 
 from api import commands
-from api import user, stories, crawler, util
+from api import admin, user, stories, crawler, util
 from api.config import config
 from api.extensions import db, mail, pagedown, login_manager, migrate, jwt
 
@@ -64,6 +64,7 @@ def register_blueprint(app):
     app.register_blueprint(stories.views.storyprint, url_prefix="/api")
     app.register_blueprint(crawler.views.blueprint, url_prefix="/api/crawler")
     app.register_blueprint(util.views.utilprint, url_prefix="/api/utils")
+    app.register_blueprint(admin.views.adminprint, url="/api/admin")
     return None
 
 
