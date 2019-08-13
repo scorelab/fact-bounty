@@ -17,7 +17,10 @@ class AllStories(MethodView):
         es_index = current_app.config["ES_INDEX"]
         es = current_app.elasticsearch
 
-        doc = {"query": {"match_all": {}}}
+        doc = {
+            "sort": [{"date": {"order": "desc"}}],
+            "query": {"match_all": {}},
+        }
         stories = {}
         try:
             for story in scan(es, doc, index=es_index, doc_type="story"):
@@ -53,6 +56,7 @@ class GetRange(MethodView):
                 index=es_index,
                 doc_type="story",
                 body={
+                    "sort": [{"date": {"order": "desc"}}],
                     "query": {"match_all": {}},
                     "from": (page - 1) * current_app.config["POSTS_PER_PAGE"],
                     "size": current_app.config["POSTS_PER_PAGE"],
@@ -228,12 +232,13 @@ class SearchStory(MethodView):
         es = current_app.elasticsearch
 
         body = {
+            "sort": [{"date": {"order": "desc"}}],
             "query": {
                 "multi_match": {
                     "query": keyword,
                     "fields": ["content", "title"],
                 }
-            }
+            },
         }
 
         stories = []
