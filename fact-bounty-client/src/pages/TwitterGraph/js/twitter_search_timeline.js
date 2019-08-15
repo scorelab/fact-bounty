@@ -1,5 +1,6 @@
 /*eslint-disable no-undef*/
 var colors = window.colors
+
 function TwitterSearchTimeline(settings) {
   var updateDateRangeCallback = settings.updateDateRangeCallback
   var graphAnimation = settings.graphAnimation
@@ -31,7 +32,7 @@ function TwitterSearchTimeline(settings) {
     var hours = hoursMinutesSeconds[0]
     var minutes = hoursMinutesSeconds[1]
     var seconds = hoursMinutesSeconds[2]
-
+    var dateRateIx
     // We subtract 1 from month because Date takes 0 indexed months
     var currentTimeStepDate = new Date(
       parseInt(year),
@@ -76,7 +77,10 @@ function TwitterSearchTimeline(settings) {
     )
   })
 
-  chart.margin({ right: 70, bottom: 80 })
+  chart.margin({
+    right: 70,
+    bottom: 80
+  })
 
   chart.xAxis
     .tickFormat(dateFormatter)
@@ -113,6 +117,7 @@ function TwitterSearchTimeline(settings) {
       d3.select('#chart svg .nvd3 > g').attr('transform', 'translate(0, -10)')
     }
   }
+
   function removeUpdateDateRangeCallback() {
     chart.dispatch.on('brush', null)
   }
@@ -188,7 +193,10 @@ function TwitterSearchTimeline(settings) {
     lastData = data
     var max_time = 0
     if (!data) {
-      return { time: null, tweet_values: [] }
+      return {
+        time: null,
+        tweet_values: []
+      }
     }
     var time = data.claim.timestamp, // eslint-disable-line no-unused-expressions
       volume_tweets = data.claim.volume,
@@ -205,7 +213,10 @@ function TwitterSearchTimeline(settings) {
         max_time = ts
       }
 
-      tweet_values.push({ x: new Date(time[i]), y: volume_tweets[i] })
+      tweet_values.push({
+        x: new Date(time[i]),
+        y: volume_tweets[i]
+      })
     }
 
     chartData.length = 0
@@ -261,8 +272,14 @@ function TwitterSearchTimeline(settings) {
       chartData[1] = {
         key: 'Time',
         values: [
-          { x: new Date(graphAnimation.current_timestamp), y: 0 },
-          { x: new Date(graphAnimation.current_timestamp), y: max }
+          {
+            x: new Date(graphAnimation.current_timestamp),
+            y: 0
+          },
+          {
+            x: new Date(graphAnimation.current_timestamp),
+            y: max
+          }
         ],
         disableTooltip: true
       }

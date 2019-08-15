@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import './styles.sass'
 import './external.css'
+import './nv.d3.css'
 import Main from './js/main'
 
 class TwitterGraph extends Component {
@@ -460,13 +461,23 @@ class TwitterGraph extends Component {
             </div>
           </form>
         </div>
-        <div className="twitter-graph">
-          <div
-            id="graph-container"
-            style={{ width: '100%', height: '80vh', margin: '0 auto' }}
-          />
+        <div className="twitter-container">
+          <div id="timeline" className="timeline">
+            <p>Timeline</p>
+            <div id="chart" className="chart">
+              <svg></svg>
+            </div>
+            <div id="focus_label">
+              Select and drag a time frame of interest above
+            </div>
+          </div>
+          <div className="twitter-graph">
+            <div
+              id="graph-container"
+              style={{ width: '100%', height: '80vh', margin: '0 auto' }}
+            />
+          </div>
         </div>
-
         <div
           id="nodeModal"
           className={

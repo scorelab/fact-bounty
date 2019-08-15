@@ -614,7 +614,7 @@ function HoaxyGraph(options) {
   }
   function updateNodeColor(node_id, score) {
     // setTimeout(function(){
-    color = getNodeColor(score)
+    var color = getNodeColor(score)
     //change node color on graph based on botscore
     if (s && s.graph) {
       var node = s.graph.nodes(node_id)
@@ -1720,7 +1720,7 @@ function HoaxyGraph(options) {
 
         node.size = new_size
 
-        score = false
+        var score = false
         if (botscores[node.id]) {
           score = botscores[node.id].score
         }

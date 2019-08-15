@@ -132,6 +132,7 @@ var Main = function(query, result_type) {
 
   //observable
   var modal$ = new Subject()
+
   function getModalObservable() {
     return modal$
   }
@@ -606,11 +607,11 @@ var Main = function(query, result_type) {
   }
 
   function pauseGraphAnimation() {
-    this.graph.pauseAnimation()
+    graph.pauseAnimation()
   }
 
   function unpauseGraphAnimation() {
-    this.graph.unpauseAnimation()
+    graph.unpauseAnimation()
   }
 
   function createTwitterDateBins(dates) {
