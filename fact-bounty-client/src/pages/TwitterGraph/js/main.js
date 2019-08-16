@@ -132,9 +132,14 @@ var Main = function(query, result_type) {
 
   //observable
   var modal$ = new Subject()
+  var graphBuild$ = new Subject()
 
   function getModalObservable() {
     return modal$
+  }
+
+  function getGraphBuildObservable() {
+    return graphBuild$
   }
 
   // **********functions***********
@@ -207,6 +212,7 @@ var Main = function(query, result_type) {
           buildTwitterGraph()
           // Check if animation should be disabled or not
           checkIfShouldDisableAnimation(twitterEdges)
+          graphBuild$.next(true)
         }
       },
       function(error) {
@@ -717,7 +723,8 @@ var Main = function(query, result_type) {
 
   return {
     getModalObservable: getModalObservable,
-    toggleNodeModal: toggleNodeModal
+    toggleNodeModal: toggleNodeModal,
+    getGraphBuildObservable: getGraphBuildObservable
   }
 }
 
