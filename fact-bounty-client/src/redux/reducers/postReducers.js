@@ -7,7 +7,8 @@ import {
   LOADING_USER_VOTES,
   SET_USER_VOTES,
   UPDATE_USER_VOTES,
-  UPDATE_POST_VOTES
+  UPDATE_POST_VOTES,
+  SET_POSTS_ON_SEARCH
 } from '../actions/actionTypes'
 
 const initialState = {
@@ -16,7 +17,8 @@ const initialState = {
   page: 1,
   userVotes: [],
   loadingPosts: false,
-  loadingUserVotes: false
+  loadingUserVotes: false,
+  searchedPosts: null
 }
 
 export default function(state = initialState, action) {
@@ -110,6 +112,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         items: updatedItems
+      }
+    }
+    case SET_POSTS_ON_SEARCH: {
+      return {
+        ...state,
+        searchedPosts: action.payload
       }
     }
     default: {

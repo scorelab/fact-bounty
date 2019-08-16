@@ -8,6 +8,7 @@ import Posts from '../Posts'
 import PostDetailView from '../PostDetailView'
 import TwitterGraph from '../TwitterGraph'
 import DashboardSideNav from '../../components/DashboardSideNav'
+import Search from '../Search'
 
 class Dashboard extends Component {
   render() {
@@ -42,6 +43,7 @@ class Dashboard extends Component {
                 path={`${match.url}/twitter`}
                 component={TwitterGraph}
               />
+              <Route exact path={`${match.url}/search`} component={Search} />
             </Switch>
           </div>
         </div>
