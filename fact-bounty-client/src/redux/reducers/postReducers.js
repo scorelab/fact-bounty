@@ -13,12 +13,12 @@ import {
 
 const initialState = {
   items: [], // the posts
+  searchedPosts: [], // the posts in search
   currentPost: null, // the current post in the post detail view
   page: 1,
   userVotes: [],
   loadingPosts: false,
-  loadingUserVotes: false,
-  searchedPosts: null
+  loadingUserVotes: false
 }
 
 export default function(state = initialState, action) {
@@ -80,38 +80,10 @@ export default function(state = initialState, action) {
       }
     }
     case UPDATE_POST_VOTES: {
-      const { story_id, value, userVote } = action.payload
-      const updatedItems = state.items.map(item => {
-        if (item._id === story_id) {
-          let approved_count_diffValue = 0
-          let mixedvote_count_diffValue = 0
-          let fake_count_diffValue = 0
-
-          if (value === 1) {
-            approved_count_diffValue = userVote === 1 ? 0 : 1
-            mixedvote_count_diffValue = userVote === 0 ? -1 : 0
-            fake_count_diffValue = userVote === -1 ? -1 : 0
-          } else if (value === 0) {
-            approved_count_diffValue = userVote === 1 ? -1 : 0
-            mixedvote_count_diffValue = userVote === 0 ? 0 : 1
-            fake_count_diffValue = userVote === -1 ? -1 : 0
-          } else if (value === -1) {
-            approved_count_diffValue = userVote === 1 ? -1 : 0
-            mixedvote_count_diffValue = userVote === 0 ? -1 : 0
-            fake_count_diffValue = userVote === -1 ? 0 : 1
-          }
-          return {
-            ...item,
-            approved_count: item.approved_count + approved_count_diffValue,
-            mixedvote_count: item.mixedvote_count + mixedvote_count_diffValue,
-            fake_count: item.fake_count + fake_count_diffValue
-          }
-        }
-        return item
-      })
       return {
         ...state,
-        items: updatedItems
+        items: getUpdatedItemsAfterVote(state.items, action),
+        searchedPosts: getUpdatedItemsAfterVote(state.searchedPosts, action)
       }
     }
     case SET_POSTS_ON_SEARCH: {
@@ -124,4 +96,36 @@ export default function(state = initialState, action) {
       return state
     }
   }
+}
+
+const getUpdatedItemsAfterVote = (items, action) => {
+  const { story_id, value, userVote } = action.payload
+  return items.map(item => {
+    if (item._id === story_id) {
+      let approved_count_diffValue = 0
+      let mixedvote_count_diffValue = 0
+      let fake_count_diffValue = 0
+
+      if (value === 1) {
+        approved_count_diffValue = userVote === 1 ? 0 : 1
+        mixedvote_count_diffValue = userVote === 0 ? -1 : 0
+        fake_count_diffValue = userVote === -1 ? -1 : 0
+      } else if (value === 0) {
+        approved_count_diffValue = userVote === 1 ? -1 : 0
+        mixedvote_count_diffValue = userVote === 0 ? 0 : 1
+        fake_count_diffValue = userVote === -1 ? -1 : 0
+      } else if (value === -1) {
+        approved_count_diffValue = userVote === 1 ? -1 : 0
+        mixedvote_count_diffValue = userVote === 0 ? -1 : 0
+        fake_count_diffValue = userVote === -1 ? 0 : 1
+      }
+      return {
+        ...item,
+        approved_count: item.approved_count + approved_count_diffValue,
+        mixedvote_count: item.mixedvote_count + mixedvote_count_diffValue,
+        fake_count: item.fake_count + fake_count_diffValue
+      }
+    }
+    return item
+  })
 }
