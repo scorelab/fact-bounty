@@ -121,7 +121,6 @@ var Twitter = function(initialize_key) {
 
       getToken().then(
         function(token) {
-          console.log('>>>>>>>>>>>>>', token)
           token[method](url, { data: params })
             .done(function(response) {
               resolve(response)

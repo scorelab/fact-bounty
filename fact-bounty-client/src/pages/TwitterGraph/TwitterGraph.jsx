@@ -7,6 +7,7 @@ import './styles.sass'
 import './external.css'
 import './nv.d3.css'
 import Main from './js/main'
+import AsyncViewWrapper from '../../components/AsyncViewWrapper/AsyncViewWrapper';
 
 class TwitterGraph extends Component {
   graphApp
@@ -42,7 +43,9 @@ class TwitterGraph extends Component {
         botscore: 0,
         botcolor: 0
       },
-      show_node_modal: false
+      show_node_modal: false,
+      loading: false,
+      visible: '0vh'
     }
   }
 
@@ -50,12 +53,26 @@ class TwitterGraph extends Component {
     if (this.state.queryText.length === 0) {
       console.error('You must input a valid search query.')
     } else {
+      this.setState({
+        loading: true,
+        visible: '0vh'
+      })
       this.graphApp = new Main(this.state.queryText, this.state.queryType)
       this.graphApp.getModalObservable().subscribe(event => {
         this.setState({
           node_modal_content: event,
           show_node_modal: true
         })
+      })
+      this.graphApp.getGraphBuildObservable().subscribe(event => {
+        this.setState({
+          loading: !event
+        })
+        if (event) {
+          this.setState({
+            visible: 'auto'
+          })
+        }
       })
     }
   }
@@ -365,6 +382,7 @@ class TwitterGraph extends Component {
   }
 
   render() {
+    const loading = <AsyncViewWrapper loading={this.state.loading} />
     return (
       <div
         className={
@@ -461,7 +479,11 @@ class TwitterGraph extends Component {
             </div>
           </form>
         </div>
-        <div className="twitter-container">
+        {loading}
+        <div
+          className="twitter-container"
+          style={{ height: this.state.visible, overflow: 'hidden' }}
+        >
           <div id="timeline" className="timeline">
             <p>Timeline</p>
             <div id="chart" className="chart">
