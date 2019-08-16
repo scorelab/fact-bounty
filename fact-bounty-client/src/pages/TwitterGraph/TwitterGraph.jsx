@@ -45,7 +45,11 @@ class TwitterGraph extends Component {
       },
       show_node_modal: false,
       loading: false,
-      visible: '0vh'
+      visible: '0vh',
+      graphAnimation: {
+        playing: false,
+        paused: false
+      }
     }
   }
 
@@ -379,18 +383,42 @@ class TwitterGraph extends Component {
 
   startGraphAnimation = () => {
     this.graphApp.startGraphAnimation()
+    this.setState({
+      graphAnimation: {
+        playing: true,
+        paused: false
+      }
+    })
   }
 
   unpauseGraphAnimation = () => {
     this.graphApp.unpauseGraphAnimation()
+    this.setState({
+      graphAnimation: {
+        playing: true,
+        paused: false
+      }
+    })
   }
 
   pauseGraphAnimation = () => {
     this.graphApp.pauseGraphAnimation()
+    this.setState({
+      graphAnimation: {
+        playing: true,
+        paused: true
+      }
+    })
   }
 
   stopGraphAnimation = () => {
     this.graphApp.stopGraphAnimation()
+    this.setState({
+      graphAnimation: {
+        playing: false,
+        paused: false
+      }
+    })
   }
 
   componentDidMount() {
@@ -399,6 +427,17 @@ class TwitterGraph extends Component {
 
   render() {
     const loading = <AsyncViewWrapper loading={this.state.loading} />
+    let playBtn, unpauseBtn, pauseBtn, stopBtn
+    if (!this.state.graphAnimation.playing) {
+      playBtn = <button className="animation-control btn btn-primary" onClick={this.startGraphAnimation}><i className="fa fa-play" aria-hidden="true"></i></button>
+    }
+    if (this.state.graphAnimation.playing && this.state.graphAnimation.paused) {
+      unpauseBtn = <button className="animation-control btn btn-primary" onClick={this.unpauseGraphAnimation}><i className="fa fa-play" aria-hidden="true"></i></button>
+    }
+    if (!this.state.graphAnimation.paused && this.state.graphAnimation.playing) {
+      pauseBtn = <button className="animation-control btn btn-primary" onClick={this.pauseGraphAnimation}><i className="fa fa-pause" aria-hidden="true"></i></button>
+    }
+    stopBtn = <button className="animation-control btn btn-primary" onClick={this.stopGraphAnimation} disabled={!this.state.graphAnimation.playing}><i className="fa fa-stop" aria-hidden="true"></i></button>
     return (
       <div
         className={
@@ -511,10 +550,10 @@ class TwitterGraph extends Component {
           </div>
           <div className="button-column">
             <p>Play</p>
-            <button className="animation-control btn btn-primary" onClick={this.startGraphAnimation}><i className="fa fa-play" aria-hidden="true"></i></button>
-            <button className="animation-control btn btn-primary" onClick={this.unpauseGraphAnimation}><i className="fa fa-play" aria-hidden="true"></i></button>
-            <button className="animation-control btn btn-primary" onClick={this.pauseGraphAnimation}><i className="fa fa-pause" aria-hidden="true"></i></button>
-            <button className="animation-control btn btn-primary" onClick={this.stopGraphAnimation}><i className="fa fa-stop" aria-hidden="true"></i></button>
+            {playBtn}
+            {unpauseBtn}
+            {pauseBtn}
+            {stopBtn}
           </div>
           <div className="twitter-graph">
             <div
