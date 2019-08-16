@@ -69,6 +69,7 @@ class Search extends Component {
 
   render() {
     const { keyword } = this.state
+    const { loadingPosts } = this.props
     return (
       <Fragment>
         <div className="container search-wrapper">
@@ -92,15 +93,14 @@ class Search extends Component {
                 color="primary"
                 style={{ width: 120 }}
                 type="submit"
-                loading={false}
-                disabled={false}
+                disabled={loadingPosts}
               >
                 SEARCH
               </Button>
             </form>
           </div>
           <hr className="hr" />
-          {this.renderPostList()}
+          {loadingPosts ? <h2>Loading...</h2> : this.renderPostList()}
         </div>
       </Fragment>
     )
@@ -111,8 +111,6 @@ Search.propTypes = {
   posts: PropTypes.array,
   loadingPosts: PropTypes.bool,
   userVotes: PropTypes.array,
-  loadingUserVotes: PropTypes.bool,
-  user: PropTypes.object,
   getPostsFromKeyword: PropTypes.func,
   loadUserVotes: PropTypes.func
 }
@@ -120,7 +118,7 @@ Search.propTypes = {
 const mapStatetoProps = state => ({
   posts: state.posts.searchedPosts,
   userVotes: state.posts.userVotes,
-  user: state.auth.user
+  loadingPosts: state.posts.searchedPostsLoading
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -8,7 +8,8 @@ import {
   SET_USER_VOTES,
   UPDATE_USER_VOTES,
   UPDATE_POST_VOTES,
-  SET_POSTS_ON_SEARCH
+  SET_POSTS_ON_SEARCH,
+  START_POSTS_SEARCH
 } from './actionTypes'
 import PostsService from '../../services/PostsService'
 
@@ -81,10 +82,9 @@ export const loadUserVotes = () => dispatch => {
 }
 
 export const getPostsFromKeyword = keyword => dispatch => {
-  dispatch({ type: LOADING_USER_VOTES })
+  dispatch({ type: START_POSTS_SEARCH })
   PostsService.getPostsFromKeyword(keyword)
     .then(res => {
-      console.log('getPostsFromKeyword', res)
       dispatch({
         type: SET_POSTS_ON_SEARCH,
         payload: res.data.stories ? res.data.stories : null

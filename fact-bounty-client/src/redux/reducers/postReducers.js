@@ -8,7 +8,8 @@ import {
   SET_USER_VOTES,
   UPDATE_USER_VOTES,
   UPDATE_POST_VOTES,
-  SET_POSTS_ON_SEARCH
+  SET_POSTS_ON_SEARCH,
+  START_POSTS_SEARCH
 } from '../actions/actionTypes'
 
 const initialState = {
@@ -18,7 +19,8 @@ const initialState = {
   page: 1,
   userVotes: [],
   loadingPosts: false,
-  loadingUserVotes: false
+  loadingUserVotes: false,
+  searchedPostsLoading: false
 }
 
 export default function(state = initialState, action) {
@@ -86,10 +88,17 @@ export default function(state = initialState, action) {
         searchedPosts: getUpdatedItemsAfterVote(state.searchedPosts, action)
       }
     }
+    case START_POSTS_SEARCH: {
+      return {
+        ...state,
+        searchedPostsLoading: true
+      }
+    }
     case SET_POSTS_ON_SEARCH: {
       return {
         ...state,
-        searchedPosts: action.payload
+        searchedPosts: action.payload,
+        searchedPostsLoading: false
       }
     }
     default: {
