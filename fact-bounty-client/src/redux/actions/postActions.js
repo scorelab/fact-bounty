@@ -84,10 +84,10 @@ export const getPostsFromKeyword = keyword => dispatch => {
   dispatch({ type: LOADING_USER_VOTES })
   PostsService.getPostsFromKeyword(keyword)
     .then(res => {
-      console.log(res)
+      console.log('getPostsFromKeyword', res)
       dispatch({
         type: SET_POSTS_ON_SEARCH,
-        payload: res.data
+        payload: res.data.stories ? res.data.stories : null
       })
     })
     .catch(err => {
