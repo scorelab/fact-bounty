@@ -721,10 +721,18 @@ var Main = function(query, result_type) {
     return 0
   }
 
+  function startGraphAnimation() {
+    graph.startAnimation()
+  }
+
   return {
     getModalObservable: getModalObservable,
     toggleNodeModal: toggleNodeModal,
-    getGraphBuildObservable: getGraphBuildObservable
+    getGraphBuildObservable: getGraphBuildObservable,
+    startGraphAnimation: startGraphAnimation,
+    unpauseGraphAnimation: unpauseGraphAnimation,
+    pauseGraphAnimation: pauseGraphAnimation,
+    stopGraphAnimation: stopGraphAnimation
   }
 }
 

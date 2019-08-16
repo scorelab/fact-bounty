@@ -377,6 +377,22 @@ class TwitterGraph extends Component {
     }
   }
 
+  startGraphAnimation = () => {
+    this.graphApp.startGraphAnimation()
+  }
+
+  unpauseGraphAnimation = () => {
+    this.graphApp.unpauseGraphAnimation()
+  }
+
+  pauseGraphAnimation = () => {
+    this.graphApp.pauseGraphAnimation()
+  }
+
+  stopGraphAnimation = () => {
+    this.graphApp.stopGraphAnimation()
+  }
+
   componentDidMount() {
     // Twitter();
   }
@@ -492,6 +508,13 @@ class TwitterGraph extends Component {
             <div id="focus_label">
               Select and drag a time frame of interest above
             </div>
+          </div>
+          <div className="button-column">
+            <p>Play</p>
+            <button className="animation-control btn btn-primary" onClick={this.startGraphAnimation}><i className="fa fa-play" aria-hidden="true"></i></button>
+            <button className="animation-control btn btn-primary" onClick={this.unpauseGraphAnimation}><i className="fa fa-play" aria-hidden="true"></i></button>
+            <button className="animation-control btn btn-primary" onClick={this.pauseGraphAnimation}><i className="fa fa-pause" aria-hidden="true"></i></button>
+            <button className="animation-control btn btn-primary" onClick={this.stopGraphAnimation}><i className="fa fa-stop" aria-hidden="true"></i></button>
           </div>
           <div className="twitter-graph">
             <div
