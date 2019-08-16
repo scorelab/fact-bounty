@@ -7,7 +7,8 @@ import {
   LOADING_USER_VOTES,
   SET_USER_VOTES,
   UPDATE_USER_VOTES,
-  UPDATE_POST_VOTES
+  UPDATE_POST_VOTES,
+  SET_POSTS_ON_SEARCH
 } from './actionTypes'
 import PostsService from '../../services/PostsService'
 
@@ -72,6 +73,21 @@ export const loadUserVotes = () => dispatch => {
       dispatch({
         type: SET_USER_VOTES,
         payload: res.data.user_votes
+      })
+    })
+    .catch(err => {
+      console.error('Server response invalid:', err)
+    })
+}
+
+export const getPostsFromKeyword = keyword => dispatch => {
+  dispatch({ type: LOADING_USER_VOTES })
+  PostsService.getPostsFromKeyword(keyword)
+    .then(res => {
+      console.log(res)
+      dispatch({
+        type: SET_POSTS_ON_SEARCH,
+        payload: res.data
       })
     })
     .catch(err => {

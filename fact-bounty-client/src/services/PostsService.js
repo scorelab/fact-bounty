@@ -39,9 +39,19 @@ const loadUserVotes = () => {
   return ApiBuilder.API.post(`/api/stories/load-user-votes`, {})
 }
 
+/**
+ *
+ * GET : getPostsFromKeyword
+ *
+ */
+const getPostsFromKeyword = keyword => {
+  return ApiBuilder.API.get(`/api/stories/search/${keyword}`)
+}
+
 export default {
   fetchPosts,
   fetchPostById,
   changeVoteCount,
-  loadUserVotes
+  loadUserVotes,
+  getPostsFromKeyword
 }
