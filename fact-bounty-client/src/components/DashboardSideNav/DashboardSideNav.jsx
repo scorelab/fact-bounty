@@ -19,8 +19,14 @@ const DashboardSideNav = () => {
         </li>
         <hr />
         <li>
-          <Link className="link" to="/dashboard/search">
+          <Link className="link" to="/dashboard/visualizations">
             Search
+          </Link>
+        </li>
+        <hr />
+        <li>
+          <Link className="link" to="/dashboard/visualizations">
+            Visualizations
           </Link>
         </li>
         <hr />

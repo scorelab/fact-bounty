@@ -9,6 +9,7 @@ import PostDetailView from '../PostDetailView'
 import TwitterGraph from '../TwitterGraph'
 import DashboardSideNav from '../../components/DashboardSideNav'
 import Search from '../Search'
+import KibanaDashboard from '../KibanaDashboard'
 
 class Dashboard extends Component {
   render() {
@@ -44,6 +45,11 @@ class Dashboard extends Component {
                 component={TwitterGraph}
               />
               <Route exact path={`${match.url}/search`} component={Search} />
+              <Route
+                exact
+                path={`${match.url}/visualizations`}
+                component={KibanaDashboard}
+              />
             </Switch>
           </div>
         </div>
