@@ -4,14 +4,12 @@ import dateutil.parser as dparser
 from ..items import NewsSitesItem
 
 
-class NewsFirstSpider(scrapy.Spider):
-    name = "nf"
+class NewsFirstSinhalaSpider(scrapy.Spider):
+    name = "nfsl"
     allowed_domains = ["newsfirst.lk"]
-    start_urls = ['https://www.newsfirst.lk/category/life/', 'https://www.newsfirst.lk/category/business/',
-                  'https://www.newsfirst.lk/category/sports/', 'https://www.newsfirst.lk/category/world/',
-                  'https://www.newsfirst.lk/category/local/'
-    ]
-
+    start_urls = ['https://www.newsfirst.lk/sinhala/category/local/']
+    
+    
     def __init__(self, date=None):
         if date is not None:
             self.dateToMatch = dparser.parse(date,fuzzy=True).date()
@@ -33,9 +31,9 @@ class NewsFirstSpider(scrapy.Spider):
         for news_url in news_urls:
             yield response.follow(news_url, callback=self.parse_article)
 
-        next_page = response.css('.next::attr(href)').extract_first()
-        if next_page is not None:
-            yield response.follow(next_page, callback=self.parse)
+        ##next_page = response.css('.next::attr(href)').extract_first()
+        ##if next_page is not None:
+            ##yield response.follow(next_page, callback=self.parse)
 
 
     def parse_article(self, response):
@@ -48,14 +46,13 @@ class NewsFirstSpider(scrapy.Spider):
         if response.css('.artical-new-byline::text').extract() and response.css('.artical-new-byline::text').extract()[1]:
             date = response.css('.artical-new-byline::text').extract()[1]
             date = dparser.parse(date,fuzzy=True).date()
-
+            # don't add news if we are using dateToMatch and date of news 
             if self.dateToMatch is not None and self.dateToMatch != date:
                 return
             item['date'] = date.strftime("%d %B, %Y")
         else:
             return
         item['imageLink'] = response.css('.main-news-block-artical .img-responsive::attr(src)').extract_first()
-        item['source'] = 'https://www.newsfirst.lk'
-        item['content'] = '\n'.join(response.css('.editor-styles p::text').extract())
-
+        item['source'] = 'https://www.newsfirst.lk/sinhala'
+ 
         yield item
