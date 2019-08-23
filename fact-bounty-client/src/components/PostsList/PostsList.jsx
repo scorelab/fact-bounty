@@ -36,7 +36,6 @@ class PostsList extends Component {
     const { posts, userVotes, limit } = this.props
     const limitedPosts = limit ? posts.slice(0, limit) : posts
     return limitedPosts.map((post, index) => {
-      console.log(userVotes)
       const userVote = userVotes.filter(uv => uv.story_id === post._id)
       return (
         <PostItem
