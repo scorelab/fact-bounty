@@ -50,22 +50,18 @@ class PostsList extends Component {
   render() {
     const { posts, loadingPosts, limit } = this.props
     return (
-      <AsyncViewWrapper loading={posts.length <= 0 && loadingPosts}>
-        <div className="post-list-wrapper">
-          <InfiniteScroll
-            pageStart={0}
-            hasMore={!limit || (limit && limit >= posts.length)}
-            loadMore={this.loadPosts}
-            loader={this.renderLoader()}
-          >
-            <div className="postLayout">
-              <div />
-              <div>{this.renderPostList()}</div>
-              <div />
-            </div>
-          </InfiniteScroll>
+      <InfiniteScroll
+        pageStart={0}
+        hasMore={!limit || (limit && limit >= posts.length)}
+        loadMore={this.loadPosts}
+        loader={this.renderLoader()}
+      >
+        <div className="postLayout">
+          <div />
+          <div>{this.renderPostList()}</div>
+          <div />
         </div>
-      </AsyncViewWrapper>
+      </InfiniteScroll>
     )
   }
 }
