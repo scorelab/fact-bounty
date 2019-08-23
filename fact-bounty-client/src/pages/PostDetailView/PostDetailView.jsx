@@ -5,6 +5,8 @@ import VotesBar from '../../components/VotesBar'
 import placeholderWide from '../../assets/img/placeholderWide.png'
 import { fetchPostById } from '../../redux/actions/postActions'
 import AsyncViewWrapper from '../../components/AsyncViewWrapper'
+import VoteButtons from '../../components/VoteButtons'
+import { changeVoteCount } from '../../redux/actions/postActions'
 import './style.sass'
 
 class PostDetailView extends Component {
@@ -14,8 +16,16 @@ class PostDetailView extends Component {
   }
 
   render() {
-    const { currentPost: post, loading } = this.props
-    console.log(post)
+    const {
+      currentPost: post,
+      loading,
+      auth,
+      userVotes,
+      match,
+      changeVoteCount
+    } = this.props
+    const userVoteX = userVotes.filter(uv => uv.story_id === match.params.id)
+    const userVote = userVoteX[0] ? userVoteX[0].value : null
     return (
       <AsyncViewWrapper loading={!post || loading}>
         {!post || (
@@ -53,6 +63,14 @@ class PostDetailView extends Component {
                 src={post.imageLink ? post.imageLink : placeholderWide}
                 alt="fact-bounty"
               />
+              <VoteButtons
+                loading={loading}
+                post={{ ...post, _id: match.params.id }}
+                changeVoteCount={changeVoteCount}
+                isAuthenticated={auth.isAuthenticated}
+                user={auth.user}
+                userVote={userVote}
+              />
             </div>
             <div className="votes-bar-section">
               <VotesBar
@@ -75,16 +93,23 @@ PostDetailView.propTypes = {
   match: PropTypes.object,
   currentPost: PropTypes.object || null,
   loading: PropTypes.bool,
-  fetchPostById: PropTypes.func
+  fetchPostById: PropTypes.func,
+  auth: PropTypes.object,
+  userVotes: PropTypes.array,
+  changeVoteCount: PropTypes.func
 }
 
 const mapStatetoProps = state => ({
   currentPost: state.posts.currentPost,
-  loading: state.posts.loadingPosts
+  loading: state.posts.loadingPosts,
+  auth: state.auth,
+  userVotes: state.posts.userVotes
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchPostById: postId => dispatch(fetchPostById(postId))
+  fetchPostById: postId => dispatch(fetchPostById(postId)),
+  changeVoteCount: (story_id, vote_value, userVote) =>
+    dispatch(changeVoteCount(story_id, vote_value, userVote))
 })
 
 export default connect(
