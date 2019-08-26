@@ -25,11 +25,7 @@ class PostsList extends Component {
   }
 
   renderLoader = () => {
-    return (
-      <div className="loader" key={0}>
-        <CircularProgress />
-      </div>
-    )
+    return <CircularProgress />
   }
 
   renderPostList = () => {

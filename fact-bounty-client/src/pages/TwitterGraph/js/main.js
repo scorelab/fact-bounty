@@ -72,7 +72,7 @@ var Main = function(query, result_type) {
   var getting_bot_scores = {
     running: false
   }
-  var initialize_key = 'znlzy-T1dNp-G-NrjmwhxsiY-tg'
+  var initialize_key = process.env.REACT_APP_OAUTHD_KEY
   var twitter = Twitter(initialize_key)
   var graphAnimation = {
     playing: false,
