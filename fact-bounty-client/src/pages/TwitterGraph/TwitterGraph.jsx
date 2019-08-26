@@ -7,7 +7,7 @@ import './styles.sass'
 import './external.css'
 import './nv.d3.css'
 import Main from './js/main'
-import AsyncViewWrapper from '../../components/AsyncViewWrapper/AsyncViewWrapper';
+import AsyncViewWrapper from '../../components/AsyncViewWrapper/AsyncViewWrapper'
 
 class TwitterGraph extends Component {
   graphApp
@@ -429,15 +429,47 @@ class TwitterGraph extends Component {
     const loading = <AsyncViewWrapper loading={this.state.loading} />
     let playBtn, unpauseBtn, pauseBtn, stopBtn
     if (!this.state.graphAnimation.playing) {
-      playBtn = <button className="animation-control btn btn-primary" onClick={this.startGraphAnimation}><i className="fa fa-play" aria-hidden="true"></i></button>
+      playBtn = (
+        <button
+          className="animation-control btn btn-primary"
+          onClick={this.startGraphAnimation}
+        >
+          <i className="fa fa-play" aria-hidden="true" />
+        </button>
+      )
     }
     if (this.state.graphAnimation.playing && this.state.graphAnimation.paused) {
-      unpauseBtn = <button className="animation-control btn btn-primary" onClick={this.unpauseGraphAnimation}><i className="fa fa-play" aria-hidden="true"></i></button>
+      unpauseBtn = (
+        <button
+          className="animation-control btn btn-primary"
+          onClick={this.unpauseGraphAnimation}
+        >
+          <i className="fa fa-play" aria-hidden="true" />
+        </button>
+      )
     }
-    if (!this.state.graphAnimation.paused && this.state.graphAnimation.playing) {
-      pauseBtn = <button className="animation-control btn btn-primary" onClick={this.pauseGraphAnimation}><i className="fa fa-pause" aria-hidden="true"></i></button>
+    if (
+      !this.state.graphAnimation.paused &&
+      this.state.graphAnimation.playing
+    ) {
+      pauseBtn = (
+        <button
+          className="animation-control btn btn-primary"
+          onClick={this.pauseGraphAnimation}
+        >
+          <i className="fa fa-pause" aria-hidden="true" />
+        </button>
+      )
     }
-    stopBtn = <button className="animation-control btn btn-primary" onClick={this.stopGraphAnimation} disabled={!this.state.graphAnimation.playing}><i className="fa fa-stop" aria-hidden="true"></i></button>
+    stopBtn = (
+      <button
+        className="animation-control btn btn-primary"
+        onClick={this.stopGraphAnimation}
+        disabled={!this.state.graphAnimation.playing}
+      >
+        <i className="fa fa-stop" aria-hidden="true" />
+      </button>
+    )
     return (
       <div
         className={
@@ -542,7 +574,7 @@ class TwitterGraph extends Component {
           <div id="timeline" className="timeline">
             <p>Timeline</p>
             <div id="chart" className="chart">
-              <svg></svg>
+              <svg />
             </div>
             <div id="focus_label">
               Select and drag a time frame of interest above
@@ -590,7 +622,7 @@ class TwitterGraph extends Component {
                     target="_blank"
                     href={
                       'https://twitter.com/intent/user?user_id=' +
-                        this.state.node_modal_content
+                      this.state.node_modal_content
                         ? this.state.node_modal_content.user_id
                         : ''
                     }
@@ -608,8 +640,8 @@ class TwitterGraph extends Component {
                         <b>Unavailable</b>
                       </span>
                     ) : (
-                        ''
-                      )}
+                      ''
+                    )}
                   </h5>
                   {this.state.node_modal_content.botscore < 0 ? (
                     <span>
@@ -617,13 +649,13 @@ class TwitterGraph extends Component {
                       timeline is set to private or has been deleted entirely.
                     </span>
                   ) : (
-                      ''
-                    )}
+                    ''
+                  )}
                   {this.state.node_modal_content.botscore > 0 ? (
                     <div>Last calculated: </div>
                   ) : (
-                      ''
-                    )}
+                    ''
+                  )}
                   {this.screenNameChange()}
                   {!this.state.node_modal_content.showStaleContent ? (
                     <div className="alert modal-informational">
@@ -631,8 +663,8 @@ class TwitterGraph extends Component {
                       latest bot score and details for this account.
                     </div>
                   ) : (
-                      ''
-                    )}
+                    ''
+                  )}
                 </div>
                 <h2>has quoted: </h2>
                 {this.hasQuoted()}

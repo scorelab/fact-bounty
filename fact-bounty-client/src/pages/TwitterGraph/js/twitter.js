@@ -5,7 +5,7 @@ var Twitter = function(initialize_key) {
   var obj = {}
 
   /* OAUTH API shouldn't have a trailing slash */
-  var OAUTH_URL = 'https://oauth.truthy.indiana.edu',
+  var OAUTH_URL = process.env.REACT_APP_OAUTHD_URL,
     OAUTH_API = OAUTH_URL + '/api'
 
   var tokenCacheKey = 'oauth_twitter_token',
@@ -14,7 +14,7 @@ var Twitter = function(initialize_key) {
     _me
 
   OAuth.initialize(initialize_key)
-  // OAuth.setOAuthdURL(OAUTH_URL);
+  OAuth.setOAuthdURL(OAUTH_URL)
 
   function getCachedToken() {
     if (!_token) {
@@ -121,7 +121,9 @@ var Twitter = function(initialize_key) {
 
       getToken().then(
         function(token) {
-          token[method](url, { data: params })
+          token[method](url, {
+            data: params
+          })
             .done(function(response) {
               resolve(response)
             })
@@ -130,11 +132,16 @@ var Twitter = function(initialize_key) {
                *  var errMsg = params.errMsg || "We were unable to complete your" +
                *                                "request. Try again later.";
                */
-              reject({ error: error, message: errMsg })
+              reject({
+                error: error,
+                message: errMsg
+              })
             })
         },
         function(error) {
-          reject({ error: error })
+          reject({
+            error: error
+          })
         }
       )
     })
@@ -143,6 +150,7 @@ var Twitter = function(initialize_key) {
 
   var followerCursor = {},
     friendCursor = {}
+
   function getNeighbors(relationship, screenName, count) {
     var dfd = new Promise(function(resolve, reject) {
       var cursorObj = relationship.startsWith('follower')
@@ -197,7 +205,10 @@ var Twitter = function(initialize_key) {
     return apiCall(
       'GET',
       '/1.1/search/tweets.json',
-      { q: '@' + screenName, count: 100 },
+      {
+        q: '@' + screenName,
+        count: 100
+      },
       'Twitter was unable to retrieve mentions of this user, is there a typo?'
     )
   }
@@ -206,7 +217,9 @@ var Twitter = function(initialize_key) {
     return apiCall(
       'GET',
       '/1.1/users/show.json',
-      { user_id: user_id },
+      {
+        user_id: user_id
+      },
       'Twitter was unable to retrieve information for this user, is there a typo?'
     )
   }
@@ -215,7 +228,10 @@ var Twitter = function(initialize_key) {
     return apiCall(
       'GET',
       '/1.1/statuses/user_timeline.json',
-      { user_id: user_id, count: 200 },
+      {
+        user_id: user_id,
+        count: 200
+      },
       'Twitter was unable to retrieve a timeline for this user, is there a typo?'
     )
   }
@@ -270,11 +286,15 @@ var Twitter = function(initialize_key) {
   }
 
   obj.followUser = function(userId) {
-    return apiCall('POST', '/1.1/friendships/create.json', { user_id: userId })
+    return apiCall('POST', '/1.1/friendships/create.json', {
+      user_id: userId
+    })
   }
 
   obj.unfollowUser = function(userId) {
-    return apiCall('POST', '/1.1/friendships/destroy.json', { user_id: userId })
+    return apiCall('POST', '/1.1/friendships/destroy.json', {
+      user_id: userId
+    })
   }
 
   obj.me = function() {
