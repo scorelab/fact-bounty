@@ -8,8 +8,8 @@ class NewsFirstSinhalaSpider(scrapy.Spider):
     name = "nfsl"
     allowed_domains = ["newsfirst.lk"]
     start_urls = ['https://www.newsfirst.lk/sinhala/category/local/']
-    
-    
+
+
     def __init__(self, date=None):
         if date is not None:
             self.dateToMatch = dparser.parse(date,fuzzy=True).date()
@@ -46,7 +46,7 @@ class NewsFirstSinhalaSpider(scrapy.Spider):
         if response.css('.artical-new-byline::text').extract() and response.css('.artical-new-byline::text').extract()[1]:
             date = response.css('.artical-new-byline::text').extract()[1]
             date = dparser.parse(date,fuzzy=True).date()
-            # don't add news if we are using dateToMatch and date of news 
+            # don't add news if we are using dateToMatch and date of news
             if self.dateToMatch is not None and self.dateToMatch != date:
                 return
             item['date'] = date.strftime("%d %B, %Y")
@@ -54,5 +54,5 @@ class NewsFirstSinhalaSpider(scrapy.Spider):
             return
         item['imageLink'] = response.css('.main-news-block-artical .img-responsive::attr(src)').extract_first()
         item['source'] = 'https://www.newsfirst.lk/sinhala'
- 
+
         yield item
