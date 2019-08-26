@@ -14,7 +14,9 @@ import {
 import PostsService from '../../services/PostsService'
 
 export const fetchPosts = page => dispatch => {
-  dispatch({ type: LOADING_POSTS })
+  dispatch({
+    type: LOADING_POSTS
+  })
   PostsService.fetchPosts(page)
     .then(posts => {
       const stories = posts.data ? posts.data.stories : []
@@ -23,7 +25,9 @@ export const fetchPosts = page => dispatch => {
           type: FETCH_POSTS,
           payload: stories
         })
-        dispatch({ type: INCREMENT_PAGE })
+        dispatch({
+          type: INCREMENT_PAGE
+        })
       }
     })
     .catch(err => {
@@ -32,7 +36,9 @@ export const fetchPosts = page => dispatch => {
 }
 
 export const fetchPostById = postId => dispatch => {
-  dispatch({ type: LOADING_POSTS })
+  dispatch({
+    type: LOADING_POSTS
+  })
   PostsService.fetchPostById(postId)
     .then(post => {
       dispatch({
@@ -46,14 +52,22 @@ export const fetchPostById = postId => dispatch => {
 }
 
 export const changeVoteCount = (story_id, vote_value, userVote) => dispatch => {
+  console.log('changing vote', story_id, vote_value, userVote)
   dispatch({
     type: UPDATE_USER_VOTES,
-    payload: { story_id, value: vote_value }
+    payload: {
+      story_id,
+      value: vote_value
+    }
   })
   dispatch({
     type: UPDATE_POST_VOTES,
     // NOTE: userVote is required to not allow vote count to increase more than required
-    payload: { story_id, value: vote_value, userVote }
+    payload: {
+      story_id,
+      value: vote_value,
+      userVote
+    }
   })
   PostsService.changeVoteCount(story_id, vote_value)
     .then(res => {
@@ -68,7 +82,9 @@ export const changeVoteCount = (story_id, vote_value, userVote) => dispatch => {
 }
 
 export const loadUserVotes = () => dispatch => {
-  dispatch({ type: LOADING_USER_VOTES })
+  dispatch({
+    type: LOADING_USER_VOTES
+  })
   PostsService.loadUserVotes()
     .then(res => {
       dispatch({
@@ -82,7 +98,9 @@ export const loadUserVotes = () => dispatch => {
 }
 
 export const getPostsFromKeyword = keyword => dispatch => {
-  dispatch({ type: START_POSTS_SEARCH })
+  dispatch({
+    type: START_POSTS_SEARCH
+  })
   PostsService.getPostsFromKeyword(keyword)
     .then(res => {
       dispatch({
