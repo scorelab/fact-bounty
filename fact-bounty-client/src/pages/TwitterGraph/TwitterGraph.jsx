@@ -482,7 +482,7 @@ class TwitterGraph extends Component {
         <div className="container">
           <form>
             <div className="search-form">
-              <div className="pr-2 text-nowrap">Search by:</div>
+              {/* <div className="pr-2 text-nowrap">Search by:</div>
               <div className="">
                 <div className="btn-group btn-group-toggle pr-2">
                   <Button
@@ -498,7 +498,7 @@ class TwitterGraph extends Component {
                     Twitter
                   </Button>
                 </div>
-              </div>
+              </div> */}
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -622,7 +622,7 @@ class TwitterGraph extends Component {
                     target="_blank"
                     href={
                       'https://twitter.com/intent/user?user_id=' +
-                      this.state.node_modal_content
+                        this.state.node_modal_content
                         ? this.state.node_modal_content.user_id
                         : ''
                     }
@@ -640,8 +640,8 @@ class TwitterGraph extends Component {
                         <b>Unavailable</b>
                       </span>
                     ) : (
-                      ''
-                    )}
+                        ''
+                      )}
                   </h5>
                   {this.state.node_modal_content.botscore < 0 ? (
                     <span>
@@ -649,13 +649,13 @@ class TwitterGraph extends Component {
                       timeline is set to private or has been deleted entirely.
                     </span>
                   ) : (
-                    ''
-                  )}
+                      ''
+                    )}
                   {this.state.node_modal_content.botscore > 0 ? (
                     <div>Last calculated: </div>
                   ) : (
-                    ''
-                  )}
+                      ''
+                    )}
                   {this.screenNameChange()}
                   {!this.state.node_modal_content.showStaleContent ? (
                     <div className="alert modal-informational">
@@ -663,8 +663,8 @@ class TwitterGraph extends Component {
                       latest bot score and details for this account.
                     </div>
                   ) : (
-                    ''
-                  )}
+                      ''
+                    )}
                 </div>
                 <h2>has quoted: </h2>
                 {this.hasQuoted()}

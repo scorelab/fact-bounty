@@ -5,8 +5,6 @@ import TwitterSearchTimeline from './twitter_search_timeline'
 import { Observable, Subject } from 'rxjs'
 
 var Main = function(query, result_type) {
-  console.log('starting main')
-
   // *********data*************
   var query_type = result_type
   var max_id = ''
@@ -125,12 +123,16 @@ var Main = function(query, result_type) {
       graphAnimation.paused = true
       unpauseGraphAnimation()
       pauseGraphAnimation()
-      // console.debug(new Date(e.pointXValue))
     }
   )
   var timeline = globalTwitterSearchTimeline
+  changeURLParamsTwitter()
+  var searchUrl = attemptToGetUrlHostPath(query_string)
+  if (searchUrl !== null) {
+    query_string = searchUrl
+  }
 
-  //observable
+  //observables
   var modal$ = new Subject()
   var graphBuild$ = new Subject()
 
@@ -180,7 +182,7 @@ var Main = function(query, result_type) {
   }
 
   function paginateTwitterRequests() {
-    console.log('getting twitter search results')
+    console.log(query_string)
     const tweetsResponse = twitter.getTweets(
       query_string,
       lang,
@@ -206,8 +208,6 @@ var Main = function(query, result_type) {
           // Continue pagination
           paginateTwitterRequests()
         } else {
-          // Stop pagination
-          console.log('Stopping get twitter search results')
           // Create timeline and graph given the Twitter results
           buildTwitterGraph()
           // Check if animation should be disabled or not
@@ -229,8 +229,6 @@ var Main = function(query, result_type) {
   paginateTwitterRequests()
 
   function buildTwitterEdgesTimeline(twitterEntities) {
-    console.log('Build graph')
-
     function TwitterEdge() {
       this.canonical_url = ''
       this.date_published = ''
@@ -723,6 +721,30 @@ var Main = function(query, result_type) {
 
   function startGraphAnimation() {
     graph.startAnimation()
+  }
+
+  function changeURLParamsTwitter() {
+    var query_string2 =
+      'query=' +
+      encodeURIComponent(query) +
+      '&sort=' +
+      result_type +
+      '&type=' +
+      'Twitter'
+    window.location.hash = query_string2
+    return query_string2
+  }
+
+  function attemptToGetUrlHostPath(url) {
+    var urlLink = document.createElement('a')
+    urlLink.href = url
+    if (window.location.hostname === urlLink.hostname) {
+      // Element was not a link so we return null
+      return null
+    } else {
+      // Return hostname and pathname of url to re-construct principal components of an url e.g. <hostname><pathname> or www.host-stuff.com/pathstuff
+      return urlLink.hostname + urlLink.pathname
+    }
   }
 
   return {
