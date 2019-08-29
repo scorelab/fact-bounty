@@ -9,6 +9,7 @@ import patch3 from '../../assets/img/patch3.png'
 import PostsList from '../../components/PostsList'
 import ContactUsForm from '../../components/ContactUsForm'
 import './style.sass'
+import TweetList from '../../components/TweetList/TweetList';
 
 class Landing extends Component {
   componentDidMount() {
@@ -80,6 +81,14 @@ class Landing extends Component {
                 <Icon fontSize="large">keyboard_arrow_right</Icon>
               </div>
             </Link>
+          </div>
+        </div>
+
+        {/* ============= RECENT TWEETS SECTION ============= */}
+        <div className="container" id="recentPosts">
+          <div className="recent-posts">
+            <h1>Recent Tweets</h1>
+            <TweetList limit={4} user={'adaderana'} />
           </div>
         </div>
 

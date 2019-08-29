@@ -1,12 +1,13 @@
 import axios from 'axios'
 const OAuth = window.OAuth
 
-var Twitter = function(initialize_key) {
+var Twitter = function() {
   var obj = {}
 
   /* OAUTH API shouldn't have a trailing slash */
   var OAUTH_URL = process.env.REACT_APP_OAUTHD_URL,
-    OAUTH_API = OAUTH_URL + '/api'
+    OAUTH_API = OAUTH_URL + '/api',
+    initialize_key = process.env.REACT_APP_OAUTHD_KEY
 
   var tokenCacheKey = 'oauth_twitter_token',
     providerCacheKey = 'oauth_twitter_provider',
@@ -115,7 +116,6 @@ var Twitter = function(initialize_key) {
   }
 
   function apiCall(method, url, params, errMsg) {
-    // var dfd = $q.defer();
     var dfd = new Promise(function(resolve, reject) {
       method = method.toLowerCase()
 
@@ -314,6 +314,18 @@ var Twitter = function(initialize_key) {
     _token = undefined
     _me = undefined
     localStorage.removeItem(tokenCacheKey)
+  }
+
+  obj.getUserTweets = function(limit, user) {
+    return apiCall(
+      'GET',
+      '/1.1/statuses/user_timeline.json',
+      {
+        screen_name: user,
+        count: limit
+      },
+      'Twitter was unable to retrieve mentions of this user, is there a typo?'
+    )
   }
 
   return obj

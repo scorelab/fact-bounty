@@ -482,23 +482,6 @@ class TwitterGraph extends Component {
         <div className="container">
           <form>
             <div className="search-form">
-              {/* <div className="pr-2 text-nowrap">Search by:</div>
-              <div className="">
-                <div className="btn-group btn-group-toggle pr-2">
-                  <Button
-                    disabled
-                    id="searchByTwitter"
-                    data-toggle="tooltip"
-                    data-delay="0"
-                    title="search Twitter content from the past 7 days"
-                    type="Button"
-                    color="primary"
-                    variant="contained"
-                  >
-                    Twitter
-                  </Button>
-                </div>
-              </div> */}
               <TextField
                 variant="outlined"
                 margin="normal"

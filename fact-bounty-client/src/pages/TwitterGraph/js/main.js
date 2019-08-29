@@ -1,4 +1,4 @@
-import Twitter from './twitter'
+import Twitter from '../../../helpers/twitter'
 import moment from 'moment'
 import HoaxyGraph from './graph'
 import TwitterSearchTimeline from './twitter_search_timeline'
@@ -70,8 +70,8 @@ var Main = function(query, result_type) {
   var getting_bot_scores = {
     running: false
   }
-  var initialize_key = process.env.REACT_APP_OAUTHD_KEY
-  var twitter = Twitter(initialize_key)
+  // var initialize_key = process.env.REACT_APP_OAUTHD_KEY
+  var twitter = Twitter()
   var graphAnimation = {
     playing: false,
     increment: 0,
@@ -182,7 +182,6 @@ var Main = function(query, result_type) {
   }
 
   function paginateTwitterRequests() {
-    console.log(query_string)
     const tweetsResponse = twitter.getTweets(
       query_string,
       lang,
@@ -421,7 +420,6 @@ var Main = function(query, result_type) {
         }
       }
     }
-    console.log('Stopping build graph')
   }
 
   function formatDate(unFormattedDate) {
