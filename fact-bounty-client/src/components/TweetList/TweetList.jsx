@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { fetchTweets } from '../../redux/actions/twitterActions'
 import PropTypes from 'prop-types'
 import AsyncViewWrapper from '../AsyncViewWrapper'
-import PostItem from '../PostItem'
+import TweetItem from '../TweetItem'
 
 class TweetList extends Component {
   componentDidMount() {
@@ -11,13 +11,16 @@ class TweetList extends Component {
   }
 
   loadTweets() {
-    this.props.fetchTweets(this.props.limit, this.props.user)
+    const { tweets } = this.props
+    if (tweets.length === 0) {
+      this.props.fetchTweets(this.props.limit, this.props.user)
+    }
   }
 
   renderTweetList() {
     const { tweets } = this.props
     return tweets.map((item, index) => {
-      return <PostItem key={index} post={item} userVote={null} />
+      return <TweetItem key={index} post={item} userVote={null} />
     })
   }
 

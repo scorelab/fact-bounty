@@ -18,7 +18,8 @@ export const fetchTweets = (limit, user) => dispatch => {
           _id: tweet.id_str,
           approved_count: 0,
           mixedvote_count: 0,
-          fake_count: 0
+          fake_count: 0,
+          user: tweet.user.screen_name
         }
         tweetItems.push(item)
       })
