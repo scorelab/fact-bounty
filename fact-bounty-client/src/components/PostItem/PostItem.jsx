@@ -9,6 +9,7 @@ import placeholder from '../../assets/img/placeholder.png'
 import { changeVoteCount } from '../../redux/actions/postActions'
 import VotesBar from '../VotesBar'
 import VoteButtons from '../VoteButtons'
+import moment from 'moment'
 import './style.sass'
 
 class PostItem extends Component {
@@ -42,7 +43,7 @@ class PostItem extends Component {
                 <div className="details">
                   <div className="title">{post.title}</div>
                   <div className="date">
-                    {new Date(post.date).toUTCString()}
+                    {!post.date || moment(new Date(post.date)).from(new Date())}
                   </div>
                   <div className="content">
                     {post.content.slice(0, 220).trim()}

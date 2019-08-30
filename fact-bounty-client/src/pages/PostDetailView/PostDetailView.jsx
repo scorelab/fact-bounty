@@ -7,6 +7,7 @@ import { fetchPostById } from '../../redux/actions/postActions'
 import AsyncViewWrapper from '../../components/AsyncViewWrapper'
 import VoteButtons from '../../components/VoteButtons'
 import { changeVoteCount } from '../../redux/actions/postActions'
+import moment from 'moment'
 import './style.sass'
 
 class PostDetailView extends Component {
@@ -35,7 +36,12 @@ class PostDetailView extends Component {
                 <h2>{post.title}</h2>
                 <div className="info">
                   <label>
-                    <b>Date:</b> {new Date(post.date).toUTCString()} |
+                    <b>Date:</b> {post.date}{' '}
+                    {!post.date ||
+                      `( ${moment(new Date(post.date)).from(
+                        new Date()
+                      )} )`}{' '}
+                    |
                   </label>
                   <label>
                     <b>Author:</b> {post.author} |
