@@ -2,7 +2,12 @@ import { LOADING_TWEETS, FETCH_TWEETS } from '../actions/actionTypes'
 
 const initialState = {
   loadingTweets: false,
-  items: []
+  items: {
+    adaderana: [],
+    lankacnews: [],
+    vigasapuwath: [],
+    mawbimaonline: []
+  }
 }
 
 export default function(state = initialState, action) {
@@ -14,11 +19,13 @@ export default function(state = initialState, action) {
       }
     }
     case FETCH_TWEETS: {
-      return {
-        ...state,
-        items: [...state.items, ...action.payload],
+      return Object.assign({}, state, {
+        items: {
+          ...state.items,
+          [action.user]: action.payload
+        },
         loadingTweets: false
-      }
+      })
     }
     default: {
       return state

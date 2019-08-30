@@ -25,7 +25,8 @@ export const fetchTweets = (limit, user) => dispatch => {
       })
       dispatch({
         type: FETCH_TWEETS,
-        payload: tweetItems
+        payload: tweetItems,
+        user: user
       })
     })
     .catch(err => {

@@ -9,9 +9,38 @@ import patch3 from '../../assets/img/patch3.png'
 import PostsList from '../../components/PostsList'
 import ContactUsForm from '../../components/ContactUsForm'
 import './style.sass'
-import TweetList from '../../components/TweetList/TweetList';
+import TweetList from '../../components/TweetList/TweetList'
+import Paper from '@material-ui/core/Paper'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
+import SwipeableViews from 'react-swipeable-views'
+import Typography from '@material-ui/core/Typography'
+// import Box from '@material-ui/core/Box'
 
+function TabPanel(props) {
+  const { children, value, index, ...other } = props
+
+  return (
+    <Typography
+      component="div"
+      role="tabpanel"
+      hidden={value !== index}
+      id={`full-width-tabpanel-${index}`}
+      aria-labelledby={`full-width-tab-${index}`}
+      {...other}
+    >
+      {children}
+    </Typography>
+  )
+}
 class Landing extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      value: 0
+    }
+  }
+
   componentDidMount() {
     this.initHashScroll()
   }
@@ -29,7 +58,20 @@ class Landing extends Component {
     }
   }
 
+  handleChange = (event, newValue) => {
+    this.setState({
+      value: newValue
+    })
+  }
+
+  handleChangeIndex = index => {
+    this.setState({
+      value: index
+    })
+  }
+
   render() {
+    const { value } = this.state
     return (
       <div className="landing-container">
         <div className="patch-wrapper-2">
@@ -85,11 +127,56 @@ class Landing extends Component {
         </div>
 
         {/* ============= RECENT TWEETS SECTION ============= */}
-        <div className="container" id="recentPosts">
+        {/* <div className="container" id="recentPosts">
           <div className="recent-posts">
             <h1>Recent Tweets</h1>
             <TweetList limit={4} user={'adaderana'} />
           </div>
+        </div> */}
+        <div className="container">
+          <h1>Recent Tweets</h1>
+          <Paper>
+            <Tabs
+              value={value}
+              onChange={this.handleChange}
+              indicatorColor="primary"
+              textColor="primary"
+              centered
+            >
+              <Tab label="Ada Derana" />
+              <Tab label="lanka C news" />
+              <Tab label="විගස පුවත් 24x7" />
+              <Tab label="Mawbima" />
+            </Tabs>
+          </Paper>
+        </div>
+        <div className="tab-container">
+          <SwipeableViews
+            // axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+            index={value}
+            onChangeIndex={this.handleChangeIndex}
+          >
+            <TabPanel value={value} index={0}>
+              <div className="container">
+                <TweetList limit={4} user={'adaderana'} />
+              </div>
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+              <div className="container">
+                <TweetList limit={4} user={'lankacnews'} />
+              </div>
+            </TabPanel>
+            <TabPanel value={value} index={2}>
+              <div className="container">
+                <TweetList limit={4} user={'vigasapuwath'} />
+              </div>
+            </TabPanel>
+            <TabPanel value={value} index={3}>
+              <div className="container">
+                <TweetList limit={4} user={'mawbimaonline'} />
+              </div>
+            </TabPanel>
+          </SwipeableViews>
         </div>
 
         {/* ============= ABOUT SECTION ============= */}
