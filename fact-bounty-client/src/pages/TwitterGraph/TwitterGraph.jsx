@@ -55,14 +55,16 @@ class TwitterGraph extends Component {
   }
 
   componentDidMount() {
-    const url = this.props.location.state.tweetUrl
-    if (url) {
-      this.setState(
-        {
-          queryText: url
-        },
-        this.submitForm
-      )
+    if (this.props.location.state) {
+      const url = this.props.location.state.tweetUrl
+      if (url) {
+        this.setState(
+          {
+            queryText: url
+          },
+          this.submitForm
+        )
+      }
     }
   }
 
