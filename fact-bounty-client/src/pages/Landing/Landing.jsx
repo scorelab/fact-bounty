@@ -117,7 +117,7 @@ class Landing extends Component {
           <div className="recent-posts">
             <h1>Recent Posts</h1>
             <PostsList limit={4} />
-            <Link to="/dashboard/posts">
+            <Link to="/posts">
               <div className="view-all-btn">
                 <label>View All</label>
                 <Icon fontSize="large">keyboard_arrow_right</Icon>

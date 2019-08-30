@@ -7,19 +7,13 @@ const DashboardSideNav = () => {
     <div className="dashboard-side-nav-container">
       <ul className="links">
         <li>
-          <Link className="link" to="/dashboard/posts">
-            Posts
-          </Link>
-        </li>
-        <hr />
-        <li>
           <Link className="link" to="/dashboard/twitter">
             Twitter
           </Link>
         </li>
         <hr />
         <li>
-          <Link className="link" to="/dashboard/visualizations">
+          <Link className="link" to="/dashboard/search">
             Search
           </Link>
         </li>
