@@ -11,17 +11,19 @@ class TweetList extends Component {
   }
 
   loadTweets() {
-    const { tweets } = this.props
+    const tweets = this.props.tweets[this.props.user]
     if (tweets.length === 0) {
       this.props.fetchTweets(this.props.limit, this.props.user)
     }
   }
 
   renderTweetList() {
-    const { tweets } = this.props
-    return tweets.map((item, index) => {
-      return <TweetItem key={index} post={item} userVote={null} />
-    })
+    const tweets = this.props.tweets[this.props.user]
+    if (tweets) {
+      return tweets.map((item, index) => {
+        return <TweetItem key={index} post={item} userVote={null} />
+      })
+    }
   }
 
   render() {
@@ -36,7 +38,7 @@ class TweetList extends Component {
 
 TweetList.propTypes = {
   fetchTweets: PropTypes.func,
-  tweets: PropTypes.array,
+  tweets: PropTypes.object,
   loading: PropTypes.bool,
   limit: PropTypes.number,
   user: PropTypes.string
