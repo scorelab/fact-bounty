@@ -23,6 +23,7 @@ const PublicLinks = () => (
         About
       </Link>
     </ListItem>
+    <Divider />
     <ListItem button>
       <Link to="/#contact" style={styles.link}>
         Contact Us

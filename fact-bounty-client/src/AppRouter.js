@@ -3,12 +3,15 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 //components
 import NavBar from './components/NavBar'
+import PrivateRoute from './components/PrivateRoute'
 
 //pages
 import Landing from './pages/Landing'
 import Register from './pages/Register'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
+import Posts from './pages/Posts'
+import PostDetailView from './pages/PostDetailView'
 
 class AppRouter extends Component {
   render() {
@@ -20,6 +23,8 @@ class AppRouter extends Component {
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
           <Route path="/dashboard" component={Dashboard} />
+          <Route exact path="/posts" component={Posts} />
+          <Route exact path="/post/:id" component={PostDetailView} />
         </Fragment>
       </Router>
     )

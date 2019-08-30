@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Switch } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import './style.sass'
+import PrivateRoute from '../../components/PrivateRoute'
 
 //Pages in the dashboard
-import Posts from '../Posts'
-import PostDetailView from '../PostDetailView'
 import TwitterGraph from '../TwitterGraph'
 import DashboardSideNav from '../../components/DashboardSideNav'
 import Search from '../Search'
 import KibanaDashboard from '../KibanaDashboard'
+import PostDetailView from '../../pages/PostDetailView'
 
 class Dashboard extends Component {
   render() {
@@ -32,23 +32,26 @@ class Dashboard extends Component {
           </div>
           <div className="col-md-10 right-section">
             <Switch>
-              <Route exact path={`/dashboard`} component={Welcome} />
-              <Route exact path={`${match.url}/posts`} component={Posts} />
-              <Route
-                exact
-                path={`${match.url}/post/:id`}
-                component={PostDetailView}
-              />
-              <Route
+              <PrivateRoute exact path={`/dashboard`} component={Welcome} />
+              <PrivateRoute
                 exact
                 path={`${match.url}/twitter`}
                 component={TwitterGraph}
               />
-              <Route exact path={`${match.url}/search`} component={Search} />
-              <Route
+              <PrivateRoute
+                exact
+                path={`${match.url}/search`}
+                component={Search}
+              />
+              <PrivateRoute
                 exact
                 path={`${match.url}/visualizations`}
                 component={KibanaDashboard}
+              />
+              <PrivateRoute
+                exact
+                path={`${match.url}/post/:id`}
+                component={PostDetailView}
               />
             </Switch>
           </div>

@@ -24,6 +24,7 @@ const PrivateLinks = ({ handleLogout }) => (
         About
       </Link>
     </ListItem>
+    <Divider />
     <ListItem button>
       <Link to="/#contact" style={styles.link}>
         Contact Us
@@ -32,7 +33,7 @@ const PrivateLinks = ({ handleLogout }) => (
     <Divider />
     <ListItem button>
       <Link to="/dashboard" style={styles.link}>
-        Profile
+        Dashboard
       </Link>
     </ListItem>
     <Divider />
