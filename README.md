@@ -74,6 +74,8 @@ Run npm install in fact-bounty-client folder.
         export ELASTIC_SEARCH_URL=""
         export ELASTIC_SEARCH_USERNAME=""
         export ELASTIC_SEARCH_PASSWORD=""
+
+        export TZ=“Asia/Colombo” 
     ```
 
     Save the file.
