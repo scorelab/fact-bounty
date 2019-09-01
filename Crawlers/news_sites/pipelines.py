@@ -9,9 +9,12 @@ import dateutil.parser as dparser
 
 class NewsSitesPipeline(object):
     def process_item(self, item, spider):
+        # add vote columns with initialized value to 0
         item["approved_count"] = 0
         item["fake_count"] = 0
         item["mixedvote_count"] = 0
+
+        # change date format to allow elasticsearch to detect it as date column
         date = dparser.parse(item["date"]).date()
         item["date"] = date.isoformat()
 

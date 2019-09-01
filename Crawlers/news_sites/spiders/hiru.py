@@ -8,7 +8,7 @@ from news_sites.items import NewsSitesItem
 class HiruNewsSpider(scrapy.Spider):
     name = "hirunews"
     allowed_domains = ["hirunews.lk"]
-    start_urls = ['http://www.hirunews.lk/sinhala/local-news.php']
+    start_urls = ["http://www.hirunews.lk/sinhala/local-news.php"]
 
     def __init__(self, date=None):
         if date is not None:
@@ -17,21 +17,19 @@ class HiruNewsSpider(scrapy.Spider):
             self.dateToMatch = None
 
     def parse(self, response):
-        for news_url in response.css(
-            '.lts-cntp a::attr("href")'
-        ).extract():
+        for news_url in response.css('.lts-cntp a::attr("href")').extract():
             yield response.follow(news_url, callback=self.parse_article)
 
-        ##next_page = response.css('.active+ li a::attr("href")').extract_first()
-        ##if next_page is not None:
-            ##yield response.follow(next_page, callback=self.parse)
+        # next_page = response.css('.active+ li a::attr("href")').extract_first()
+        # if next_page is not None:
+        # yield response.follow(next_page, callback=self.parse)
 
     def parse_article(self, response):
         item = NewsSitesItem()
 
         item["author"] = "hirunews.lk"
         item["title"] = response.css(".lts-cntp2::text").extract_first()
-        date = response.css('.time::text').extract_first()
+        date = response.css(".time::text").extract_first()
         if date is None:
             return
 
@@ -49,5 +47,6 @@ class HiruNewsSpider(scrapy.Spider):
         item["date"] = date.strftime("%d %B, %Y")
         item["imageLink"] = img_link
         item["source"] = "http://www.hirunews.lk/sinhala"
+        item["news_url"] = response.url
 
         yield item

@@ -8,7 +8,7 @@ from news_sites.items import NewsSitesItem
 class adaDeranaSinhalaSpider(scrapy.Spider):
     name = "adaderanasl"
     allowed_domains = ["sinhala.adaderana.lk"]
-    start_urls = ['http://sinhala.adaderana.lk/morehotnews.php']
+    start_urls = ["http://sinhala.adaderana.lk/morehotnews.php"]
 
     def __init__(self, date=None):
         if date is not None:
@@ -17,21 +17,19 @@ class adaDeranaSinhalaSpider(scrapy.Spider):
             self.dateToMatch = None
 
     def parse(self, response):
-        for news_url in response.css(
-            '.story-text a::attr("href")'
-        ).extract():
+        for news_url in response.css('.story-text a::attr("href")').extract():
             yield response.follow(news_url, callback=self.parse_article)
 
-        ##next_page = response.css('.active+ li a::attr("href")').extract_first()
-        ##if next_page is not None:
-            ##yield response.follow(next_page, callback=self.parse)
+        # next_page = response.css('.active+ li a::attr("href")').extract_first()
+        # if next_page is not None:
+        # yield response.follow(next_page, callback=self.parse)
 
     def parse_article(self, response):
         item = NewsSitesItem()
 
         item["author"] = "http://sinhala.adaderana.lk"
         item["title"] = response.css(".news-heading::text").extract_first()
-        date = response.css('.news-datestamp::text').extract_first()
+        date = response.css(".news-datestamp::text").extract_first()
         if date is None:
             return
 
@@ -48,5 +46,6 @@ class adaDeranaSinhalaSpider(scrapy.Spider):
         item["date"] = date.strftime("%d %B, %Y")
         item["imageLink"] = img_link
         item["source"] = "http://sinhala.adaderana.lk"
+        item["news_url"] = response.url
 
         yield item

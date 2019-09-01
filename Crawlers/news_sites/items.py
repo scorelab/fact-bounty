@@ -20,3 +20,4 @@ class NewsSitesItem(scrapy.Item):
     approved_count = scrapy.Field()
     fake_count = scrapy.Field()
     mixedvote_count = scrapy.Field()
+    news_url = scrapy.Field()

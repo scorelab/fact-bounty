@@ -8,8 +8,7 @@ from news_sites.items import NewsSitesItem
 class RateGossipSpider(scrapy.Spider):
     name = "rategossip"
     allowed_domains = ["rategossip.com"]
-    start_urls = ['http://www.rategossip.com/all-page.html',
-                  ]
+    start_urls = ["http://www.rategossip.com/all-page.html"]
 
     def __init__(self, date=None):
         if date is not None:
@@ -23,16 +22,16 @@ class RateGossipSpider(scrapy.Spider):
         ).extract():
             yield response.follow(news_url, callback=self.parse_article)
 
-        ##next_page = response.css('.active+ li a::attr("href")').extract_first()
-        ##if next_page is not None:
-            ##yield response.follow(next_page, callback=self.parse)
+        # next_page = response.css('.active+ li a::attr("href")').extract_first()
+        # if next_page is not None:
+        # yield response.follow(next_page, callback=self.parse)
 
     def parse_article(self, response):
         item = NewsSitesItem()
 
         item["author"] = "http://www.rategossip.com"
         item["title"] = response.css(".artititle a::text").extract_first()
-        date = response.css('.artidate::text').extract_first()
+        date = response.css(".artidate::text").extract_first()
         if date is None:
             return
 
@@ -50,5 +49,6 @@ class RateGossipSpider(scrapy.Spider):
         item["date"] = date.strftime("%d %B, %Y")
         item["imageLink"] = img_link
         item["source"] = "http://www.rategossip.com"
+        item["news_url"] = response.url
 
         yield item
