@@ -59,5 +59,6 @@ class amSpider(scrapy.Spider):
         item["content"] = " \n ".join(
             response.css("#k2Container p::text").extract()
         )
+        item["news_url"] = response.url
 
         yield item

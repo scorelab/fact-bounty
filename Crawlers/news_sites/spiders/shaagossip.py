@@ -8,8 +8,7 @@ from news_sites.items import NewsSitesItem
 class ShaaGossipSpider(scrapy.Spider):
     name = "shaagossip"
     allowed_domains = ["gossip.shaafm.lk"]
-    start_urls = ['http://gossip.shaafm.lk/gossipnews/',
-                  ]
+    start_urls = ["http://gossip.shaafm.lk/gossipnews/"]
 
     def __init__(self, date=None):
         if date is not None:
@@ -18,21 +17,19 @@ class ShaaGossipSpider(scrapy.Spider):
             self.dateToMatch = None
 
     def parse(self, response):
-        for news_url in response.css(
-            '.nwsheading a::attr("href")'
-        ).extract():
+        for news_url in response.css('.nwsheading a::attr("href")').extract():
             yield response.follow(news_url, callback=self.parse_article)
 
-        ##next_page = response.css('.active+ li a::attr("href")').extract_first()
-        ##if next_page is not None:
-            ##yield response.follow(next_page, callback=self.parse)
+        # next_page = response.css('.active+ li a::attr("href")').extract_first()
+        # if next_page is not None:
+        # yield response.follow(next_page, callback=self.parse)
 
     def parse_article(self, response):
         item = NewsSitesItem()
 
         item["author"] = "http://gossip.shaafm.lk"
         item["title"] = response.css(".nwsheading a::text").extract_first()
-        date = response.css('.datecalendar div::text').extract_first()
+        date = response.css(".datecalendar div::text").extract_first()
         if date is None:
             return
 
@@ -50,5 +47,6 @@ class ShaaGossipSpider(scrapy.Spider):
         item["date"] = date.strftime("%d %B")
         item["imageLink"] = img_link
         item["source"] = "http://gossip.shaafm.lk"
+        item["news_url"] = response.url
 
         yield item
