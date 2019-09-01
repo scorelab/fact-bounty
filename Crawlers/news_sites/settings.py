@@ -67,13 +67,10 @@ ROBOTSTXT_OBEY = True
 # ITEM_PIPELINES = {
 #    'news_sites.pipelines.NewsSitesPipeline': 300,
 # }
-ITEM_PIPELINES = {
-    "news_sites.pipelines.NewsSitesPipeline": 300,
-    "scrapyelasticsearch.scrapyelasticsearch.ElasticSearchPipeline": 500,
-}
+ITEM_PIPELINES = {"news_sites.pipelines.NewsSitesPipeline": 300}
 
 ELASTICSEARCH_SERVERS = ["http://localhost:9200"]
-ELASTICSEARCH_INDEX = "test"
+ELASTICSEARCH_INDEX = "test5"
 ELASTICSEARCH_TYPE = "story"
 
 # Enable and configure the AutoThrottle extension (disabled by default)
