@@ -178,6 +178,16 @@ class Landing extends Component {
             </TabPanel>
           </SwipeableViews>
         </div>
+        <div className="container">
+          <div>
+            <Link to="/tweets">
+              <div className="view-all-btn">
+                <label>View All</label>
+                <Icon fontSize="large">keyboard_arrow_right</Icon>
+              </div>
+            </Link>
+          </div>
+        </div>
 
         {/* ============= ABOUT SECTION ============= */}
         <div className="container" id="about">

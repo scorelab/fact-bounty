@@ -38,6 +38,9 @@ class PrivateLinks extends React.Component {
         <Link to="/posts" style={styles.link}>
           <Button color="inherit">Posts</Button>
         </Link>
+        <Link to="/tweets" style={styles.link}>
+          <Button color="inherit">Tweets</Button>
+        </Link>
         <Link to="/#about" style={styles.link}>
           <Button color="inherit">About</Button>
         </Link>
