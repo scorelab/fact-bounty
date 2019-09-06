@@ -9,11 +9,11 @@ class ContactUsForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      name: null,
-      email: null,
-      phone: null,
+      name: undefined,
+      email: undefined,
+      phone: undefined,
       subject: 'User - Contact Us',
-      message: null
+      message: undefined
     }
   }
 
@@ -85,7 +85,7 @@ class ContactUsForm extends Component {
             color="primary"
             style={{ width: 120, alignSelf: 'center', marginTop: 20 }}
             type="submit"
-            loading={loading}
+            loading={loading.toString()}
             disabled={loading}
           >
             SEND
