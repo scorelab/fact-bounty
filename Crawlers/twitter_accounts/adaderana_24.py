@@ -6,7 +6,6 @@ from elasticsearch import Elasticsearch, helpers
 from datetime import datetime
 from dotenv import load_dotenv
 
-
 load_dotenv()
 
 consumer_key = os.getenv('consumer_key')
@@ -59,7 +58,7 @@ def get_all_tweets(screen_name):
         data = [  # Please without s in data
             {
                 "_index": "twitter_index",
-                "_type": "adaderana",
+                "_type": "AdaDerana_24",
                 "_id": index,
                 "_source": ID
             }
@@ -75,11 +74,11 @@ def get_all_tweets(screen_name):
 
 
 if __name__ == '__main__':
-    # pass in the username of the account  want to download
-    get_all_tweets("adaderana")
+    # pass in the username of the account you want to download
+    get_all_tweets("AdaDerana_24")
     if __name__ == "__main__":
         time.sleep(60)
         while True:
-            thr = threading.Thread(target=get_all_tweets("adaderana"))
+            thr = threading.Thread(target=get_all_tweets("AdaDerana_24"))
             thr.start()
             time.sleep(3600)  # do work every one hour
