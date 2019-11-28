@@ -168,14 +168,36 @@ And use [localhost:3000](https://) to browse.
 
 ### Running with Docker
 
-1. Set DEV_DATABASE_URL as environment variable in fact-bounty-flask else it will connect to default i.e `data-dev.sqlite`.
-2. In the root of the project directory, run `docker-compose build`
-   - If you are on Linux machine, execute the following steps to install compose. 
+*   #### Set DEV_DATABASE_URL as environment variable in fact-bounty-flask else it will connect to default i.e `data-dev.sqlite`
+
+*   #### In the root of the project directory, run `docker-compose build`
+    If you are on Linux machine, execute the following steps to install compose. 
+    ```
+        sudo curl -L https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+        sudo chmod +x /usr/local/bin/docker-compose
+    ```
+     
+*   #### Set Environment Variables
+    Create a .env file and add the following:
+    ```
+        FLASK_APP="app.py"
+        SECRET_KEY="some-very-long-string-of-random-characters-CHANGE-TO-YOUR-LIKING"
+        FLASK_ENV="development"
+        FLASK_CONFIG="development"
+
+        DEV_DATABASE_URL=""
+        TEST_DATABASE_URL=""
+        DATABASE_URL=""
+
+        ELASTIC_SEARCH_URL=""
+        ELASTIC_SEARCH_USERNAME=""
+        ELASTIC_SEARCH_PASSWORD=""
+
+        TZ=“Asia/Colombo”
      ```
-     sudo curl -L https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
-     sudo chmod +x /usr/local/bin/docker-compose
-     ```
-3. Once build completes, run `docker-compose up`
+    Save the file.
+
+*   #### Once build completes, run `docker-compose up`
 
 # How to Contribute
 
