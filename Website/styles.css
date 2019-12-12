@@ -1,0 +1,68 @@
+* {
+	font-family: 'Indie Flower', cursive;
+}
+
+body {
+	margin: 5px;
+}
+
+h1 {
+	display: block;
+	margin-bottom: .5em;
+	text-align: center;
+}
+
+h2 {
+	font-size: 1.2rem;
+	text-align: center;
+    text-decoration: underline;
+}
+
+img {
+	display: block;
+	margin: 0 auto;
+	max-height: 250px;
+}
+
+ul {
+	padding-left: 1.2em;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.container {
+	display: flex;
+}
+
+.col {
+	display: flex;
+	flex-direction: column;
+	overflow: auto;
+	width: 33%;
+}
+
+.top-right {
+	position: absolute;
+	right: 20px;
+	top: 20px;
+}
+
+.row {
+	flex-grow: 1;
+	margin: 5px;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+#problems { background-color: #c69cf4; }
+#motives { background-color: #9cf4a7; }
+#fears { background-color: #9ce5f4; }
+#business { background-color: #f4b69c; }
+#users { background-color: #f4f19c; }
+#uvp { background-color: #f49cc8; }
+#problems { background-color: #e3c0ac; }
+#competitive-advantages { background-color: #a39cf4; }
+#alternatives { background-color: #f4c89c; }
+#solutions { background-color: #9cf4df; }
