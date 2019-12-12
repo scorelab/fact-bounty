@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html ng-app="angular">
+	<head>
+			<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>User Persona</title>
+		<link rel="stylesheet" href="styles.css">
+		<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+	</head>
+	<body ng-controller="controller">
+		<h1>User Persona</h1>
+		<select class="top-right" ng-model="model" ng-options="persona.Name for persona in Personas track by persona.Id"></select>
+		<div class="container">
+			<div class="col">
+				<div class="row" id="motives">
+					<h2>{{model.Name}}</h2>
+					<img alt="Person" ng-src="photos/{{model.Photo}}">
+					<p class="text-center">"{{model.Quote}}"</p>
+					<ul>
+						<li>Age: {{model.Age}}</li>
+						<li>Occupation: {{model.Occupation}}</li>
+						<li>Family: {{model.Family}}</li>
+						<li>Location: {{model.Location}}</li>
+						<li>Character: {{model.Character}}</li>
+					</ul>
+				</div>
+				<div class="row" id="fears">
+					<h2>Personality</h2>
+					<ul>
+						<li ng-repeat="item in model.PersonalityTraits">
+							{{item.Name}}
+							<br><progress ng-value="item.Value" max="100"></progress>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="col">
+				<div class="row" id="business">
+					<h2>Goals</h2>
+					<ul>
+						<li ng-repeat="goal in model.Goals">{{goal}}</li>
+					</ul>
+				</div>
+				<div class="row" id="users">
+					<h2>Frustrations</h2>
+					<ul>
+						<li ng-repeat="frustration in model.Frustrations">{{frustration}}</li>
+					</ul>
+				</div>
+				<div class="row" id="uvp">
+					<h2>Bio</h2>
+					<p>{{model.Bio}}</p>
+				</div>
+			</div>
+			<div class="col">
+				<div class="row" id="competitive-advantages">
+					<h2>Motivations</h2>
+					<ul>
+						<li ng-repeat="item in model.Motivations">
+							{{item.Name}}
+							<br><progress ng-value="item.Value" max="100"></progress>
+						</li>
+					</ul>
+				</div>
+				<div class="row" id="alternatives">
+					<h2>Brands</h2>
+					<ul>
+						<li>Fill in this field with all types of potential or existing target users of the analyzed business.</li>
+					</ul>
+				</div>
+				<div class="row" id="solutions">
+					<h2>Preferred Channels</h2>
+					<ul>
+						<li ng-repeat="item in model.PreferredChannels">
+							{{item.Name}}
+							<br><progress ng-value="item.Value" max="100"></progress>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<script src="angular.js"></script>
+		<script src="app.js"></script>
+	</body>
+</html>
