@@ -1,0 +1,79 @@
+@import '../../styles/variables.sass'
+
+.landing-container
+    .patch-wrapper-2
+        @media #{'only screen and (max-width: 1200px)'}
+            display: none
+        width: 600px
+        height: auto
+        position: absolute
+        right: -150px
+        top: 600px 
+        img 
+            overflow-x: hidden;
+            width: 100%
+            opacity: 0.5
+    .patch-wrapper-3
+        @media #{'only screen and (max-width: 1200px)'}
+            display: none
+        width: 600px
+        height: auto
+        position: absolute
+        left: -200px 
+        top: 1700px 
+        img 
+            width: 140%
+            opacity: 0.5
+    .divider
+        margin: 80px 0px 0px 0px
+    .header
+        margin: 30px 0px 0px 0px
+        .left-section
+            padding-left: 30px
+            display: flex
+            flex-direction: column
+            justify-content: center
+            text-align: left
+        .right-section
+            display: flex
+            flex-direction: column
+            justify-content: center
+            .header-img
+                width: 100%
+                @media #{'only screen and (max-width: 800px)'}
+                    display: none
+    .about
+        margin: 80px 0px 0px 0px
+        .about-block
+            margin: 50px 5px 0px 5px
+            label
+                background-color: $primary_color
+                width: 22px
+                height: 22px
+                border-radius: 44px
+                color: #ffffff
+                text-align: center
+                margin-right: 10px
+                font-size: 14px
+            h3
+                margin: 10px 0px 0px 0px 
+            p
+                margin: 10px 0px 0px 0px 
+    .recent-posts
+        margin: 80px 0px 0px 0px
+        h1
+            margin-bottom: 30px
+        .view-all-btn
+            z-index: 99999
+            display: flex
+            label
+                font-size: 24px
+                margin-right: 5px
+    .tab-container 
+        padding: 24px 0 0 0
+    .view-all-btn
+            z-index: 99999
+            display: flex
+            label
+                font-size: 24px
+                margin-right: 5px

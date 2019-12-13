@@ -12,6 +12,7 @@ import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import Posts from './pages/Posts'
 import PostDetailView from './pages/PostDetailView'
+import Profile from './pages/Profile'
 import Tweets from './pages/Tweets'
 
 class AppRouter extends Component {
@@ -27,6 +28,7 @@ class AppRouter extends Component {
           <Route exact path="/posts" component={Posts} />
           <Route exact path="/tweets" component={Tweets} />
           <Route exact path="/post/:id" component={PostDetailView} />
+          <Route exact path="/profile" component={Profile} />
         </Fragment>
       </Router>
     )
