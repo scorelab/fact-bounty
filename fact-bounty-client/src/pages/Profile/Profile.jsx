@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import headerImg from '../../assets/img/headerImg.png'
 import Icon from '@material-ui/core/Icon'
 import Button from '@material-ui/core/Button'
 import Footer from '../../components/Footer'
@@ -8,31 +8,8 @@ import patch2 from '../../assets/img/patch2.png'
 import patch3 from '../../assets/img/patch3.png'
 import PostsList from '../../components/PostsList'
 import './style.sass'
-import TweetList from '../../components/TweetList/TweetList'
-import Paper from '@material-ui/core/Paper'
-import Tabs from '@material-ui/core/Tabs'
-import Tab from '@material-ui/core/Tab'
-import SwipeableViews from 'react-swipeable-views'
 import UserInfo from '../../components/UserInfo'
-import Typography from '@material-ui/core/Typography'
-// import Box from '@material-ui/core/Box'
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props
-
-  return (
-    <Typography
-      component="div"
-      role="tabpanel"
-      hidden={value !== index}
-      id={`full-width-tabpanel-${index}`}
-      aria-labelledby={`full-width-tab-${index}`}
-      {...other}
-    >
-      {children}
-    </Typography>
-  )
-}
 class Profile extends Component {
   constructor(props) {
     super(props)
@@ -118,8 +95,8 @@ class Profile extends Component {
           </div>
           <div className="card" style={{ marginTop: 15 }}>
             <div className="card-body">
-              <label for="placeholderForm">
-                <b>Provide feedback on Johnny Appleseed's posts...</b>
+              <label>
+                <b>Provide feedback on Johnny Appleseed&apos;s posts...</b>
               </label>
               <input
                 type="text"
@@ -151,6 +128,11 @@ class Profile extends Component {
       </div>
     )
   }
+}
+
+Profile.propTypes = {
+  bio: PropTypes.string,
+  name: PropTypes.string
 }
 
 export default Profile

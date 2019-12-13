@@ -12,6 +12,7 @@ class UserInfo extends Component {
         <div className="col-2">
           <img
             src={defaultImage}
+            alt="profile"
             style={{ width: 100 + '%', borderRadius: 20 }}
           />
         </div>
