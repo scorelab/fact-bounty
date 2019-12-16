@@ -29,7 +29,7 @@ Run npm install in fact-bounty-client folder.
  npm install
  ```
 
-* Rename the env.example file as .env in fact-bounty-client folder. 
+*   Rename the env.example file as .env in fact-bounty-client folder. 
   Set up values in .env in order to use the twitter search function and google, facebook login.
 
 ## Set up `oauthd`
@@ -58,8 +58,8 @@ npm install -g oauthd
 oauthd init
 ```
 
-* Give a name for the instance (for example, Twitter)
-* Choose Y (yes) when prompted to install the default plugins
+*   Give a name for the instance (for example, Twitter)
+*   Choose Y (yes) when prompted to install the default plugins
 
 5.Move into the directory that was just created (for example, Twitter):
 
