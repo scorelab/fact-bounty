@@ -44,27 +44,21 @@ class VoteButtons extends Component {
             className={userVote === 1 ? 'trueBtnSelected' : 'trueBtn'}
             onClick={() => this.handleClick(1)}
           >
-            <Icon className="trueIcon">
-              check_circle
-            </Icon>
+            <Icon className="trueIcon">check_circle</Icon>
             <label className="trueLbl">True</label>
           </div>
           <div
             className={userVote === -1 ? 'fakeBtnSelected' : 'fakeBtn'}
             onClick={() => this.handleClick(-1)}
           >
-            <Icon className="fakeIcon">
-              cancel
-            </Icon>
+            <Icon className="fakeIcon">cancel</Icon>
             <label className="fakeLbl">Fake</label>
           </div>
           <div
             className={userVote === 0 ? 'mixBtnSelected' : 'mixBtn'}
             onClick={() => this.handleClick(0)}
           >
-            <Icon className="mixIcon">
-              report_problem
-            </Icon>
+            <Icon className="mixIcon">report_problems</Icon>
             <label className="mixLbl">Mix</label>
           </div>
         </div>
