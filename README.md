@@ -8,7 +8,7 @@ The recent decade has witnessed the birth of social media ecosystems that brings
 
 #### Fact Bounty is a crowd sourced fact checking platform.
 
-# User Guide
+## User Guide
 
 #### How to Setup
 
