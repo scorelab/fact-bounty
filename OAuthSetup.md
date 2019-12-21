@@ -21,5 +21,6 @@ Step 7: `cd FOLDER_NAME`
 Step 8: `ouathd start`
 
 your screen should look like this when visiting the localhost:6284
+
 ![Screenshot 2019-12-20 at 6 37 35 PM](https://user-images.githubusercontent.com/39365087/71256790-dde32800-2357-11ea-8741-6197207e4d2b.png)
 
