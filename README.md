@@ -32,6 +32,59 @@ Run npm install in fact-bounty-client folder.
 * Rename the env.example file as .env in fact-bounty-client folder. 
   Set up values in .env in order to use the twitter search function and google, facebook login.
 
+## Set up `oauthd`
+
+1. Install redis-server using Brew (macOS only):
+
+```bash
+brew install redis
+```
+
+2. Start redis-server in the background:
+
+```bash
+redis-server --daemonize yes
+```
+
+3. Install `oauthd` globally:
+
+```bash
+npm install -g oauthd
+```
+
+4. In the **fact-bounty-client** directory, run:
+
+```bash
+oauthd init
+```
+
+- Give a name for the instance (for example, Twitter)
+- Choose Y (yes) when prompted to install the default plugins
+
+5. Move into the directory that was just created (for example, Twitter):
+
+```bash
+cd Twitter
+```
+
+6. Run the `oauthd` instance:
+
+```bash
+oauthd start
+```
+
+Upon the server starting, you should see output similar to the following:
+
+![image](https://user-images.githubusercontent.com/29003194/70922527-3c28a780-1ff4-11ea-9865-1d83ae63d686.png)
+
+Now, to verify that `oauthd` is indeed running, visit the address given (in this case, http://localhost:6284).
+
+You should see the following page:
+
+![image](https://user-images.githubusercontent.com/29003194/70922775-afcab480-1ff4-11ea-9fc3-9e3196c38290.png)
+
+With this, you have successfully installed `oauthd`!
+
 ## Set up flask server
 
 ### Technologies required
