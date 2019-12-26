@@ -24,6 +24,8 @@ jobs:
         - docker-compose down
     - stage: react
       language: node_js
+      env:
+        - REACT_APP_OAUTHD_KEY=$REACT_TEST_OAUTHD_KEY
       node_js:
         - "stable"
       cache:
