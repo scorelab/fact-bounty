@@ -42,9 +42,9 @@ def register_extensions(app):
     mail.init_app(app)
     migrate.init_app(app, db)
     pagedown.init_app(app)
-    swag = Swagger(app)
-    if os.environ.get('FLASK_CONFIG') != "production":
-        es = Elasticsearch([app.config['ES_URL']])
+    swag = Swagger(app)  # noqa: F841
+    if os.environ.get("FLASK_CONFIG") != "production":
+        es = Elasticsearch([app.config["ES_URL"]])
     else:
         es = Elasticsearch(
             [app.config["ES_URL"]],
@@ -63,10 +63,10 @@ def register_extensions(app):
 def register_blueprint(app):
     """Register Flask blueprints."""
     app.register_blueprint(user.views.userprint, url_prefix="/api/users")
-    app.register_blueprint(stories.views.storyprint, url_prefix="/api")
+    app.register_blueprint(stories.views.storyprint, url_prefix="/api/stories")
     app.register_blueprint(crawler.views.blueprint, url_prefix="/api/crawler")
     app.register_blueprint(util.views.utilprint, url_prefix="/api/utils")
-    app.register_blueprint(admin.views.adminprint, url="/api/admin")
+    app.register_blueprint(admin.views.adminprint, url_prefix="/api/admin")
     return None
 
 

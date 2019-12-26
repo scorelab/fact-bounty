@@ -12,10 +12,11 @@ if os.path.exists(dotenv_path):
 app = create_app(os.getenv("FLASK_CONFIG") or "default")
 
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
+@app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
 def default_route(path):
     return render_template("index.html")
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
