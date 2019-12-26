@@ -31,6 +31,7 @@ jobs:
           - node_modules
       before_script: cd fact-bounty-client
       script:
+        - npm install
         - npm test
         - npm run build
       deploy:
