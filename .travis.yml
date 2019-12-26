@@ -1,21 +1,41 @@
 # Config file for automatic testing at travis-ci.org
-language: python
-env:
-  - FLASK_APP=app.py FLASK_CONFIG=testing DOCKER_COMPOSE_VERSION=1.4.2
-python:
-  - 3.5
-  - 3.6
-services:
-  - docker
-install:
-  - pip install -r fact-bounty-flask/requirements.txt
-before_script:
-  - sleep 10
-  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-  - chmod +x docker-compose
-  - docker-compose up --build -d
-script: 
-  - cd fact-bounty-flask
-  - flask test
-after_script:
-  - docker-compose down
+jobs:
+  include:
+    - stage: flask
+      language: python
+      env:
+        - FLASK_APP=app.py FLASK_CONFIG=testing DOCKER_COMPOSE_VERSION=1.4.2
+      python:
+        - 3.5
+        - 3.6
+      services:
+        - docker
+      install:
+        - pip install -r fact-bounty-flask/requirements.txt
+      before_script:
+        - sleep 10
+        - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+        - chmod +x docker-compose
+        - docker-compose up --build -d
+      script: 
+        - cd fact-bounty-flask
+        - flask test
+      after_script:
+        - docker-compose down
+    - stage: react
+      language: node_js
+      node_js:
+        - "stable"
+      cache:
+        directories:
+          - node_modules
+      script:
+        - npm test
+        - npm run build
+      deploy:
+        provider: pages
+        skip_cleanup: true
+        github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+        keep_history: true
+        on:
+          branch: master
