@@ -29,13 +29,14 @@ jobs:
       cache:
         directories:
           - node_modules
+      before_script: cd fact-bounty-client
       script:
         - npm test
         - npm run build
       deploy:
         provider: pages
         skip_cleanup: true
-        github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+        github_token: $GITHUB_TOKEN  # Set in settings page of repository
         keep_history: true
         on:
           branch: master
