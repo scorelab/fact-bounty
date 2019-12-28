@@ -30,8 +30,10 @@ def create_app(config_name):
     @app.before_first_request
     def create_tables():
         db.create_all()
-
     return app
+    
+    except Exception as err:
+        print("Error occured:", err)
 
 
 def register_extensions(app):

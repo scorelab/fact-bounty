@@ -219,6 +219,4 @@ def create_admin():
         )
         user.save()
     except Exception as e:
-        print(str(e))
-        response = {"message": "Something went wrong!!"}
-        return make_response(jsonify(response)), 500
+        return {"Error occured": str(e)}
