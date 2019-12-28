@@ -49,3 +49,9 @@ userprint.add_url_rule(
     view_func=userController["token_refresh"],
     methods=["POST"],
 )
+
+userprint.add_url_rule(
+    "/profile",
+    view_func=userController["profile"],
+    methods=["GET", "POST"]
+)
