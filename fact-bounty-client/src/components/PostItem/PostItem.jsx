@@ -73,16 +73,15 @@ class PostItem extends Component {
                 fake_count={post.fake_count}
               />
             </CardContent>
-
-            <VoteButtons
-              loading={loading}
-              post={post}
-              changeVoteCount={changeVoteCount}
-              isAuthenticated={auth.isAuthenticated}
-              user={auth.user}
-              userVote={userVote}
-            />
           </Card>
+          <VoteButtons
+            loading={loading}
+            post={post}
+            changeVoteCount={changeVoteCount}
+            isAuthenticated={auth.isAuthenticated}
+            user={auth.user}
+            userVote={userVote}
+          />
         </div>
       </div>
     )
