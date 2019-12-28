@@ -213,6 +213,42 @@ class TokenRefresh(MethodView):
         return make_response(jsonify(response)), 200
 
 
+class Profile(MethodView):
+    """This class-based view handles retrieving and updating the current \
+    user's information"""
+
+    @staticmethod
+    @jwt_required
+    def get(self):
+        current_user = get_jwt_identity()
+
+        response = jsonify(current_user)
+        return make_response(response), 200
+
+    @jwt_required
+    def post(self):
+        try:
+            post_data = request.get_json(silent=True)
+            name = post_data["name"]
+            email = post_data["email"]
+        except Exception:
+            response = {"message": "Some user details are missing."}
+            return make_response(jsonify(response)), 404
+
+        # Querying the database to get the user to update
+        user = User.find_by_email(email)
+
+        if user:
+            user = user.update(email=email, name=name)
+            user.save()
+            response = {"message": "User has been updated."}
+            return make_response(jsonify(response)), 204
+
+        else:
+            response = {"message": "User not found. Please check your request."}
+            return make_response(jsonify(response)), 404
+
+
 userController = {
     "register": Register.as_view("register"),
     "login": Login.as_view("login"),
@@ -220,4 +256,5 @@ userController = {
     "logout_access": LogoutAccess.as_view("logout_access"),
     "logout_refresh": LogoutRefresh.as_view("logout_refresh"),
     "token_refresh": TokenRefresh.as_view("token_refresh"),
+    "profile": Profile.as_view("profile")
 }
