@@ -13,7 +13,6 @@ class Posts extends Component {
           </div>
           <hr className="hr" />
           <PostsList />
-          <PostItem post={testPost} />
         </div>
       </Fragment>
     )

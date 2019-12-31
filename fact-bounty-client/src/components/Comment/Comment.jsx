@@ -75,7 +75,5 @@ const mapStateToProps = state => ({
   auth: state.auth
 })
 
-export default compose(
-  withStyles(styles),
-  connect(mapStateToProps)
+export default compose(withStyles(styles), connect(mapStateToProps)
 )(Comment)
