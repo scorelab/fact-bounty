@@ -11,6 +11,7 @@ import VotesBar from '../VotesBar'
 import VoteButtons from '../VoteButtons'
 import moment from 'moment'
 import './style.sass'
+import PostComments from '../PostComments'
 
 class PostItem extends Component {
   componentDidMount() {
@@ -81,6 +82,12 @@ class PostItem extends Component {
               isAuthenticated={auth.isAuthenticated}
               user={auth.user}
               userVote={userVote}
+            />
+            <PostComments
+              post={post}
+              isAuthenticated={auth.isAuthenticated}
+              classes={classes}
+              comments={post.comments}
             />
           </Card>
         </div>
