@@ -2,13 +2,20 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import InfiniteScroll from 'react-infinite-scroller'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Select from '@material-ui/core/Select'
 import PropTypes from 'prop-types'
 import { fetchPosts, loadUserVotes } from '../../redux/actions/postActions'
 import PostItem from '../../components/PostItem'
-import AsyncViewWrapper from '../../components/AsyncViewWrapper'
+import InputLabel from '@material-ui/core/InputLabel'
 import './style.sass'
 
 class PostsList extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      filterType: 'all'
+    }
+  }
   componentDidMount() {
     this.loadUserVotes()
   }
@@ -31,7 +38,11 @@ class PostsList extends Component {
   renderPostList = () => {
     const { posts, userVotes, limit } = this.props
     const limitedPosts = limit ? posts.slice(0, limit) : posts
-    return limitedPosts.map((post, index) => {
+    const filteredPosts =
+      this.state.filterType === 'all'
+        ? limitedPosts
+        : this.filterNotesBy(this.state.filterType, limitedPosts)
+    return filteredPosts.map((post, index) => {
       const userVote = userVotes.filter(uv => uv.story_id === post._id)
       return (
         <PostItem
@@ -41,6 +52,23 @@ class PostsList extends Component {
         />
       )
     })
+  }
+
+  handleFilter = event => {
+    let filterType = event.target.value
+    this.setState({ filterType: filterType })
+  }
+
+  filterNotesBy = (filterType, posts) => {
+    const filteredNotes = posts.filter(post => {
+      let desiredCount = post[filterType]
+      return (
+        Math.max(post.approved_count, post.mixedvote_count, post.fake_count) ==
+        desiredCount
+      )
+    })
+
+    return filteredNotes
   }
 
   render() {
@@ -53,6 +81,22 @@ class PostsList extends Component {
         loader={this.renderLoader()}
       >
         <div className="postLayout">
+          <InputLabel htmlFor="filled-age-native-simple">Filter</InputLabel>{' '}
+          <br />
+          <Select
+            native
+            value={this.state.filterType}
+            onChange={this.handleFilter}
+            inputProps={{
+              name: 'filter',
+              id: 'filter-selector'
+            }}
+          >
+            <option value={'all'}>All</option>
+            <option value={'approved_count'}>True</option>
+            <option value={'fake_count'}>Fake</option>
+            <option value={'mixedvote_count'}>Mixed</option>
+          </Select>
           <div />
           <div>{this.renderPostList()}</div>
           <div />
@@ -72,7 +116,8 @@ PostsList.propTypes = {
   user: PropTypes.object,
   isAuth: PropTypes.bool,
   fetchPosts: PropTypes.func,
-  loadUserVotes: PropTypes.func
+  loadUserVotes: PropTypes.func,
+  filterType: PropTypes.string
 }
 
 const mapStatetoProps = state => ({
