@@ -63,7 +63,7 @@ class PostsList extends Component {
     const filteredNotes = posts.filter(post => {
       let desiredCount = post[filterType]
       return (
-        Math.max(post.approved_count, post.mixedvote_count, post.fake_count) ==
+        Math.max(post.approved_count, post.mixedvote_count, post.fake_count) ===
         desiredCount
       )
     })
@@ -135,7 +135,4 @@ const mapDispatchToProps = dispatch => ({
   loadUserVotes: () => dispatch(loadUserVotes())
 })
 
-export default connect(
-  mapStatetoProps,
-  mapDispatchToProps
-)(PostsList)
+export default connect(mapStatetoProps, mapDispatchToProps)(PostsList)
