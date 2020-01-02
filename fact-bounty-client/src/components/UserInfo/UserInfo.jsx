@@ -35,3 +35,4 @@ UserInfo.propTypes = {
 export default UserInfo
 
 
+
