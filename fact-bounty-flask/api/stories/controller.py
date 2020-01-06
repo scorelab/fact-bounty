@@ -2,7 +2,7 @@ from flask.views import MethodView
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import make_response, request, jsonify, current_app
 from elasticsearch.helpers import scan
-from .model import Vote
+from .model import Vote, Comment
 from flasgger import swag_from
 
 
@@ -267,6 +267,110 @@ class SearchStory(MethodView):
         }
         return make_response(jsonify(response)), 200
 
+class LoadUserComments(MethodView):
+    # retrieve all comments by a user
+    @jwt_required
+    def post(self):
+        # destructure user id
+        user_id = get_jwt_identity()
+
+        commented_posts = []
+        try:
+            commented_q = Comment.fetch_user_comments(user_id)
+            for commented in commented_q:
+                commented_posts.append({"story_id": commented.story_id, "content": commented.content})
+        except Exception:
+            response = {"message": "Unable to retrieve commented posts."}
+            return make_response(jsonify(response)), 500
+
+        response = {
+            "message": "Retrieved commented posts.",
+            "user_comments": commented_posts,
+        }
+        return make_response(jsonify(response)), 200
+
+class ChangeComment(MethodView):
+    """
+    Update comment (or create if comment does not already exist)
+    """
+
+    @jwt_required
+    def post(self):
+        # extract user id from token
+        user_id = get_jwt_identity()
+
+        # extract data from request
+        data = request.get_json(silent=True)
+
+        try:
+            _id = data["story_id"]
+            comment_id = data["comment_id"]
+            comment_content = str(data["comment_content"])
+        except Exception:
+            response = {"message": "Comment information missing."}
+            return make_response(jsonify(response)), 404
+
+        # fetch user's comment of story
+        try:
+            comment = Comment.objects.get(pk = comment_id)
+        except Exception:
+            response = {"message": "Something went wrong!"}
+            return make_response(jsonify(response)), 500
+
+        # attempt to update the comment
+        if comment is not None:
+
+            # update content column of comment
+            comment.value = comment_content
+
+            res = "updated"
+            code = 201
+        # else create a new comment
+        else:
+            try:
+                comment = Comment(story_id=_id, user_id=user_id, content=comment_content)
+            except Exception:
+                response = {"message": "Something went wrong!"}
+                return make_response(jsonify(response)), 500
+            res = "created"
+            code = 200
+
+        response = {"message": "Comment {} updated.".format(res)}
+        return make_response(jsonify(response)), code
+
+
+class DeleteComment(MethodView):
+    """
+    Deletes a comment
+    """
+
+    @classmethod
+    @jwt_required
+    def delete(self):
+        # extract data from request
+        data = request.get_json(silent=True)
+
+        try:
+            comment_id = data["comment_id"]
+            res = comment_id
+        except Exception:
+            response = {"message": "Comment information missing."}
+            return make_response(jsonify(response)), 404
+
+        # fetch user's comment and delete
+        try:
+            comment = Comment.query.get(comment_id).delete()
+            comment.save()
+            code = 202
+        except Exception:
+            response = {"message": "Something went wrong!"}
+            return make_response(jsonify(response)), 500
+
+        response = {"message": "Comment {} deleted.".format(res)}
+        return make_response(jsonify(response)), code
+
+
+
 
 storyController = {
     "allstories": AllStories.as_view("all_stories"),
@@ -275,4 +379,7 @@ storyController = {
     "loaduservotes": LoadUserVotes.as_view("load_user_votes"),
     "changevote": ChangeUserVote.as_view("change_vote"),
     "getstory": GetById.as_view("get_story"),
+    "loadusercomments": LoadUserComments.as_view("load_user_comments"),
+    "changecomment": ChangeComment.as_view("change_comment"),
+    "deletecomment": DeleteComment.as_view("delete_comment")
 }

@@ -35,3 +35,22 @@ storyprint.add_url_rule(
     view_func=storyController["changevote"],
     methods=["POST"],
 )
+
+storyprint.add_url_rule(
+    "/stories/load-user-comments",
+    view_func=storyController["loadusercomments"],
+    methods=["POST"],
+)
+
+storyprint.add_url_rule(
+    "/stories/change-comment",
+    view_func=storyController["changecomment"],
+    methods=["POST"],
+)
+
+storyprint.add_url_rule(
+    "/stories/delete-comment",
+    view_func=storyController["deletecomment"],
+    methods=["DELETE"],
+)
+
