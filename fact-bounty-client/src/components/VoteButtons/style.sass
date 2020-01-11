@@ -1,21 +1,16 @@
 @import '../../styles/variables.sass'
 
-
 .vote-buttons-container
   opacity: 0
   transition: 0.2s ease
   position: absolute
-  top: 10px
-  right: 10px
-  float: right
+  top: 0
+  right: -70px
   .buttons
-    float: right
     // true
     .trueBtn
       display: flex
       .trueIcon
-        position: absolute
-        right: 0px
         color: $grey
       .trueLbl
         opacity: 0
@@ -36,8 +31,6 @@
     .fakeBtn
       display: flex
       .fakeIcon
-        position: absolute
-        right: 0px
         color: $grey
       .fakeLbl
         opacity: 0
@@ -58,8 +51,6 @@
     .mixBtn
       display: flex
       .mixIcon
-        position: absolute
-        right: 0px
         color: $grey
       .mixLbl
         opacity: 0

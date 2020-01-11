@@ -84,7 +84,7 @@ class TweetItem extends Component {
                         onClick={this.visualizeTweet}
                       >
                         View
-                    </Button>
+                      </Button>
                     </div>
                   </div>
                 </div>

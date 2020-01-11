@@ -58,7 +58,7 @@ class VoteButtons extends Component {
             className={userVote === 0 ? 'mixBtnSelected' : 'mixBtn'}
             onClick={() => this.handleClick(0)}
           >
-            <Icon className="mixIcon">report_problems</Icon>
+            <Icon className="mixIcon">report_problem</Icon>
             <label className="mixLbl">Mix</label>
           </div>
         </div>
