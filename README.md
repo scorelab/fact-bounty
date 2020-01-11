@@ -29,7 +29,7 @@ Run npm install in fact-bounty-client folder.
  npm install
  ```
 
-* Rename the env.example file as .env in fact-bounty-client folder. 
+* Duplicate and rename the env.example file as .env in fact-bounty-client folder.
   Set up values in .env in order to use the twitter search function and google, facebook login.
 
 ## Set up flask server
@@ -57,7 +57,7 @@ Run npm install in fact-bounty-client folder.
         $ virtualenv -p python3 venv
         $ source venv/bin/activate
     ```
-        For *Windows* you can use - 
+        For *Windows* you can use -
     ```
         $ venv/Scipts/activate.bat
     ```
@@ -78,7 +78,7 @@ Run npm install in fact-bounty-client folder.
         export ELASTIC_SEARCH_USERNAME=""
         export ELASTIC_SEARCH_PASSWORD=""
 
-        export TZ=“Asia/Colombo” 
+        export TZ=“Asia/Colombo”
     ```
 
     Save the file.
@@ -111,7 +111,7 @@ Run npm install in fact-bounty-client folder.
     ```
         (venv)$ wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.7.0.deb
         (venv)$ wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.7.0.deb.sha512
-        (venv)$ shasum -a 512 -c elasticsearch-6.7.0.deb.sha512 
+        (venv)$ shasum -a 512 -c elasticsearch-6.7.0.deb.sha512
         (venv)$ sudo dpkg -i elasticsearch-6.7.0.deb
 
     ```
@@ -150,13 +150,13 @@ Run npm install in fact-bounty-client folder.
         (venv)$ curl -X GET "localhost:9200/"
     ```
     or open [https://localhost:9200](https://localhost:9200)
-    
+
 ### How to Use
 
 Use two terminals, one for fact-bounty-flask and the other for fact-bounty-client.
 
 Run the flask server in the fact-bounty-flask folder:
-    
+
 `(venv)$ flask run`
 
 start the npm server in fact-bounty-client directory.
@@ -174,12 +174,12 @@ And use [localhost:3000](https://) to browse.
 *   #### Set DEV_DATABASE_URL as environment variable in fact-bounty-flask else it will connect to default i.e `data-dev.sqlite`
 
 *   #### In the root of the project directory, run `docker-compose build`
-    If you are on Linux machine, execute the following steps to install compose. 
+    If you are on Linux machine, execute the following steps to install compose.
     ```
         sudo curl -L https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
         sudo chmod +x /usr/local/bin/docker-compose
     ```
-     
+
 *   #### Set Environment Variables
     Create a .env file and add the following:
     ```
