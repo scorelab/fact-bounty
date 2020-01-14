@@ -134,3 +134,27 @@ export const logoutUser = () => dispatch => {
       console.error(err)
     })
 }
+
+export const forgotPassword = userData => dispatch => {
+  AuthService.forgotPassword(userData)
+    .then(res => {
+      if (res.status === 202) {
+        dispatch({
+          type: GET_ERRORS,
+          payload: res.data.message
+        })
+      }
+    })
+    .catch(err => {
+      if (err && err.response) {
+        let payload = err.response.data
+        if (typeof payload === 'string') {
+          payload = { fetch: err.response.data }
+        }
+        dispatch({
+          type: GET_ERRORS,
+          payload
+        })
+      }
+    })
+}
