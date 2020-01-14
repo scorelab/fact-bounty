@@ -13,7 +13,7 @@ import Dashboard from './pages/Dashboard'
 import Posts from './pages/Posts'
 import PostDetailView from './pages/PostDetailView'
 import Tweets from './pages/Tweets'
-
+import ForgotPassword from './pages/ForgotPassword'
 class AppRouter extends Component {
   render() {
     return (
@@ -23,6 +23,7 @@ class AppRouter extends Component {
           <Route exact path="/" component={Landing} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
+          <Route exact path="/forgotpassword" component={ForgotPassword} />
           <Route path="/dashboard" component={Dashboard} />
           <Route exact path="/posts" component={Posts} />
           <Route exact path="/tweets" component={Tweets} />
