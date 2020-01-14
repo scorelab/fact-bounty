@@ -2,11 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import classnames from 'classnames'
-import IconButton from '@material-ui/core/IconButton'
-import InputAdornment from '@material-ui/core/InputAdornment'
-import Visibility from '@material-ui/icons/Visibility'
-import VisibilityOff from '@material-ui/icons/VisibilityOff'
-import { Link as RouterLink } from 'react-router-dom'
 import compose from 'recompose/compose'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
@@ -18,8 +13,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import withStyles from '@material-ui/core/styles/withStyles'
-import Link from '@material-ui/core/Link'
-import OauthContainer from '../../components/OAuthContainer'
 import Toast from '../../components/Toast'
 import { updateError } from '../../redux/actions/errorActions'
 import { forgotPassword } from '../../redux/actions/authActions'
@@ -94,6 +87,7 @@ class ForgotPassword extends Component {
     e.preventDefault()
     // Remove error from store
     const { email } = this.state
+    this.props.forgotPassword({ email: email })
   }
 
   render() {
