@@ -15,23 +15,28 @@ from api.extensions import db, mail, pagedown, login_manager, migrate, jwt
 
 
 def create_app(config_name):
-    # create and configure the app
-    app = Flask(
-        __name__, static_folder="../build/static", template_folder="../build"
-    )
-    app.config.from_object(config[config_name])
-    config[config_name].init_app(app)
+    try:
+        # create and configure the app
+        app = Flask(
+            __name__,
+            static_folder="../build/static",
+            template_folder="../build",
+        )
+        app.config.from_object(config[config_name])
+        config[config_name].init_app(app)
 
-    register_extensions(app)
-    register_blueprint(app)
-    register_shellcontext(app)
-    register_commands(app)
+        register_extensions(app)
+        register_blueprint(app)
+        register_shellcontext(app)
+        register_commands(app)
 
-    @app.before_first_request
-    def create_tables():
-        db.create_all()
+        @app.before_first_request
+        def create_tables():
+            db.create_all()
 
-    return app
+        return app
+    except Exception as err:
+        print("Error occured:", err)
 
 
 def register_extensions(app):
