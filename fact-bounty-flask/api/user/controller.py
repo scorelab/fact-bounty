@@ -107,6 +107,38 @@ class Login(MethodView):
         return make_response(jsonify(response)), 200
 
 
+class ForgotPassword(MethodView):
+    """This class sends a reset password mail."""
+
+    def post(self):
+        """Handle POST request for this view. Url --> /api/users/forgot_password"""
+        # getting JSON data from request
+        post_data = request.get_json(silent=True)
+
+        try:
+            email = post_data["email"]
+        except Exception:
+            response = {"message": "Please provide email."}
+            return make_response(jsonify(response)), 404
+
+        # Querying the database with requested email
+        user = User.find_by_email(email)
+        if user:
+            # TODO: Sending password reset mail
+
+            response = {
+                "message": "A password reset mail has been sent to you. "
+                "Please follow the instruction in the email to reset your password."
+            }
+
+            # return a response notifying the user that they registered
+            # successfully
+            return make_response(jsonify(response)), 201
+        else:
+            response = {"message": "Email not registered"}
+            return make_response(jsonify(response)), 202
+
+
 class Auth(MethodView):
     """This class-based view handles user register and access token generation \
     via 3rd sources like facebook, google"""
@@ -216,6 +248,7 @@ class TokenRefresh(MethodView):
 userController = {
     "register": Register.as_view("register"),
     "login": Login.as_view("login"),
+    "forgot_password": ForgotPassword.as_view("forgot_password"),
     "auth": Auth.as_view("auth"),
     "logout_access": LogoutAccess.as_view("logout_access"),
     "logout_refresh": LogoutRefresh.as_view("logout_refresh"),

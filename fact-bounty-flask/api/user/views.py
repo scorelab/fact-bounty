@@ -10,6 +10,11 @@ userprint.add_url_rule(
 userprint.add_url_rule(
     "/register", view_func=userController["register"], methods=["POST"]
 )
+userprint.add_url_rule(
+    "/forgot_password",
+    view_func=userController["forgot_password"],
+    methods=["POST"],
+)
 
 userprint.add_url_rule(
     "/oauth", view_func=userController["auth"], methods=["POST"]
