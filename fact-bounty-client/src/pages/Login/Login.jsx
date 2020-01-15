@@ -229,6 +229,8 @@ class Login extends Component {
               Login
             </Button>
             <p style={{ textAlign: 'center' }}>
+              {' '}
+              <br />
               <Link component={RouterLink} to="/forgotpassword">
                 Forgot password ?
               </Link>
