@@ -78,6 +78,11 @@ Run npm install in fact-bounty-client folder.
         export ELASTIC_SEARCH_USERNAME=""
         export ELASTIC_SEARCH_PASSWORD=""
 
+        export ADMIN_USERNAME = "admin"
+        export ADMIN_PASSWORD = "password"
+        export ADMIN_EMAIL = "email@email.com"
+
+
         export TZ=“Asia/Colombo”
     ```
 

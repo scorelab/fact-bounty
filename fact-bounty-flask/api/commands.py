@@ -6,16 +6,39 @@ from subprocess import call
 import coverage
 import sys
 import click
-from flask import current_app
+from flask import current_app, make_response, jsonify
 from flask.cli import with_appcontext
 from flask_migrate import upgrade
 from werkzeug.exceptions import MethodNotAllowed, NotFound
+from .user import model
+import getpass
+import re
 
 
 COV = None
 if os.environ.get("FLASK_COVERAGE"):
     COV = coverage.coverage(branch=True, include="./*")
     COV.start()
+"""
+regex to check valid email is entered
+"""
+regex = r"^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+
+"""
+function for
+for validating an Email
+"""
+
+
+def check(email):
+    """
+    pass the regualar expression
+    and the string in search() method
+    """
+    if re.search(regex, email):
+        return True
+    else:
+        return False
 
 
 @click.command()
@@ -168,3 +191,34 @@ def deploy():
     migrate database to latest revision
     """
     upgrade()
+
+
+@click.command(name="create_admin")
+@with_appcontext
+def create_admin():
+    """
+    create an admin user
+    """
+    admin_username = input("Enter the admin username: ")
+    admin_password = getpass.getpass(prompt="Enter the admin password: ")
+    admin_role = "admin"
+    valid = False
+    while not valid:
+        admin_email = input("Enter the admin email: ")
+        valid = check(admin_email)
+        if valid:
+            break
+        else:
+            pass
+    try:
+        user = model.User(
+            name=admin_username,
+            email=admin_email,
+            password=admin_password,
+            role=admin_role,
+        )
+        user.save()
+    except Exception as e:
+        print(str(e))
+        response = {"message": "Something went wrong!!"}
+        return make_response(jsonify(response)), 500

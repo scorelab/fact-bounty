@@ -11,8 +11,11 @@ def send_async_email(app, msg):
 
 def send_email(to, subject, body):
     app = current_app._get_current_object()
-    msg = Message(app.config['FACTBOUNTY_MAIL_SUBJECT_PREFIX'] + subject,
-                  sender=app.config['FACTBOUNTY_MAIL_SENDER'], recipients=[to])
+    msg = Message(
+        app.config["FACTBOUNTY_MAIL_SUBJECT_PREFIX"] + subject,
+        sender=app.config["FACTBOUNTY_MAIL_SENDER"],
+        recipients=[to],
+    )
     msg.body = body
     thr = Thread(target=send_async_email, args=[app, msg])
     thr.start()

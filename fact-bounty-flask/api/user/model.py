@@ -22,8 +22,9 @@ class User(Model):
     date = Column(db.DateTime, default=datetime.now())
     votes = db.relationship("Vote", backref=db.backref("user"))
     type = Column(db.String(50), default="remote")
+    role = Column(db.String(10), default="user")
 
-    def __init__(self, name, email, password, _type="remote"):
+    def __init__(self, id, name, email, password, role="user", _type="remote"):
         """
         Initializes the user instance
         """
@@ -32,6 +33,7 @@ class User(Model):
         if password:
             self.password = Bcrypt().generate_password_hash(password).decode()
         self.type = _type
+        self.role = role
 
     def __repr__(self):
         """
@@ -45,12 +47,21 @@ class User(Model):
 
         :return: user JSON object
         """
-        user_json = {"name": self.name, "email": self.email, "date": self.date}
+        user_json = {
+            "name": self.name,
+            "email": self.email,
+            "date": self.date,
+            "role": self.role,
+        }
         return user_json
 
     @classmethod
     def find_by_email(cls, email):
         return cls.query.filter_by(email=email).first()
+
+    @classmethod
+    def find_by_user_id(cls, id):
+        return cls.query.filter_by(id=id).first()
 
     def verify_password(self, password):
         """
