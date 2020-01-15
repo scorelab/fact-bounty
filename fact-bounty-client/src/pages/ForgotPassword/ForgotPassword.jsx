@@ -108,7 +108,7 @@ class ForgotPassword extends Component {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Forgot Password
+            Reset Password
           </Typography>
 
           <form
@@ -116,6 +116,9 @@ class ForgotPassword extends Component {
             onSubmit={this.onSubmit}
             className={this.props.classes.form}
           >
+            <Typography component="span" variant="caption" color="error">
+              {typeof this.props.errors !== 'object' ? this.props.errors : null}
+            </Typography>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="email">Email Address</InputLabel>
               <Input
