@@ -15,6 +15,7 @@ import Typography from '@material-ui/core/Typography'
 import withStyles from '@material-ui/core/styles/withStyles'
 import Toast from '../../components/Toast'
 import { updateError } from '../../redux/actions/errorActions'
+import { updateSuccess } from '../../redux/actions/successActions'
 import { forgotPassword } from '../../redux/actions/authActions'
 import styles from './ForgotPassword.style'
 
@@ -24,6 +25,7 @@ class ForgotPassword extends Component {
     this.state = {
       email: '',
       errors: {},
+      success: {},
       emailValid: false,
       formValid: false,
       openToast: false
@@ -33,6 +35,7 @@ class ForgotPassword extends Component {
   componentDidMount() {
     // If logged in and user navigates to Register page, should redirect them to dashboard
     this.props.updateError({})
+    this.props.updateSuccess({})
     if (this.props.auth.isAuthenticated) {
       this.props.history.push('/dashboard')
     }
@@ -46,6 +49,14 @@ class ForgotPassword extends Component {
         openToast = true
       }
       return { errors, openToast }
+    }
+    if (props.success) {
+      const success = props.success
+      let openToast = false
+      if (success.fetch) {
+        openToast = true
+      }
+      return { success, openToast }
     }
     return null
   }
@@ -80,6 +91,7 @@ class ForgotPassword extends Component {
   closeToast = () => {
     // Remove error from store
     this.props.updateError({})
+    this.props.updateSuccess({})
     this.setState({ openToast: false })
   }
 
@@ -117,7 +129,19 @@ class ForgotPassword extends Component {
             className={this.props.classes.form}
           >
             <Typography component="span" variant="caption" color="error">
-              {typeof this.props.errors !== 'object' ? this.props.errors : null}
+              {typeof this.props.errors === 'object'
+                ? this.props.errors.message
+                : null}
+            </Typography>
+            <Typography
+              component="span"
+              variant="caption"
+              color="primary"
+              align="center"
+            >
+              {typeof this.props.success === 'object'
+                ? this.props.success.message
+                : null}
             </Typography>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="email">Email Address</InputLabel>
@@ -158,14 +182,17 @@ ForgotPassword.propTypes = {
   forgotPassword: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
+  success: PropTypes.object.isRequired,
   history: PropTypes.object,
   classes: PropTypes.object,
-  updateError: PropTypes.func.isRequired
+  updateError: PropTypes.func.isRequired,
+  updateSuccess: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  errors: state.errors
+  errors: state.errors,
+  success: state.success
 })
 
 export default compose(
@@ -174,6 +201,6 @@ export default compose(
   }),
   connect(
     mapStateToProps,
-    { forgotPassword, updateError }
+    { forgotPassword, updateError, updateSuccess }
   )
 )(ForgotPassword)
