@@ -1,6 +1,11 @@
 import jwt_decode from 'jwt-decode'
 import { setAuthToken, saveAllTokens } from '../../helpers/AuthTokenHelper'
-import { SET_CURRENT_USER, USER_LOADING, GET_ERRORS } from './actionTypes'
+import {
+  SET_CURRENT_USER,
+  USER_LOADING,
+  GET_ERRORS,
+  GET_SUCCESS
+} from './actionTypes'
 import AuthService from '../../services/AuthService'
 
 // Set logged in user
@@ -141,7 +146,13 @@ export const forgotPassword = userData => dispatch => {
       if (res.status === 202) {
         dispatch({
           type: GET_ERRORS,
-          payload: res.data.message
+          payload: { message: res.data.message }
+        })
+      }
+      if (res.status === 200) {
+        dispatch({
+          type: GET_SUCCESS,
+          payload: { message: res.data.message }
         })
       }
     })
