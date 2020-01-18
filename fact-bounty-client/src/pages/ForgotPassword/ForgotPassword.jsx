@@ -16,7 +16,10 @@ import withStyles from '@material-ui/core/styles/withStyles'
 import Toast from '../../components/Toast'
 import { updateError } from '../../redux/actions/errorActions'
 import { updateSuccess } from '../../redux/actions/successActions'
-import { forgotPassword } from '../../redux/actions/authActions'
+import {
+  forgotPassword,
+  authVerificationToken
+} from '../../redux/actions/authActions'
 import styles from './ForgotPassword.style'
 
 class ForgotPassword extends Component {
@@ -24,6 +27,7 @@ class ForgotPassword extends Component {
     super()
     this.state = {
       email: '',
+      verificationToken: '',
       errors: {},
       success: {},
       emailValid: false,
@@ -85,7 +89,7 @@ class ForgotPassword extends Component {
 
   validateForm = () => {
     this.setState({
-      formValid: this.state.emailValid
+      formValid: this.state.emailValid || this.state.verificationToken !== ''
     })
   }
   closeToast = () => {
@@ -98,12 +102,62 @@ class ForgotPassword extends Component {
   onSubmit = e => {
     e.preventDefault()
     // Remove error from store
+    this.props.updateSuccess({})
+    this.props.updateError({})
+
     const { email } = this.state
-    this.props.forgotPassword({ email: email })
+    if (!this.props.success.message) {
+      this.props.forgotPassword({ email: email })
+    } else {
+      this.props.authVerificationToken(
+        {
+          verification_token: this.state.verificationToken
+        },
+        this.props.history
+      )
+    }
   }
 
   render() {
     const { errors, openToast } = this.state
+    var formInput, buttonName
+    if (!this.props.success.message) {
+      formInput = (
+        <FormControl margin="normal" required fullWidth>
+          <InputLabel htmlFor="email">Email Address</InputLabel>
+          <Input
+            autoComplete="on"
+            onChange={this.onChange}
+            value={this.state.email}
+            error={!!errors.email}
+            id="email"
+            type="email"
+            className={classnames('', {
+              invalid: errors.email
+            })}
+          />
+          <Typography component="span" variant="caption" color="error">
+            {errors.email}
+          </Typography>
+        </FormControl>
+      )
+      buttonName = 'Send verification code'
+    } else {
+      formInput = (
+        <FormControl margin="normal" required fullWidth>
+          <InputLabel htmlFor="verificationToken">
+            Verification token
+          </InputLabel>
+          <Input
+            autoComplete="on"
+            onChange={this.onChange}
+            value={this.state.verificationToken}
+            id="verificationToken"
+          />
+        </FormControl>
+      )
+      buttonName = 'Verify token'
+    }
     return (
       <main className={this.props.classes.main}>
         <CssBaseline />
@@ -120,7 +174,7 @@ class ForgotPassword extends Component {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Reset Password
+            Forgot Password
           </Typography>
 
           <form
@@ -143,24 +197,7 @@ class ForgotPassword extends Component {
                 ? this.props.success.message
                 : null}
             </Typography>
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="email">Email Address</InputLabel>
-              <Input
-                autoComplete="on"
-                onChange={this.onChange}
-                value={this.state.email}
-                error={!!errors.email}
-                id="email"
-                type="email"
-                className={classnames('', {
-                  invalid: errors.email
-                })}
-              />
-              <Typography component="span" variant="caption" color="error">
-                {errors.email}
-              </Typography>
-            </FormControl>
-
+            {formInput}
             <Button
               type="submit"
               fullWidth
@@ -169,7 +206,7 @@ class ForgotPassword extends Component {
               className={this.props.classes.submit}
               disabled={!this.state.formValid}
             >
-              Reset Password
+              {buttonName}
             </Button>
           </form>
         </Paper>
@@ -180,6 +217,7 @@ class ForgotPassword extends Component {
 
 ForgotPassword.propTypes = {
   forgotPassword: PropTypes.func.isRequired,
+  authVerificationToken: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   success: PropTypes.object.isRequired,
@@ -201,6 +239,6 @@ export default compose(
   }),
   connect(
     mapStateToProps,
-    { forgotPassword, updateError, updateSuccess }
+    { forgotPassword, authVerificationToken, updateError, updateSuccess }
   )
 )(ForgotPassword)
