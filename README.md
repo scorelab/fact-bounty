@@ -216,6 +216,66 @@ And use [localhost:3000](https://) to browse.
 
 *   #### Once build completes, run `docker-compose up`
 
+## Setting up an OAuth Daemon
+
+## Step 1: Pre-requisite
+
+### Technologies required
+
+*   **[Node.js](http://nodejs.org/)** 
+*   **[Redis](http://redis.io/download)**
+
+You should also install the `grunt-cli` npm package with the following command: 
+```sh
+$ (sudo) npm install -g grunt-cli
+```
+
+## Step 2: Install OAuthD
+You should install OAuthD from npm, by executing the following command:
+```sh
+$ (sudo) npm install -g oauthd
+```
+
+Then check the correctness of the OAuthD installation with the following command:
+```sh
+$ oauthd -v
+```
+
+## Step 3: Create an instance
+
+Go into a folder where you want to create your oauthd instance and run the following command:
+```sh
+$ oauthd init
+```
+
+Follow the prompt instructions. It will guide you in the instance creation. You need to answer 'Y' or just press enter when the prompt ask you:
+```sh
+oauthd> Do you want to install default plugins?  (Y|n)>  (Y)
+```
+
+## Step 4: Run instance
+To run the instance, just run the following command:
+```sh
+$ cd myinstance && oauthd start
+```
+
+You should see something like this in your shell:
+```sh
+Initializing plugins engine
+Loading auth
+Loading request
+Loading slashme
+Loading statistics
+Loading front
+oauthd start server
+oauthd listening at http://0.0.0.0:6284 for http://localhost:6284
+Server is ready (load time: 0.9s)
+```
+
+Then go to browser and type http://localhost:6284/
+
+Learn more about the OAuthD [configuration](https://github.com/oauth-io/oauthd/wiki/Configuration) and the [command line features](https://github.com/oauth-io/oauthd/wiki/Command-Line-Interface).
+
 # How to Contribute
 
 - First fork the repository and clone it.
