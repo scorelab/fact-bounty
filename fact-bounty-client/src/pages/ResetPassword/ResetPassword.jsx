@@ -200,8 +200,8 @@ class Register extends Component {
                       {this.state.showOldPassword ? (
                         <Visibility />
                       ) : (
-                        <VisibilityOff />
-                      )}
+                          <VisibilityOff />
+                        )}
                     </IconButton>
                   </InputAdornment>
                 }
@@ -229,8 +229,8 @@ class Register extends Component {
                       {this.state.showPassword ? (
                         <Visibility />
                       ) : (
-                        <VisibilityOff />
-                      )}
+                          <VisibilityOff />
+                        )}
                     </IconButton>
                   </InputAdornment>
                 }
@@ -295,7 +295,8 @@ Register.propTypes = {
   errors: PropTypes.object.isRequired,
   history: PropTypes.object,
   classes: PropTypes.object,
-  updateError: PropTypes.func.isRequired
+  updateError: PropTypes.func.isRequired,
+  match: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({

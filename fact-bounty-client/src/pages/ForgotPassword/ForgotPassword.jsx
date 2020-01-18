@@ -81,6 +81,9 @@ class ForgotPassword extends Component {
     switch (fieldname) {
       case 'email':
         errors.email = emailValid ? '' : 'Invalid E-mail'
+        break
+      default:
+        break
     }
     this.setState(
       {
@@ -133,6 +136,7 @@ class ForgotPassword extends Component {
           <Input
             autoComplete="on"
             onChange={this.onChange}
+            validate
             value={this.state.email}
             error={!!errors.email}
             id="email"

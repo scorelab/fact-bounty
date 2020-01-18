@@ -52,7 +52,8 @@ class Register(MethodView):
         try:
             user = User(email=email, password=password, name=name)
             user.save()
-        except Exception:
+        except Exception as err:
+            print("Error occured: ", err)
             response = {"message": "Something went wrong!!"}
             return make_response(jsonify(response)), 500
 

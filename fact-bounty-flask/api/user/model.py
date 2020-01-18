@@ -84,6 +84,9 @@ class User(Model):
         return uuid4().hex
 
     def generate_password_hash(self, password):
+        """
+        Returns hash of password
+        """
         return Bcrypt().generate_password_hash(password).decode()
 
 
