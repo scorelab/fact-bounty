@@ -31,6 +31,7 @@ class ForgotPassword extends Component {
       errors: {},
       success: {},
       emailValid: false,
+      verificationTokenValid: false,
       formValid: false,
       openToast: false
     }
@@ -68,20 +69,24 @@ class ForgotPassword extends Component {
   onChange = e => {
     let { id, value } = e.target
     this.setState({ [id]: value }, () => {
-      this.validateField(value)
+      this.validateField(id, value)
     })
   }
 
-  validateField = value => {
-    let { emailValid, errors } = this.state
+  validateField = (fieldname, value) => {
+    let { emailValid, verificationTokenValid, errors } = this.state
 
     emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)
-    errors.email = emailValid ? '' : 'Invalid E-mail'
-
+    verificationTokenValid = !!this.state.verificationToken
+    switch (fieldname) {
+      case 'email':
+        errors.email = emailValid ? '' : 'Invalid E-mail'
+    }
     this.setState(
       {
         errors,
-        emailValid
+        emailValid,
+        verificationTokenValid
       },
       this.validateForm
     )
