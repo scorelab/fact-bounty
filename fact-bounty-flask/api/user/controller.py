@@ -129,11 +129,14 @@ class ForgotPassword(MethodView):
         if user:
             verification_token = user.verification_token
             # Body of the email
-            mail_content = f"""Hi,
+            mail_content = (
+                """Hi,
 
             You are receiving this because you have requested to reset password for your account.
 
-            Here is you verification token: {verification_token}"""
+            Here is you verification token: """
+                + verification_token
+            )
             # The email addresses and password
             sender_address = current_app.config["MAIL_USERNAME"]
             sender_pass = current_app.config["MAIL_PASSWORD"]
