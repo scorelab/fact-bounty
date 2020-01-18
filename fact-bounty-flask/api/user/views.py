@@ -17,6 +17,18 @@ userprint.add_url_rule(
 )
 
 userprint.add_url_rule(
+    "/auth_verification_token",
+    view_func=userController["auth_verification_token"],
+    methods=["POST"],
+)
+
+userprint.add_url_rule(
+    "/reset_password",
+    view_func=userController["reset_password"],
+    methods=["POST"],
+)
+
+userprint.add_url_rule(
     "/oauth", view_func=userController["auth"], methods=["POST"]
 )
 
