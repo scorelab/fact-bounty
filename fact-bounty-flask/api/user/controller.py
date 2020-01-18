@@ -1,5 +1,5 @@
 from flask.views import MethodView
-from flask import make_response, request, jsonify
+from flask import make_response, request, jsonify, current_app
 from flask_jwt_extended import (
     create_access_token,
     create_refresh_token,
@@ -9,6 +9,9 @@ from flask_jwt_extended import (
     get_raw_jwt,
 )
 from .model import User, RevokedToken
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 
 class Register(MethodView):
@@ -124,19 +127,112 @@ class ForgotPassword(MethodView):
         # Querying the database with requested email
         user = User.find_by_email(email)
         if user:
-            # TODO: Sending password reset mail
+            verification_token = user.verification_token
+            # Body of the email
+            mail_content = f"""Hi,
+
+            You are receiving this because you have requested to reset password for your account.
+
+            Here is you verification token: {verification_token}"""
+            # The email addresses and password
+            sender_address = current_app.config["MAIL_USERNAME"]
+            sender_pass = current_app.config["MAIL_PASSWORD"]
+            receiver_address = user.email
+            # Setup the MIME
+            message = MIMEMultipart()
+            message["From"] = sender_address
+            message["To"] = receiver_address
+            message["Subject"] = "Password reset"
+            # The body and the attachments for the mail
+            message.attach(MIMEText(mail_content, "plain"))
+            # Create SMTP session for sending the mail
+            session = smtplib.SMTP(
+                current_app.config["MAIL_SERVER"],
+                current_app.config["MAIL_PORT"],
+            )  # use gmail with port
+            session.starttls()  # enable security
+            session.login(
+                sender_address, sender_pass
+            )  # login with mail_id and password
+            text = message.as_string()
+            session.sendmail(sender_address, receiver_address, text)
+            session.quit()
+            print("Password reset email sent successfully")
 
             response = {
-                "message": "A password reset mail has been sent to you. "
-                "Please follow the instruction in the email to reset your password."
+                "message": "Verification token has been sent to you on your registered email"
             }
 
-            # return a response notifying the user that they registered
-            # successfully
-            return make_response(jsonify(response)), 201
+            # return a response notifying the user that a password reset mail has
+            # been sent to registered email
+            return make_response(jsonify(response)), 200
         else:
             response = {"message": "Email not registered"}
             return make_response(jsonify(response)), 202
+
+
+class AuthVerificationToken(MethodView):
+    """This class verifies token which is being used to reset the password"""
+
+    def post(self):
+        data = request.get_json(silent=True)
+        try:
+            verification_token = data["verification_token"]
+        except Exception:
+            response = {"message": "Please provide verification token."}
+            return make_response(jsonify(response)), 404
+
+        # since token is unique, find user by its verification token
+        # if it exist it means input token is correct
+        user = User.find_by_verification_token(verification_token)
+
+        if user:
+            response = {"message": "Auth success"}
+            return make_response(jsonify(response)), 200
+        else:
+            response = {"message": "Incorrect, please check again"}
+            return make_response(jsonify(response)), 202
+
+
+class ResetPassword(MethodView):
+    """This class is used to change the password"""
+
+    def post(self):
+
+        data = request.get_json(silent=True)
+        try:
+            verification_token = data["verificationToken"]
+            old_password = data["oldPassword"]
+            new_password = data["password"]
+            new_password_confirm = data["password2"]
+        except Exception:
+            response = {"message": "Please provide all required fields."}
+            return make_response(jsonify(response)), 202
+
+        # find user by token
+        user = User.find_by_verification_token(verification_token)
+
+        # if token is correct
+        if user:
+            # check if old password is incorrect
+            if not user.verify_password(old_password):
+                response = {"message": "Old password incorrect"}
+                return make_response(jsonify(response)), 402
+            # new password and confirm has to be equal
+            elif new_password != new_password_confirm:
+                response = {
+                    "message": "New password and confirm password does not match"
+                }
+                return make_response(jsonify(response)), 202
+            # overwrite old password with new password
+            else:
+                user.password = user.generate_password_hash(new_password)
+                user.save()
+                response = {"message": "Password successfully changed"}
+                return make_response(jsonify(response)), 200
+        else:
+            response = {"message": "Unauthorized"}
+            return make_response(jsonify(response)), 401
 
 
 class Auth(MethodView):
@@ -249,6 +345,10 @@ userController = {
     "register": Register.as_view("register"),
     "login": Login.as_view("login"),
     "forgot_password": ForgotPassword.as_view("forgot_password"),
+    "auth_verification_token": AuthVerificationToken.as_view(
+        "auth_verification_token"
+    ),
+    "reset_password": ResetPassword.as_view("reset_password"),
     "auth": Auth.as_view("auth"),
     "logout_access": LogoutAccess.as_view("logout_access"),
     "logout_refresh": LogoutRefresh.as_view("logout_refresh"),
