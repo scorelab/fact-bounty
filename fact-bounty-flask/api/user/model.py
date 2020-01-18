@@ -33,7 +33,7 @@ class User(Model):
         self.email = email
         self.verification_token = self.generate_token()
         if password:
-            self.password = Bcrypt().generate_password_hash(password).decode()
+            self.password = self.generate_password_hash(password)
         self.type = _type
 
     def __repr__(self):
@@ -54,6 +54,12 @@ class User(Model):
     @classmethod
     def find_by_email(cls, email):
         return cls.query.filter_by(email=email).first()
+
+    @classmethod
+    def find_by_verification_token(cls, verification_token):
+        return cls.query.filter_by(
+            verification_token=verification_token
+        ).first()
 
     def verify_password(self, password):
         """
@@ -76,6 +82,9 @@ class User(Model):
         Returns a random token
         """
         return uuid4().hex
+
+    def generate_password_hash(self, password):
+        return Bcrypt().generate_password_hash(password).decode()
 
 
 class RevokedToken(Model):
