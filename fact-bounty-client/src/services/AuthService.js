@@ -27,6 +27,22 @@ const forgotPassword = userData => {
 }
 /**
  *
+ * POST : authVerificationToken
+ *
+ */
+const authVerificationToken = userData => {
+  return ApiBuilder.API.post(`/api/users/auth_verification_token`, userData)
+}
+/**
+ *
+ * POST : resetPassword
+ *
+ */
+const resetPassword = userData => {
+  return ApiBuilder.API.post(`/api/users/reset_password`, userData)
+}
+/**
+ *
  * POST : OauthUser
  *
  */
@@ -64,6 +80,8 @@ export default {
   loginUser,
   registerUser,
   forgotPassword,
+  authVerificationToken,
+  resetPassword,
   OauthUser,
   tokenRefresh,
   revokeAccessToken,
