@@ -28,6 +28,9 @@ Run npm install in fact-bounty-client folder.
  cd fact-bounty-client/
  npm install
  ```
+ 
+ * Rename the env.example file as .env in fact-bounty-client folder. 
+  Set up values in .env in order to use the twitter search function and google, facebook login.
 
 ## Set up flask server
 
