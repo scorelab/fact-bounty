@@ -1,6 +1,11 @@
 import jwt_decode from 'jwt-decode'
 import { setAuthToken, saveAllTokens } from '../../helpers/AuthTokenHelper'
-import { SET_CURRENT_USER, USER_LOADING, GET_ERRORS } from './actionTypes'
+import {
+  SET_CURRENT_USER,
+  USER_LOADING,
+  GET_ERRORS,
+  GET_SUCCESS
+} from './actionTypes'
 import AuthService from '../../services/AuthService'
 
 // Set logged in user
@@ -132,5 +137,93 @@ export const logoutUser = () => dispatch => {
     })
     .catch(err => {
       console.error(err)
+    })
+}
+
+export const forgotPassword = userData => dispatch => {
+  AuthService.forgotPassword(userData)
+    .then(res => {
+      if (res.status === 202) {
+        dispatch({
+          type: GET_ERRORS,
+          payload: { message: res.data.message }
+        })
+      }
+      if (res.status === 200) {
+        dispatch({
+          type: GET_SUCCESS,
+          payload: { message: res.data.message }
+        })
+      }
+    })
+    .catch(err => {
+      if (err && err.response) {
+        let payload = err.response.data
+        if (typeof payload === 'string') {
+          payload = { fetch: err.response.data }
+        }
+        dispatch({
+          type: GET_ERRORS,
+          payload
+        })
+      }
+    })
+}
+
+export const authVerificationToken = (userData, history) => dispatch => {
+  AuthService.authVerificationToken(userData)
+    .then(res => {
+      if (res.status === 202) {
+        dispatch({
+          type: GET_ERRORS,
+          payload: { message: res.data.message }
+        })
+      }
+      if (res.status === 200) {
+        history.push('/resetpassword/' + userData.verification_token)
+      }
+    })
+    .catch(err => {
+      if (err && err.response) {
+        let payload = err.response.data
+        if (typeof payload === 'string') {
+          payload = { fetch: err.response.data }
+        }
+        dispatch({
+          type: GET_ERRORS,
+          payload
+        })
+      }
+    })
+}
+
+export const resetPassword = (userData, history) => dispatch => {
+  AuthService.resetPassword(userData)
+    .then(res => {
+      if (res.status === 202) {
+        dispatch({
+          type: GET_ERRORS,
+          payload: { message: res.data.message }
+        })
+      }
+      if (res.status === 200) {
+        dispatch({
+          type: GET_SUCCESS,
+          payload: { message: res.data.message }
+        })
+        history.push('/login')
+      }
+    })
+    .catch(err => {
+      if (err && err.response) {
+        let payload = err.response.data
+        if (typeof payload === 'string') {
+          payload = { fetch: err.response.data }
+        }
+        dispatch({
+          type: GET_ERRORS,
+          payload
+        })
+      }
     })
 }
