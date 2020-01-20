@@ -39,6 +39,41 @@ Run npm install in fact-bounty-client folder.
 *   **[Elasticsearch](https://www.elastic.co/downloads/elasticsearch)** - A search engine based on the Lucene library
 *   Minor dependencies can be found in the requirements.txt file.
 
+## Install oauthd
+
+oauthd is a solution based on node.js that enables you to set up and run your own stand-alone, completely free, web Background API Server.
+
+Pre-requisite to the oauthd installation are:
+
+Node.js
+Redis
+The default configuration of oauthd use the Redis default configuration. You can check the configuration section to learn more about configuration. However, for a quickstart, you can just check that your Redis is working by following this redis quickstart tutorial.
+
+* **Another dependencies for oauthd is grunt-cli which is just a npm package you will need to install globally, by executing the following command:**
+
+```bash
+npm install -g grunt-cli
+```
+
+* **Start redis-server in the background:**
+
+```bash
+redis-server --daemonize yes
+```
+
+* **Then install oauthd by this command**
+
+```bash
+npm install -g oauthd
+```
+
+* **Go to the "fact-bounty-client" folder and run the command**
+
+```bash
+oauthd init
+```
+Then give the name as Twitter and press 'Y'
+
 ### Installation / Usage
  * First ensure you have python3 globally installed in your computer. If not, you can get python3 [here](https://www.python.org).
 
