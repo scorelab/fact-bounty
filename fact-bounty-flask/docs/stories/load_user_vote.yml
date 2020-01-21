@@ -1,0 +1,40 @@
+Update vote-count
+---
+tags:
+  - Stories
+consumes:
+  - "application/json"
+parameters:
+- in: header
+  name: Authorization
+  description: an authorization header
+  required: true
+  type: string
+responses:
+  200:
+    description: JSON object containing success message and user votes
+    schema:
+        type: object
+        properties:
+            message:
+                type: string
+                example: Retrieved user votes successfully
+            user_votes:
+                schema:
+                    type: array
+                    items:
+                        type: object
+                        properties:
+                            story_id:
+                                type: string
+                            value:
+                                type: integer
+
+  500:
+    description: Something went wrong
+    schema:
+        type: object
+        properties:
+            message:
+                type: string
+                example: Something went wrong

@@ -12,7 +12,8 @@ class AllStories(MethodView):
 
     :return: JSON object with all stories and HTTP status code 200.
     """
-    @swag_from('../../docs/stories/get_all.yml')
+
+    @swag_from("../../docs/stories/get_all.yml")
     def get(self):
 
         es_index = current_app.config["ES_INDEX"]
@@ -46,7 +47,8 @@ class GetRange(MethodView):
 
     :return: JSON object with range of stories and HTTP status code 200.
     """
-    @swag_from('../../docs/stories/get_range.yml')
+
+    @swag_from("../../docs/stories/get_range.yml")
     def get(self, page):
         es_index = current_app.config["ES_INDEX"]
         es = current_app.elasticsearch
@@ -83,6 +85,7 @@ class GetRange(MethodView):
 class LoadUserVotes(MethodView):
     # Retrieve user voted posts
     @jwt_required
+    @swag_from("../../docs/stories/load_user_vote.yml")
     def post(self):
         # extract user id from token
         user_id = get_jwt_identity()
@@ -111,6 +114,7 @@ class ChangeUserVote(MethodView):
     """
 
     @jwt_required
+    @swag_from("../../docs/stories/change_vote_count.yml")
     def post(self):
         es_index = current_app.config["ES_INDEX"]
         es = current_app.elasticsearch
@@ -212,6 +216,7 @@ class ChangeUserVote(MethodView):
 
 
 class GetById(MethodView):
+    @swag_from("../../docs/stories/get_by_id.yml")
     def get(self, id):
         es_index = current_app.config["ES_INDEX"]
         es = current_app.elasticsearch
@@ -267,6 +272,7 @@ class SearchStory(MethodView):
         }
         return make_response(jsonify(response)), 200
 
+
 class LoadUserComments(MethodView):
     # retrieve all comments by a user
     @jwt_required
@@ -278,7 +284,12 @@ class LoadUserComments(MethodView):
         try:
             commented_q = Comment.fetch_user_comments(user_id)
             for commented in commented_q:
-                commented_posts.append({"story_id": commented.story_id, "content": commented.content})
+                commented_posts.append(
+                    {
+                        "story_id": commented.story_id,
+                        "content": commented.content,
+                    }
+                )
         except Exception:
             response = {"message": "Unable to retrieve commented posts."}
             return make_response(jsonify(response)), 500
@@ -288,6 +299,7 @@ class LoadUserComments(MethodView):
             "user_comments": commented_posts,
         }
         return make_response(jsonify(response)), 200
+
 
 class ChangeComment(MethodView):
     """
@@ -312,7 +324,7 @@ class ChangeComment(MethodView):
 
         # fetch user's comment of story
         try:
-            comment = Comment.objects.get(pk = comment_id)
+            comment = Comment.objects.get(pk=comment_id)
         except Exception:
             response = {"message": "Something went wrong!"}
             return make_response(jsonify(response)), 500
@@ -328,7 +340,9 @@ class ChangeComment(MethodView):
         # else create a new comment
         else:
             try:
-                comment = Comment(story_id=_id, user_id=user_id, content=comment_content)
+                comment = Comment(
+                    story_id=_id, user_id=user_id, content=comment_content
+                )
             except Exception:
                 response = {"message": "Something went wrong!"}
                 return make_response(jsonify(response)), 500
@@ -370,8 +384,6 @@ class DeleteComment(MethodView):
         return make_response(jsonify(response)), code
 
 
-
-
 storyController = {
     "allstories": AllStories.as_view("all_stories"),
     "getrange": GetRange.as_view("get_range"),
@@ -381,5 +393,5 @@ storyController = {
     "getstory": GetById.as_view("get_story"),
     "loadusercomments": LoadUserComments.as_view("load_user_comments"),
     "changecomment": ChangeComment.as_view("change_comment"),
-    "deletecomment": DeleteComment.as_view("delete_comment")
+    "deletecomment": DeleteComment.as_view("delete_comment"),
 }
