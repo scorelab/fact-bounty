@@ -1,0 +1,52 @@
+Update vote-count
+---
+tags:
+  - Stories
+consumes:
+  - application/json
+produces:
+  - application/json
+parameters:
+- in: header
+  name: Authorization
+  description: an authorization header
+  required: true
+  type: string
+- in: body
+  name: body
+  type: object
+responses:
+  200:
+    description: JSON object containing success message
+    schema:
+      type: object
+      properties:
+          message:
+              type: string
+              example: Vote created successfully
+  201:
+    description: JSON object containing success message
+    schema:
+      type: object
+      properties:
+          message:
+              type: string
+              example: Vote updated successfully
+  404:
+    description: JSON object containing error message
+    schema:
+      type: object
+      properties:
+          message:
+              type: string
+              example: Please provide all the required fields
+
+  500:
+    description: Something went wrong
+    schema:
+        type: object
+        properties:
+            message:
+                type: string
+                example: Something went wrong
+
