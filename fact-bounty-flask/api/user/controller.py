@@ -64,7 +64,7 @@ class Register(MethodView):
 class Login(MethodView):
     """This class-based view handles user login and access token generation."""
 
-    @swag_from("../../docs/users/login.yml")
+    @swag_from("../../docs/auth/login.yml")
     def post(self):
         """Handle POST request for this view. Url ---> /api/users/login"""
         data = request.get_json(silent=True)
