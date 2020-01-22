@@ -8,6 +8,7 @@ import PrivateRoute from '../../components/PrivateRoute'
 import TwitterGraph from '../TwitterGraph'
 import DashboardSideNav from '../../components/DashboardSideNav'
 import Search from '../Search'
+import TweetSearch from '../TweetSearch'
 import KibanaDashboard from '../KibanaDashboard'
 import PostDetailView from '../../pages/PostDetailView'
 
@@ -52,6 +53,11 @@ class Dashboard extends Component {
                 exact
                 path={`${match.url}/post/:id`}
                 component={PostDetailView}
+              />
+              <PrivateRoute
+                exact
+                path={`${match.url}/tweetsearch`}
+                component={TweetSearch}
               />
             </Switch>
           </div>

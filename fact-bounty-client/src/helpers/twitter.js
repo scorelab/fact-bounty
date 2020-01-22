@@ -328,6 +328,18 @@ var Twitter = function() {
     )
   }
 
+  obj.searchForTweets = function(query, limit) {
+    return apiCall(
+      'GET',
+      '/1.1/search/tweets.json',
+      {
+        q: query,
+        count: limit
+      },
+      'Twitter was not able to fetch tweets relating to these keywords.'
+    )
+  }
+
   return obj
 }
 
