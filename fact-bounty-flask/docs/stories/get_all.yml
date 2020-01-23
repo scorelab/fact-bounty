@@ -1,7 +1,5 @@
 Retrieve stories
 ---
-tags:
-  - Stories
 responses:
   200:
-    description: JSON object with all stories.
+    description: JSON object with all stories. 

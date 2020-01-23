@@ -85,7 +85,6 @@ class GetRange(MethodView):
 class LoadUserVotes(MethodView):
     # Retrieve user voted posts
     @jwt_required
-    @swag_from("../../docs/stories/load_user_vote.yml")
     def post(self):
         # extract user id from token
         user_id = get_jwt_identity()
@@ -114,7 +113,6 @@ class ChangeUserVote(MethodView):
     """
 
     @jwt_required
-    @swag_from("../../docs/stories/change_vote_count.yml")
     def post(self):
         es_index = current_app.config["ES_INDEX"]
         es = current_app.elasticsearch
@@ -216,7 +214,6 @@ class ChangeUserVote(MethodView):
 
 
 class GetById(MethodView):
-    @swag_from("../../docs/stories/get_by_id.yml")
     def get(self, id):
         es_index = current_app.config["ES_INDEX"]
         es = current_app.elasticsearch

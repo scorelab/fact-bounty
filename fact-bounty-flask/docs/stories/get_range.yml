@@ -1,11 +1,5 @@
 Retrieve stories in range
 ---
-tags:
-  - Stories
-parameters:
-  - in: page
-    name: page
-    type: integer
 responses:
   200:
     description: JSON object with range of stories.

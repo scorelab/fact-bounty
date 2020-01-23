@@ -58,7 +58,7 @@ export const registerUser = (userData, history) => dispatch => {
       if (res.status === 202) {
         dispatch({
           type: GET_ERRORS,
-          payload: { message: res.data.message }
+          payload: res.data.message
         })
       } else {
         history.push('/login')
