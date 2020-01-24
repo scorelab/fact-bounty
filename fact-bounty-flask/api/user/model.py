@@ -66,7 +66,7 @@ class User(Model):
     def find_by_user_id(cls, id):
         return cls.query.filter_by(id=id).first()
 
-    @classmethod
+    @classmethod   
     def find_by_verification_token(cls, verification_token):
         return cls.query.filter_by(
             verification_token=verification_token
