@@ -77,8 +77,16 @@ Run npm install in fact-bounty-client folder.
         export ELASTIC_SEARCH_URL=""
         export ELASTIC_SEARCH_USERNAME=""
         export ELASTIC_SEARCH_PASSWORD=""
+	
+        export TZ="Asia/Colombo"
+        
+        export MAIL_USERNAME=""
+        export MAIL_PASSWORD=""
+        export FACTBOUNTY_ADMIN=""
+        export MAIL_PORT="587"
+        export MAIL_USE_TLS="true"
+        export MAIL_SERVER="smtp.gmail.com"
 
-        export TZ=“Asia/Colombo”
     ```
 
     Save the file.
@@ -211,3 +219,4 @@ And use [localhost:3000](https://) to browse.
 
 ## License
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fscorelab%2Ffact-Bounty.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fscorelab%2Ffact-Bounty?ref=badge_large)
+
