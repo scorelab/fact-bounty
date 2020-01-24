@@ -1,0 +1,21 @@
+User login
+---
+tags:
+- Auth
+consumes:
+- "application/json"
+parameters:
+- in: "body"
+  name: "body"
+  schema:
+    type: "object"
+    properties:
+        email:
+            type: string
+            example: abcd@xyz.com
+        password:
+            type: string
+            example: asdf1234
+responses:
+    200:
+        description: User successfully logged in.

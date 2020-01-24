@@ -9,6 +9,7 @@ from flask_jwt_extended import (
     get_raw_jwt,
 )
 from .model import User, RevokedToken
+from flasgger import swag_from
 
 
 class Register(MethodView):
@@ -63,6 +64,7 @@ class Register(MethodView):
 class Login(MethodView):
     """This class-based view handles user login and access token generation."""
 
+    @swag_from("../../docs/users/login.yml")
     def post(self):
         """Handle POST request for this view. Url ---> /api/users/login"""
         data = request.get_json(silent=True)
