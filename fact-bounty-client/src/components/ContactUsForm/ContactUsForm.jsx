@@ -56,7 +56,7 @@ class ContactUsForm extends Component {
             name="email"
             placeholder="Email"
             required
-            value={email||""}
+            value={email||''}
             onChange={e => {
               this.setState({ email: e.target.value })
             }}
@@ -64,7 +64,7 @@ class ContactUsForm extends Component {
           <input
             type="number"
             name="phone"
-            value={phone||""}
+            value={phone||''}
             placeholder="Phone Number"
             onChange={e => {
               this.setState({ phone: e.target.value })
@@ -75,7 +75,7 @@ class ContactUsForm extends Component {
             rows="5"
             placeholder="Your Message"
             required
-            value={message||""}
+            value={message||''}
             onChange={e => {
               this.setState({ message: e.target.value })
             }}
