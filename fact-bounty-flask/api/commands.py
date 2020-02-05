@@ -56,7 +56,8 @@ def test(coverage):
     import unittest
 
     tests = unittest.TestLoader().discover("tests")
-    unittest.TextTestRunner(verbosity=2).run(tests)
+    result = unittest.TextTestRunner(verbosity=2).run(tests)
+
     if COV:
         COV.stop()
         COV.save()
@@ -67,6 +68,11 @@ def test(coverage):
         COV.html_report(directory=covdir)
         print("HTML version: file://%s/index.html" % covdir)
         COV.erase()
+
+    if result.wasSuccessful():
+        return 0
+    else:
+        sys.exit("Tests have failed")
 
 
 @click.command()
