@@ -2,7 +2,9 @@ import os
 import unittest
 import tempfile
 import json
+import sys
 
+sys.path.append(os.path.join(sys.path[0], "../../"))
 FLASKR = __import__("fact-bounty-flask")
 
 

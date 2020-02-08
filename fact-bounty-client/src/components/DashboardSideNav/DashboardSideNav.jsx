@@ -19,6 +19,12 @@ const DashboardSideNav = () => {
         </li>
         <hr />
         <li>
+          <Link className="link" to="/dashboard/tweetsearch">
+            Search Tweets
+          </Link>
+        </li>
+        <hr />
+        <li>
           <Link className="link" to="/dashboard/visualizations">
             Visualizations
           </Link>

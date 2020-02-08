@@ -6,7 +6,8 @@ const initialState = {
     adaderana: [],
     lankacnews: [],
     vigasapuwath: [],
-    mawbimaonline: []
+    mawbimaonline: [],
+    search: []
   }
 }
 
