@@ -1,0 +1,15 @@
+Token refresh
+---
+tags:
+- User
+produces:
+  - application/json
+parameters:
+- in: header
+  name: Authorization
+  description: an authorization header
+  required: true
+  type: string
+responses:
+    200:
+        description: Token refreshed successfully.

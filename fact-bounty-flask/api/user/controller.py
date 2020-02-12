@@ -18,6 +18,7 @@ from email.mime.text import MIMEText
 class Register(MethodView):
     """This class registers a new user."""
 
+    @swag_from("../../docs/users/register.yml")
     def post(self):
         """Handle POST request for this view. Url --> /api/users/register"""
         # getting JSON data from request
@@ -241,6 +242,7 @@ class Auth(MethodView):
     """This class-based view handles user register and access token generation \
     via 3rd sources like facebook, google"""
 
+    @swag_from("../../docs/users/oauth.yml")
     def post(self):
         # Querying the database with requested email
         data = request.get_json(silent=True)
@@ -300,6 +302,7 @@ class Auth(MethodView):
 
 class LogoutAccess(MethodView):
     @jwt_required
+    @swag_from("../../docs/users/logout_access.yml")
     def post(self):
         jti = get_raw_jwt()["jti"]
         try:
@@ -316,6 +319,7 @@ class LogoutAccess(MethodView):
 
 class LogoutRefresh(MethodView):
     @jwt_refresh_token_required
+    @swag_from("../../docs/users/logout_refresh.yml")
     def post(self):
         jti = get_raw_jwt()["jti"]
         try:
@@ -332,6 +336,7 @@ class LogoutRefresh(MethodView):
 
 class TokenRefresh(MethodView):
     @jwt_refresh_token_required
+    @swag_from("../../docs/users/token_refresh.yml")
     def post(self):
         current_user = get_jwt_identity()
         access_token = create_access_token(identity=current_user, fresh=False)
