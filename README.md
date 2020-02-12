@@ -121,12 +121,12 @@ Run npm install in fact-bounty-client folder.
 
 ### How to install Elasticsearch and start elasticsearch server
 
-*   #### Elasticsearch v6.7.0 can be installed as follows:
+*   #### Elasticsearch v7.6.0 can be installed as follows:
     ```
-        (venv)$ wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.7.0.deb
-        (venv)$ wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.7.0.deb.sha512
-        (venv)$ shasum -a 512 -c elasticsearch-6.7.0.deb.sha512
-        (venv)$ sudo dpkg -i elasticsearch-6.7.0.deb
+        (venv)$ wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.6.0.deb
+        (venv)$ wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.6.0.deb.sha512
+        (venv)$ shasum -a 512 -c elasticsearch-7.6.0.deb.sha512
+        (venv)$ sudo dpkg -i elasticsearch-7.6.0.deb
 
     ```
 
