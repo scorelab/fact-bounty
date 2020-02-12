@@ -1,0 +1,17 @@
+User logout
+---
+tags:
+- User
+produces:
+  - application/json
+parameters:
+- in: header
+  name: Authorization
+  description: an authorization header
+  required: true
+  type: string
+responses:
+    200:
+        description: Refresh token has been revoked.
+    500:
+        description: Something went wrong!

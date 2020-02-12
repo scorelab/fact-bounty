@@ -1,0 +1,69 @@
+User registration via OAuth like facebook, google, etc.
+---
+tags:
+  - User
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+parameters:
+- in: body
+  name: body
+  schema:
+    type: object
+    properties:
+        name:
+            type: string
+            example: xyz
+        email:
+            type: string
+            example: xyz@gmail.com
+        type:
+            type: string
+            example: admin
+responses:
+  201:
+    description: (for new user) JSON object containing success message, access token and refresh token.
+    schema:
+        type: object
+        properties:
+            message:
+                type: string
+                example: You logged in successfully.
+            access_token:
+                type: string
+                example: hash-generated-by-jwt
+            refresh_token:
+                type: string
+                example: hash-generated-by-jwt
+  202:
+    description: (for existing user) JSON object containing success message, access token and refresh token.
+    schema:
+        type: object
+        properties:
+            message:
+                type: string
+                example: You logged in successfully.
+            access_token:
+                type: string
+                example: hash-generated-by-jwt
+            refresh_token:
+                type: string
+                example: hash-generated-by-jwt
+
+  404:
+    description: Fields are missing
+    schema:
+        type: object
+        properties:
+            message:
+                type: string
+                example: Please provide all the required fields.
+  500:
+    description: Something went wrong
+    schema:
+        type: object
+        properties:
+            message:
+                type: string
+                example: Something went wrong

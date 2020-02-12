@@ -1,0 +1,67 @@
+User registration via form
+---
+tags:
+  - User
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+parameters:
+- in: body
+  name: body
+  schema:
+    type: object
+    properties:
+        name:
+            type: string
+            example: xyz
+        email:
+            type: string
+            example: xyz@gmail.com
+        password:
+            type: string
+            example: password123
+        password2:
+            type: string
+            example: password123
+responses:
+  201:
+    description:  JSON object containing success message
+    schema:
+        type: object
+        properties:
+            message:
+                type: string
+                example: You registered successfully. Please log in.
+  202:
+    description: JSON object containing success message
+    schema:
+        type: object
+        properties:
+            message:
+                type: string
+                example: User already exists. Please login.
+  401:
+    description: Passwords do not match
+    schema:
+        type: object
+        properties:
+            message:
+                type: string
+                example: Both passwords does not match
+  404:
+    description: Fields are missing
+    schema:
+        type: object
+        properties:
+            message:
+                type: string
+                example: Please provide all the required fields.
+  500:
+    description: Something went wrong
+    schema:
+        type: object
+        properties:
+            message:
+                type: string
+                example: Something went wrong

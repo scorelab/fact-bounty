@@ -1,7 +1,7 @@
 User login
 ---
 tags:
-- Auth
+- User
 consumes:
 - "application/json"
 parameters:
