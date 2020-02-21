@@ -19,6 +19,12 @@ const PublicLinks = () => (
     <Link to="/#contact" style={styles.link}>
       <Button color="inherit">Contact Us</Button>
     </Link>
+    <div className="asd">
+      <label class="switch">
+        <input type="checkbox" />
+        <span class="slider round"></span>
+      </label>
+    </div>
     <span style={styles.btnContainer}>
       <Link to="/register" style={styles.link}>
         <Button variant="outlined" color="primary">
