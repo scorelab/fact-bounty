@@ -19,12 +19,6 @@ const PublicLinks = () => (
     <Link to="/#contact" style={styles.link}>
       <Button color="inherit">Contact Us</Button>
     </Link>
-    <span>
-      <label class="switch">
-        <input type="checkbox"/>
-        <span class="slider round"></span>
-      </label>
-    </span>
     <span style={styles.btnContainer}>
       <Link to="/register" style={styles.link}>
         <Button variant="outlined" color="primary">

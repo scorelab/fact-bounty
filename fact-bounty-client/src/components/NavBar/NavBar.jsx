@@ -22,7 +22,8 @@ class NavBar extends Component {
     super(props)
     this.state = {
       drawerIsOpen: false,
-      toastIsOpen: false
+      toastIsOpen: false,
+      dark:false
     }
   }
 
@@ -47,6 +48,13 @@ class NavBar extends Component {
   handleLogout = () => {
     this.showToast()
     this.props.logoutUser()
+  }
+
+  toggleDark=()=>{
+    const temp=this.state.dark;
+    this.setState({
+      dark: !temp
+    })
   }
 
   render() {
@@ -85,6 +93,16 @@ class NavBar extends Component {
                 <PublicLinks />
               )}
             </div>
+            <span>
+              <label class="switch">
+                <input 
+                  type="checkbox"
+                  onChange={this.toggleDark}
+                />
+                <span class="slider round"></span>
+              </label>
+            </span>
+            {this.state.dark?"dark":"light"}
           </Toolbar>
         </AppBar>
       </div>
