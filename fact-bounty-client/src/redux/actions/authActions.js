@@ -1,7 +1,15 @@
 import jwt_decode from 'jwt-decode'
 import { setAuthToken, saveAllTokens } from '../../helpers/AuthTokenHelper'
-import { SET_CURRENT_USER, USER_LOADING, GET_ERRORS } from './actionTypes'
+import { SET_CURRENT_USER, USER_LOADING, GET_ERRORS,DARK_MODE } from './actionTypes'
 import AuthService from '../../services/AuthService'
+
+//Toggle Dark mode
+export const toggleDarkMode=curr=>{
+  return{
+    type:DARK_MODE,
+    payload:!curr
+  }
+}
 
 // Set logged in user
 export const setCurrentUser = payload => {

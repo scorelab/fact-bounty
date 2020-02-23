@@ -11,7 +11,7 @@ import SwipeableDrawer from '../SwipeableDrawer'
 import PublicLinks from './Links/PublicLinks'
 import PrivateLinks from './Links/PrivateLinks'
 import Toast from '../Toast'
-import { logoutUser } from '../../redux/actions/authActions'
+import { logoutUser,toggleDarkMode } from '../../redux/actions/authActions'
 import styles from './NavBar.style'
 import factbountyLogo from '../../assets/logos/factbountyLogo.png'
 import './styles.sass'
@@ -22,8 +22,7 @@ class NavBar extends Component {
     super(props)
     this.state = {
       drawerIsOpen: false,
-      toastIsOpen: false,
-      dark:false
+      toastIsOpen: false
     }
   }
 
@@ -50,18 +49,11 @@ class NavBar extends Component {
     this.props.logoutUser()
   }
 
-  toggleDark=()=>{
-    const temp=this.state.dark;
-    this.setState({
-      dark: !temp
-    })
-  }
-
   render() {
     const { drawerIsOpen, toastIsOpen } = this.state
     const { classes, auth } = this.props
     return (
-      <div className={`${classes.root} nav-bar-container`}>
+      <div className={`${classes.root} nav-bar-container ${(auth.dark ? 'darkmode' : '')}`}>
         <Toast
           isOpen={toastIsOpen}
           handleClose={this.closeToast}
@@ -71,7 +63,7 @@ class NavBar extends Component {
           isOpen={drawerIsOpen}
           toggleDrawer={this.toggleDrawer}
         />
-        <AppBar position="static" color="default" className={classes.navBar}>
+        <AppBar position="static" color="default" className={`${classes.navBar} ${(auth.dark ? 'darkmode' : '')}`}>
           <Toolbar>
             <IconButton
               className={classes.menuButton}
@@ -97,12 +89,12 @@ class NavBar extends Component {
               <label class="switch">
                 <input 
                   type="checkbox"
-                  onChange={this.toggleDark}
+                  onChange={()=>this.props.toggleDarkMode(auth.dark)}
                 />
                 <span class="slider round"></span>
               </label>
             </span>
-            {this.state.dark?"dark":"light"}
+            {auth.dark?"Dark Mode":"Light Mode"}
           </Toolbar>
         </AppBar>
       </div>
@@ -118,11 +110,14 @@ NavBar.propTypes = {
 
 const NavBarWithStyles = withStyles(styles)(NavBar)
 
-const mapStateToProps = state => ({
-  auth: state.auth
-})
+const mapStateToProps = state => {
+  return{
+    auth: state.auth,
+    dark: state.dark
+  }
+}
 
 export default connect(
   mapStateToProps,
-  { logoutUser }
+  { logoutUser,toggleDarkMode }
 )(NavBarWithStyles)
