@@ -1,11 +1,11 @@
 import jwt_decode from 'jwt-decode'
 import { setAuthToken, saveAllTokens } from '../../helpers/AuthTokenHelper'
-import { SET_CURRENT_USER, USER_LOADING, GET_ERRORS,DARK_MODE } from './actionTypes'
 import {
   SET_CURRENT_USER,
   USER_LOADING,
   GET_ERRORS,
-  GET_SUCCESS
+  GET_SUCCESS,
+  DARK_MODE
 } from './actionTypes'
 import AuthService from '../../services/AuthService'
 
