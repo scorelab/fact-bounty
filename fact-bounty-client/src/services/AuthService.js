@@ -17,7 +17,30 @@ const loginUser = userData => {
 const registerUser = userData => {
   return ApiBuilder.API.post(`/api/users/register`, userData)
 }
-
+/**
+ *
+ * POST : forgotPassword
+ *
+ */
+const forgotPassword = userData => {
+  return ApiBuilder.API.post(`/api/users/forgot_password`, userData)
+}
+/**
+ *
+ * POST : authVerificationToken
+ *
+ */
+const authVerificationToken = userData => {
+  return ApiBuilder.API.post(`/api/users/auth_verification_token`, userData)
+}
+/**
+ *
+ * POST : resetPassword
+ *
+ */
+const resetPassword = userData => {
+  return ApiBuilder.API.post(`/api/users/reset_password`, userData)
+}
 /**
  *
  * POST : OauthUser
@@ -56,6 +79,9 @@ const revokeRefreshToken = () => {
 export default {
   loginUser,
   registerUser,
+  forgotPassword,
+  authVerificationToken,
+  resetPassword,
   OauthUser,
   tokenRefresh,
   revokeAccessToken,
