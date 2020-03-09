@@ -15,7 +15,8 @@ app = create_app(os.getenv("FLASK_CONFIG") or "default")
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
 def default_route(path):
-    return render_template("index.html")
+    # return render_template("index.html")
+    return jsonify({'message': 'return statement changed to this. uncomment index.html return'})
 
 
 if __name__ == "__main__":

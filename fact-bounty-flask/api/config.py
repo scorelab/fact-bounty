@@ -37,6 +37,7 @@ class Config:
         'uiversion': '2',
         'parse': True
     }
+    ADMIN_TOKEN_KEY = "ADMIN_TOKEN_KEY"
 
     @staticmethod
     def init_app(app):
