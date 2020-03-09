@@ -24,8 +24,9 @@ class User(Model):
     date = Column(db.DateTime, default=datetime.now())
     votes = db.relationship("Vote", backref=db.backref("user"))
     type = Column(db.String(50), default="remote")
+    role = Column(db.String(10), default="user")
 
-    def __init__(self, name, email, password, _type="remote"):
+    def __init__(self, name, email, password, role="user", _type="remote"):
         """
         Initializes the user instance
         """
@@ -35,6 +36,7 @@ class User(Model):
         if password:
             self.password = User.generate_password_hash(password)
         self.type = _type
+        self.role = role
 
     def __repr__(self):
         """
@@ -56,10 +58,25 @@ class User(Model):
         return cls.query.filter_by(email=email).first()
 
     @classmethod
+    def find_by_user_id(cls, _id):
+        return cls.query.filter_by(id=_id).first()
+
+    @classmethod
     def find_by_verification_token(cls, verification_token):
         return cls.query.filter_by(
             verification_token=verification_token
         ).first()
+
+    @classmethod
+    def verify_admin(cls, email):
+        """
+        Verify admin role
+        """
+        try:
+            query = cls.query.filter_by(email=email, role="admin").first()
+            return query
+        except Exception as err:
+            print("Error: ", err)
 
     @staticmethod
     def generate_token():

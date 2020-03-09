@@ -4,41 +4,49 @@ from flask import make_response, request, jsonify, current_app
 from elasticsearch.helpers import scan
 from .model import Vote, Comment
 from flasgger import swag_from
+from ..user import model
 
 
 class AllStories(MethodView):
     """
-    Retrieve stories
+    Retrieve stories only for admin
 
     :return: JSON object with all stories and HTTP status code 200.
     """
 
+    @jwt_required
     @swag_from("../../docs/stories/get_all.yml")
     def get(self):
+        user_id = get_jwt_identity()
+        user = model.User.find_by_user_id(user_id)
 
-        es_index = current_app.config["ES_INDEX"]
-        es = current_app.elasticsearch
+        if user.role == "admin":
+            es_index = current_app.config["ES_INDEX"]
+            es = current_app.elasticsearch
 
-        doc = {
-            "sort": [{"date": {"order": "desc"}}],
-            "query": {"match_all": {}},
-        }
-        stories = {}
-        try:
-            for story in scan(es, doc, index=es_index, doc_type="story"):
-                PID = story["_id"]
-                source = story["_source"]
-                stories[PID] = source
-        except Exception as e:
-            # An error occured, so return a string message containing error
-            response = {"message": str(e)}
-            return make_response(jsonify(response)), 500
+            doc = {
+                "sort": [{"date": {"order": "desc"}}],
+                "query": {"match_all": {}},
+            }
+            stories = {}
+            try:
+                for story in scan(es, doc, index=es_index, doc_type="story"):
+                    PID = story["_id"]
+                    source = story["_source"]
+                    stories[PID] = source
+            except Exception as e:
+                # An error occured, so return a string message containing error
+                response = {"message": str(e)}
+                return make_response(jsonify(response)), 500
 
-        response = {
-            "message": "Stories successfully fetched",
-            "stories": stories,
-        }
-        return make_response(jsonify(response)), 200
+            response = {
+                "message": "Stories successfully fetched",
+                "stories": stories,
+            }
+            return make_response(jsonify(response)), 200
+        else:
+            response = {"message": "only for admins"}
+            return make_response(jsonify(response)), 400
 
 
 class GetRange(MethodView):
