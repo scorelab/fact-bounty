@@ -62,8 +62,8 @@ class Register(MethodView):
 
 class Login(MethodView):
     """This class-based view handles admin login and access token generation."""
-
-    def post(self):
+    @staticmethod
+    def post():
         """Handle POST request for this view. Url ---> /api/admin/login"""
         app = current_app._get_current_object()
         email = request.json.get('email')
@@ -93,12 +93,14 @@ class Login(MethodView):
 
 
 class Logout(MethodView):
-    def post(self, current_user):
+    @staticmethod
+    def post(current_user):
         return jsonify({'message': 'logged out'})
 
 
 class SystemPanel(MethodView):
-    def get(self, current_user):
+    @staticmethod
+    def get(current_user):
 
         io_data_start = psutil.net_io_counters()
 
@@ -138,6 +140,6 @@ class SystemPanel(MethodView):
 adminController = {
     "system": SystemPanel.as_view("system_panel"),
     "register": Register.as_view("register"),
-    "login": Login.as_view("login"),    
+    "login": Login.as_view("login"),
     "logout": admin_token_required(Logout.as_view("logout"), Admin)
 }

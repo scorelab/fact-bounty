@@ -2,7 +2,6 @@ from threading import Thread
 from flask import current_app, jsonify, request
 from flask_mail import Message
 from api.extensions import mail
-from functools import wraps
 import jwt
 
 def send_async_email(app, msg):
@@ -23,14 +22,15 @@ def admin_token_required(f, model):
     def decorated(*args, **kwargs):
         app = current_app._get_current_object()
         token = None
-        if 'x-access-token' in request.headers: 
+        if 'x-access-token' in request.headers:
             token = request.headers['x-access-token']
         if not token:
             return jsonify({'message': 'token is missing'}), 401
         try:
             data = jwt.decode(token, app.config['ADMIN_TOKEN_KEY'])
             current_user = model.query.filter_by(id=data['admin_id']).first()
-        except:
-            return jsonify({'message': 'Token is Invalid!'}), 401
+        except Exception:
+            response = {'message': 'Token is Invalid!'}
+            return jsonify(response), 401
         return f(current_user, *args, **kwargs)
     return decorated

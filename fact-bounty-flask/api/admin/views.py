@@ -1,6 +1,5 @@
 from flask import Blueprint
 from .controller import adminController
-from .model import Admin
 
 adminprint = Blueprint("admin", __name__)
 
