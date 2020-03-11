@@ -13,7 +13,8 @@ PERIOD = 1  # 1 sec
 
 class Register(MethodView):
     """This registers new admin"""
-    def post(self):
+    @staticmethod
+    def post():
         """Handle POST request for this view. Url --> /api/admin/register"""
         # getting JSON data from request
         post_data = request.get_json(silent=True)
