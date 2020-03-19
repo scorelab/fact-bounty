@@ -117,10 +117,10 @@ Run npm install in fact-bounty-client folder.
 
 *   #### Elasticsearch v7.6.0 can be installed as follows:
     ```
-        (venv)$ wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.6.0.deb
-        (venv)$ wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.6.0.deb.sha512
-        (venv)$ shasum -a 512 -c elasticsearch-7.6.0.deb.sha512
-        (venv)$ sudo dpkg -i elasticsearch-7.6.0.deb
+        (venv)$ wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.6.0-amd64.deb
+        (venv)$ wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.6.0-amd64.deb.sha512
+        (venv)$ shasum -a 512 -c elasticsearch-7.6.0-amd64.deb.sha512
+        (venv)$ sudo dpkg -i elasticsearch-7.6.0-amd64.deb
 
     ```
 
