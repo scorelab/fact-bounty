@@ -18,7 +18,7 @@ Step 6:  Give your folder a name
 
 Step 7: `cd FOLDER_NAME`
 
-Step 8: `ouathd start`
+Step 8: `oauthd start`
 
 your screen should look like this when visiting the localhost:6284
 
