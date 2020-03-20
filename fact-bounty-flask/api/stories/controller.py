@@ -4,6 +4,8 @@ from flask import make_response, request, jsonify, current_app
 from elasticsearch.helpers import scan
 from .model import Vote, Comment
 from flasgger import swag_from
+from api.admin.model import Admin
+from api.helpers import admin_token_required
 
 
 class AllStories(MethodView):
@@ -385,7 +387,8 @@ class DeleteComment(MethodView):
 
 
 storyController = {
-    "allstories": AllStories.as_view("all_stories"),
+    "allstories": admin_token_required(AllStories.as_view("all_stories"), Admin),
+    # "allstories": admin_token_required(AllStories.as_view("all_stories"), Admin),
     "getrange": GetRange.as_view("get_range"),
     "search": SearchStory.as_view("search"),
     "loaduservotes": LoadUserVotes.as_view("load_user_votes"),

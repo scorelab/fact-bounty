@@ -37,6 +37,7 @@ class Config:
         'uiversion': '2',
         'parse': True
     }
+    ADMIN_TOKEN_KEY = os.environ.get("ADMIN_TOKEN_KEY") or "secret encryption and decryption string"
 
     @staticmethod
     def init_app(app):

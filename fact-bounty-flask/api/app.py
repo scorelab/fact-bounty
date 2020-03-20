@@ -9,7 +9,7 @@ from flask_jwt_extended import JWTManager
 from flasgger import Swagger
 
 from api import commands
-from api import admin, user, stories, crawler, util
+from api import user, stories, crawler, util, admin
 from api.config import config
 from api.extensions import db, mail, pagedown, login_manager, migrate, jwt
 
@@ -63,7 +63,6 @@ def register_extensions(app):
     app.scrapy = scrapyd
     scheduler.start()
     jwt.init_app(app)
-
 
 def register_blueprint(app):
     """Register Flask blueprints."""
