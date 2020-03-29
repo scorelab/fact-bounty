@@ -257,7 +257,7 @@ class Login extends Component {
             <OauthContainer button_type="Login" />
           </form>
           <p>
-            Don&apos;t have an account?&nbsp;
+            Don't have an account?
             <Link component={RouterLink} to="/register">
               Create One.
             </Link>
