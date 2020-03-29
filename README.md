@@ -157,7 +157,7 @@ Run npm install in fact-bounty-client folder.
     ```
         (venv)$ curl -X GET "localhost:9200/"
     ```
-    or open [https://localhost:9200](https://localhost:9200)
+    or open [http://localhost:9200](http://localhost:9200)
 
 ### How to Use
 
