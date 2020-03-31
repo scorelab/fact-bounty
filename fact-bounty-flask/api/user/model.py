@@ -26,7 +26,7 @@ class User(Model):
     type = Column(db.String(50), default="remote")
     role = Column(db.String(10), default="user")
 
-    def __init__(self, name, email, password, role="user", _type="remote"):
+    def __init__(self, name, email, password=None, role="user", _type="remote"):
         """
         Initializes the user instance
         """
