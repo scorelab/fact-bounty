@@ -284,6 +284,7 @@ class Auth(MethodView):
                 "message": "You logged in successfully.",
                 "access_token": access_token,
                 "refresh_token": refresh_token,
+                "user_details": user.to_json()
             }
             return make_response(jsonify(response)), 201
 
@@ -296,6 +297,7 @@ class Auth(MethodView):
                 "message": "You logged in successfully.",
                 "access_token": access_token,
                 "refresh_token": refresh_token,
+                "user_details": user.to_json()
             }
             return make_response(jsonify(response)), 202
 

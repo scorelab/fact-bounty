@@ -84,7 +84,7 @@ export const registerUser = (userData, history) => dispatch => {
 }
 
 export const OauthUser = creds => dispatch => {
-  AuthService.OauthUser(JSON.stringify(creds))
+  AuthService.OauthUser(creds)
     .then(res => {
       // Set token to localStorage
       const { access_token, refresh_token, user_details } = res.data
