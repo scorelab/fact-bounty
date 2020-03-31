@@ -12,25 +12,33 @@ The recent decade has witnessed the birth of social media ecosystems that brings
 
 #### How to Setup
 
-Clone the repository.
+*   Clone the repository.
 
-`git clone https://github.com/scorelab/fact-Bounty.git`
+    ```bash
+    git clone https://github.com/scorelab/fact-Bounty.git
+    ```
 
-Change directry to the folder.
+*   Change directory to the folder.
 
-`cd fact-Bounty/`
+    ```bash
+    cd fact-Bounty/
+    ```
 
 ## Set up react server
 
-Run npm install in fact-bounty-client folder.
+*   Run npm install in fact-bounty-client folder.
 
-```
- cd fact-bounty-client/
- npm install
- ```
+    ```bash
+    cd fact-bounty-client
+    npm install
+    ```
 
-* Duplicate and rename the env.example file as .env in fact-bounty-client folder.
-  Set up values in .env in order to use the twitter search function and google, facebook login.
+*   Duplicate and rename the `.env.example` file as `.env` inside the `fact-bounty-client` folder.
+  Set up environment values in `.env` in order to use the twitter search function and Google, Facebook login (OAuth).
+
+    ```bash
+    cp .env.example .env
+    ```
 
 ## Set up flask server
 
@@ -43,28 +51,42 @@ Run npm install in fact-bounty-client folder.
 *   Minor dependencies can be found in the requirements.txt file.
 
 ### Installation / Usage
- * First ensure you have python3 globally installed in your computer. If not, you can get python3 [here](https://www.python.org).
+ *  First ensure you have python3 globally installed in your computer. If not, you can get python3 [here](https://www.python.org).
 
- * After this, ensure you have installed virtualenv globally as well. If not, run this:
+ *  After this, ensure you have installed virtualenv globally as well. If not, run this:
+    ```bash
+    pip install virtualenv
     ```
-    $ pip install virtualenv
+    Error: If you encounter the following error, then follow the fix below
+    ```python
+    ERROR: Could not install packages due to an EnvironmentError: [Errno 13] Permission denied: ...
     ```
 
+    ```bash
+    sudo -H pip install virtualenv
+    ```
  * #### Dependencies
 
-    1. Create and fire up your virtual environment in python3:
-    ```
-        $ virtualenv -p python3 venv
-        $ source venv/bin/activate
-    ```
+    *   Create and fire up your virtual environment in python3:
+        ```bash
+        virtualenv -p python3 venv
+        source venv/bin/activate
+        ```
+
         For *Windows* you can use -
-    ```
-        $ venv/Scipts/activate.bat
-    ```
+
+        ```
+        venv/Scipts/activate.bat
+        ```
 
 *   #### Environment Variables
-    Create a .env file and add the following:
-    ```
+    *   Change directory to the folder
+        ```bash
+        $ cd fact-bounty-flask
+        ```
+
+    *   Create a .env file in the `fact-bounty-flask` folder and add the following:
+        ```bash
         export FLASK_APP="app.py"
         export SECRET_KEY="some-very-long-string-of-random-characters-CHANGE-TO-YOUR-LIKING"
         export FLASK_ENV="development"
@@ -77,7 +99,7 @@ Run npm install in fact-bounty-client folder.
         export ELASTIC_SEARCH_URL=""
         export ELASTIC_SEARCH_USERNAME=""
         export ELASTIC_SEARCH_PASSWORD=""
-	
+
         export TZ="Asia/Colombo"
         
         export MAIL_USERNAME=""
@@ -86,96 +108,101 @@ Run npm install in fact-bounty-client folder.
         export MAIL_PORT="587"
         export MAIL_USE_TLS="true"
         export MAIL_SERVER="smtp.gmail.com"
-
-    ```
+        ```
 
     Save the file.
 
 *   #### Install your requirements
-    ```
+    ```bash
         (venv)$ pip install -r requirements.txt
     ```
 
 *   #### Set up github pre-hook
-    ```
+    ```bash
         (venv)$ pre-commit install
     ```
 
 *   #### Running It
     On your terminal, run the server using this one simple command:
-    ```
+    ```bash
         (venv)$ flask run
     ```
 
 *   #### Add sample data
-    Browse to db folder and run:
-    ```
-        (venv)$ python add_es.py
+    Browse to db folder inside `fact-Bounty` and run:
+    ```bash
+    (venv)$ cd db
+    (venv)$ python add_es.py
     ```
 
 ### How to install Elasticsearch and start elasticsearch server
 
 *   #### Elasticsearch v7.6.0 can be installed as follows:
-    ```
-        (venv)$ wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.6.0-amd64.deb
-        (venv)$ wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.6.0-amd64.deb.sha512
-        (venv)$ shasum -a 512 -c elasticsearch-7.6.0-amd64.deb.sha512
-        (venv)$ sudo dpkg -i elasticsearch-7.6.0-amd64.deb
+    ```bash
+    wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.6.0-amd64.deb
+    wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.6.0-amd64.deb.sha512
+    shasum -a 512 -c elasticsearch-7.6.0-amd64.deb.sha512
+    sudo dpkg -i elasticsearch-7.6.0-amd64.deb
 
     ```
-
+    If you're an Arch Linux user, install it using the package manager, pacman
+    ```bash
+    sudo pacman -S elasticsearch
+    ```
 *   #### Check whether your system uses `init` or `systemd` by running command:
-    ```
-        (venv)$ ps -p 1
+    ```bash
+    ps -p 1
     ```
 
 *   #### Running Elasticsearch with SysV `init`
-    Use the update-rc.d command to configure Elasticsearch to start automatically when the system boots up:
-    ```
-        (venv)$ sudo update-rc.d elasticsearch defaults 95 10
-    ```
-    Elasticsearch can be started and stopped using the service command:
-    ```
-        (venv)$ sudo -i service elasticsearch start
-        (venv)$ sudo -i service elasticsearch stop
-    ```
+    *   Use the update-rc.d command to configure Elasticsearch to start automatically when the system boots up:
+        ```bash
+        sudo update-rc.d elasticsearch defaults 95 10
+        ```
+    *   Elasticsearch can be started and stopped using the service command:
+        ```bash
+        sudo -i service elasticsearch start
+        sudo -i service elasticsearch stop
+        ```
 
 *   #### Running Elasticsearch with SysV `systemd`
-    To configure Elasticsearch to start automatically when the system boots up, run the following commands:
-    ```
-        (venv)$ sudo /bin/systemctl daemon-reload
-        (venv)$ sudo /bin/systemctl enable elasticsearch.service
-    ```
-    Elasticsearch can be started and stopped using the service command:
-    ```
-        (venv)$ sudo systemctl start elasticsearch.service
-        (venv)$ sudo systemctl stop elasticsearch.service
-    ```
-
+    *   To configure Elasticsearch to start automatically when the system boots up, run the following commands:
+        ```bash
+        sudo /bin/systemctl daemon-reload
+        sudo /bin/systemctl enable elasticsearch.service
+        ```
+    *   Elasticsearch can be started and stopped using the service command:
+        ```bash
+        sudo systemctl start elasticsearch.service
+        sudo systemctl stop elasticsearch.service
+        ```
+    If you're facing issues in starting `elasticsearch.service`, check your system default Java version as Elasticsearch requires at least OpenJDK 10.
 *   #### Check Elasticsearch server is running by:
     `CURL` request:
+    ```bash
+    (venv)$ curl -X GET "localhost:9200/"
     ```
-        (venv)$ curl -X GET "localhost:9200/"
-    ```
-    or open [https://localhost:9200](https://localhost:9200)
+    or open [localhost:9200](localhost:9200)
 
 ### How to Use
 
-Use two terminals, one for fact-bounty-flask and the other for fact-bounty-client.
+*   Use two terminals, one for `fact-bounty-flask` and the other for `fact-bounty-client`.
 
-Run the flask server in the fact-bounty-flask folder:
+*   Run the flask server in the `fact-bounty-flask` folder:
 
-`(venv)$ flask run`
+    ```bash
+    (venv)$ flask run
+    ```
 
-start the npm server in fact-bounty-client directory.
+*   Start the npm server in fact-bounty-client directory.
 
-`npm start`
+    ```bash
+    npm start
+    ```
 
-And use [localhost:3000](https://) to browse.
+And use [localhost:3000](localhost:3000) to browse.
 
-
-> **NOTE**: This version is only supporting for Chrome browser. And make sure to instal the extension -> Redux Dev Tools in chrome extension library.
->
+> **NOTE**: This version is only supporting for Chrome browser. And make sure to install the extension -> Redux Dev Tools in chrome extension library.
 
 ### Running with Docker
 
@@ -183,29 +210,29 @@ And use [localhost:3000](https://) to browse.
 
 *   #### In the root of the project directory, run `docker-compose build`
     If you are on Linux machine, execute the following steps to install compose.
-    ```
-        sudo curl -L https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
-        sudo chmod +x /usr/local/bin/docker-compose
+    ```bash
+    sudo curl -L https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
     ```
 
 *   #### Set Environment Variables
-    Create a .env file and add the following:
+    Create a .env file inside fact-bounty-flask and add the following:
+    ```bash
+    FLASK_APP="app.py"
+    SECRET_KEY="some-very-long-string-of-random-characters-CHANGE-TO-YOUR-LIKING"
+    FLASK_ENV="development"
+    FLASK_CONFIG="development"
+
+    DEV_DATABASE_URL=""
+    TEST_DATABASE_URL=""
+    DATABASE_URL=""
+
+    ELASTIC_SEARCH_URL=""
+    ELASTIC_SEARCH_USERNAME=""
+    ELASTIC_SEARCH_PASSWORD=""
+
+    TZ=“Asia/Colombo”
     ```
-        FLASK_APP="app.py"
-        SECRET_KEY="some-very-long-string-of-random-characters-CHANGE-TO-YOUR-LIKING"
-        FLASK_ENV="development"
-        FLASK_CONFIG="development"
-
-        DEV_DATABASE_URL=""
-        TEST_DATABASE_URL=""
-        DATABASE_URL=""
-
-        ELASTIC_SEARCH_URL=""
-        ELASTIC_SEARCH_USERNAME=""
-        ELASTIC_SEARCH_PASSWORD=""
-
-        TZ=“Asia/Colombo”
-     ```
     Save the file.
 
 *   #### Once build completes, run `docker-compose up`
@@ -220,7 +247,5 @@ And use [localhost:3000](https://) to browse.
 - You can open issue regarding any problem according to the given issue template.
 - Make changes and do the PR according to the given template.
 
-
 ## License
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fscorelab%2Ffact-Bounty.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fscorelab%2Ffact-Bounty?ref=badge_large)
-
