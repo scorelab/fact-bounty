@@ -1,6 +1,6 @@
 ### Setting up oauthd daemon locally
 
-This service is installed separately and will get integrated with the project by updating the environment variables in `.env` file by updating `EACT_APP_OAUTHD_KEY` and `EACT_APP_OAUTHD_URL`
+This service is installed separately and will get integrated with the project by updating the environment variables in `.env` file by updating `REACT_APP_OAUTHD_KEY` and `REACT_APP_OAUTHD_URL`
 
 Refer [OAuth official page](https://oauth.net/getting-started/) to understand the usecase and setup process of OAuth.
 If you're already familiar with the OAuth or you just wnat to integrate without getting into much details you continue following the below mentioned steps to setup OAuth.
