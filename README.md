@@ -143,6 +143,7 @@ The recent decade has witnessed the birth of social media ecosystems that brings
     ```
 
 -   #### Add sample data
+
     Browse to db folder inside `fact-Bounty` and run:
 
     ```bash
@@ -181,7 +182,7 @@ The recent decade has witnessed the birth of social media ecosystems that brings
         ```bash
         sudo update-rc.d elasticsearch defaults 95 10
         ```
-        
+
     -   Elasticsearch can be started and stopped using the service command:
 
         ```bash
@@ -189,7 +190,7 @@ The recent decade has witnessed the birth of social media ecosystems that brings
         sudo -i service elasticsearch stop
         ```
 
--   #### Running Elasticsearch with SysV `systemd`
+*   #### Running Elasticsearch with SysV `systemd`
 
     -   To configure Elasticsearch to start automatically when the system boots up, run the following commands:
 
@@ -206,13 +207,14 @@ The recent decade has witnessed the birth of social media ecosystems that brings
 
     -   If you're facing issues in starting `elasticsearch.service`, check your system default Java version as Elasticsearch requires at least OpenJDK 10.
 
--   #### Check Elasticsearch server is running by
+*   #### Check Elasticsearch server is running by
+
     `CURL` request:
 
     ```bash
     (venv)$ curl -X GET "localhost:9200/"
     ```
-    
+
     or open [localhost:9200](localhost:9200)
 
 ### How to Use
