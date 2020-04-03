@@ -182,6 +182,7 @@ The recent decade has witnessed the birth of social media ecosystems that brings
         sudo update-rc.d elasticsearch defaults 95 10
         ```
         
+        
     -   Elasticsearch can be started and stopped using the service command:
 
         ```bash
