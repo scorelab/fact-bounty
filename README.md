@@ -82,7 +82,9 @@ The recent decade has witnessed the birth of social media ecosystems that brings
 
         For _Windows_ you can use -
 
-            venv/Scipts/activate.bat
+        ```
+        venv/Scipts/activate.bat
+        ```
 
 -   #### Environment Variables
 
@@ -123,13 +125,13 @@ The recent decade has witnessed the birth of social media ecosystems that brings
 -   #### Install your requirements
 
     ```bash
-        (venv)$ pip install -r requirements.txt
+    (venv)$ pip install -r requirements.txt
     ```
 
 -   #### Set up github pre-hook
 
     ```bash
-        (venv)$ pre-commit install
+    (venv)$ pre-commit install
     ```
 
 -   #### Running It
@@ -137,11 +139,12 @@ The recent decade has witnessed the birth of social media ecosystems that brings
     On your terminal, run the server using this one simple command:
 
     ```bash
-        (venv)$ flask run
+    (venv)$ flask run
     ```
 
 -   #### Add sample data
     Browse to db folder inside `fact-Bounty` and run:
+
     ```bash
     (venv)$ cd db
     (venv)$ python add_es.py
@@ -174,10 +177,13 @@ The recent decade has witnessed the birth of social media ecosystems that brings
 -   #### Running Elasticsearch with SysV `init`
 
     -   Use the update-rc.d command to configure Elasticsearch to start automatically when the system boots up:
+
         ```bash
         sudo update-rc.d elasticsearch defaults 95 10
         ```
+        
     -   Elasticsearch can be started and stopped using the service command:
+
         ```bash
         sudo -i service elasticsearch start
         sudo -i service elasticsearch stop
@@ -186,12 +192,14 @@ The recent decade has witnessed the birth of social media ecosystems that brings
 -   #### Running Elasticsearch with SysV `systemd`
 
     -   To configure Elasticsearch to start automatically when the system boots up, run the following commands:
+
         ```bash
         sudo /bin/systemctl daemon-reload
         sudo /bin/systemctl enable elasticsearch.service
         ```
 
     -   Elasticsearch can be started and stopped using the service command:
+
         ```bash
         sudo systemctl start elasticsearch.service sudo systemctl stop elasticsearch.service
         ```
@@ -200,10 +208,12 @@ The recent decade has witnessed the birth of social media ecosystems that brings
 
 -   #### Check Elasticsearch server is running by
     `CURL` request:
+
     ```bash
     (venv)$ curl -X GET "localhost:9200/"
     ```
-    or open <localhost:9200>
+    
+    or open [localhost:9200](localhost:9200)
 
 ### How to Use
 
@@ -221,7 +231,7 @@ The recent decade has witnessed the birth of social media ecosystems that brings
     npm start
     ```
 
-And use <localhost:3000> to browse.
+And use [localhost:3000](localhost:3000) to browse.
 
 > **NOTE**: This version is only supporting for Chrome browser. And make sure to install the extension -> Redux Dev Tools in chrome extension library.
 
