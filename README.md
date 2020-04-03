@@ -44,12 +44,12 @@ The recent decade has witnessed the birth of social media ecosystems that brings
 
 ### Technologies required
 
-- **[Python3](https://www.python.org/downloads/)** - A programming language that lets you work more quickly (The universe loves speed!).
-- **[Flask](http://flask.pocoo.org/)** - A microframework for Python based on Werkzeug, Jinja 2 and good intentions
-- **[Virtualenv](https://virtualenv.pypa.io/en/stable/)** - A tool to create isolated virtual environments
-- **[SQLite](https://www.sqlite.org/)** - An in-process library that implements a self-contained, serverless, zero-configuration, transactional SQL database engine
-- **[Elasticsearch](https://www.elastic.co/downloads/elasticsearch)** - A search engine based on the Lucene library
-- Minor dependencies can be found in the requirements.txt file.
+-   **[Python3](https://www.python.org/downloads/)** - A programming language that lets you work more quickly (The universe loves speed!).
+-   **[Flask](http://flask.pocoo.org/)** - A microframework for Python based on Werkzeug, Jinja 2 and good intentions
+-   **[Virtualenv](https://virtualenv.pypa.io/en/stable/)** - A tool to create isolated virtual environments
+-   **[SQLite](https://www.sqlite.org/)** - An in-process library that implements a self-contained, serverless, zero-configuration, transactional SQL database engine
+-   **[Elasticsearch](https://www.elastic.co/downloads/elasticsearch)** - A search engine based on the Lucene library
+-   Minor dependencies can be found in the requirements.txt file.
 
 ### Installation / Usage
 
@@ -280,9 +280,9 @@ And use [localhost:3000](localhost:3000) to browse.
 
 ## How to Contribute
 
-- First fork the repository and clone it.
-- You can open issue regarding any problem according to the given issue template.
-- Make changes and do the PR according to the given template.
+-   First fork the repository and clone it.
+-   You can open issue regarding any problem according to the given issue template.
+-   Make changes and do the PR according to the given template.
 
 ## License
 
