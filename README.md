@@ -82,9 +82,7 @@ The recent decade has witnessed the birth of social media ecosystems that brings
 
         For _Windows_ you can use -
 
-        ```
-        venv/Scipts/activate.bat
-        ```
+            venv/Scipts/activate.bat
 
 -   #### Environment Variables
 
@@ -179,8 +177,6 @@ The recent decade has witnessed the birth of social media ecosystems that brings
         ```bash
         sudo update-rc.d elasticsearch defaults 95 10
         ```
-
-        
     -   Elasticsearch can be started and stopped using the service command:
         ```bash
         sudo -i service elasticsearch start
@@ -207,7 +203,7 @@ The recent decade has witnessed the birth of social media ecosystems that brings
     ```bash
     (venv)$ curl -X GET "localhost:9200/"
     ```
-    or open [localhost:9200](localhost:9200)
+    or open <localhost:9200>
 
 ### How to Use
 
@@ -225,7 +221,7 @@ The recent decade has witnessed the birth of social media ecosystems that brings
     npm start
     ```
 
-And use [localhost:3000](localhost:3000) to browse.
+And use <localhost:3000> to browse.
 
 > **NOTE**: This version is only supporting for Chrome browser. And make sure to install the extension -> Redux Dev Tools in chrome extension library.
 
