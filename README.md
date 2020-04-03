@@ -6,11 +6,11 @@
 
 The recent decade has witnessed the birth of social media ecosystems that brings social organizations, media content and various stakeholders together, and now it appears significant advantages of comprehensiveness, diversity and wisdom that provide users with higher quality of experiences. Meanwhile, social media ecosystems suffer from security, privacy and trustworthiness threats. How to leverage the power of intelligent crowds to improve the ecosystem’s efficacy and efficiency, as well as ensure its security and privacy become burning and challenging issues.
 
-#### Fact Bounty is a crowd sourced fact checking platform.
+**Fact Bounty is a crowd sourced fact checking platform.**
 
 ## User Guide
 
-#### How to Setup
+### How to Setup
 
 -   Clone the repository.
 
@@ -44,12 +44,12 @@ The recent decade has witnessed the birth of social media ecosystems that brings
 
 ### Technologies required
 
--   **[Python3](https://www.python.org/downloads/)** - A programming language that lets you work more quickly (The universe loves speed!).
--   **[Flask](http://flask.pocoo.org/)** - A microframework for Python based on Werkzeug, Jinja 2 and good intentions
--   **[Virtualenv](https://virtualenv.pypa.io/en/stable/)** - A tool to create isolated virtual environments
--   **[SQLite](https://www.sqlite.org/)** - An in-process library that implements a self-contained, serverless, zero-configuration, transactional SQL database engine
--   **[Elasticsearch](https://www.elastic.co/downloads/elasticsearch)** - A search engine based on the Lucene library
--   Minor dependencies can be found in the requirements.txt file.
+- **[Python3](https://www.python.org/downloads/)** - A programming language that lets you work more quickly (The universe loves speed!).
+- **[Flask](http://flask.pocoo.org/)** - A microframework for Python based on Werkzeug, Jinja 2 and good intentions
+- **[Virtualenv](https://virtualenv.pypa.io/en/stable/)** - A tool to create isolated virtual environments
+- **[SQLite](https://www.sqlite.org/)** - An in-process library that implements a self-contained, serverless, zero-configuration, transactional SQL database engine
+- **[Elasticsearch](https://www.elastic.co/downloads/elasticsearch)** - A search engine based on the Lucene library
+- Minor dependencies can be found in the requirements.txt file.
 
 ### Installation / Usage
 
@@ -80,7 +80,7 @@ The recent decade has witnessed the birth of social media ecosystems that brings
         source venv/bin/activate
         ```
 
-        For _Windows_ you can use -
+        For *Windows* you can use -
 
         ```
         venv/Scipts/activate.bat
@@ -143,7 +143,6 @@ The recent decade has witnessed the birth of social media ecosystems that brings
     ```
 
 -   #### Add sample data
-
     Browse to db folder inside `fact-Bounty` and run:
 
     ```bash
@@ -190,7 +189,8 @@ The recent decade has witnessed the birth of social media ecosystems that brings
         sudo -i service elasticsearch stop
         ```
 
-*   #### Running Elasticsearch with SysV `systemd`
+
+-   #### Running Elasticsearch with SysV `systemd`
 
     -   To configure Elasticsearch to start automatically when the system boots up, run the following commands:
 
@@ -207,14 +207,13 @@ The recent decade has witnessed the birth of social media ecosystems that brings
 
     -   If you're facing issues in starting `elasticsearch.service`, check your system default Java version as Elasticsearch requires at least OpenJDK 10.
 
-*   #### Check Elasticsearch server is running by
-
+-   #### Check Elasticsearch server is running by
     `CURL` request:
 
     ```bash
     (venv)$ curl -X GET "localhost:9200/"
     ```
-
+    
     or open [localhost:9200](localhost:9200)
 
 ### How to Use
@@ -279,11 +278,11 @@ And use [localhost:3000](localhost:3000) to browse.
 
 [How to setup OAuth Daemon](OAuthdSetup.md)
 
-# How to Contribute
+## How to Contribute
 
--   First fork the repository and clone it.
--   You can open issue regarding any problem according to the given issue template.
--   Make changes and do the PR according to the given template.
+- First fork the repository and clone it.
+- You can open issue regarding any problem according to the given issue template.
+- Make changes and do the PR according to the given template.
 
 ## License
 
