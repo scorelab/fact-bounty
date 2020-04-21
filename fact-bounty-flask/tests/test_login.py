@@ -3,7 +3,7 @@ import unittest
 import tempfile
 import json
 import sys
-from app import app, db
+from app import app
 from fake_db import db_fd, db_path
 
 sys.path.append(os.path.join(sys.path[0], "../../"))
@@ -12,8 +12,8 @@ FLASKR = app
 USER_DATA = dict(
     name="name2",
     email="example2@gmail.com",
-    password="password",
-    password2="password",
+    password="test2credentials",
+    password2="test2credentials",
 )
 
 
