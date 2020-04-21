@@ -1,9 +1,15 @@
 from elasticsearch import Elasticsearch
 import json
+import os
 
-es = Elasticsearch()
+ELASTICSEARCH_URL = '127.0.0.1'
 
-with open('dump/stories.json', 'r') as read:
+es = Elasticsearch(
+	[ELASTICSEARCH_URL],
+	port=9200
+        )
+
+with open(os.path.join(os.path.dirname(__file__),'dump/stories.json'), 'r') as read:
 	data = json.load(read)
 	i = 1
 	for row in data:

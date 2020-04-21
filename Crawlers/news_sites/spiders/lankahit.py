@@ -12,7 +12,9 @@ class LankaHitGossipSpider(scrapy.Spider):
         "http://sinhala.lankahitgossip.com/category/hit-gossip-news/"
     ]
 
-    def __init__(self, date=None):
+    def __init__(self, date=None, *args, **kwargs):
+        super(LankaHitGossipSpider, self).__init__(*args, **kwargs)
+
         if date is not None:
             self.dateToMatch = dparser.parse(date).date()
         else:

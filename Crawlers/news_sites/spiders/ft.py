@@ -9,7 +9,9 @@ class FtSpider(scrapy.Spider):
     allowed_domains = ["ft.lk"]
     start_urls = ["http://www.ft.lk"]
 
-    def __init__(self, date=None):
+    def __init__(self, date=None, *args, **kwargs):
+        super(FtSpider, self).__init__(*args, **kwargs)
+
         if date is not None:
             self.dateToMatch = dparser.parse(date, fuzzy=True).date()
         else:

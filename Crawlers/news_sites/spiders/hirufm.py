@@ -10,7 +10,9 @@ class HiruFmSpider(scrapy.Spider):
     allowed_domains = ["gossip.hirufm.lk"]
     start_urls = ["http://gossip.hirufm.lk/gossipnews/"]
 
-    def __init__(self, date=None):
+    def __init__(self, date=None, *args, **kwargs):
+        super(HiruFmSpider, self).__init__(*args, **kwargs)
+
         if date is not None:
             self.dateToMatch = dparser.parse(date).date()
         else:

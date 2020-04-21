@@ -1,0 +1,81 @@
+2020-04-21T10:59:40+0530 [-] Removing stale pidfile /home/saurav/fact-Bounty/Crawlers/twistd.pid
+2020-04-21T10:59:40+0530 [-] Loading /home/saurav/fact-Bounty/fact-bounty-flask/venv/lib/python3.8/site-packages/scrapyd/txapp.py...
+2020-04-21T10:59:40+0530 [-] Scrapyd web console available at http://0.0.0.0:6800/
+2020-04-21T10:59:40+0530 [-] Loaded.
+2020-04-21T10:59:40+0530 [twisted.scripts._twistd_unix.UnixAppLogger#info] twistd 20.3.0 (/home/saurav/fact-Bounty/fact-bounty-flask/venv/bin/python3 3.8.1) starting up.
+2020-04-21T10:59:40+0530 [twisted.scripts._twistd_unix.UnixAppLogger#info] reactor class: twisted.internet.epollreactor.EPollReactor.
+2020-04-21T10:59:40+0530 [-] Site starting on 6800
+2020-04-21T10:59:40+0530 [twisted.web.server.Site#info] Starting factory <twisted.web.server.Site object at 0x7f4f98897730>
+2020-04-21T10:59:40+0530 [Launcher] Scrapyd 1.2.1 started: max_proc=16, runner='scrapyd.runner'
+2020-04-21T10:59:40+0530 [-] Process started:  project='default' spider='hirufm' job='a88dd474835c11eaa3f9548ca00f1246' pid=3710 log='logs/default/hirufm/a88dd474835c11eaa3f9548ca00f1246.log' items=None
+2020-04-21T10:59:41+0530 [Launcher,3710/stderr] /home/saurav/fact-Bounty/fact-bounty-flask/venv/lib/python3.8/site-packages/scrapy/utils/project.py:90: ScrapyDeprecationWarning: Use of environment variables prefixed with SCRAPY_ to override settings is deprecated. The following environment variables are currently defined: JOB, LOG_FILE, SLOT, SPIDER
+	  warnings.warn(
+2020-04-21T10:59:44+0530 [-] Process finished:  project='default' spider='hirufm' job='a88dd474835c11eaa3f9548ca00f1246' pid=3710 log='logs/default/hirufm/a88dd474835c11eaa3f9548ca00f1246.log' items=None
+2020-04-21T10:59:45+0530 [-] Process started:  project='default' spider='hirunews' job='a89b5b8a835c11eaa3f9548ca00f1246' pid=3713 log='logs/default/hirunews/a89b5b8a835c11eaa3f9548ca00f1246.log' items=None
+2020-04-21T10:59:46+0530 [Launcher,3713/stderr] /home/saurav/fact-Bounty/fact-bounty-flask/venv/lib/python3.8/site-packages/scrapy/utils/project.py:90: ScrapyDeprecationWarning: Use of environment variables prefixed with SCRAPY_ to override settings is deprecated. The following environment variables are currently defined: JOB, LOG_FILE, SLOT, SPIDER
+	  warnings.warn(
+2020-04-21T10:59:47+0530 [-] Process finished:  project='default' spider='hirunews' job='a89b5b8a835c11eaa3f9548ca00f1246' pid=3713 log='logs/default/hirunews/a89b5b8a835c11eaa3f9548ca00f1246.log' items=None
+2020-04-21T10:59:50+0530 [-] Process started:  project='default' spider='hitgossip' job='a8a7acdc835c11eaa3f9548ca00f1246' pid=3748 log='logs/default/hitgossip/a8a7acdc835c11eaa3f9548ca00f1246.log' items=None
+2020-04-21T10:59:51+0530 [Launcher,3748/stderr] /home/saurav/fact-Bounty/fact-bounty-flask/venv/lib/python3.8/site-packages/scrapy/utils/project.py:90: ScrapyDeprecationWarning: Use of environment variables prefixed with SCRAPY_ to override settings is deprecated. The following environment variables are currently defined: JOB, LOG_FILE, SLOT, SPIDER
+	  warnings.warn(
+2020-04-21T10:59:54+0530 [-] Process finished:  project='default' spider='hitgossip' job='a8a7acdc835c11eaa3f9548ca00f1246' pid=3748 log='logs/default/hitgossip/a8a7acdc835c11eaa3f9548ca00f1246.log' items=None
+2020-04-21T10:59:55+0530 [-] Process started:  project='default' spider='hotnews' job='a8b4aca2835c11eaa3f9548ca00f1246' pid=3751 log='logs/default/hotnews/a8b4aca2835c11eaa3f9548ca00f1246.log' items=None
+2020-04-21T10:59:56+0530 [Launcher,3751/stderr] /home/saurav/fact-Bounty/fact-bounty-flask/venv/lib/python3.8/site-packages/scrapy/utils/project.py:90: ScrapyDeprecationWarning: Use of environment variables prefixed with SCRAPY_ to override settings is deprecated. The following environment variables are currently defined: JOB, LOG_FILE, SLOT, SPIDER
+	  warnings.warn(
+2020-04-21T11:00:00+0530 [-] Process started:  project='default' spider='lankadeepa' job='a8c3e104835c11eaa3f9548ca00f1246' pid=3770 log='logs/default/lankadeepa/a8c3e104835c11eaa3f9548ca00f1246.log' items=None
+2020-04-21T11:00:00+0530 [-] Process finished:  project='default' spider='hotnews' job='a8b4aca2835c11eaa3f9548ca00f1246' pid=3751 log='logs/default/hotnews/a8b4aca2835c11eaa3f9548ca00f1246.log' items=None
+2020-04-21T11:00:01+0530 [Launcher,3770/stderr] /home/saurav/fact-Bounty/fact-bounty-flask/venv/lib/python3.8/site-packages/scrapy/utils/project.py:90: ScrapyDeprecationWarning: Use of environment variables prefixed with SCRAPY_ to override settings is deprecated. The following environment variables are currently defined: JOB, LOG_FILE, SLOT, SPIDER
+	  warnings.warn(
+2020-04-21T11:00:05+0530 [-] Process started:  project='default' spider='nethgossip' job='a8d3213c835c11eaa3f9548ca00f1246' pid=3803 log='logs/default/nethgossip/a8d3213c835c11eaa3f9548ca00f1246.log' items=None
+2020-04-21T11:00:06+0530 [Launcher,3803/stderr] /home/saurav/fact-Bounty/fact-bounty-flask/venv/lib/python3.8/site-packages/scrapy/utils/project.py:90: ScrapyDeprecationWarning: Use of environment variables prefixed with SCRAPY_ to override settings is deprecated. The following environment variables are currently defined: JOB, LOG_FILE, SLOT, SPIDER
+	  warnings.warn(
+2020-04-21T11:00:10+0530 [-] Process started:  project='default' spider='nf' job='a8e26a66835c11eaa3f9548ca00f1246' pid=3819 log='logs/default/nf/a8e26a66835c11eaa3f9548ca00f1246.log' items=None
+2020-04-21T11:00:11+0530 [Launcher,3819/stderr] /home/saurav/fact-Bounty/fact-bounty-flask/venv/lib/python3.8/site-packages/scrapy/utils/project.py:90: ScrapyDeprecationWarning: Use of environment variables prefixed with SCRAPY_ to override settings is deprecated. The following environment variables are currently defined: JOB, LOG_FILE, SLOT, SPIDER
+	  warnings.warn(
+2020-04-21T11:00:15+0530 [-] Process started:  project='default' spider='nfsl' job='a8f40c08835c11eaa3f9548ca00f1246' pid=3848 log='logs/default/nfsl/a8f40c08835c11eaa3f9548ca00f1246.log' items=None
+2020-04-21T11:00:16+0530 [Launcher,3848/stderr] /home/saurav/fact-Bounty/fact-bounty-flask/venv/lib/python3.8/site-packages/scrapy/utils/project.py:90: ScrapyDeprecationWarning: Use of environment variables prefixed with SCRAPY_ to override settings is deprecated. The following environment variables are currently defined: JOB, LOG_FILE, SLOT, SPIDER
+	  warnings.warn(
+2020-04-21T11:00:20+0530 [twisted.python.log#info] "127.0.0.1" - - [21/Apr/2020:05:30:18 +0000] "GET /listspiders.json?project=default HTTP/1.1" 200 312 "-" "python-requests/2.23.0"
+2020-04-21T11:00:20+0530 [twisted.python.log#info] "127.0.0.1" - - [21/Apr/2020:05:30:20 +0000] "POST /schedule.json HTTP/1.1" 200 85 "-" "python-requests/2.23.0"
+2020-04-21T11:00:20+0530 [twisted.python.log#info] "127.0.0.1" - - [21/Apr/2020:05:30:20 +0000] "POST /schedule.json HTTP/1.1" 200 85 "-" "python-requests/2.23.0"
+2020-04-21T11:00:20+0530 [twisted.python.log#info] "127.0.0.1" - - [21/Apr/2020:05:30:20 +0000] "POST /schedule.json HTTP/1.1" 200 85 "-" "python-requests/2.23.0"
+2020-04-21T11:00:20+0530 [twisted.python.log#info] "127.0.0.1" - - [21/Apr/2020:05:30:20 +0000] "POST /schedule.json HTTP/1.1" 200 85 "-" "python-requests/2.23.0"
+2020-04-21T11:00:20+0530 [twisted.python.log#info] "127.0.0.1" - - [21/Apr/2020:05:30:20 +0000] "POST /schedule.json HTTP/1.1" 200 85 "-" "python-requests/2.23.0"
+2020-04-21T11:00:20+0530 [twisted.python.log#info] "127.0.0.1" - - [21/Apr/2020:05:30:20 +0000] "POST /schedule.json HTTP/1.1" 200 85 "-" "python-requests/2.23.0"
+2020-04-21T11:00:20+0530 [-] Process started:  project='default' spider='rategossip' job='a90290c0835c11eaa3f9548ca00f1246' pid=3859 log='logs/default/rategossip/a90290c0835c11eaa3f9548ca00f1246.log' items=None
+2020-04-21T11:00:20+0530 [twisted.python.log#info] "127.0.0.1" - - [21/Apr/2020:05:30:20 +0000] "POST /schedule.json HTTP/1.1" 200 85 "-" "python-requests/2.23.0"
+2020-04-21T11:00:20+0530 [twisted.python.log#info] "127.0.0.1" - - [21/Apr/2020:05:30:20 +0000] "POST /schedule.json HTTP/1.1" 200 85 "-" "python-requests/2.23.0"
+2020-04-21T11:00:20+0530 [twisted.python.log#info] "127.0.0.1" - - [21/Apr/2020:05:30:20 +0000] "POST /schedule.json HTTP/1.1" 200 85 "-" "python-requests/2.23.0"
+2020-04-21T11:00:20+0530 [twisted.python.log#info] "127.0.0.1" - - [21/Apr/2020:05:30:20 +0000] "POST /schedule.json HTTP/1.1" 200 85 "-" "python-requests/2.23.0"
+2020-04-21T11:00:21+0530 [twisted.python.log#info] "127.0.0.1" - - [21/Apr/2020:05:30:20 +0000] "POST /schedule.json HTTP/1.1" 200 85 "-" "python-requests/2.23.0"
+2020-04-21T11:00:21+0530 [twisted.python.log#info] "127.0.0.1" - - [21/Apr/2020:05:30:21 +0000] "POST /schedule.json HTTP/1.1" 200 85 "-" "python-requests/2.23.0"
+2020-04-21T11:00:21+0530 [twisted.python.log#info] "127.0.0.1" - - [21/Apr/2020:05:30:21 +0000] "POST /schedule.json HTTP/1.1" 200 85 "-" "python-requests/2.23.0"
+2020-04-21T11:00:21+0530 [twisted.python.log#info] "127.0.0.1" - - [21/Apr/2020:05:30:21 +0000] "POST /schedule.json HTTP/1.1" 200 85 "-" "python-requests/2.23.0"
+2020-04-21T11:00:21+0530 [twisted.python.log#info] "127.0.0.1" - - [21/Apr/2020:05:30:21 +0000] "POST /schedule.json HTTP/1.1" 200 85 "-" "python-requests/2.23.0"
+2020-04-21T11:00:21+0530 [twisted.python.log#info] "127.0.0.1" - - [21/Apr/2020:05:30:21 +0000] "POST /schedule.json HTTP/1.1" 200 85 "-" "python-requests/2.23.0"
+2020-04-21T11:00:21+0530 [twisted.python.log#info] "127.0.0.1" - - [21/Apr/2020:05:30:21 +0000] "POST /schedule.json HTTP/1.1" 200 85 "-" "python-requests/2.23.0"
+2020-04-21T11:00:21+0530 [twisted.python.log#info] "127.0.0.1" - - [21/Apr/2020:05:30:21 +0000] "POST /schedule.json HTTP/1.1" 200 85 "-" "python-requests/2.23.0"
+2020-04-21T11:00:21+0530 [twisted.python.log#info] "127.0.0.1" - - [21/Apr/2020:05:30:21 +0000] "POST /schedule.json HTTP/1.1" 200 85 "-" "python-requests/2.23.0"
+2020-04-21T11:00:21+0530 [twisted.python.log#info] "127.0.0.1" - - [21/Apr/2020:05:30:21 +0000] "POST /schedule.json HTTP/1.1" 200 85 "-" "python-requests/2.23.0"
+2020-04-21T11:00:21+0530 [twisted.python.log#info] "127.0.0.1" - - [21/Apr/2020:05:30:21 +0000] "POST /schedule.json HTTP/1.1" 200 85 "-" "python-requests/2.23.0"
+2020-04-21T11:00:22+0530 [twisted.python.log#info] "127.0.0.1" - - [21/Apr/2020:05:30:21 +0000] "POST /schedule.json HTTP/1.1" 200 85 "-" "python-requests/2.23.0"
+2020-04-21T11:00:22+0530 [twisted.python.log#info] "127.0.0.1" - - [21/Apr/2020:05:30:22 +0000] "POST /schedule.json HTTP/1.1" 200 85 "-" "python-requests/2.23.0"
+2020-04-21T11:00:22+0530 [twisted.python.log#info] "127.0.0.1" - - [21/Apr/2020:05:30:22 +0000] "POST /schedule.json HTTP/1.1" 200 85 "-" "python-requests/2.23.0"
+2020-04-21T11:00:22+0530 [Launcher,3859/stderr] /home/saurav/fact-Bounty/fact-bounty-flask/venv/lib/python3.8/site-packages/scrapy/utils/project.py:90: ScrapyDeprecationWarning: Use of environment variables prefixed with SCRAPY_ to override settings is deprecated. The following environment variables are currently defined: JOB, LOG_FILE, SLOT, SPIDER
+	  warnings.warn(
+2020-04-21T11:00:22+0530 [-] Process finished:  project='default' spider='nfsl' job='a8f40c08835c11eaa3f9548ca00f1246' pid=3848 log='logs/default/nfsl/a8f40c08835c11eaa3f9548ca00f1246.log' items=None
+2020-04-21T11:00:25+0530 [-] Process started:  project='default' spider='raw' job='a91032ac835c11eaa3f9548ca00f1246' pid=3872 log='logs/default/raw/a91032ac835c11eaa3f9548ca00f1246.log' items=None
+2020-04-21T11:00:25+0530 [-] Process finished:  project='default' spider='rategossip' job='a90290c0835c11eaa3f9548ca00f1246' pid=3859 log='logs/default/rategossip/a90290c0835c11eaa3f9548ca00f1246.log' items=None
+2020-04-21T11:00:26+0530 [Launcher,3872/stderr] /home/saurav/fact-Bounty/fact-bounty-flask/venv/lib/python3.8/site-packages/scrapy/utils/project.py:90: ScrapyDeprecationWarning: Use of environment variables prefixed with SCRAPY_ to override settings is deprecated. The following environment variables are currently defined: JOB, LOG_FILE, SLOT, SPIDER
+	  warnings.warn(
+2020-04-21T11:00:27+0530 [-] Process finished:  project='default' spider='nethgossip' job='a8d3213c835c11eaa3f9548ca00f1246' pid=3803 log='logs/default/nethgossip/a8d3213c835c11eaa3f9548ca00f1246.log' items=None
+2020-04-21T11:00:30+0530 [-] Process started:  project='default' spider='readmelk' job='a920e5ac835c11eaa3f9548ca00f1246' pid=3885 log='logs/default/readmelk/a920e5ac835c11eaa3f9548ca00f1246.log' items=None
+2020-04-21T11:00:31+0530 [Launcher,3885/stderr] /home/saurav/fact-Bounty/fact-bounty-flask/venv/lib/python3.8/site-packages/scrapy/utils/project.py:90: ScrapyDeprecationWarning: Use of environment variables prefixed with SCRAPY_ to override settings is deprecated. The following environment variables are currently defined: JOB, LOG_FILE, SLOT, SPIDER
+	  warnings.warn(
+2020-04-21T11:00:35+0530 [-] Process started:  project='default' spider='reporter' job='a92e73fc835c11eaa3f9548ca00f1246' pid=3897 log='logs/default/reporter/a92e73fc835c11eaa3f9548ca00f1246.log' items=None
+2020-04-21T11:00:36+0530 [Launcher,3897/stderr] /home/saurav/fact-Bounty/fact-bounty-flask/venv/lib/python3.8/site-packages/scrapy/utils/project.py:90: ScrapyDeprecationWarning: Use of environment variables prefixed with SCRAPY_ to override settings is deprecated. The following environment variables are currently defined: JOB, LOG_FILE, SLOT, SPIDER
+	  warnings.warn(
+2020-04-21T11:00:37+0530 [-] Process finished:  project='default' spider='reporter' job='a92e73fc835c11eaa3f9548ca00f1246' pid=3897 log='logs/default/reporter/a92e73fc835c11eaa3f9548ca00f1246.log' items=None
+2020-04-21T11:00:40+0530 [-] Process started:  project='default' spider='roar' job='a93bedac835c11eaa3f9548ca00f1246' pid=3909 log='logs/default/roar/a93bedac835c11eaa3f9548ca00f1246.log' items=None
+2020-04-21T11:00:41+0530 [Launcher,3909/stderr] /home/saurav/fact-Bounty/fact-bounty-flask/venv/lib/python3.8/site-packages/scrapy/utils/project.py:90: ScrapyDeprecationWarning: Use of environment variables prefixed with SCRAPY_ to override settings is deprecated. The following environment variables are currently defined: JOB, LOG_FILE, SLOT, SPIDER
+	  warnings.warn(

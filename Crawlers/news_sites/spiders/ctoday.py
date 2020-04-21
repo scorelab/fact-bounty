@@ -23,7 +23,9 @@ class CtodaySpider(scrapy.Spider):
     # base url of api to extract single news article
     base_url = "http://site-api.ceylontoday.lk/api/News/getSingleNews?Id="
 
-    def __init__(self, date=None):
+    def __init__(self, date=None, *args, **kwargs):
+        super(CtodaySpider, self).__init__(*args, **kwargs)
+
         if date is not None:
             self.dateToMatch = dparser.parse(date).date()
         else:

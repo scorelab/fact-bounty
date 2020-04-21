@@ -1,78 +1,78 @@
 [{
     "title": "A",
+    "author": "A author",
     "content": "A content",
-    "featured_img_url": "A url",
+    "imageLink": "A url",
+    "source": "A source",
     "approved_count": 1,
     "fake_count": 1,
     "mixedvote_count": 0,
-    "date_added": {
-      "$date": "2019-01-01T00:00:00.000Z"
-    }
+    "date": "2019-01-01T00:00:00.000Z"
   },
   {
     "title": "B",
+    "author": "B author",
     "content": "B content",
-    "featured_img_url": "B url",
+    "imageLink": "B url",
+    "source": "B source",
     "approved_count": 2,
     "fake_count": 8,
     "mixedvote_count": 1,
-    "date_added": {
-      "$date": "2019-01-02T00:00:00.000Z"
-    }
+    "date" : "2019-01-02T00:00:00.000Z"
   },
   {
     "title": "C",
+    "author": "C author",
     "content": "C content",
-    "featured_img_url": "C url",
+    "imageLink": "C url",
+    "source": "C source",
     "approved_count": 3,
     "fake_count": 2,
     "mixedvote_count": 0,
-    "date_added": {
-      "$date": "2019-01-03T00:00:00.000Z"
-    }
+    "date" : "2019-01-03T00:00:00.000Z"
   },
   {
     "title": "D",
+    "author": "D author",
     "content": "D content",
-    "featured_img_url": "D url",
+    "imageLink": "D url",
+    "source": "D source",
     "approved_count": 4,
     "fake_count": 4,
     "mixedvote_count": 0,
-    "date_added": {
-      "$date": "2019-01-04T00:00:00.000Z"
-    }
+    "date"  : "2019-01-04T00:00:00.000Z"
   },
   {
     "title": "E",
+    "author": "E author",
     "content": "E content",
-    "featured_img_url": "E url",
+    "imageLink": "E url",
+    "source": "E source",
     "approved_count": 5,
     "fake_count": 5,
     "mixedvote_count": 6,
-    "date_added": {
-      "$date": "2019-01-05T00:00:00.000Z"
-    }
+    "date": "2019-01-05T00:00:00.000Z"
   },
   {
     "title": "F",
+    "author": "F author",
     "content": "F content",
-    "featured_img_url": "F url",
+    "imageLink": "F url",
+    "source": "F source",
     "approved_count": 6,
     "fake_count": 6,
     "mixedvote_count": 2,
-    "date_added": {
-      "$date": "2019-01-06T00:00:00.000Z"
-    }
+    "date": "2019-01-06T00:00:00.000Z"
   },
   {
     "title": "G",
+    "author": "G author",
     "content": "G content",
-    "featured_img_url": "G url",
+    "imageLink": "G url",
+    "source": "G source",
     "approved_count": 7,
     "fake_count": 7,
     "mixedvote_count": 0,
-    "date_added": {
-      "$date": "2019-01-07T00:00:00.000Z"
-    }
+    "date" : "2019-01-07T00:00:00.000Z"
   }
 ]

@@ -99,24 +99,21 @@ class CrawlByDate(MethodView):
         scrapyd = current_app.scrapy
         try:
             data = request.get_json(silent=True)
-
-            live = data['live'] == 'True'
-
-            if not live:
-                date = data['date']
-                date = dparser.parse(date).date()
-            else:
-                date = datetime.now().date()
+            # live = data['live'] == 'True'
+            # if not live:
+            #     date = data['date']
+            #     date = dparser.parse(date).date()
+            # else:
+            date = datetime.now().date()
 
             spiders = scrapyd.list_spiders('default')
             tasks = []
             for spider in spiders:
                 tasks.append(scrapyd.schedule('default', spider,
                                               date=date.strftime('%d %B, %Y')))
-
             response = {
                 'message': 'Started Crawling today news',
-                'tasks': tasks
+                'tasks': tasks,
             }
             return make_response(jsonify(response)), 200
         except Exception as e:

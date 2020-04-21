@@ -10,7 +10,9 @@ class ReporterSpider(scrapy.Spider):
     allowed_domains = ["reporter.lk"]
     start_urls = ["http://www.reporter.lk/"]
 
-    def __init__(self, date=None):
+    def __init__(self, date=None, *args, **kwargs):
+        super(ReporterSpider, self).__init__(*args, **kwargs)
+
         if date is not None:
             self.dateToMatch = dparser.parse(date, fuzzy=True).date()
         else:

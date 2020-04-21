@@ -15,7 +15,8 @@ class amSpider(scrapy.Spider):
         "http://am.lk/sports",
     ]
 
-    def __init__(self, date=None):
+    def __init__(self, date=None, *args, **kwargs):
+        super(amSpider, self).__init__(*args, **kwargs)
         if date is not None:
             self.dateToMatch = dparser.parse(date).date()
         else:

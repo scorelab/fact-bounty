@@ -4,14 +4,15 @@ Create ElasicSearch index
 from elasticsearch import Elasticsearch
 
 es = Elasticsearch("http://localhost:9200")
-index_name = "test3"
+index_name = "test5"
 
 # Setting mappings for index
 mapping = {
     "mappings": {
-        "story": {
+        "stories": {
             "properties": {
                 "date": {"type": "date"},
+                "author": {"type": "keyword"},
                 "title": {"type": "keyword"},
                 "content": {"type": "keyword"},
                 "imageLink": {"type": "keyword"},
@@ -25,4 +26,4 @@ mapping = {
 }
 
 
-es.indices.create(index=index_name, body=mapping)
+es.index(index=index_name, body=mapping)

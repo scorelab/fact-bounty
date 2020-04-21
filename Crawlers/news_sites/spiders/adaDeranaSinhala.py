@@ -10,7 +10,8 @@ class adaDeranaSinhalaSpider(scrapy.Spider):
     allowed_domains = ["sinhala.adaderana.lk"]
     start_urls = ["http://sinhala.adaderana.lk/morehotnews.php"]
 
-    def __init__(self, date=None):
+    def __init__(self, date=None, *args, **kwargs):
+        super(adaDeranaSinhalaSpider, self).__init__(*args, **kwargs)
         if date is not None:
             self.dateToMatch = dparser.parse(date).date()
         else:

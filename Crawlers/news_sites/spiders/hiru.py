@@ -10,7 +10,9 @@ class HiruNewsSpider(scrapy.Spider):
     allowed_domains = ["hirunews.lk"]
     start_urls = ["http://www.hirunews.lk/sinhala/local-news.php"]
 
-    def __init__(self, date=None):
+    def __init__(self, date=None, *args, **kwargs):
+        super(HiruNewsSpider, self).__init__(*args, **kwargs)
+
         if date is not None:
             self.dateToMatch = dparser.parse(date).date()
         else:

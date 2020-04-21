@@ -10,7 +10,9 @@ class LankaHotNewsSpider(scrapy.Spider):
     allowed_domains = ["lankahotnews.net"]
     start_urls = ["https://www.lankahotnews.net/"]
 
-    def __init__(self, date=None):
+    def __init__(self, date=None, *args, **kwargs):
+        super(LankaHotNewsSpider, self).__init__(*args, **kwargs)
+
         if date is not None:
             self.dateToMatch = dparser.parse(date).date()
         else:

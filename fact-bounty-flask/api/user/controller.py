@@ -50,14 +50,20 @@ class Register(MethodView):
             response = {"message": "Both passwords does not match"}
             return make_response(jsonify(response)), 401
 
-        # Register the user
+        # Find if a role is present
         try:
-            user = User(email=email, password=password, name=name)
+            role = post_data["role"]
+            user = User(email=email, password=password, name=name, role=role)
             user.save()
-        except Exception as err:
-            print("Error occured: ", err)
-            response = {"message": "Something went wrong!!"}
-            return make_response(jsonify(response)), 500
+        except KeyError:
+            # Register the user as non admin
+            try:
+                user = User(email=email, password=password, name=name)
+                user.save()
+            except Exception as err:
+                print("Error occured: ", err)
+                response = {"message": "Something went wrong!!"}
+                return make_response(jsonify(response)), 500
 
         response = {"message": "You registered successfully. Please log in."}
 

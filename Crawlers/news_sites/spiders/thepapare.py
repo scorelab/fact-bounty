@@ -2,7 +2,7 @@
 import scrapy
 import dateutil.parser as dparser
 
-from ..items import NewsSitesItem
+from news_sites.items import NewsSitesItem
 
 
 class ThePapareSpider(scrapy.Spider):
@@ -10,7 +10,9 @@ class ThePapareSpider(scrapy.Spider):
     allowed_domains = ["thepapare.com"]
     start_urls = ["http://www.thepapare.com/latest-news"]
 
-    def __init__(self, date=None):
+    def __init__(self, date=None, *args, **kwargs):
+        super(ThePapareSpider, self).__init__(*args, **kwargs)
+
         if date is not None:
             self.dateToMatch = dparser.parse(date, fuzzy=True).date()
         else:

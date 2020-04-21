@@ -1,21 +1,21 @@
 # Config file for automatic testing at travis-ci.org
 language: python
 env:
-  - FLASK_APP=app.py FLASK_CONFIG=testing DOCKER_COMPOSE_VERSION=1.4.2
+  - FLASK_APP=app.py FLASK_CONFIG=testing ELASTIC_SEARCH_URL=127.0.0.1
 python:
   - 3.5
   - 3.6
 services:
-  - docker
+  - elasticsearch
 install:
   - pip install -r fact-bounty-flask/requirements.txt
+  - pip install -r Crawlers/requirements.txt
 before_script:
   - sleep 10
-  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-  - chmod +x docker-compose
-  - docker-compose up --build -d
+  - cd Crawlers
+  - scrapyd > logfile_scrapy &
+  - cd ..
+  - python db/add_es.py
 script: 
   - cd fact-bounty-flask
   - flask test
-after_script:
-  - docker-compose down

@@ -10,7 +10,9 @@ class RateGossipSpider(scrapy.Spider):
     allowed_domains = ["rategossip.com"]
     start_urls = ["http://www.rategossip.com/all-page.html"]
 
-    def __init__(self, date=None):
+    def __init__(self, date=None, *args, **kwargs):
+        super(RateGossipSpider, self).__init__(*args, **kwargs)
+
         if date is not None:
             self.dateToMatch = dparser.parse(date).date()
         else:
