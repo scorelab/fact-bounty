@@ -12,7 +12,7 @@ FLASKR = app
 USER_DATA = dict(
     name="name2",
     email="example2@gmail.com",
-    credential="test2credentials",
+    credential1="test2credentials",
     credential2="test2credentials",
 )
 
@@ -67,7 +67,7 @@ class Test_Login(unittest.TestCase):
             data=json.dumps(
                 dict(
                     email=USER_DATA["email"],
-                    password=USER_DATA["password"] + "x",
+                    password=USER_DATA["credential1"] + "x",
                 )
             ),
             content_type="application/json",
@@ -87,7 +87,7 @@ class Test_Login(unittest.TestCase):
             data=json.dumps(
                 dict(
                     email=USER_DATA["email"] + "x",
-                    password=USER_DATA["password"],
+                    password=USER_DATA["credential1"],
                 )
             ),
             content_type="application/json",
