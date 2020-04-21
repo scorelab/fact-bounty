@@ -12,8 +12,8 @@ FLASKR = app
 USER_DATA = dict(
     name="Admin",
     email="admin@gmail.com",
-    password="test3credentials",
-    password2="test3credentials",
+    credential1="test3credentials",
+    credential2="test3credentials",
     role="admin"
 )
 
@@ -32,8 +32,8 @@ class Test_Story(unittest.TestCase):
                 dict(
                     name=USER_DATA["name"],
                     email=USER_DATA["email"],
-                    password=USER_DATA["password"],
-                    password2=USER_DATA["password2"],
+                    password=USER_DATA["credential1"],
+                    password2=USER_DATA["credential2"],
                     role=USER_DATA["role"]
                 )
             ),
@@ -45,7 +45,7 @@ class Test_Story(unittest.TestCase):
         response = self.app.post(
             "/api/users/login",
             data=json.dumps(
-                dict(email=USER_DATA["email"], password=USER_DATA["password"])
+                dict(email=USER_DATA["email"], password=USER_DATA["credential1"])
             ),
             content_type="application/json",
             follow_redirects=True,
