@@ -12,8 +12,8 @@ FLASKR = app
 USER_DATA = dict(
     name="name",
     email="example@gmail.com",
-    password="test1credentials",
-    password2="test1credentials",
+    credential1="test1credentials",
+    credential2="test1credentials",
 )
 
 
@@ -41,8 +41,8 @@ class Test_Register(unittest.TestCase):
                 dict(
                     name=USER_DATA["name"],
                     email=USER_DATA["email"],
-                    password=USER_DATA["password"],
-                    password2=USER_DATA["password2"],
+                    password=USER_DATA["credential1"],
+                    password2=USER_DATA["credential2"],
                 )
             ),
             content_type="application/json",
@@ -63,8 +63,8 @@ class Test_Register(unittest.TestCase):
                 dict(
                     name=USER_DATA["name"],
                     email=USER_DATA["email"] + "x",
-                    password=USER_DATA["password"],
-                    password2=USER_DATA["password2"] + "x",
+                    password=USER_DATA["credential1"],
+                    password2=USER_DATA["credential2"] + "x",
                 )
             ),
             content_type="application/json",
@@ -83,8 +83,8 @@ class Test_Register(unittest.TestCase):
                 dict(
                     name=USER_DATA["name"],
                     email=USER_DATA["email"],
-                    password=USER_DATA["password"],
-                    password2=USER_DATA["password2"],
+                    password=USER_DATA["credential1"],
+                    password2=USER_DATA["credential2"],
                 )
             ),
             content_type="application/json",
