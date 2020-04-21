@@ -3,20 +3,26 @@ import unittest
 import tempfile
 import json
 import sys
+from app import app, db
+from fake_db import db_fd, db_path
 
 sys.path.append(os.path.join(sys.path[0], "../../"))
-FLASKR = __import__("fact-bounty-flask")
+FLASKR = app
 
 
 class Test_Admin(unittest.TestCase):
-    def setUp(self):
-        FLASKR.config["SQLALCHEMY_DATABASE_URI"] = tempfile.mkstemp()
+    @classmethod
+    def setUpClass(self):
+        self.db_fd, self.db_path = db_fd, db_path
+        FLASKR.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///' + self.db_path
         FLASKR.testing = True
-        self.app = FLASKR.app.app.test_client()
+        self.app = FLASKR.test_client()
 
-    def tearDown(self):
-        os.close(self.db_fd)
-        os.unlink(FLASKR.config["SQLALCHEMY_DATABASE_URI"])
+    @classmethod
+    def tearDownClass(self):
+        # os.close(self.db_fd)
+        # os.unlink(self.db_path)
+        pass
 
     def test_fetch_system_panel_200(self):
         """Get System Panel Information"""

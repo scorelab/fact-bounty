@@ -12,7 +12,9 @@ class RoarSpider(scrapy.Spider):
         "https://roar.media/english/tech/",
     ]
 
-    def __init__(self, date=None):
+    def __init__(self, date=None, *args, **kwargs):
+        super(RoarSpider, self).__init__(*args, **kwargs)
+
         if date is not None:
             self.dateToMatch = dparser.parse(date, fuzzy=True).date()
         else:

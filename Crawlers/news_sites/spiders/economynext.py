@@ -9,7 +9,8 @@ class EconomyNextSpider(scrapy.Spider):
     allowed_domains = ["economynext.com"]
     start_urls = ["http://www.economynext.com/"]
 
-    def __init__(self, date=None):
+    def __init__(self, date=None, *args, **kwargs):
+        super(EconomyNextSpider, self).__init__(*args, **kwargs)
         if date is not None:
             self.dateToMatch = dparser.parse(date, fuzzy=True).date()
         else:

@@ -10,7 +10,9 @@ class LankadeepaSpider(scrapy.Spider):
     allowed_domains = ["lankadeepa.lk"]
     start_urls = ["http://www.lankadeepa.lk/latest_news/1"]
 
-    def __init__(self, date=None):
+    def __init__(self, date=None, *args, **kwargs):
+        super(LankadeepaSpider, self).__init__(*args, **kwargs)
+
         if date is not None:
             self.dateToMatch = dparser.parse(date, fuzzy=True).date()
         else:

@@ -1,3 +1,4 @@
+attrs==19.2.0 
 scrapy==1.6.0
 elasticsearch==6.2.0
 scrapyd==1.2.0

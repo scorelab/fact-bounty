@@ -3,9 +3,11 @@ import unittest
 import tempfile
 import json
 import sys
+from app import app, db
+from fake_db import db_fd, db_path
 
 sys.path.append(os.path.join(sys.path[0], "../../"))
-FLASKR = __import__("fact-bounty-flask")
+FLASKR = app
 
 USER_DATA = dict(
     name="name",
@@ -16,15 +18,18 @@ USER_DATA = dict(
 
 
 class Test_Register(unittest.TestCase):
-    def setUp(self):
-        self.db_fd,
-        FLASKR.config["SQLALCHEMY_DATABASE_URI"] = tempfile.mkstemp()
+    @classmethod
+    def setUpClass(self):
+        self.db_fd, self.db_path = db_fd, db_path
+        FLASKR.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///' + self.db_path
         FLASKR.testing = True
-        self.app = FLASKR.app.app.test_client()
+        self.app = FLASKR.test_client()
 
-    def tearDown(self):
-        os.close(self.db_fd)
-        os.unlink(FLASKR.config["SQLALCHEMY_DATABASE_URI"])
+    @classmethod
+    def tearDownClass(self):
+        pass
+        # os.close(self.db_fd)
+        # os.unlink(self.db_path)
         # FLASKR.db.session.remove()
         # FLASKR.db.drop_all()
 
@@ -45,7 +50,7 @@ class Test_Register(unittest.TestCase):
         )
         res = response.data.decode("ASCII")
         res = json.loads(res)
-        self.assertEqual(response.status_code, 202)
+        self.assertEqual(response.status_code, 201)
         self.assertEqual(
             res["message"], "You registered successfully. Please log in."
         )

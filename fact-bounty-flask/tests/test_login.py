@@ -3,23 +3,46 @@ import unittest
 import tempfile
 import json
 import sys
+from app import app, db
+from fake_db import db_fd, db_path
 
 sys.path.append(os.path.join(sys.path[0], "../../"))
-FLASKR = __import__("fact-bounty-flask")
+FLASKR = app
 
-USER_DATA = dict(email="example@gmail.com", password="password",)
+USER_DATA = dict(
+    name="name2",
+    email="example2@gmail.com",
+    password="password",
+    password2="password",
+)
 
 
 class Test_Login(unittest.TestCase):
+    @classmethod
     def setUp(self):
-        self.db_fd,
-        FLASKR.config["SQLALCHEMY_DATABASE_URI"] = tempfile.mkstemp()
+        self.db_fd, self.db_path = db_fd, db_path
+        FLASKR.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///' + self.db_path
         FLASKR.testing = True
-        self.app = FLASKR.app.app.test_client()
+        self.app = FLASKR.test_client()
+        self.app.post(
+            "/api/users/register",
+            data=json.dumps(
+                dict(
+                    name=USER_DATA["name"],
+                    email=USER_DATA["email"],
+                    password=USER_DATA["password"],
+                    password2=USER_DATA["password2"],
+                )
+            ),
+            content_type="application/json",
+            follow_redirects=True,
+        )
 
-    def tearDown(self):
-        os.close(self.db_fd)
-        os.unlink(FLASKR.config["SQLALCHEMY_DATABASE_URI"])
+    @classmethod
+    def tearDownClass(self):
+        # os.close(self.db_fd)
+        # os.unlink(self.db_path)
+        pass
 
     def test_can_log_in_returns_200(self):
         """Login successful."""
@@ -52,9 +75,9 @@ class Test_Login(unittest.TestCase):
         )
         res = response.data.decode("ASCII")
         res = json.loads(res)
-        self.assertEqual(response.status_code, 401)
+        self.assertEqual(response.status_code, 402)
         self.assertEqual(
-            res["message"], "Invalid email or password, Please try again"
+            res["message"], "Wrong password, Please try again"
         )
 
     def test_sees_error_message_if_username_doesnt_exist(self):
@@ -74,7 +97,7 @@ class Test_Login(unittest.TestCase):
         res = json.loads(res)
         self.assertEqual(response.status_code, 401)
         self.assertEqual(
-            res["message"], "Invalid email or password, Please try again"
+            res["message"], "Invalid email, Please try again"
         )
 
 

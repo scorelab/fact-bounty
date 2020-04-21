@@ -15,7 +15,9 @@ class NewsFirstSpider(scrapy.Spider):
         "https://www.newsfirst.lk/category/local/",
     ]
 
-    def __init__(self, date=None):
+    def __init__(self, date=None, *args, **kwargs):
+        super(NewsFirstSpider, self).__init__(*args, **kwargs)
+
         if date is not None:
             self.dateToMatch = dparser.parse(date, fuzzy=True).date()
         else:

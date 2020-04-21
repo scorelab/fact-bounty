@@ -10,7 +10,9 @@ class NethGossipSpider(scrapy.Spider):
     allowed_domains = ["nethgossip.lk"]
     start_urls = ["http://nethgossip.lk/category/9"]
 
-    def __init__(self, date=None):
+    def __init__(self, date=None, *args, **kwargs):
+        super(NethGossipSpider, self).__init__(*args, **kwargs)
+
         if date is not None:
             self.dateToMatch = dparser.parse(date).date()
         else:

@@ -10,7 +10,9 @@ class ReadmelkSpider(scrapy.Spider):
     allowed_domains = ["readme.lk"]
     start_urls = ["http://www.readme.lk/"]
 
-    def __init__(self, date=None):
+    def __init__(self, date=None, *args, **kwargs):
+        super(ReadmelkSpider, self).__init__(*args, **kwargs)
+
         if date is not None:
             self.dateToMatch = dparser.parse(date, fuzzy=True).date()
         else:

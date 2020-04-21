@@ -10,7 +10,9 @@ class slgurdianSpider(scrapy.Spider):
     allowed_domains = ["srilankaguardian.org"]
     start_urls = ["http://www.srilankaguardian.org/search"]
 
-    def __init__(self, date=None):
+    def __init__(self, date=None, *args, **kwargs):
+        super(slgurdianSpider, self).__init__(*args, **kwargs)
+
         if date is not None:
             self.dateToMatch = dparser.parse(date, fuzzy=True).date()
         else:

@@ -13,5 +13,5 @@ blueprint.add_url_rule(
 blueprint.add_url_rule(
     '/crawl_live',
     view_func=crawlerController['crawlbydate'],
-    methods=['POST']
+    methods=['GET']
 )
