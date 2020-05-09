@@ -60,7 +60,6 @@ API.interceptors.response.use(
           AuthService.tokenRefresh()
             .then(res => {
               const { access_token } = res.data
-              console.log(res)
               fetchingAccessToken = false
               //update header
               setAuthToken(access_token)
