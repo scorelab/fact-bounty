@@ -85,7 +85,7 @@ class ContactUsForm extends Component {
             color="primary"
             style={{ width: 120, alignSelf: 'center', marginTop: 20 }}
             type="submit"
-            loading={loading}
+            loading={loading ? 1 : 0}
             disabled={loading}
           >
             SEND
