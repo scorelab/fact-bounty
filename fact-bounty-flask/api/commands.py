@@ -222,8 +222,6 @@ def create_admin():
         valid = check(admin_email)
         if valid:
             break
-        else:
-            pass
     try:
         user = model.User(
             name=admin_username,
