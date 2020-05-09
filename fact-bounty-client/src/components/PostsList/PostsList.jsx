@@ -32,7 +32,7 @@ class PostsList extends Component {
   }
 
   renderLoader = () => {
-    return <CircularProgress />
+    return <CircularProgress key={Math.floor(Math.random() * 1000)} />
   }
 
   renderPostList = () => {
