@@ -71,6 +71,4 @@ Dashboard.propTypes = {
   match: PropTypes.object
 }
 
-const mapStateToProps = state => ({})
-
 export default Dashboard
