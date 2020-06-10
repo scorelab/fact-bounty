@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import './style.sass'
 import PostsList from '../../components/PostsList'
+import PostItem from '../../components/PostItem'
 
 class Posts extends Component {
   render() {

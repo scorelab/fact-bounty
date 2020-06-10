@@ -11,6 +11,7 @@ import VotesBar from '../VotesBar'
 import VoteButtons from '../VoteButtons'
 import moment from 'moment'
 import './style.sass'
+import PostComments from '../PostComments'
 
 class PostItem extends Component {
   componentDidMount() {
@@ -82,6 +83,12 @@ class PostItem extends Component {
               user={auth.user}
               userVote={userVote}
             />
+            <PostComments
+              post={post}
+              isAuthenticated={auth.isAuthenticated}
+              classes={classes}
+              comments={post.comments}
+            />
           </Card>
         </div>
       </div>
@@ -125,8 +132,5 @@ const mapDispatchToProps = dispatch => ({
 
 export default compose(
   withStyles(styles),
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )
+  connect(mapStateToProps, mapDispatchToProps)
 )(PostItem)

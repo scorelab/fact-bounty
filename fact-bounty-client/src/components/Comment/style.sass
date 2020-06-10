@@ -1,0 +1,74 @@
+@import '../../styles/variables.sass'
+
+@media only screen and (max-width: 600px)
+  .post-container
+    flex-direction: column
+
+.post-item-wrapper
+  margin: 0px 0px 30px 0px
+  .post-container
+    overflow: hidden
+    display: flex
+    .btn-container
+      text-align: right
+    .image
+      margin: 10px
+      width: 100%
+      .post-img
+        margin: 15px
+        border-radius: 100%
+        width: 120px
+        height: 120px
+        margin: auto
+    .details
+      width: 100%;
+      padding: 12px 22px 2px 22px
+      .title
+        font-size: 1.2rem
+        font-weight: 500
+        margin-bottom: 5px
+      .date
+        font-size: 0.8rem
+        opacity: 0.7
+        margin-bottom: 12px
+      .content
+        text-align: justify
+        margin-bottom: 15px
+        line-height: 1.3
+        font-size: 18px
+      a
+        text-decoration: none
+        color: #424242
+      .read-more
+        text-decoration: none
+        color: #9E9E9E
+        font-size: 0.7rem
+        text-align: right
+        position: absolute
+        bottom: 4px
+        right: 6px
+        font-weight: 500
+        cursor: pointer
+      .read-more:hover
+        color: #795548
+  .hover-container
+    transition: 0.2s ease
+    position: relative
+    .votes-bar-container
+      .vote-status
+        height: 4px
+      .votes
+        opacity: 0
+      .vote-value
+        opacity: 0
+  .hover-container:hover
+    .vote-buttons-container
+      opacity: 1
+    .votes-bar-container
+      .vote-status
+        height: 25vh
+      .votes
+        opacity: 1
+      .vote-value
+        opacity: 1
+
