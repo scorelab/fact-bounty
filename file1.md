@@ -2,7 +2,7 @@
 I created a logo for fact-bounty
 <br>
 This is the logo
-https://user-images.githubusercontent.com/58349712/86525678-fbb54c00-bea7-11ea-92b0-2c055f262306.png
+https://user-images.githubusercontent.com/58349712/86527174-0b3d9080-beba-11ea-9f8f-cf7b1528956c.png
 <br>
 <br>
 Thank You<br>
