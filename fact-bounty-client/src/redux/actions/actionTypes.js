@@ -2,6 +2,7 @@ export const GET_ERRORS = 'GET_ERRORS'
 export const UPDATE_ERRORS = 'UPDATE_ERRORS'
 export const USER_LOADING = 'USER_LOADING'
 export const SET_CURRENT_USER = 'SET_CURRENT_USER'
+export const DARK_MODE = 'DARK_MODE'
 export const GET_SUCCESS = 'GET_SUCCESS'
 export const UPDATE_SUCCESS = 'UPDATE_SUCCESS'
 
