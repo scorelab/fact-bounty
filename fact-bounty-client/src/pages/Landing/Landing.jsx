@@ -89,9 +89,7 @@ class Landing extends Component {
                   Welcome to <b>Fact Bounty</b>
                 </h1>
                 <p>
-                  Fact Bounty is a crowd sourced based fact checking platform.
-                  Using Fact Bounty, you will be able to find out the truth and
-                  minimize spread of false news and roumors
+                  Fact Bounty is a crowdsourced based fact-checking platform. Using Fact Bounty, you will be able to find out the truth and minimize the spread of false news and rumors.
                 </p>
                 <Link to="/#about">
                   <Button
@@ -200,8 +198,7 @@ class Landing extends Component {
                   <label>1</label>SEARCH
                   <h3>Search News Posts</h3>
                   <p>
-                    Search for news posts in Fact Bounty and find out which
-                    posts are real and which is fake
+                    Search for news posts in Fact Bounty and find out which posts are real and which are fake.
                   </p>
                 </div>
               </div>
@@ -210,9 +207,7 @@ class Landing extends Component {
                   <label>2</label>VOTE
                   <h3>Vote News Posts</h3>
                   <p>
-                    Users can upvote, down vote or put an neutral vote to new
-                    posts listed in fact bounty, which will be used to validate
-                    the facts stated in the news
+                    Users can upvote, downvote, or put a neutral vote to new posts listed in fact bounty, which will be used to validate the facts stated in the news.
                   </p>
                 </div>
               </div>
@@ -224,8 +219,7 @@ class Landing extends Component {
                   <label>3</label>VISUALIZE
                   <h3>Visualize News Post Stats</h3>
                   <p>
-                    View charts and graphs to see in a visual representations of
-                    roumor spread and news source validity
+                    View charts and graphs to see visual representations of rumor spread and news source validity.
                   </p>
                 </div>
               </div>
