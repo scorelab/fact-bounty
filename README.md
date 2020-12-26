@@ -83,7 +83,7 @@ The recent decade has witnessed the birth of social media ecosystems that brings
         For *Windows* you can use -
 
         ```
-        venv/Scipts/activate.bat
+        venv\Scipts\activate.bat
         ```
 
 -   #### Environment Variables
