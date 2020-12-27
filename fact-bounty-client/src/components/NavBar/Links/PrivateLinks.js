@@ -95,7 +95,8 @@ PrivateLinks.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  dark: state.dark
 })
 
 export default connect(mapStateToProps)(PrivateLinks)

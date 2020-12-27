@@ -4,9 +4,17 @@ import {
   SET_CURRENT_USER,
   USER_LOADING,
   GET_ERRORS,
-  GET_SUCCESS
+  GET_SUCCESS,
+  DARK_MODE
 } from './actionTypes'
 import AuthService from '../../services/AuthService'
+
+export const toggleDarkMode = curr => {
+  return {
+    type: DARK_MODE,
+    payload: !curr
+  }
+}
 
 // Set logged in user
 export const setCurrentUser = payload => {
