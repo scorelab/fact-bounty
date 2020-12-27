@@ -11,10 +11,11 @@ import SwipeableDrawer from '../SwipeableDrawer'
 import PublicLinks from './Links/PublicLinks'
 import PrivateLinks from './Links/PrivateLinks'
 import Toast from '../Toast'
-import { logoutUser } from '../../redux/actions/authActions'
+import { logoutUser , toggleDarkMode } from '../../redux/actions/authActions'
 import styles from './NavBar.style'
 import factbountyLogo from '../../assets/logos/factbountyLogo.png'
 import './styles.sass'
+// import Darkmode from '../Darkmode/DarkMode'
 
 class NavBar extends Component {
   // constructor
@@ -53,7 +54,7 @@ class NavBar extends Component {
     const { drawerIsOpen, toastIsOpen } = this.state
     const { classes, auth } = this.props
     return (
-      <div className={`${classes.root} nav-bar-container`}>
+      <div className={`${classes.root}  ${auth.dark ? 'darkmode nav-bar-container' : 'nav-bar-container'}`}>
         <Toast
           isOpen={toastIsOpen}
           handleClose={this.closeToast}
@@ -63,8 +64,10 @@ class NavBar extends Component {
           isOpen={drawerIsOpen}
           toggleDrawer={this.toggleDrawer}
         />
-        <AppBar position="static" color="default" className={classes.navBar}>
+        <AppBar position="static" color="default" className={` ${classes.navBar} ${auth.dark ? 'darkmode ' : '' }`}>
+          
           <Toolbar>
+            
             <IconButton
               className={classes.menuButton}
               color="inherit"
@@ -79,13 +82,28 @@ class NavBar extends Component {
               </Link>
             </div>
             <div className={classes.linkButtonsContainer}>
+              
+
               {auth.isAuthenticated ? (
                 <PrivateLinks handleLogout={this.handleLogout} />
               ) : (
                 <PublicLinks />
               )}
+              
             </div>
+            <span>
+              <label className="switch">
+                <input
+                type="checkbox"
+                onChange={() => this.props.toggleDarkMode(auth.dark)}
+                />
+                <span className ="slider round"></span>
+              </label>
+            </span>
+            {auth.dark ? '☀' : '☾' }
+            
           </Toolbar>
+          
         </AppBar>
       </div>
     )
@@ -95,16 +113,18 @@ class NavBar extends Component {
 NavBar.propTypes = {
   classes: PropTypes.object.isRequired,
   auth: PropTypes.object,
-  logoutUser: PropTypes.func.isRequired
+  logoutUser: PropTypes.func.isRequired,
+  dark: PropTypes.func.isRequired,
 }
 
 const NavBarWithStyles = withStyles(styles)(NavBar)
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  dark: state.dark
 })
 
 export default connect(
   mapStateToProps,
-  { logoutUser }
+  { logoutUser , toggleDarkMode }
 )(NavBarWithStyles)

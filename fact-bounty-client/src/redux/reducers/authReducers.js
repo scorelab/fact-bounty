@@ -1,11 +1,16 @@
-import { SET_CURRENT_USER, USER_LOADING } from '../actions/actionTypes'
+import {
+  SET_CURRENT_USER,
+  USER_LOADING,
+  DARK_MODE
+} from '../actions/actionTypes'
 
 // eslint-disable-next-line prettier/prettier
 const isEmpty = require('is-empty')
 const initialState = {
   isAuthenticated: false,
   user: {},
-  loading: false
+  loading: false,
+  dark: false
 }
 
 export default function(state = initialState, action) {
@@ -20,6 +25,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         loading: true
+      }
+    case DARK_MODE:
+      return {
+        ...state,
+        dark: !state.dark
       }
     default:
       return state

@@ -39,7 +39,7 @@ class ContactUsForm extends Component {
     return (
       <div className="contact-us-form-container">
         <h1>Contact Us</h1>
-        <p>Feel free to contact us for any inquiries or feedback</p>
+        <p>Feel free to contact us for any inquiries or feedback!</p>
         <form onSubmit={this.onSubmit}>
           <input
             type="text"
