@@ -1,0 +1,57 @@
+Run started:2021-10-04 04:06:05.793320
+
+Test results:
+>> Issue: [B404:blacklist] Consider possible security implications associated with call module.
+   Severity: Low   Confidence: High
+   Location: api/commands.py:8
+   More Info: https://bandit.readthedocs.io/en/latest/blacklists/blacklist_imports.html#b404-import-subprocess
+7	from glob import glob
+8	from subprocess import call
+9	import coverage
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with subprocess module.
+   Severity: Low   Confidence: High
+   Location: api/commands.py:55
+   More Info: https://bandit.readthedocs.io/en/latest/blacklists/blacklist_imports.html#b404-import-subprocess
+54	    if coverage and not os.environ.get("FLASK_COVERAGE"):
+55	        import subprocess
+56	
+57	        os.environ["FLASK_COVERAGE"] = "1"
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   Location: api/commands.py:58
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b603_subprocess_without_shell_equals_true.html
+57	        os.environ["FLASK_COVERAGE"] = "1"
+58	        sys.exit(subprocess.call(sys.argv))
+59	    import unittest
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   Location: api/commands.py:104
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b603_subprocess_without_shell_equals_true.html
+103	        click.echo("{}: {}".format(description, " ".join(command_line)))
+104	        rv = call(command_line)
+105	        if rv != 0:
+
+--------------------------------------------------
+
+Code scanned:
+	Total lines of code: 1537
+	Total lines skipped (#nosec): 0
+
+Run metrics:
+	Total issues (by severity):
+		Undefined: 0.0
+		Low: 4.0
+		Medium: 0.0
+		High: 0.0
+	Total issues (by confidence):
+		Undefined: 0.0
+		Low: 0.0
+		Medium: 0.0
+		High: 4.0
+Files skipped (0):

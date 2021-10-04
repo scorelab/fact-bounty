@@ -1,3 +1,4 @@
+from __future__ import annotations
 from flask_jwt_extended import JWTManager
 from flask_login import LoginManager
 from flask_migrate import Migrate
@@ -6,6 +7,8 @@ from flask_pagedown import PageDown
 from flask_sqlalchemy import SQLAlchemy
 from flask import jsonify, make_response
 from api import user
+from flask.wrappers import Response
+from typing import Tuple
 
 db = SQLAlchemy()
 mail = Mail()
@@ -20,20 +23,20 @@ jwt = JWTManager()
 
 # This method will check if a token is blacklisted, and will be called automatically when blacklist is enabled
 @jwt.token_in_blacklist_loader
-def check_if_token_is_blacklist(decypted_token):
+def check_if_token_is_blacklist(decypted_token) -> bool:
     jti = decypted_token["jti"]
     return user.model.RevokedToken.is_jti_blacklisted(jti)
 
 
 # The following callbacks are used for customizing jwt response/error messages.
 @jwt.expired_token_loader
-def expired_token_callback():
+def expired_token_callback() -> Tuple[Response, int]:
     response = {"message": "The token has expired.", "error": "token_expired"}
     return make_response(jsonify(response)), 401
 
 
 @jwt.invalid_token_loader
-def invalid_token_callback(error):
+def invalid_token_callback(error) -> Tuple[Response, int]:
     # we have to keep the argument here, since it's passed in by the caller internally
     response = {
         "message": "Signature verification failed.",
@@ -43,7 +46,7 @@ def invalid_token_callback(error):
 
 
 @jwt.unauthorized_loader
-def missing_token_callback(error):
+def missing_token_callback(error) -> Tuple[Response, int]:
     response = {
         "message": "Request does not contain an access token.",
         "error": "authorization_required",
@@ -52,7 +55,7 @@ def missing_token_callback(error):
 
 
 @jwt.needs_fresh_token_loader
-def token_not_fresh_callback():
+def token_not_fresh_callback() -> Tuple[Response, int]:
     response = {
         "message": "The token is not fresh.",
         "error": "fresh_token_required",
@@ -61,7 +64,7 @@ def token_not_fresh_callback():
 
 
 @jwt.revoked_token_loader
-def revoked_token_callback():
+def revoked_token_callback() -> Tuple[Response, int]:
     response = {
         "message": "The token has been revoked.",
         "error": "token_revoked",

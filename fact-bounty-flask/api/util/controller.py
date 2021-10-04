@@ -1,6 +1,9 @@
+from __future__ import annotations
 from flask.views import MethodView
 from flask import make_response, request, jsonify, current_app
 from api.helpers import send_email
+from flask.wrappers import Response
+from typing import Tuple
 
 
 class ContactUs(MethodView):
@@ -8,7 +11,7 @@ class ContactUs(MethodView):
     send through contact us form request
     """
 
-    def post(self):
+    def post(self) -> Tuple[Response, int]:
         try:
             # get the request data
             data = request.get_json(silent=True)

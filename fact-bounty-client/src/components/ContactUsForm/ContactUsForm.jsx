@@ -63,6 +63,10 @@ class ContactUsForm extends Component {
           />
           <input
             type="number"
+            step="1"
+            min="100000000"
+            minLength="9"
+            maxLength="13"
             name="phone"
             value={phone}
             placeholder="Phone Number"

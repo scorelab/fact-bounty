@@ -1,3 +1,4 @@
+from __future__ import annotations
 from flask.views import MethodView
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import make_response, request, jsonify, current_app
@@ -5,6 +6,8 @@ from elasticsearch.helpers import scan
 from .model import Vote, Comment
 from flasgger import swag_from
 from ..user import model
+from flask.wrappers import Response
+from typing import Tuple
 
 
 class AllStories(MethodView):
@@ -16,7 +19,7 @@ class AllStories(MethodView):
 
     @jwt_required
     @swag_from("../../docs/stories/get_all.yml")
-    def get(self):
+    def get(self) -> Tuple[Response, int]:
         user_id = get_jwt_identity()
         user = model.User.find_by_user_id(user_id)
 
@@ -57,7 +60,7 @@ class GetRange(MethodView):
     """
 
     @swag_from("../../docs/stories/get_range.yml")
-    def get(self, page):
+    def get(self, page) -> Tuple[Response, int]:
         es_index = current_app.config["ES_INDEX"]
         es = current_app.elasticsearch
 
@@ -94,7 +97,7 @@ class LoadUserVotes(MethodView):
     # Retrieve user voted posts
     @jwt_required
     @swag_from("../../docs/stories/load_user_vote.yml")
-    def post(self):
+    def post(self) -> Tuple[Response, int]:
         # extract user id from token
         user_id = get_jwt_identity()
 
@@ -123,7 +126,7 @@ class ChangeUserVote(MethodView):
 
     @jwt_required
     @swag_from("../../docs/stories/change_vote_count.yml")
-    def post(self):
+    def post(self) -> Tuple[Response, int]:
         es_index = current_app.config["ES_INDEX"]
         es = current_app.elasticsearch
 
@@ -225,7 +228,7 @@ class ChangeUserVote(MethodView):
 
 class GetById(MethodView):
     @swag_from("../../docs/stories/get_by_id.yml")
-    def get(self, id):
+    def get(self, id) -> Tuple[Response, int]:
         es_index = current_app.config["ES_INDEX"]
         es = current_app.elasticsearch
 
@@ -241,7 +244,7 @@ class GetById(MethodView):
 
 
 class SearchStory(MethodView):
-    def get(self, keyword):
+    def get(self, keyword) -> Tuple[Response, int]:
         es_index = current_app.config["ES_INDEX"]
         es = current_app.elasticsearch
 
@@ -284,7 +287,7 @@ class SearchStory(MethodView):
 class LoadUserComments(MethodView):
     # retrieve all comments by a user
     @jwt_required
-    def post(self):
+    def post(self) -> Tuple[Response, int]:
         # destructure user id
         user_id = get_jwt_identity()
 
@@ -315,7 +318,7 @@ class ChangeComment(MethodView):
     """
 
     @jwt_required
-    def post(self):
+    def post(self) -> Tuple[Response, int]:
         # extract user id from token
         user_id = get_jwt_identity()
 
@@ -368,7 +371,7 @@ class DeleteComment(MethodView):
 
     @classmethod
     @jwt_required
-    def delete(self):
+    def delete(self) -> Tuple[Response, int]:
         # extract data from request
         data = request.get_json(silent=True)
 

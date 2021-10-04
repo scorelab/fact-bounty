@@ -1,3 +1,4 @@
+from __future__ import annotations
 from datetime import datetime
 from flask import current_app
 from flask_bcrypt import Bcrypt
@@ -26,7 +27,7 @@ class User(Model):
     type = Column(db.String(50), default="remote")
     role = Column(db.String(10), default="user")
 
-    def __init__(self, name, email, password=None, role="user", _type="remote"):
+    def __init__(self, name, email, password=None, role: str="user", _type="remote") -> None:
         """
         Initializes the user instance
         """
@@ -38,7 +39,7 @@ class User(Model):
         self.type = _type
         self.role = role
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """
         Returns the object reprensentation
         """
@@ -79,7 +80,7 @@ class User(Model):
             print("Error: ", err)
 
     @staticmethod
-    def generate_token():
+    def generate_token() -> str:
         """
         Returns a random token
         """
@@ -100,7 +101,7 @@ class User(Model):
         """
         return Bcrypt().check_password_hash(self.password, password)
 
-    def save(self):
+    def save(self) -> None:
         """
         Save a user to the database.
         This includes creating a new user and editing one.
@@ -118,11 +119,11 @@ class RevokedToken(Model):
     id = Column(db.Integer, primary_key=True)
     jti = Column(db.String(120))
 
-    def add(self):
+    def add(self) -> None:
         db.session.add(self)
         db.session.commit()
 
     @classmethod
-    def is_jti_blacklisted(cls, jti):
+    def is_jti_blacklisted(cls, jti) -> bool:
         query = cls.query.filter_by(jti=jti).first()
         return bool(query)

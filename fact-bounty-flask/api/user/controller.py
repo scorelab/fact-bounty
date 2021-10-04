@@ -1,3 +1,4 @@
+from __future__ import annotations
 from flask.views import MethodView
 from flask import make_response, request, jsonify, current_app
 from flask_jwt_extended import (
@@ -13,13 +14,15 @@ from flasgger import swag_from
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from flask.wrappers import Response
+from typing import Tuple
 
 
 class Register(MethodView):
     """This class registers a new user."""
 
     @swag_from("../../docs/users/register.yml")
-    def post(self):
+    def post(self) -> Tuple[Response, int]:
         """Handle POST request for this view. Url --> /api/users/register"""
         # getting JSON data from request
         post_data = request.get_json(silent=True)
@@ -76,7 +79,7 @@ class Login(MethodView):
     """This class-based view handles user login and access token generation."""
 
     @swag_from("../../docs/users/login.yml")
-    def post(self):
+    def post(self) -> Tuple[Response, int]:
         """Handle POST request for this view. Url ---> /api/users/login"""
         data = request.get_json(silent=True)
 
@@ -124,7 +127,7 @@ class Login(MethodView):
 class ForgotPassword(MethodView):
     """This class sends a reset password mail."""
 
-    def post(self):
+    def post(self) -> Tuple[Response, int]:
         """Handle POST request for this view. Url --> /api/users/forgot_password"""
         # getting JSON data from request
         post_data = request.get_json(silent=True)
@@ -188,7 +191,7 @@ class ForgotPassword(MethodView):
 class AuthVerificationToken(MethodView):
     """This class verifies token which is being used to reset the password"""
 
-    def post(self):
+    def post(self) -> Tuple[Response, int]:
         data = request.get_json(silent=True)
         try:
             verification_token = data["verification_token"]
@@ -211,7 +214,7 @@ class AuthVerificationToken(MethodView):
 class ResetPassword(MethodView):
     """This class is used to change the password"""
 
-    def post(self):
+    def post(self) -> Tuple[Response, int]:
 
         data = request.get_json(silent=True)
         try:
@@ -249,7 +252,7 @@ class Auth(MethodView):
     via 3rd sources like facebook, google"""
 
     @swag_from("../../docs/users/oauth.yml")
-    def post(self):
+    def post(self) -> Tuple[Response, int]:
         # Querying the database with requested email
         data = request.get_json(silent=True)
 
@@ -311,7 +314,7 @@ class Auth(MethodView):
 class LogoutAccess(MethodView):
     @jwt_required
     @swag_from("../../docs/users/logout_access.yml")
-    def post(self):
+    def post(self) -> Tuple[Response, int]:
         jti = get_raw_jwt()["jti"]
         try:
             revoked_token = RevokedToken(jti=jti)
@@ -328,7 +331,7 @@ class LogoutAccess(MethodView):
 class LogoutRefresh(MethodView):
     @jwt_refresh_token_required
     @swag_from("../../docs/users/logout_refresh.yml")
-    def post(self):
+    def post(self) -> Tuple[Response, int]:
         jti = get_raw_jwt()["jti"]
         try:
             revoked_token = RevokedToken(jti=jti)
@@ -345,7 +348,7 @@ class LogoutRefresh(MethodView):
 class TokenRefresh(MethodView):
     @jwt_refresh_token_required
     @swag_from("../../docs/users/token_refresh.yml")
-    def post(self):
+    def post(self) -> Tuple[Response, int]:
         current_user = get_jwt_identity()
         access_token = create_access_token(identity=current_user, fresh=False)
 
@@ -362,14 +365,14 @@ class Profile(MethodView):
 
     @staticmethod
     @jwt_required
-    def get(self):
+    def get(self) -> Tuple[Response, int]:
         current_user = get_jwt_identity()
 
         response = jsonify(current_user)
         return make_response(response), 200
 
     @jwt_required
-    def post(self):
+    def post(self) -> Tuple[Response, int]:
         try:
             post_data = request.get_json(silent=True)
             name = post_data["name"]

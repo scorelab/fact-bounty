@@ -1,3 +1,4 @@
+from __future__ import annotations
 import os
 import unittest
 import tempfile
@@ -12,19 +13,19 @@ FLASKR = app
 
 class Test_Admin(unittest.TestCase):
     @classmethod
-    def setUpClass(self):
+    def setUpClass(self) -> None:
         self.db_fd, self.db_path = db_fd, db_path
         FLASKR.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///' + self.db_path
         FLASKR.testing = True
         self.app = FLASKR.test_client()
 
     @classmethod
-    def tearDownClass(self):
+    def tearDownClass(self) -> None:
         # os.close(self.db_fd)
         # os.unlink(self.db_path)
         pass
 
-    def test_fetch_system_panel_200(self):
+    def test_fetch_system_panel_200(self) -> None:
         """Get System Panel Information"""
         response = self.app.get("/api/admin/system")
         res = response.data.decode("ASCII")

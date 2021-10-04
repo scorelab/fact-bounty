@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 """Click commands."""
+from __future__ import annotations
+from typing import Dict, Optional
+
 import os
 from glob import glob
 from subprocess import call
@@ -28,7 +31,7 @@ with regex to check email string
 """
 
 
-def check(email):
+def check(email) -> bool:
     """
     pass the regualar expression
     and the string in search() method
@@ -46,7 +49,7 @@ def check(email):
     default=False,
     help="Run tests under code coverage.",
 )
-def test(coverage):
+def test(coverage) -> Optional[int]:
     """Run the unit tests."""
     if coverage and not os.environ.get("FLASK_COVERAGE"):
         import subprocess
@@ -83,7 +86,7 @@ def test(coverage):
     is_flag=True,
     help="Fix imports using isort, before linting",
 )
-def lint(fix_imports):
+def lint(fix_imports) -> None:
     """Lint and check code style with flake8 and isort."""
     skip = ["requirements", "venv", "migrations", "__pycache__"]
     root_files = glob("*.py")
@@ -108,7 +111,7 @@ def lint(fix_imports):
 
 
 @click.command()
-def clean():
+def clean() -> None:
     """Remove *.pyc and *.pyo files recursively starting at current directory.
 
     Borrowed from Flask-Script, converted to use Click.
@@ -131,7 +134,7 @@ def clean():
     help="Property on Rule to order by (default: rule)",
 )
 @with_appcontext
-def urls(url, order):
+def urls(url, order) -> None:
     """Display all of the url matching routes for the project.
 
     Borrowed from Flask-Script, converted to use Click.
@@ -191,7 +194,7 @@ def urls(url, order):
 
 
 @click.command()
-def deploy():
+def deploy() -> None:
     """
     migrate database to latest revision
     """
@@ -200,7 +203,7 @@ def deploy():
 
 @click.command(name="create_admin")
 @with_appcontext
-def create_admin():
+def create_admin() -> Optional[Dict[str, str]]:
     """
     create an admin user
     """

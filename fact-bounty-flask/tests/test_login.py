@@ -1,3 +1,4 @@
+from __future__ import annotations
 import os
 import unittest
 import tempfile
@@ -5,11 +6,12 @@ import json
 import sys
 from app import app
 from fake_db import db_fd, db_path
+from typing import Dict
 
 sys.path.append(os.path.join(sys.path[0], "../../"))
 FLASKR = app
 
-USER_DATA = dict(
+USER_DATA: Dict[str, str] = dict(
     name="name2",
     email="example2@gmail.com",
     credential1="test2credentials",
@@ -19,7 +21,7 @@ USER_DATA = dict(
 
 class Test_Login(unittest.TestCase):
     @classmethod
-    def setUp(self):
+    def setUp(self) -> None:
         self.db_fd, self.db_path = db_fd, db_path
         FLASKR.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///' + self.db_path
         FLASKR.testing = True
@@ -39,12 +41,12 @@ class Test_Login(unittest.TestCase):
         )
 
     @classmethod
-    def tearDownClass(self):
+    def tearDownClass(self) -> None:
         # os.close(self.db_fd)
         # os.unlink(self.db_path)
         pass
 
-    def test_can_log_in_returns_200(self):
+    def test_can_log_in_returns_200(self) -> None:
         """Login successful."""
         response = self.app.post(
             "/api/users/login",
@@ -60,7 +62,7 @@ class Test_Login(unittest.TestCase):
         self.assertEqual(res["message"], "You logged in successfully.")
         self.assertNotEqual(res["access_token"], "")
 
-    def test_sees_error_message_if_password_is_incorrect(self):
+    def test_sees_error_message_if_password_is_incorrect(self) -> None:
         """Show error if password is incorrect."""
         response = self.app.post(
             "/api/users/login",
@@ -80,7 +82,7 @@ class Test_Login(unittest.TestCase):
             res["message"], "Wrong password, Please try again"
         )
 
-    def test_sees_error_message_if_username_doesnt_exist(self):
+    def test_sees_error_message_if_username_doesnt_exist(self) -> None:
         """Show error if username doesn't exist."""
         response = self.app.post(
             "/api/users/login",

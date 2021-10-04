@@ -1,14 +1,17 @@
+from __future__ import annotations
 import psutil
 import os
 import time
 from flask import make_response, jsonify
 from flask.views import MethodView
+from flask.wrappers import Response
+from typing import Tuple
 
 PERIOD = 1  # 1 sec
 
 
 class SystemPanel(MethodView):
-    def get(self):
+    def get(self) -> Tuple[Response, int]:
 
         io_data_start = psutil.net_io_counters()
 
