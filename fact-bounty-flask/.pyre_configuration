@@ -1,0 +1,9 @@
+{
+  "source_directories": [
+    {
+      "import_root": ".",
+      "source": "api"
+    }
+  ],
+  "taint_models_path": "/home/sampath/mis/fact-bounty/env/pysa/lib"
+}

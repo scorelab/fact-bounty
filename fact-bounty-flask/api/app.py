@@ -1,3 +1,4 @@
+from __future__ import annotations
 import os
 
 from flask import Flask
@@ -12,9 +13,11 @@ from api import commands
 from api import admin, user, stories, crawler, util
 from api.config import config
 from api.extensions import db, mail, pagedown, login_manager, migrate, jwt
+from flask.app import Flask
+from typing import Optional
 
 
-def create_app(config_name):
+def create_app(config_name: str) -> Optional[Flask]:
     try:
         # create and configure the app
         app = Flask(
@@ -39,7 +42,7 @@ def create_app(config_name):
         print("Error occured:", err)
 
 
-def register_extensions(app):
+def register_extensions(app) -> None:
     """Register Flask extensions"""
     CORS(app)
     db.init_app(app)
@@ -65,7 +68,7 @@ def register_extensions(app):
     jwt.init_app(app)
 
 
-def register_blueprint(app):
+def register_blueprint(app) -> None:
     """Register Flask blueprints."""
     app.register_blueprint(user.views.userprint, url_prefix="/api/users")
     app.register_blueprint(stories.views.storyprint, url_prefix="/api/stories")
@@ -75,7 +78,7 @@ def register_blueprint(app):
     return None
 
 
-def register_commands(app):
+def register_commands(app) -> None:
     """Register Click commands."""
     app.cli.add_command(commands.test)
     app.cli.add_command(commands.lint)
@@ -85,7 +88,7 @@ def register_commands(app):
     app.cli.add_command(commands.create_admin)
 
 
-def register_shellcontext(app):
+def register_shellcontext(app) -> None:
     """Register shell context objects."""
 
     def shell_context():

@@ -1,12 +1,15 @@
+from __future__ import annotations
 from flask.views import MethodView
 from flask import make_response, request, jsonify, current_app
 import dateutil.parser as dparser
 from datetime import datetime
 from .utils import cron_crawlers
+from flask.wrappers import Response
+from typing import Tuple
 
 
 class SetCronJob(MethodView):
-    def get(self):
+    def get(self) -> Tuple[Response, int]:
         try:
             jobs = []
             for job in current_app.scheduler.get_jobs():
@@ -29,7 +32,7 @@ class SetCronJob(MethodView):
             }
             return make_response(jsonify(response)), 404
 
-    def post(self):
+    def post(self) -> Tuple[Response, int]:
         try:
             data = request.get_json(silent=True)
 
@@ -51,7 +54,7 @@ class SetCronJob(MethodView):
             }
             return make_response(jsonify(response)), 404
 
-    def put(self):
+    def put(self) -> Tuple[Response, int]:
         try:
             data = request.get_json(silent=True)
 
@@ -74,7 +77,7 @@ class SetCronJob(MethodView):
             }
             return make_response(jsonify(response)), 404
 
-    def delete(self):
+    def delete(self) -> Tuple[Response, int]:
         try:
             data = request.get_json(silent=True)
 
@@ -95,7 +98,7 @@ class SetCronJob(MethodView):
 
 
 class CrawlByDate(MethodView):
-    def get(self):
+    def get(self) -> Tuple[Response, int]:
         scrapyd = current_app.scrapy
         try:
             data = request.get_json(silent=True)

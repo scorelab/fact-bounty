@@ -1,4 +1,5 @@
 import os
+from __future__ import annotations
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -39,7 +40,7 @@ class Config:
     }
 
     @staticmethod
-    def init_app(app):
+    def init_app(app) -> None:
         pass
 
 
@@ -70,7 +71,7 @@ class ProductionConfig(Config):
     ES_PASSWORD = os.environ.get("ELASTIC_SEARCH_PASSWORD")
 
     @classmethod
-    def init_app(cls, app):
+    def init_app(cls, app) -> None:
         Config.init_app(app)
 
         # email errors to the administrators
@@ -97,7 +98,7 @@ class ProductionConfig(Config):
 
 class DockerConfig(Config):
     @classmethod
-    def init_app(cls, app):
+    def init_app(cls, app) -> None:
         ProductionConfig.init_app(app)
 
         # log to stderr

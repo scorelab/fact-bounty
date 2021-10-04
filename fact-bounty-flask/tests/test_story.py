@@ -1,3 +1,4 @@
+from __future__ import annotations
 import os
 import unittest
 import tempfile
@@ -5,11 +6,12 @@ import json
 import sys
 from app import app
 from fake_db import db_fd, db_path
+from typing import Dict
 
 sys.path.append(os.path.join(sys.path[0], "../../"))
 FLASKR = app
 
-USER_DATA = dict(
+USER_DATA: Dict[str, str] = dict(
     name="Admin",
     email="admin@gmail.com",
     credential1="test3credentials",
@@ -20,7 +22,7 @@ USER_DATA = dict(
 
 class Test_Story(unittest.TestCase):
     @classmethod
-    def setUpClass(self):
+    def setUpClass(self) -> None:
         self.db_fd, self.db_path = db_fd, db_path
         FLASKR.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///' + self.db_path
         FLASKR.testing = True
@@ -55,12 +57,12 @@ class Test_Story(unittest.TestCase):
         self.access_token = res['access_token']
 
     @classmethod
-    def tearDownClass(self):
+    def tearDownClass(self) -> None:
         # os.close(self.db_fd)
         # os.unlink(self.db_path)
         pass
 
-    def test_fetch_all_stories_200(self):
+    def test_fetch_all_stories_200(self) -> None:
         """Fetch all stories"""
         response = self.app.get(
             "/api/stories/all",
@@ -74,7 +76,7 @@ class Test_Story(unittest.TestCase):
         self.assertEqual(res["message"], "Stories successfully fetched")
         self.assertTrue(isinstance(res["stories"], (dict)))
 
-    def test_fetch_range_of_stories_200(self):
+    def test_fetch_range_of_stories_200(self) -> None:
         """Fetch range of stories"""
         response = self.app.get("/api/stories/get-range/1")
         res = response.data.decode("ASCII")
@@ -83,7 +85,7 @@ class Test_Story(unittest.TestCase):
         self.assertEqual(res["message"], "Stories successfully fetched")
         self.assertTrue(isinstance(res["stories"], (list)))
 
-    def test_fetch_single_story(self):
+    def test_fetch_single_story(self) -> None:
         """Fetch a single story"""
         response = self.app.get("/api/stories/get/1")
         res = response.data.decode("ASCII")

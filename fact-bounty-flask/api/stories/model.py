@@ -1,3 +1,4 @@
+from __future__ import annotations
 from api.database import Column, Model, db
 from datetime import datetime
 
@@ -14,7 +15,7 @@ class Vote(Model):
     user_id = Column(db.Integer, db.ForeignKey("user.id"))
     value = Column(db.Integer)
 
-    def __init__(self, story_id, user_id, value):
+    def __init__(self, story_id, user_id, value) -> None:
         self.story_id = story_id
         self.user_id = user_id
         self.value = value
@@ -23,7 +24,7 @@ class Vote(Model):
     def fetch_user_votes(cls, user_id):
         return cls.query.filter_by(user_id=user_id).all()
 
-    def save(self):
+    def save(self) -> None:
         """
         Save a user to the database.
         This includes creating a new user and editing one.
@@ -43,7 +44,7 @@ class Comment(Model):
     user_id = Column(db.Integer, db.ForeignKey("user.id"))
     content = Column(db.Integer)
 
-    def __init__(self, story_id, user_id, content):
+    def __init__(self, story_id, user_id, content) -> None:
         self.story_id = story_id
         self.user_id = user_id
         self.content = content
@@ -56,7 +57,7 @@ class Comment(Model):
     def fetch_post_comments(cls, post_id):
         return cls.query.filter_by(post_id=post_id).all()
 
-    def save(self):
+    def save(self) -> None:
         """
         Save a comment to the database.
         """

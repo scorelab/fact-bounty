@@ -1,15 +1,16 @@
+from __future__ import annotations
 from threading import Thread
 from flask import current_app
 from flask_mail import Message
 from api.extensions import mail
 
 
-def send_async_email(app, msg):
+def send_async_email(app, msg) -> None:
     with app.app_context():
         mail.send(msg)
 
 
-def send_email(to, subject, body):
+def send_email(to, subject, body) -> Thread:
     app = current_app._get_current_object()
     msg = Message(app.config['FACTBOUNTY_MAIL_SUBJECT_PREFIX'] + subject,
                   sender=app.config['FACTBOUNTY_MAIL_SENDER'], recipients=[to])
